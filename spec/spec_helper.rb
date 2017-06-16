@@ -1,4 +1,8 @@
 require "bundler/setup"
+if ENV["COVERAGE"]
+  require 'simplecov'
+  SimpleCov.start
+end
 require "orca_api"
 
 RSpec.configure do |config|
