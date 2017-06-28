@@ -3,6 +3,14 @@ if ENV["COVERAGE"]
   require 'simplecov'
   SimpleCov.start
 end
+require "webmock/rspec"
+require "awesome_print"
+AwesomePrint.defaults = {
+  indent: 2,
+  index: false,
+  plain: true,
+}
+
 require "orca_api"
 
 RSpec.configure do |config|
