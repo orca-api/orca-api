@@ -53,7 +53,7 @@ RSpec.describe OrcaApi::OrcaApi do
       json = orca_api.call(path, params: params, body: body, http_method: http_method)
       # HACK: レスポンスを整形して出力する
       if ENV["ORCA_API_URL"]
-        ap(json)
+        $stderr.puts(json.ai)
       end
       json
     }
@@ -79,6 +79,25 @@ RSpec.describe OrcaApi::OrcaApi do
         {}
       }
       let(:http_method) { :get }
+
+      it { is_expected.to be_api_result_equal_to(result) }
+    end
+
+    describe "/api01rv2/patientlst1v2" do
+      let(:path) { "/api01rv2/patientlst1v2" }
+      let(:params) {
+        { "class" => "01" }
+      }
+      let(:body) {
+        {
+          "patientlst1req" => {
+            "Base_StartDate" => "2012-06-01",
+            "Base_EndDate" => "2012-06-30",
+            "Contain_TestPatient_Flag" => 1,
+          }
+        }
+      }
+      let(:http_method) { :post }
 
       it { is_expected.to be_api_result_equal_to(result) }
     end
