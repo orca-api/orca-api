@@ -20,10 +20,11 @@ RSpec::Matchers.define :be_api_result_equal_to do |expected|
 end
 
 RSpec.describe OrcaApi::OrcaApi do
-  describe ".new" do
-    let(:options) { ["example.com", double("authentication"), 18000] }
+  let(:options) { ["example.com", double("authentication"), 18000] }
+  let(:orca_api) { OrcaApi::OrcaApi.new(*options) }
 
-    subject { OrcaApi::OrcaApi.new(*options) }
+  describe ".new" do
+    subject { orca_api }
 
     its(:host) { is_expected.to eq(options[0]) }
     its(:authentication) { is_expected.to eq(options[1]) }
@@ -52,7 +53,6 @@ RSpec.describe OrcaApi::OrcaApi do
   describe "#call" do
     let(:options) { ["example.com", authentication, 18000] }
     let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
-    let(:orca_api) { OrcaApi::OrcaApi.new(*options) }
     let(:result) {
       fixture_name = path[1..-1].gsub("/", "_") + ".json"
       fixture_path = File.expand_path(File.join("../../fixtures/orca_api_results", fixture_name), __FILE__)
@@ -122,5 +122,12 @@ RSpec.describe OrcaApi::OrcaApi do
 
       include_examples "日レセAPIを呼び出せること"
     end
+  end
+
+  describe "#new_patient_service" do
+    subject { orca_api.new_patient_service }
+
+    it { is_expected.to be_instance_of(OrcaApi::PatientService) }
+    its(:orca_api) { is_expected.to eq(orca_api) }
   end
 end
