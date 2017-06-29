@@ -1,0 +1,48 @@
+{
+  "patientmodres" => {
+         "Request_Number" => "01",
+        "Response_Number" => "02",
+              "Karte_Uid" => "123456789012345678901234567890123456",
+               "Orca_Uid" => "850a3c68-44a6-4306-a00e-f3306fdc6dad",
+       "Information_Date" => "2017-06-29",
+       "Information_Time" => "08:33:42",
+             "Api_Result" => "000",
+     "Api_Result_Message" => "検索処理終了",
+                 "Reskey" => "Acceptance_Info",
+    "Patient_Information" => {
+                    "Patient_ID" => "00001",
+                     "WholeName" => "テスト　カンジャ",
+              "WholeName_inKana" => "テスト　カンジャ",
+                     "BirthDate" => "1965-04-04",
+                           "Sex" => "1",
+         "HouseHolder_WholeName" => "テスト　カンジャ",
+                  "Relationship" => "世帯主",
+                    "Occupation" => "警備員",
+      "Home_Address_Information" => {
+        "Address_ZipCode" => "6900051",
+          "WholeAddress1" => "島根県松江市横浜町",
+          "WholeAddress2" => "１１５５",
+           "PhoneNumber1" => "0852-22-2222"
+      },
+         "WorkPlace_Information" => {
+              "WholeName" => "島根銀行株式会社",
+        "Address_ZipCode" => "6900015",
+          "WholeAddress1" => "島根県松江市上乃木",
+          "WholeAddress2" => "１２３４５６",
+            "PhoneNumber" => "0852-33-3333"
+      },
+             "Contraindication1" => "　",
+              "TestPatient_Flag" => "0",
+              "Reduction_Reason" => "00",
+         "Reduction_Reason_Name" => "該当なし",
+                      "Discount" => "00",
+                 "Discount_Name" => "該当なし",
+                    "Condition1" => "00",
+               "Condition1_Name" => "該当なし",
+                    "Condition2" => "00",
+               "Condition2_Name" => "該当なし",
+                    "Condition3" => "00",
+               "Condition3_Name" => "該当なし"
+    }
+  }
+}
