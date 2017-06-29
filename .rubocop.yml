@@ -45,6 +45,11 @@ Style/HashSyntax:
 Style/StringLiterals:
   Enabled: false
 
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: single_quotes, double_quotes
+Style/StringLiteralsInInterpolation:
+  Enabled: false
+
 # Configuration parameters: PreferredDelimiters.
 Style/PercentLiteralDelimiters:
   Enabled: false
@@ -89,4 +94,18 @@ Performance/StringReplacement:
 
 # Configuration parameters: Strict.
 Style/NumericLiterals:
+  Enabled: false
+
+Lint/AmbiguousBlockAssociation:
+  Exclude:
+    - 'spec/**/*'
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: prefer_alias, prefer_alias_method
+Style/Alias:
+  Enabled: false
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: braces, no_braces, context_dependent
+Style/BracesAroundHashParameters:
   Enabled: false
