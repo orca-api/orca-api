@@ -39,10 +39,9 @@ module OrcaApi
 
     def get(id)
       # 患者情報の取得
-      karte_uid = "123456789012345678901234567890123456" # TODO: Karte_Uidはorca_apiに持たせる
       body = {
         PATIENT_GET_REQ_NAME => PATIENT_GET_REQ_01.merge(
-          "Karte_Uid" => karte_uid,
+          "Karte_Uid" => orca_api.karte_uid,
           "Patient_ID" => id.to_s
         )
       }
