@@ -3,7 +3,7 @@
 require "spec_helper"
 
 RSpec.describe OrcaApi::PatientService do
-  let(:orca_api) { double("OrcaApi::OrcaApi") }
+  let(:orca_api) { double("OrcaApi::OrcaApi", karte_uid: "karte_uid") }
   let(:patient_service) { described_class.new(orca_api) }
 
   describe "#get" do
