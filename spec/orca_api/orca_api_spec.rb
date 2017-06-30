@@ -20,29 +20,26 @@ RSpec::Matchers.define :be_api_result_equal_to do |expected|
 end
 
 RSpec.describe OrcaApi::OrcaApi do
-  # HACK: 環境変数ORCA_API_URLに日レセのURLを指定すると、実際に日レセAPIを呼び出してレスポンスを出力する。
-  #   そのとき、環境変数ORCA_API_BASIC_AUTHENTICATIONに「<ユーザ名>/<パスワード>」の形式でBASIC認証の認証情報を指定できる。
-  let(:orca_api_options) {
-    {
-      url: ENV["ORCA_API_URL"] || "http://example.com:8000",
-      basic_authentication:
-        ENV["ORCA_API_BASIC_AUTHENTICATION"] ? ENV["ORCA_API_BASIC_AUTHENTICATION"].split("/") : %w(ormaster ormaster),
-      debug_output: $stdout,
-    }
-  }
-  let(:orca_api) { OrcaApi::OrcaApi.new(orca_api_options) }
+  describe ".new" do
+    let(:options) { ["example.com", double("authentication"), 18000] }
 
-  describe "#url" do
-    subject { orca_api.url }
-    it { is_expected.to eq(orca_api_options[:url]) }
-  end
+    subject { OrcaApi::OrcaApi.new(*options) }
 
-  describe "#basic_authentication" do
-    subject { orca_api.basic_authentication }
-    it { is_expected.to eq(orca_api_options[:basic_authentication]) }
+    its(:host) { is_expected.to eq(options[0]) }
+    its(:authentication) { is_expected.to eq(options[1]) }
+    its(:port) { is_expected.to eq(options[2]) }
+
+    describe "portは省略可能" do
+      let(:options) { ["example.com", double("authentication")] }
+
+      its(:port) { is_expected.to eq(8000) }
+    end
   end
 
   describe "#call" do
+    let(:options) { ["example.com", authentication, 18000] }
+    let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
+    let(:orca_api) { OrcaApi::OrcaApi.new(*options) }
     let(:result) {
       fixture_name = path[1..-1].gsub("/", "_") + ".json"
       fixture_path = File.expand_path(File.join("../../fixtures/orca_api_results", fixture_name), __FILE__)
@@ -50,56 +47,67 @@ RSpec.describe OrcaApi::OrcaApi do
     }
 
     subject {
-      json = orca_api.call(path, params: params, body: body, http_method: http_method)
-      # HACK: レスポンスを整形して出力する
-      if ENV["ORCA_API_URL"]
-        $stderr.puts(json.ai)
-      end
-      json
+      orca_api.call(path, params: params, body: body, http_method: http_method)
     }
 
     before do
       query = params.merge(format: "json").map { |k, v| "#{k}=#{v}" }.join("&")
-      stub_request(http_method, URI.join(orca_api_options[:url], path, "?#{query}"))
+      stub_request(http_method, URI.join(url, path, "?#{query}"))
         .with(body: body.empty? ? nil : body.to_json)
         .to_return(body: result.to_json)
     end
 
-    # HACK: 実際のサーバにリクエストを送信する
-    if ENV["ORCA_API_URL"]
-      before { WebMock.disable! }
-    end
+    shared_examples "日レセAPIを呼び出せること" do
+      describe "/api01rv2/patientgetv2" do
+        let(:path) { "/api01rv2/patientgetv2" }
+        let(:params) {
+          { id: "1" }
+        }
+        let(:body) {
+          {}
+        }
+        let(:http_method) { :get }
 
-    describe "/api01rv2/patientgetv2" do
-      let(:path) { "/api01rv2/patientgetv2" }
-      let(:params) {
-        { id: "1" }
-      }
-      let(:body) {
-        {}
-      }
-      let(:http_method) { :get }
+        it { is_expected.to be_api_result_equal_to(result) }
+      end
 
-      it { is_expected.to be_api_result_equal_to(result) }
-    end
-
-    describe "/api01rv2/patientlst1v2" do
-      let(:path) { "/api01rv2/patientlst1v2" }
-      let(:params) {
-        { "class" => "01" }
-      }
-      let(:body) {
-        {
-          "patientlst1req" => {
-            "Base_StartDate" => "2012-06-01",
-            "Base_EndDate" => "2012-06-30",
-            "Contain_TestPatient_Flag" => 1,
+      describe "/api01rv2/patientlst1v2" do
+        let(:path) { "/api01rv2/patientlst1v2" }
+        let(:params) {
+          { "class" => "01" }
+        }
+        let(:body) {
+          {
+            "patientlst1req" => {
+              "Base_StartDate" => "2012-06-01",
+              "Base_EndDate" => "2012-06-30",
+              "Contain_TestPatient_Flag" => 1,
+            }
           }
         }
-      }
-      let(:http_method) { :post }
+        let(:http_method) { :post }
 
-      it { is_expected.to be_api_result_equal_to(result) }
+        it { is_expected.to be_api_result_equal_to(result) }
+      end
+    end
+
+    context "BASIC認証" do
+      let(:authentication) { OrcaApi::OrcaApi::BasicAuthentication.new("ormaster", "ormaster") }
+      let(:http_scheme) { "http" }
+
+      include_examples "日レセAPIを呼び出せること"
+    end
+
+    context "SSLクライアント認証" do
+      let(:authentication) {
+        auth = OrcaApi::OrcaApi::SslClientAuthentication.new("ca_file", "cert_path", "key_path")
+        allow(auth).to receive(:cert).and_return("cert")
+        allow(auth).to receive(:key).and_return("key")
+        auth
+      }
+      let(:http_scheme) { "https" }
+
+      include_examples "日レセAPIを呼び出せること"
     end
   end
 end
