@@ -1,18 +1,34 @@
+Metrics/AbcSize:
+  Max: 30
+  Exclude:
+    - 'spec/**/*'
+
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 30
+  CountComments: false
+  Exclude:
+    - 'spec/**/*'
+
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
   Max: 28
+  Exclude:
+    - 'orca_api.gemspec'
+    - 'spec/**/*'
 
 # Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
 # URISchemes: http, https
 Metrics/LineLength:
-  Max: 96
+  Max: 130
 
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
     - 'test/**/*'
-    - 'lib/orca_api.rb'
-    - 'lib/orca_api/orca_api.rb'
+
+Style/AsciiComments:
+  Enabled: false
 
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: compact, expanded
@@ -36,4 +52,41 @@ Style/PercentLiteralDelimiters:
 # Configuration parameters: EnforcedStyle, SupportedStyles, AllowInnerSlashes.
 # SupportedStyles: slashes, percent_r, mixed
 Style/RegexpLiteral:
+  Enabled: false
+
+# SupportedStyles: line_count_based, semantic, braces_for_chaining
+# ProceduralMethods: benchmark, bm, bmbm, create, each_with_object, measure, new, realtime, tap, with_object
+# FunctionalMethods: let, let!, subject, watch
+# IgnoredMethods: lambda, proc, it
+Style/BlockDelimiters:
+  Enabled: false
+
+# Configuration parameters: EnforcedStyleForMultiline, SupportedStylesForMultiline.
+# SupportedStylesForMultiline: comma, consistent_comma, no_comma
+Style/TrailingCommaInLiteral:
+  Enabled: false
+
+# Configuration parameters: MaxLineLength.
+Style/IfUnlessModifier:
+  Enabled: false
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: both, prefix, postfix
+Style/NegatedIf:
+  Enabled: false
+
+# Configuration parameters: SupportedStyles, WordRegex.
+# SupportedStyles: percent, brackets
+Style/WordArray:
+  Enabled: false
+
+Security/Eval:
+  Exclude:
+    - 'spec/**/*'
+
+Performance/StringReplacement:
+  Enabled: false
+
+# Configuration parameters: Strict.
+Style/NumericLiterals:
   Enabled: false

@@ -3,6 +3,9 @@ if ENV["COVERAGE"]
   require 'simplecov'
   SimpleCov.start
 end
+require "rspec/its"
+require "webmock/rspec"
+
 require "orca_api"
 
 RSpec.configure do |config|
