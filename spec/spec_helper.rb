@@ -5,12 +5,6 @@ if ENV["COVERAGE"]
 end
 require "rspec/its"
 require "webmock/rspec"
-require "awesome_print"
-AwesomePrint.defaults = {
-  indent: 2,
-  index: false,
-  plain: true,
-}
 
 require "orca_api"
 
