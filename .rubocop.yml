@@ -86,3 +86,7 @@ Security/Eval:
 
 Performance/StringReplacement:
   Enabled: false
+
+# Configuration parameters: Strict.
+Style/NumericLiterals:
+  Enabled: false
