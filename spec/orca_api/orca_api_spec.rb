@@ -36,6 +36,19 @@ RSpec.describe OrcaApi::OrcaApi do
     end
   end
 
+  describe "#debug_ouput=" do
+    let(:http) { spy("Net::HTTP") }
+
+    before do
+      allow(Net::HTTP).to receive(:new).and_return(http)
+      orca_api = OrcaApi::OrcaApi.new("example.com", spy("authentication"))
+      orca_api.debug_output = $stdout
+      orca_api.call("/path/to/api")
+    end
+
+    it { expect(http).to have_received(:set_debug_output).with($stdout) }
+  end
+
   describe "#call" do
     let(:options) { ["example.com", authentication, 18000] }
     let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
