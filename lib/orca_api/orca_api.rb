@@ -3,6 +3,7 @@
 require "uri"
 require "net/http"
 require "json"
+require "securerandom"
 
 require_relative "orca_api/ssl_client_authentication"
 require_relative "orca_api/basic_authentication"
@@ -15,12 +16,17 @@ module OrcaApi
     attr_accessor :host
     attr_accessor :authentication
     attr_accessor :port
+    attr_writer :karte_uid
     attr_accessor :debug_output
 
     def initialize(host, authentication, port = 8000)
       @host = host
       @authentication = authentication
       @port = port
+    end
+
+    def karte_uid
+      @karte_uid ||= SecureRandom.uuid
     end
 
     def call(path, params: {}, body: {}, http_method: :post)

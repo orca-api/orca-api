@@ -37,6 +37,25 @@ RSpec.describe OrcaApi::OrcaApi do
     end
   end
 
+  describe "#karte_uid" do
+    subject { orca_api.karte_uid }
+
+    context "karte_uidを設定済み" do
+      before do
+        orca_api.karte_uid = "user_specified_karte_uid"
+      end
+
+      it { is_expected.to eq("user_specified_karte_uid") }
+    end
+
+    context "karte_uidを未設定" do
+      it "SecureRandom.uuidを使ってkarte_uidを自動生成すること" do
+        expect(SecureRandom).to receive(:uuid).and_return("generated uuid").once
+        is_expected.to eq("generated uuid")
+      end
+    end
+  end
+
   describe "#debug_ouput=" do
     let(:http) { spy("Net::HTTP") }
 
