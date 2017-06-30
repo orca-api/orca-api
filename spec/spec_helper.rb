@@ -3,6 +3,7 @@ if ENV["COVERAGE"]
   require 'simplecov'
   SimpleCov.start
 end
+require "rspec/its"
 require "webmock/rspec"
 require "awesome_print"
 AwesomePrint.defaults = {
