@@ -23,6 +23,6 @@ RSpec.configure do |config|
 end
 
 def load_orca_api_response_json(basename)
-  json_path = File.expand_path(File.join("../fixtures/orca_api_results", basename), __FILE__)
+  json_path = File.expand_path(File.join("../fixtures/orca_api_responses", basename), __FILE__)
   JSON.parse(File.read(json_path))
 end
