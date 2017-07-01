@@ -130,12 +130,17 @@ RSpec.describe OrcaApi::OrcaApi do
       include_examples "日レセAPIを呼び出せること"
     end
 
-    context "SSLクライアント認証" do
+    context "SSLクライアント認証+BASIC認証" do
       let(:authentication) {
-        auth = OrcaApi::OrcaApi::SslClientAuthentication.new("ca_file", "cert_path", "key_path")
-        allow(auth).to receive(:cert).and_return("cert")
-        allow(auth).to receive(:key).and_return("key")
-        auth
+        ssl_auth = OrcaApi::OrcaApi::SslClientAuthentication.new("ca_file", "cert_path", "key_path")
+        allow(ssl_auth).to receive(:cert).and_return("cert")
+        allow(ssl_auth).to receive(:key).and_return("key")
+        expect(ssl_auth).to receive(:apply).once.and_call_original
+
+        basic_auth = OrcaApi::OrcaApi::BasicAuthentication.new("ormaster", "ormaster")
+        expect(basic_auth).to receive(:apply).once.and_call_original
+
+        [ssl_auth, basic_auth]
       }
       let(:http_scheme) { "https" }
 
