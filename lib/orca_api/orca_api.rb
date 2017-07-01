@@ -53,7 +53,9 @@ module OrcaApi
         http.set_debug_output(@debug_output)
       end
 
-      @authentication.apply(http, req)
+      [@authentication].flatten.each do |auth|
+        auth.apply(http, req)
+      end
 
       http.start { |h|
         res = h.request(req)
