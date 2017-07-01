@@ -6,6 +6,7 @@ if ENV["COVERAGE"] || ENV["CI"]
 end
 require "rspec/its"
 require "webmock/rspec"
+require "json"
 
 require "orca_api"
 
@@ -19,4 +20,9 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+end
+
+def load_orca_api_response_json(basename)
+  json_path = File.expand_path(File.join("../fixtures/orca_api_results", basename), __FILE__)
+  JSON.parse(File.read(json_path))
 end

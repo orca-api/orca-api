@@ -17,17 +17,11 @@ module OrcaApi
       "Patient_Mode" => "Modify",
       "Orca_Uid" => "",
     }.freeze
-    PATIENT_GET_REQ_02 = {
-      "Request_Number" => PLACE_HOLDER,
+    PATIENT_GET_REQ_99 = {
+      "Request_Number" => "99",
       "Karte_Uid" => PLACE_HOLDER,
       "Patient_ID" => PLACE_HOLDER,
-      "Patient_Mode" => "Modify",
       "Orca_Uid" => PLACE_HOLDER,
-      "Continue_Mode" => "",
-      "Patient_Information" => PLACE_HOLDER,
-      "Modify_Option" => {
-        "Former_Name_Mode" => "",
-      }.freeze
     }.freeze
     PATIENT_GET_RES_NAME = "patientmodres".freeze
 
@@ -45,30 +39,29 @@ module OrcaApi
           "Patient_ID" => id.to_s
         )
       }
-      res = orca_api.call(PATIENT_GET_PATH, body: body)
-      patientmodres = res[PATIENT_GET_RES_NAME]
-      if patientmodres["Request_Number"].to_i <= patientmodres["Response_Number"].to_i
+      res0 = orca_api.call(PATIENT_GET_PATH, body: body)
+      res = res0[PATIENT_GET_RES_NAME]
+      if res["Request_Number"].to_i <= res["Response_Number"].to_i
         # TODO: エラー処理
       end
+
+      patient = Patient.new(res["Patient_Information"])
 
       # ロック解除
-      patient_id = patientmodres["Patient_Information"].delete("Patient_ID")
       body = {
-        PATIENT_GET_REQ_NAME => PATIENT_GET_REQ_02.merge(
-          "Request_Number" => patientmodres["Response_Number"],
-          "Karte_Uid" => patientmodres["Karte_Uid"],
-          "Patient_ID" => patient_id,
-          "Orca_Uid" => patientmodres["Orca_Uid"],
-          "Patient_Information" => patientmodres["Patient_Information"]
+        PATIENT_GET_REQ_NAME => PATIENT_GET_REQ_99.merge(
+          "Karte_Uid" => res["Karte_Uid"],
+          "Patient_ID" => res["Patient_Information"]["Patient_ID"],
+          "Orca_Uid" => res["Orca_Uid"]
         )
       }
-      res = orca_api.call(PATIENT_GET_PATH, body: body)
-      patientmodres = res[PATIENT_GET_RES_NAME]
-      if patientmodres["Response_Number"].to_i != 0
+      res0 = orca_api.call(PATIENT_GET_PATH, body: body)
+      res = res0[PATIENT_GET_RES_NAME]
+      if res["Response_Number"] != "00"
         # TODO: エラー処理
       end
 
-      Patient.new(patientmodres["Patient_Information"])
+      patient
     end
   end
 end

@@ -1,0 +1,15 @@
+{
+  "patientmodres": {
+    "Request_Number": "99",
+    "Response_Number": "00",
+    "Orca_Uid": "850a3c68-44a6-4306-a00e-f3306fdc6dad",
+    "Information_Date": "2017-07-01",
+    "Information_Time": "12:00:23",
+    "Api_Result": "000",
+    "Api_Result_Message": "解除処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001"
+    }
+  }
+}

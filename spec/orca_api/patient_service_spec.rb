@@ -12,6 +12,7 @@ RSpec.describe OrcaApi::PatientService do
     subject { patient_service.get(patient_id) }
 
     before do
+      count = 0
       expect(orca_api).to receive(:call).twice { |path, body: {}|
         expect(path).to eq("/orca12/patientmodv31")
 
@@ -19,23 +20,25 @@ RSpec.describe OrcaApi::PatientService do
 
         case req["Request_Number"]
         when "01"
+          expect(req["Karte_Uid"]).to eq("karte_uid")
           expect(req["Patient_ID"]).to eq(patient_id.to_s)
           expect(req["Patient_Mode"]).to eq("Modify")
           expect(req["Orca_Uid"]).to eq("")
-        when "02"
-          fixture_name = "#{path[1..-1].gsub("/", "_")}_01.json"
-          fixture_path = File.expand_path(File.join("../../fixtures/orca_api_results", fixture_name), __FILE__)
-          res01 = eval(File.read(fixture_path))["patientmodres"]
 
-          expect(req["Patient_ID"]).to eq(res01["Patient_Information"].delete("Patient_ID"))
-          expect(req["Patient_Mode"]).to eq("Modify")
+          expect(count).to eq(0)
+          count += 1
+        when "99"
+          res01 = load_orca_api_response_json("#{path[1..-1].gsub("/", "_")}_01.json")["patientmodres"]
+
+          expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
+          expect(req["Patient_ID"]).to eq(res01["Patient_Information"]["Patient_ID"])
           expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-          expect(req["Patient_Information"]).to eq(res01["Patient_Information"])
+
+          expect(count).to eq(1)
+          count += 1
         end
 
-        fixture_name = "#{path[1..-1].gsub("/", "_")}_#{req["Request_Number"]}.json"
-        fixture_path = File.expand_path(File.join("../../fixtures/orca_api_results", fixture_name), __FILE__)
-        eval(File.read(fixture_path))
+        load_orca_api_response_json("#{path[1..-1].gsub("/", "_")}_#{req["Request_Number"]}.json")
       }
     end
 
