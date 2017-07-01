@@ -114,3 +114,7 @@ Style/Alias:
 # SupportedStyles: braces, no_braces, context_dependent
 Style/BracesAroundHashParameters:
   Enabled: false
+
+# Configuration parameters: MinBodyLength.
+Style/GuardClause:
+  Enabled: false
