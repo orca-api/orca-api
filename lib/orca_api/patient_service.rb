@@ -10,20 +10,19 @@ module OrcaApi
 
     PATIENT_GET_PATH = "/orca12/patientmodv31".freeze
     PATIENT_GET_REQ_NAME = "patientmodreq".freeze
-    PATIENT_GET_REQ_01 = {
+    PATIENT_GET_REQ01 = {
       "Request_Number" => "01",
       "Karte_Uid" => PLACE_HOLDER,
       "Patient_ID" => PLACE_HOLDER,
       "Patient_Mode" => "Modify",
       "Orca_Uid" => "",
     }.freeze
-    PATIENT_GET_REQ_99 = {
+    PATIENT_GET_REQ99 = {
       "Request_Number" => "99",
       "Karte_Uid" => PLACE_HOLDER,
       "Patient_ID" => PLACE_HOLDER,
       "Orca_Uid" => PLACE_HOLDER,
     }.freeze
-    PATIENT_GET_RES_NAME = "patientmodres".freeze
 
     attr_reader :orca_api
 
@@ -31,37 +30,43 @@ module OrcaApi
       @orca_api = orca_api
     end
 
+    # 患者情報の取得
     def get(id)
-      # 患者情報の取得
+      req_name = PATIENT_GET_REQ_NAME
+      req01 = PATIENT_GET_REQ01
+      req99 = PATIENT_GET_REQ99
+      api_path = PATIENT_GET_PATH
+
       body = {
-        PATIENT_GET_REQ_NAME => PATIENT_GET_REQ_01.merge(
+        req_name => req01.merge(
           "Karte_Uid" => orca_api.karte_uid,
           "Patient_ID" => id.to_s
         )
       }
-      res0 = orca_api.call(PATIENT_GET_PATH, body: body)
-      res = res0[PATIENT_GET_RES_NAME]
+      res0 = orca_api.call(api_path, body: body)
+      res = res0.first[1]
       if res["Request_Number"].to_i <= res["Response_Number"].to_i
         # TODO: エラー処理
       end
 
-      patient = Patient.new(res["Patient_Information"])
+      unlock(api_path,
+             req_name => req99.merge(
+               "Karte_Uid" => res["Karte_Uid"],
+               "Patient_ID" => res["Patient_Information"]["Patient_ID"],
+               "Orca_Uid" => res["Orca_Uid"]
+             ))
 
-      # ロック解除
-      body = {
-        PATIENT_GET_REQ_NAME => PATIENT_GET_REQ_99.merge(
-          "Karte_Uid" => res["Karte_Uid"],
-          "Patient_ID" => res["Patient_Information"]["Patient_ID"],
-          "Orca_Uid" => res["Orca_Uid"]
-        )
-      }
-      res0 = orca_api.call(PATIENT_GET_PATH, body: body)
-      res = res0[PATIENT_GET_RES_NAME]
+      Patient.new(res["Patient_Information"])
+    end
+
+    private
+
+    def unlock(api_path, body)
+      res0 = orca_api.call(api_path, body: body)
+      res = res0.first[1]
       if res["Response_Number"] != "00"
         # TODO: エラー処理
       end
-
-      patient
     end
   end
 end
