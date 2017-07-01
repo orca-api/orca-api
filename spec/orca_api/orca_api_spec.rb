@@ -73,9 +73,7 @@ RSpec.describe OrcaApi::OrcaApi do
     let(:options) { ["example.com", authentication, 18000] }
     let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
     let(:result) {
-      fixture_name = path[1..-1].gsub("/", "_") + ".json"
-      fixture_path = File.expand_path(File.join("../../fixtures/orca_api_results", fixture_name), __FILE__)
-      eval(File.read(fixture_path))
+      load_orca_api_response_json(path[1..-1].gsub("/", "_") + ".json")
     }
 
     subject {
