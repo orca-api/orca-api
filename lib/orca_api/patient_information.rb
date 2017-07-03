@@ -4,7 +4,7 @@ require_relative "api_struct"
 
 module OrcaApi
   # 患者情報を表現するクラス
-  class Patient < ApiStruct
+  class PatientInformation < ApiStruct
     # 患者情報に含まれる自宅情報を表現するクラス
     class HomeAddressInformation < ApiStruct
       define_accessors(

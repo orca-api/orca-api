@@ -17,7 +17,6 @@ RSpec.describe OrcaApi::PatientService do
         expect(path).to eq("/orca12/patientmodv31")
 
         req = body["patientmodreq"]
-
         case req["Request_Number"]
         when "01"
           expect(req["Karte_Uid"]).to eq("karte_uid")
@@ -42,7 +41,7 @@ RSpec.describe OrcaApi::PatientService do
       }
     end
 
-    it { is_expected.to be_instance_of(OrcaApi::Patient) }
+    it { is_expected.to be_instance_of(OrcaApi::PatientInformation) }
     its(:id) { is_expected.to eq("00001") }
     its(:whole_name) { is_expected.to eq("テスト　カンジャ") }
   end

@@ -1,6 +1,6 @@
 # coding: utf-8
 
-require_relative "patient"
+require_relative "patient_information"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
@@ -56,7 +56,7 @@ module OrcaApi
                "Orca_Uid" => res["Orca_Uid"]
              ))
 
-      Patient.new(res["Patient_Information"])
+      PatientInformation.new(res["Patient_Information"])
     end
 
     private
