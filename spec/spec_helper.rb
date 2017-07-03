@@ -1,6 +1,7 @@
 require "bundler/setup"
-if ENV["COVERAGE"]
-  require 'simplecov'
+if ENV["COVERAGE"] || ENV["CI"]
+  require "simplecov"
+  SimpleCov.coverage_dir(File.join(ENV["CIRCLE_ARTIFACTS"], "coverage")) if ENV["CIRCLE_ARTIFACTS"]
   SimpleCov.start
 end
 require "rspec/its"
