@@ -45,4 +45,41 @@ RSpec.describe OrcaApi::PatientService do
     its(:id) { is_expected.to eq("00001") }
     its(:whole_name) { is_expected.to eq("テスト　カンジャ") }
   end
+
+  describe "#get_health_public_insurance" do
+    let(:patient_id) { 1 }
+
+    subject { patient_service.get_health_public_insurance(patient_id) }
+
+    before do
+      count = 0
+      expect(orca_api).to receive(:call).twice { |path, body: {}|
+        expect(path).to eq("/orca12/patientmodv32")
+
+        req = body["patientmodreq"]
+        case req["Request_Number"]
+        when "01"
+          expect(req["Karte_Uid"]).to eq("karte_uid")
+          expect(req["Orca_Uid"]).to eq("")
+          expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
+
+          expect(count).to eq(0)
+          count += 1
+        when "99"
+          res01 = load_orca_api_response_json("#{path[1..-1].gsub("/", "_")}_01.json").first[1]
+
+          expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
+          expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
+          expect(req["Patient_Information"]).to eq(res01["Patient_Information"])
+
+          expect(count).to eq(1)
+          count += 1
+        end
+
+        load_orca_api_response_json("#{path[1..-1].gsub("/", "_")}_#{req["Request_Number"]}.json")
+      }
+    end
+
+    it { is_expected.to be_instance_of(OrcaApi::HealthPublicInsurance) }
+  end
 end

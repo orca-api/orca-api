@@ -1,0 +1,859 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "943d33ae-4f03-4233-8244-ebf4a3e7ad0f",
+    "Information_Date": "2017-07-02",
+    "Information_Time": "08:22:52",
+    "Api_Result": "E50",
+    "Api_Result_Message": "保険・公費にエラーがあります。",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1",
+      "Home_Address_Information": {
+        "WholeAddress1": "島根県松江市横浜町",
+        "WholeAddress2": "１１５５"
+      }
+    },
+    "HealthInsurance_Information": {
+      "HealthInsurance_Info": [
+        {
+          "InsuranceProvider_Id": "0000000003",
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_WholeName": "自費",
+          "HealthInsuredPerson_Assistance": "2",
+          "HealthInsuredPerson_Assistance_Name": "非課税",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　カンジャ",
+          "Certificate_StartDate": "2012-05-15",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_CheckDate": "2012-05-15"
+        },
+        {
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "１２３４５６７",
+          "HealthInsuredPerson_Number": "５５５５５５５",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　カンジャ",
+          "Certificate_StartDate": "2011-02-16",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_GetDate": "2010-10-01",
+          "Certificate_CheckDate": "2011-02-17"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "PublicInsurance_Information": {
+      "PublicInsurance_Info": [
+        {
+          "PublicInsurance_Id": "0000000001",
+          "PublicInsurance_Class": "051",
+          "PublicInsurance_Name": "特定負有",
+          "PublicInsurer_Number": "51326015",
+          "Certificate_IssuedDate": "2011-01-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_CheckDate": "2012-01-23"
+        },
+        {
+          "PublicInsurance_Id": "0000000002",
+          "PublicInsurance_Class": "957",
+          "PublicInsurance_Name": "公費（一般",
+          "Certificate_IssuedDate": "2011-01-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_CheckDate": "2012-02-14"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "HealthInsurance_Combination_Information": {
+      "HealthInsurance_Combination_Info": [
+        {
+          "Insurance_Combination_Number": "0021",
+          "Insurance_Combination_Rate_Admission": "0.00",
+          "Insurance_Combination_Rate_Outpatient": "0.00",
+          "Insurance_Combination_StartDate": "2011-01-01",
+          "Insurance_Combination_ExpiredDate": "2011-02-15",
+          "PublicInsurance_Info": [
+            {
+              "PublicInsurance_Id": "0000000001",
+              "PublicInsurance_Class": "051",
+              "PublicInsurance_Name": "特定負有",
+              "PublicInsurer_Number": "51326015",
+              "Rate_Admission": "0.00",
+              "Money_Admission": "0",
+              "Rate_Outpatient": "0.00",
+              "Money_Outpatient": "0"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "Insurance_Combination_Number": "0020",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2011-02-16",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "１２３４５６７",
+          "HealthInsuredPerson_Number": "５５５５５５５",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1",
+          "PublicInsurance_Info": [
+            {
+              "PublicInsurance_Id": "0000000001",
+              "PublicInsurance_Class": "051",
+              "PublicInsurance_Name": "特定負有",
+              "PublicInsurer_Number": "51326015",
+              "Rate_Admission": "0.00",
+              "Money_Admission": "0",
+              "Rate_Outpatient": "0.00",
+              "Money_Outpatient": "0"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "Insurance_Combination_Number": "0005",
+          "Insurance_Combination_Rate_Admission": "1.00",
+          "Insurance_Combination_Rate_Outpatient": "1.00",
+          "Insurance_Combination_StartDate": "2012-05-15",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000003",
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_WholeName": "自費",
+          "HealthInsuredPerson_Assistance": "2",
+          "HealthInsuredPerson_Assistance_Name": "非課税",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+          "Insurance_Combination_Number": "0001",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2011-02-16",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "１２３４５６７",
+          "HealthInsuredPerson_Number": "５５５５５５５",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "Patient_Message_Information": {
+      "Patient_Message_Info": [
+        {
+          "Patient_Result": "APP2",
+          "Patient_Result_Message": "957 公費（一般"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
