@@ -21,7 +21,10 @@ module OrcaApi
         if self.class.struct_mappings.key?(attr_name) && v.is_a?(Hash)
           v = self.class.struct_mappings[attr_name].new(v)
         end
-        send("#{attr_name}=", v)
+        setter_name = "#{attr_name}="
+        if respond_to?(setter_name)
+          send(setter_name, v)
+        end
       end
     end
   end
