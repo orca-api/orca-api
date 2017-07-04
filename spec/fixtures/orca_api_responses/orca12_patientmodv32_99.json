@@ -3,18 +3,18 @@
     "Request_Number": "99",
     "Response_Number": "00",
     "Karte_Uid": "karte_uid",
-    "Orca_Uid": "943d33ae-4f03-4233-8244-ebf4a3e7ad0f",
-    "Information_Date": "2017-07-02",
-    "Information_Time": "08:22:52",
+    "Orca_Uid": "1a98b336-41e9-4d96-8d14-d794ae6888e5",
+    "Information_Date": "2017-07-04",
+    "Information_Time": "14:27:22",
     "Api_Result": "000",
     "Api_Result_Message": "解除処理終了",
     "Reskey": "Acceptance_Info",
     "Patient_Information": {
-      "Patient_ID": "00001",
-      "WholeName": "テスト　カンジャ",
-      "WholeName_inKana": "テスト　カンジャ",
-      "BirthDate": "1965-04-04",
-      "Sex": "1"
+      "Patient_ID": "00003",
+      "WholeName": "テスト　華子",
+      "WholeName_inKana": "テスト　ハナコ",
+      "BirthDate": "1928-05-06",
+      "Sex": "2"
     }
   }
 }
