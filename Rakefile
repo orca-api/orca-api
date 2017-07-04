@@ -10,8 +10,8 @@ RuboCop::RakeTask.new do |t|
   if ENV.key?("CI")
     require "rubocop"
     require "rubocop/formatter/junit_formatter"
-    t.formatters = ["RuboCop::Formatter::JUnitFormatter"]
-    t.options = ["--out", File.join(ENV["CIRCLE_TEST_REPORTS"], "rubocop.xml")]
+    t.formatters = ["progress", "RuboCop::Formatter::JUnitFormatter"]
+    t.options = ["--out", File.join(ENV["CIRCLE_TEST_REPORTS"], "rubocop", "rubocop.xml")]
   end
 end
 
