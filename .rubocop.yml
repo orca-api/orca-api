@@ -85,6 +85,11 @@ Style/NegatedIf:
 Style/WordArray:
   Enabled: false
 
+# Configuration parameters: MinSize, SupportedStyles.
+# SupportedStyles: percent, brackets
+Style/SymbolArray:
+  Enabled: false
+
 Security/Eval:
   Exclude:
     - 'spec/**/*'
