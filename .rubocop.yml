@@ -1,7 +1,14 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+
 Metrics/AbcSize:
-  Max: 30
+  Max: 35
   Exclude:
     - 'spec/**/*'
+
+Metrics/PerceivedComplexity:
+  Max: 10
 
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
