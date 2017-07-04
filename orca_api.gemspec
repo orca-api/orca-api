@@ -42,4 +42,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rubocop"
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "rspec_junit_formatter"
+  spec.add_development_dependency "rubocop-junit-formatter"
 end
