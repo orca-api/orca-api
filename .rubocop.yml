@@ -10,6 +10,17 @@ Metrics/AbcSize:
 
 Metrics/PerceivedComplexity:
   Max: 10
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'spec/**/*'
+
+# Configuration parameters: CountBlocks.
+Metrics/BlockNesting:
+  Exclude:
+    - 'spec/**/*'
 
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
