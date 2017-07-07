@@ -15,7 +15,7 @@ Vagrant.configure(2) do |config|
     <% if File.exist?('.apt-cache-proxy') %>
       echo 'Acquire::http::Proxy "http://<%= File.read('.apt-cache-proxy').strip %>:3142/";' > /etc/apt/apt.conf.d/99proxy
     <% else %>
-      echo sed -i'~' -e "s%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/mirrors.txt%g" /etc/apt/sources.list
+      sed -i '~' -e 's%http://archive.ubuntu.com/ubuntu%mirror://mirrors.ubuntu.com/JP.txt%g' /etc/apt/sources.list
     <% end %>
     curl -o /etc/apt/sources.list.d/jma-receipt-xenial50.list https://ftp.orca.med.or.jp/pub/ubuntu/jma-receipt-xenial50.list
     curl https://ftp.orca.med.or.jp/pub/ubuntu/archive.key | apt-key add -
