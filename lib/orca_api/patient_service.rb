@@ -49,7 +49,7 @@ module OrcaApi
     end
 
     # 患者情報の取得
-    def get(id)
+    def get(id, associations: [])
       req_name = PATIENT_GET_REQ_NAME
       req01 = PATIENT_GET_REQ01
       req99 = PATIENT_GET_REQ99
@@ -74,7 +74,11 @@ module OrcaApi
                "Orca_Uid" => res["Orca_Uid"]
              ))
 
-      PatientInformation.new(res["Patient_Information"])
+      PatientInformation.new(res["Patient_Information"]).tap { |patient|
+        associations.each do |association|
+          patient.send("#{association}=", send("get_#{association}", id))
+        end
+      }
     end
 
     # 患者保険・公費情報の取得

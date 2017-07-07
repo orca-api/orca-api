@@ -101,5 +101,7 @@ module OrcaApi
     )
     alias_method("id", "patient_id")
     alias_method("id=", "patient_id=")
+
+    attr_accessor :health_public_insurance
   end
 end
