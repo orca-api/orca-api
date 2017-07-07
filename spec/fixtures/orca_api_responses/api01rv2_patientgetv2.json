@@ -1,0 +1,176 @@
+{
+  "patientinfores": {
+    "Information_Date": "2017-06-28",
+    "Information_Time": "11:21:28",
+    "Api_Result": "00",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Patient Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1",
+      "HouseHolder_WholeName": "テスト　カンジャ",
+      "Relationship": "世帯主",
+      "Home_Address_Information": {
+        "Address_ZipCode": "6900051",
+        "WholeAddress1": "島根県松江市横浜町",
+        "WholeAddress2": "１１５５",
+        "PhoneNumber1": "0852-22-2222"
+      },
+      "WorkPlace_Information": {
+        "WholeName": "島根銀行株式会社",
+        "Address_ZipCode": "6900015",
+        "WholeAddress1": "島根県松江市上乃木",
+        "WholeAddress2": "１２３４５６",
+        "PhoneNumber": "0852-33-3333"
+      },
+      "Contraindication1": "　",
+      "TestPatient_Flag": "0",
+      "Occupation": "警備員",
+      "Reduction_Reason": "00",
+      "Reduction_Reason_Name": "該当なし",
+      "Discount": "00",
+      "Discount_Name": "該当なし",
+      "Condition1": "00",
+      "Condition1_Name": "該当なし",
+      "Condition2": "00",
+      "Condition2_Name": "該当なし",
+      "Condition3": "00",
+      "Condition3_Name": "該当なし",
+      "Ic_Code": "01",
+      "Ic_Code_Name": "現金",
+      "Community_Cid_Agree": "False",
+      "FirstVisit_Date": "2011-04-20",
+      "Outpatient_Class": "1",
+      "Admission_Date": "2014-09-30",
+      "HealthInsurance_Information": [
+        {
+          "Insurance_Combination_Number": "0001",
+          "InsuranceCombination_Rate_Admission": "0.30",
+          "InsuranceCombination_Rate_Outpatient": "0.30",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "１２３４５６７",
+          "HealthInsuredPerson_Number": "５５５５５５５",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　カンジャ",
+          "Certificate_StartDate": "2011-02-16",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Insurance_CheckDate": "2011-02-17"
+        },
+        {
+          "Insurance_Combination_Number": "0005",
+          "InsuranceCombination_Rate_Admission": "1.00",
+          "InsuranceCombination_Rate_Outpatient": "1.00",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_WholeName": "自費",
+          "HealthInsuredPerson_Assistance": "2",
+          "HealthInsuredPerson_Assistance_Name": "非課税",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　カンジャ",
+          "Certificate_StartDate": "2012-05-15",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Insurance_CheckDate": "2012-05-15"
+        },
+        {
+          "Insurance_Combination_Number": "0020",
+          "InsuranceCombination_Rate_Admission": "0.30",
+          "InsuranceCombination_Rate_Outpatient": "0.30",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "１２３４５６７",
+          "HealthInsuredPerson_Number": "５５５５５５５",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　カンジャ",
+          "Certificate_StartDate": "2011-02-16",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Insurance_CheckDate": "2011-02-17",
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "051",
+              "PublicInsurance_Name": "特定負有",
+              "PublicInsurer_Number": "51326015",
+              "Rate_Admission": "0.00",
+              "Money_Admission": "     0",
+              "Rate_Outpatient": "0.00",
+              "Money_Outpatient": "     0",
+              "Certificate_IssuedDate": "2011-01-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

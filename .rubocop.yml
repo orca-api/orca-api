@@ -1,5 +1,24 @@
+AllCops:
+  Exclude:
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+
 Metrics/AbcSize:
-  Max: 30
+  Max: 35
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/PerceivedComplexity:
+  Max: 10
+  Exclude:
+    - 'spec/**/*'
+
+Metrics/CyclomaticComplexity:
+  Exclude:
+    - 'spec/**/*'
+
+# Configuration parameters: CountBlocks.
+Metrics/BlockNesting:
   Exclude:
     - 'spec/**/*'
 
@@ -113,4 +132,8 @@ Style/Alias:
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: braces, no_braces, context_dependent
 Style/BracesAroundHashParameters:
+  Enabled: false
+
+# Configuration parameters: MinBodyLength.
+Style/GuardClause:
   Enabled: false
