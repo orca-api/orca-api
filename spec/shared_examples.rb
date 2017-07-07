@@ -32,7 +32,7 @@ RSpec.shared_examples "ApiStructを日レセAPIのレスポンスやハッシュ
                 end
               end
               if !empty_indices.empty?
-                describe "[" + empty_indices.join("][")+ "]" do
+                describe "[" + empty_indices.join("][") + "]" do
                   it "属性の値はすべてnilであること" do
                     empty_indices.each do |index|
                       inner_class.attribute_mappings do |inner_attr_name|
