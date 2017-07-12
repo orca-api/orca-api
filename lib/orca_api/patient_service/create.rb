@@ -13,7 +13,6 @@ module OrcaApi
         end
 
         api_path = "/orca12/patientmodv31"
-
         body = RequestBody.new(karte_uid: orca_api.karte_uid, patient_information: patient)
         res0 = orca_api.call(api_path, body: body)
         res = res0.first[1]
@@ -24,6 +23,10 @@ module OrcaApi
             body.select_answer = "Ok"
             res0 = orca_api.call(api_path, body: body)
             res = res0.first[1]
+            # TODO: ここでエラーが発生するケースに対応する
+            if res["Response_Number"] != "00"
+              # TODO: エラー処理
+            end
           else
             # TODO: 適切な例外クラスを投げる
             raise "PatientDuplicated"
