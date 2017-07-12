@@ -43,6 +43,10 @@ module OrcaApi
     end
 
     def initialize(attributes = {})
+      update(attributes)
+    end
+
+    def update(attributes)
       attributes.each do |k, v|
         k = k.to_s
         attr_name = self.class.attribute_mappings[k] || k
@@ -63,6 +67,72 @@ module OrcaApi
         if respond_to?(setter_name)
           send(setter_name, value)
         end
+      end
+      self
+    end
+
+    def attributes(name_type: nil, omit: true, &include_filter)
+      res = {}
+      self.class.attribute_mappings.each do |json_name, attr_name|
+        if block_given? && !yield(self, json_name, attr_name)
+          next
+        end
+        value = send(attr_name)
+        if !value && omit
+          next
+        end
+        key = make_attributes_key(name_type, json_name, attr_name)
+        is_struct = self.class.struct_mappings.key?(attr_name)
+        if self.class.array_names.include?(attr_name)
+          if value.empty?
+            if !omit
+              res[key] = []
+            end
+            next
+          end
+          found_value = false
+          value.reverse.each do |v|
+            r = if is_struct
+                  v.attributes(name_type: name_type, omit: omit, &include_filter) || {}
+                else
+                  v || ""
+                end
+            if omit && r.empty? && !found_value
+              next
+            end
+            res[key] ||= []
+            res[key].unshift(r)
+            found_value = true
+          end
+        elsif is_struct
+          if !value
+            value = self.class.struct_mappings[attr_name].new
+          end
+          r = value.attributes(name_type: name_type, omit: omit, &include_filter) || {}
+          if !r.empty? || !omit
+            res[key] = r
+          end
+        elsif !value || value.empty?
+          if !omit
+            res[key] = ""
+          end
+        else
+          res[key] = value
+        end
+      end
+      res
+    end
+
+    private
+
+    def make_attributes_key(name_type, json_name, attr_name)
+      case name_type
+      when :symbol
+        attr_name.to_sym
+      when :json
+        json_name
+      else
+        attr_name
       end
     end
   end

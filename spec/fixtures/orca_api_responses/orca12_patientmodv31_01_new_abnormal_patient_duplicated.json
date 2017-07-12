@@ -1,0 +1,98 @@
+{
+  "patientmodres": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "a2082aa7-2915-4e9b-91ee-e0c653767824",
+    "Information_Date": "2017-07-12",
+    "Information_Time": "21:57:27",
+    "Api_Result": "S20",
+    "Api_Result_Message": "選択項目があります。選択結果を返却してください。",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "*",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1",
+      "Reduction_Reason": "00",
+      "Reduction_Reason_Name": "該当なし",
+      "Discount": "00",
+      "Discount_Name": "該当なし",
+      "Condition1": "00",
+      "Condition1_Name": "該当なし",
+      "Condition2": "00",
+      "Condition2_Name": "該当なし",
+      "Condition3": "00",
+      "Condition3_Name": "該当なし"
+    },
+    "Patient2_Information": [
+      {
+        "Patient_ID": "00055",
+        "WholeName": "コウガク　テスト",
+        "WholeName_inKana": "コウガク　テスト",
+        "BirthDate": "1965-04-04",
+        "Sex": "1"
+      },
+      {
+        "Patient_ID": "00001",
+        "WholeName": "テスト　カンジャ",
+        "WholeName_inKana": "テスト　カンジャ",
+        "BirthDate": "1965-04-04",
+        "Sex": "1",
+        "WholeAddress1": "島根県松江市横浜町",
+        "WholeAddress2": "１１５５"
+      },
+      {
+        "Patient_ID": "00016",
+        "WholeName": "テスト　シュウヌ",
+        "WholeName_inKana": "テスト　シュウヌ",
+        "BirthDate": "1965-04-04",
+        "Sex": "1"
+      },
+      {
+        "Patient_ID": "00097",
+        "WholeName": "テスト　ジヒ１",
+        "WholeName_inKana": "テスト　ジヒ１",
+        "BirthDate": "1965-04-04",
+        "Sex": "1"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ],
+    "Patient_Select_Information": {
+      "Patient_Select": "0101",
+      "Patient_Select_Message": "二重登録疑いの患者が存在します。登録しますか？"
+    }
+  }
+}
