@@ -4,17 +4,24 @@ require "spec_helper"
 
 RSpec.describe OrcaApi::ApiStruct do
   class MyApiStruct < OrcaApi::ApiStruct
+    class EmptyStruct < OrcaApi::ApiStruct
+      define_accessors(["ID"])
+    end
+
     define_accessors(
       [
         "Patient_ID",
         "WholeName",
         "WholeName_inKana",
+        "Sex",
         ["Home_Address_Information", { struct: OrcaApi::PatientInformation::HomeAddressInformation }],
         ["WorkPlace_Information", { struct: OrcaApi::PatientInformation::WorkPlaceInformation }],
         ["HealthInsurance_Info", { struct: OrcaApi::HealthPublicInsurance::HealthInsuranceInfo, array: true }],
         ["PublicInsurance_Info", { struct: OrcaApi::HealthPublicInsurance::PublicInsuranceInfo, array: true }],
+        ["Empty_Struct", { struct: EmptyStruct }],
         ["Array1", { array: true }],
         ["Array2", { array: true }],
+        ["Array3", { array: true }],
       ]
     )
   end
@@ -23,6 +30,7 @@ RSpec.describe OrcaApi::ApiStruct do
     {
       "Patient_ID" => "1",
       "WholeName" => "テスト　患者",
+      "Sex" => nil,
       "Home_Address_Information" => {
         "Address_ZipCode" => "6900051",
         "WholeAddress1" => "島根県松江市横浜町",
@@ -43,8 +51,10 @@ RSpec.describe OrcaApi::ApiStruct do
         {},
         {},
       ],
+      "Empty_Struct" => {},
       "Array1" => [],
       "Array2" => ["01", nil, "03", nil, nil],
+      "Array3" => nil,
     }
   }
   let(:my_api_struct) { MyApiStruct.new(attributes) }
@@ -217,6 +227,7 @@ RSpec.describe OrcaApi::ApiStruct do
           "patient_id" => "1",
           "whole_name" => "テスト　患者",
           "whole_name_in_kana" => "",
+          "sex" => "",
           "home_address_information" => {
             "address_zip_code" => "6900051",
             "whole_address1" => "島根県松江市横浜町",
@@ -239,6 +250,10 @@ RSpec.describe OrcaApi::ApiStruct do
             "",
             "",
           ],
+          "array3" => [],
+          "empty_struct" => {
+            "id" => "",
+          },
           "health_insurance_info" => [
             {
               "insurance_provider_mode" => "",

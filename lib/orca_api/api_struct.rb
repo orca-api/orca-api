@@ -72,52 +72,18 @@ module OrcaApi
     end
 
     def attributes(name_type: nil, omit: true, &include_filter)
+      args = { name_type: name_type, omit: omit }
       res = {}
       self.class.attribute_mappings.each do |json_name, attr_name|
         if block_given? && !yield(self, json_name, attr_name)
           next
         end
         value = send(attr_name)
-        if !value && omit
+        if omit && (!value || (!value.is_a?(ApiStruct) && value.empty?))
           next
         end
-        key = make_attributes_key(name_type, json_name, attr_name)
-        is_struct = self.class.struct_mappings.key?(attr_name)
-        if self.class.array_names.include?(attr_name)
-          if value.empty?
-            if !omit
-              res[key] = []
-            end
-            next
-          end
-          found_value = false
-          value.reverse.each do |v|
-            r = if is_struct
-                  v.attributes(name_type: name_type, omit: omit, &include_filter) || {}
-                else
-                  v || ""
-                end
-            if omit && r.empty? && !found_value
-              next
-            end
-            res[key] ||= []
-            res[key].unshift(r)
-            found_value = true
-          end
-        elsif is_struct
-          if !value
-            value = self.class.struct_mappings[attr_name].new
-          end
-          r = value.attributes(name_type: name_type, omit: omit, &include_filter) || {}
-          if !r.empty? || !omit
-            res[key] = r
-          end
-        elsif !value || value.empty?
-          if !omit
-            res[key] = ""
-          end
-        else
-          res[key] = value
+        if (v = attributes_convert(value, attr_name, args, &include_filter))
+          res[attributes_make_key(name_type, json_name, attr_name)] = v
         end
       end
       res
@@ -125,7 +91,7 @@ module OrcaApi
 
     private
 
-    def make_attributes_key(name_type, json_name, attr_name)
+    def attributes_make_key(name_type, json_name, attr_name)
       case name_type
       when :symbol
         attr_name.to_sym
@@ -134,6 +100,59 @@ module OrcaApi
       else
         attr_name
       end
+    end
+
+    def attributes_convert(value, attr_name, args, &include_filter)
+      struct_class = self.class.struct_mappings[attr_name]
+      if self.class.array_names.include?(attr_name)
+        attributes_convert_array(value, struct_class, args, &include_filter)
+      elsif struct_class
+        attributes_convert_struct(value, struct_class, args, &include_filter)
+      else
+        value ? value : ""
+      end
+    end
+
+    def attributes_convert_array(value, struct_class, args, &include_filter)
+      if !value || value.empty?
+        return []
+      end
+
+      res = if struct_class
+              value.map { |v|
+                v.attributes(args, &include_filter)
+              }
+            else
+              value.map { |v|
+                v || ""
+              }
+            end
+
+      if args[:omit]
+        res.length.times do
+          if res.last.empty?
+            res.pop
+          else
+            break
+          end
+        end
+        if res.empty?
+          res = nil
+        end
+      end
+
+      res
+    end
+
+    def attributes_convert_struct(value, struct_class, args, &include_filter)
+      if !value
+        value = struct_class.new
+      end
+      v = value.attributes(args, &include_filter)
+      if args[:omit] && v.empty?
+        v = nil
+      end
+      v
     end
   end
 end
