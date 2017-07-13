@@ -14,6 +14,7 @@ Metrics/PerceivedComplexity:
     - 'spec/**/*'
 
 Metrics/CyclomaticComplexity:
+  Max: 10
   Exclude:
     - 'spec/**/*'
 
@@ -21,6 +22,11 @@ Metrics/CyclomaticComplexity:
 Metrics/BlockNesting:
   Exclude:
     - 'spec/**/*'
+
+# Configuration parameters: CountComments.
+Metrics/ClassLength:
+  CountComments: false
+  Max: 250
 
 # Configuration parameters: CountComments.
 Metrics/MethodLength:
@@ -31,7 +37,8 @@ Metrics/MethodLength:
 
 # Configuration parameters: CountComments, ExcludedMethods.
 Metrics/BlockLength:
-  Max: 28
+  CountComments: false
+  Max: 30
   Exclude:
     - 'orca_api.gemspec'
     - 'spec/**/*'
