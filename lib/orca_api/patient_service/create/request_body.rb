@@ -42,10 +42,6 @@ module OrcaApi
           @select_answer = select_answer
         end
 
-        def empty?
-          false
-        end
-
         def to_json
           patient_information_attrs = patient_information.attributes(name_type: :json, omit: true) { |api_struct, json_name, _|
             INCLUDE_FILTER_SETTINGS.key?(api_struct.class) && INCLUDE_FILTER_SETTINGS[api_struct.class].include?(json_name)

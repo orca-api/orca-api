@@ -20,12 +20,6 @@ RSpec.describe OrcaApi::PatientService::Create::RequestBody do
     )
   }
 
-  describe "#empty?" do
-    subject { request_body.empty? }
-
-    it { is_expected.to be false }
-  end
-
   describe "#to_json" do
     subject { JSON.parse(request_body.to_json) }
 
