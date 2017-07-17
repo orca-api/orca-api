@@ -8,6 +8,8 @@ require "securerandom"
 require_relative "orca_api/ssl_client_authentication"
 require_relative "orca_api/basic_authentication"
 
+require_relative "result"
+
 require_relative "patient_service"
 
 module OrcaApi
