@@ -49,69 +49,47 @@ RSpec.describe OrcaApi::Result do
 
   let(:result) { described_class.new(response) }
 
-  describe "#raw" do
+  subject { result }
+
+  context "HAORIの正常レスポンス" do
     let(:response) { haori_ok_response }
 
-    subject { result.raw }
-
-    it { is_expected.to eq(response) }
+    its(:raw) { is_expected.to eq(response) }
+    its(:api_result) { is_expected.to eq("000") }
+    its(:api_result_message) { is_expected.to eq("検索処理終了") }
+    its(:request_number) { is_expected.to eq("01") }
+    its(:response_number) { is_expected.to eq("02") }
+    its(:karte_uid) { is_expected.to eq("karte_uid") }
+    its(:orca_uid) { is_expected.to eq("850a3c68-44a6-4306-a00e-f3306fdc6dad") }
+    its("ok?") { is_expected.to be true }
+    its(:message) { is_expected.to eq("検索処理終了(000)") }
   end
 
-  describe "#api_result" do
-    subject { result.api_result }
+  context "HAORIの異常レスポンス" do
+    let(:response) { haori_ng_response }
 
-    context "Api_Resultが000" do
-      let(:response) { haori_ok_response }
-
-      it { is_expected.to eq("000") }
-    end
-
-    context "Api_ResultがS20" do
-      let(:response) { haori_ng_response }
-
-      it { is_expected.to eq("S20") }
-    end
+    its(:raw) { is_expected.to eq(response) }
+    its(:api_result) { is_expected.to eq("S20") }
+    its(:api_result_message) { is_expected.to eq("選択項目があります。選択結果を返却してください。") }
+    its(:request_number) { is_expected.to eq("01") }
+    its(:response_number) { is_expected.to eq("02") }
+    its(:karte_uid) { is_expected.to eq("karte_uid") }
+    its(:orca_uid) { is_expected.to eq("a2082aa7-2915-4e9b-91ee-e0c653767824") }
+    its("ok?") { is_expected.to be false }
+    its(:message) { is_expected.to eq("選択項目があります。選択結果を返却してください。(S20)") }
   end
 
-  describe "#ok?" do
-    subject { result.ok? }
+  context "HAORIではない正常レスポンス" do
+    let(:response) { not_haori_ok_response }
 
-    context "Api_Resultが000" do
-      let(:response) { haori_ok_response }
-
-      it { is_expected.to be true }
-    end
-
-    context "Api_ResultがS20" do
-      let(:response) { haori_ng_response }
-
-      it { is_expected.to be false }
-    end
-  end
-
-  describe "#api_result_message" do
-    subject { result.api_result_message }
-
-    context "Api_Result_Messageが検索処理終了" do
-      let(:response) { haori_ok_response }
-
-      it { is_expected.to eq("検索処理終了") }
-    end
-  end
-
-  describe "#message" do
-    subject { result.message }
-
-    context "HAORIの正常" do
-      let(:response) { haori_ok_response }
-
-      it { is_expected.to eq("検索処理終了(000)") }
-    end
-
-    context "HAORIの異常" do
-      let(:response) { haori_ng_response }
-
-      it { is_expected.to eq("選択項目があります。選択結果を返却してください。(S20)") }
-    end
+    its(:raw) { is_expected.to eq(response) }
+    its(:api_result) { is_expected.to eq("00") }
+    its(:api_result_message) { is_expected.to eq("処理終了") }
+    its(:request_number) { is_expected.to be_nil }
+    its(:response_number) { is_expected.to be_nil }
+    its(:karte_uid) { is_expected.to be_nil }
+    its(:orca_uid) { is_expected.to be_nil }
+    its("ok?") { is_expected.to be true }
+    its(:message) { is_expected.to eq("処理終了(00)") }
   end
 end
