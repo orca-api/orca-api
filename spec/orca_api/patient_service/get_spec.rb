@@ -8,7 +8,7 @@ RSpec.describe OrcaApi::PatientService, "::Get" do
 
   describe "#get" do
     let(:patient_id) { 1 }
-    let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01.json") }
+    let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify.json") }
 
     context "患者情報のみ取得する" do
       subject { patient_service.get(patient_id) }
