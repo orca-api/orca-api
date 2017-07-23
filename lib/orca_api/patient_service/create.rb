@@ -2,6 +2,7 @@
 
 require_relative "../patient_information"
 require_relative "create/request_body"
+require_relative "create/result"
 
 module OrcaApi
   class PatientService
@@ -14,26 +15,14 @@ module OrcaApi
 
         api_path = "/orca12/patientmodv31"
         body = RequestBody.new(karte_uid: orca_api.karte_uid, patient_information: patient)
-        res0 = orca_api.call(api_path, body: body)
-        res = res0.first[1]
-        if res["Response_Number"] == "02"
-          if allow_duplication
-            body.request_number = "02"
-            body.orca_uid = res["Orca_Uid"]
-            body.select_answer = "Ok"
-            res0 = orca_api.call(api_path, body: body)
-            res = res0.first[1]
-            # TODO: ここでエラーが発生するケースに対応する
-            if res["Response_Number"] != "00"
-              # TODO: エラー処理
-            end
-          else
-            # TODO: 適切な例外クラスを投げる
-            raise "PatientDuplicated"
-          end
+        res = Result.new(orca_api.call(api_path, body: body))
+        if !res.ok? && allow_duplication && !res.duplicated_patient_candidates.empty?
+          body.request_number = "02"
+          body.orca_uid = res.orca_uid
+          body.select_answer = "Ok"
+          res = Result.new(orca_api.call(api_path, body: body))
         end
-
-        patient.update(res["Patient_Information"])
+        res
       end
     end
   end
