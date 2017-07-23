@@ -1,20 +1,15 @@
 # coding: utf-8
 
-require_relative "../patient_information"
-
 module OrcaApi
   class PatientService
     # 患者情報の取得
     module Get
-      API_PATH = "/orca12/patientmodv31".freeze
-      private_constant :API_PATH
+      def get(id)
+        api_path = "/orca12/patientmodv31"
+        req_name = "patientmodreq"
 
-      REQ_NAME = "patientmodreq".freeze
-      private_constant :REQ_NAME
-
-      def get(id, associations: [])
         body = {
-          REQ_NAME => {
+          req_name => {
             "Request_Number" => "01",
             "Karte_Uid" => orca_api.karte_uid,
             "Patient_ID" => id.to_s,
@@ -22,25 +17,20 @@ module OrcaApi
             "Orca_Uid" => "",
           }
         }
-        res0 = orca_api.call(API_PATH, body: body)
-        res = res0.first[1]
-        if res["Request_Number"].to_i <= res["Response_Number"].to_i
+        res = Result.new(orca_api.call(api_path, body: body))
+        if !res.ok?
           # TODO: エラー処理
         end
 
-        unlock(API_PATH,
-               REQ_NAME => {
+        unlock(api_path,
+               req_name => {
                  "Request_Number" => "99",
-                 "Karte_Uid" => res["Karte_Uid"],
-                 "Patient_ID" => res["Patient_Information"]["Patient_ID"],
-                 "Orca_Uid" => res["Orca_Uid"],
+                 "Karte_Uid" => res.karte_uid,
+                 "Patient_ID" => res.patient_information["Patient_ID"],
+                 "Orca_Uid" => res.orca_uid,
                })
 
-        PatientInformation.new(res["Patient_Information"]).tap { |patient|
-          associations.each do |association|
-            patient.send("#{association}=", send("get_#{association}", id))
-          end
-        }
+        res.patient_information
       end
     end
   end
