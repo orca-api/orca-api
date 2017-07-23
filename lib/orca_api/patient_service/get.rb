@@ -4,7 +4,7 @@ module OrcaApi
   class PatientService
     # 患者情報の取得
     module Get
-      def get(id, associations: [])
+      def get(id)
         api_path = "/orca12/patientmodv31"
         req_name = "patientmodreq"
 
