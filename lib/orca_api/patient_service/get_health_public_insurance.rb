@@ -1,43 +1,44 @@
 # coding: utf-8
 
-require_relative "../health_public_insurance"
-
 module OrcaApi
   class PatientService
     # 患者保険・公費情報の取得
     module GetHealthPublicInsurance
-      API_PATH = "/orca12/patientmodv32".freeze
-      private_constant :API_PATH
-
-      REQ_NAME = "patientmodreq".freeze
-      private_constant :REQ_NAME
-
       def get_health_public_insurance(id)
+        api_path = "/orca12/patientmodv32"
+        req_name = "patientmodreq"
+
         body = {
-          REQ_NAME => {
+          req_name => {
             "Request_Number" => "01",
             "Karte_Uid" => orca_api.karte_uid,
             "Orca_Uid" => "",
             "Patient_Information" => {
               "Patient_ID" => id.to_s,
-            }.freeze
+            }
           }
         }
-        res0 = orca_api.call(API_PATH, body: body)
-        res = res0.first[1]
-        if res["Request_Number"].to_i <= res["Response_Number"].to_i
+        res = Result.new(orca_api.call(api_path, body: body))
+        if !res.ok?
           # TODO: エラー処理
         end
 
-        unlock(API_PATH,
-               REQ_NAME => {
+        unlock(api_path,
+               req_name => {
                  "Request_Number" => "99",
-                 "Karte_Uid" => res["Karte_Uid"],
-                 "Orca_Uid" => res["Orca_Uid"],
-                 "Patient_Information" => res["Patient_Information"],
+                 "Karte_Uid" => res.karte_uid,
+                 "Orca_Uid" => res.orca_uid,
+                 "Patient_Information" => res.patient_information,
                })
 
-        HealthPublicInsurance.new(res)
+        keys = %w(
+          HealthInsurance_Information
+          PublicInsurance_Information
+          HealthInsurance_Combination_Information
+        )
+        res.raw.first[1].select { |k, _|
+          keys.include?(k)
+        }
       end
     end
   end
