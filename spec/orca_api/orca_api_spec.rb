@@ -70,32 +70,30 @@ RSpec.describe OrcaApi::OrcaApi do
   end
 
   describe "#call" do
-    let(:options) { ["example.com", authentication, 18000] }
-    let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
-    let(:result) {
-      load_orca_api_response_json(path[1..-1].gsub("/", "_") + ".json")
-    }
-
-    subject {
-      orca_api.call(path, params: params, body: body, http_method: http_method)
-    }
-
-    before do
-      query = params.merge(format: "json").map { |k, v| "#{k}=#{v}" }.join("&")
-      stub_request(http_method, URI.join(url, path, "?#{query}"))
-        .with(body: body.empty? ? nil : body.to_json)
-        .to_return(body: result.to_json)
-    end
-
     shared_examples "日レセAPIを呼び出せること" do
+      let(:options) { ["example.com", authentication, 18000] }
+      let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
+      let(:result) {
+        load_orca_api_response_json(path[1..-1].gsub("/", "_") + ".json")
+      }
+
+      subject {
+        orca_api.call(path, params: params, body: body, http_method: http_method)
+      }
+
+      before do
+        query = params.merge(format: "json").map { |k, v| "#{k}=#{v}" }.join("&")
+        stub_request(http_method, URI.join(url, path, "?#{query}"))
+          .with(body: body ? body.to_json : nil)
+          .to_return(body: result.to_json)
+      end
+
       describe "/api01rv2/patientgetv2" do
         let(:path) { "/api01rv2/patientgetv2" }
         let(:params) {
           { id: "1" }
         }
-        let(:body) {
-          {}
-        }
+        let(:body) { nil }
         let(:http_method) { :get }
 
         it { is_expected.to be_api_result_equal_to(result) }
@@ -143,6 +141,19 @@ RSpec.describe OrcaApi::OrcaApi do
       let(:http_scheme) { "https" }
 
       include_examples "日レセAPIを呼び出せること"
+    end
+
+    context "bodyにハッシュ以外のオブジェクトを指定する" do
+      # HACK: spyにはもともとto_jsonというメソッドが定義されているため、明示的に指定する必要がある
+      let(:body) { spy("body", to_json: "json") }
+
+      before do
+        allow(Net::HTTP).to receive(:new).and_return(spy("Net::HTTP"))
+        orca_api = OrcaApi::OrcaApi.new("example.com", [])
+        orca_api.call("/path/to/api", body: body)
+      end
+
+      it { expect(body).to have_received(:to_json) }
     end
   end
 

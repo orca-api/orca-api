@@ -1,0 +1,77 @@
+{
+  "patientmodres": {
+    "Request_Number": "01",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "850a3c68-44a6-4306-a00e-f3306fdc6dad",
+    "Information_Date": "2017-06-29",
+    "Information_Time": "08:33:42",
+    "Api_Result": "000",
+    "Api_Result_Message": "登録終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "東京　太郎",
+      "WholeName_inKana": "トウキョウ　タロウ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1",
+      "HouseHolder_WholeName": "東京　太郎",
+      "Relationship": "世帯主",
+      "Occupation": "警備員",
+      "NickName": "ニックネーム",
+      "CellularNumber": "012-3456-7890",
+      "FaxNumber": "01-2345-6789",
+      "EmailAddress": "test@example.com",
+      "Home_Address_Information": {
+        "Address_ZipCode": "6900051",
+        "WholeAddress1": "島根県松江市横浜町",
+        "WholeAddress2": "１１５５",
+        "PhoneNumber1": "0852-22-2222",
+        "PhoneNumber2": "0852-44-4444"
+      },
+      "WorkPlace_Information": {
+        "WholeName": "島根銀行株式会社",
+        "Address_ZipCode": "6900015",
+        "WholeAddress1": "島根県松江市上乃木",
+        "WholeAddress2": "１２３４５６",
+        "PhoneNumber": "0852-33-3333"
+      },
+      "Contact_Information": {
+        "WholeName": "島根銀行株式会社",
+        "Relationship": "勤務先",
+        "Address_ZipCode": "6900015",
+        "WholeAddress1": "島根県松江市上乃木",
+        "WholeAddress2": "１２３４５６",
+        "PhoneNumber1": "0852-33-3333",
+        "PhoneNumber2": "0852-55-5555"
+      },
+      "Home2_Information": {
+        "WholeName": "実家",
+        "Address_ZipCode": "6900099",
+        "WholeAddress1": "島根県松江市沖縄町",
+        "WholeAddress2": "５５１１",
+        "PhoneNumber": "0852-99-9999"
+      },
+      "Contraindication1": "　",
+      "Contraindication2": "　",
+      "Allergy1": "えび",
+      "Allergy2": "かに",
+      "Infection1": "",
+      "Infection2": "",
+      "Comment1": "",
+      "Comment2": "",
+      "TestPatient_Flag": "0",
+      "Death_Flag": "0",
+      "Reduction_Reason": "00",
+      "Reduction_Reason_Name": "該当なし",
+      "Discount": "00",
+      "Discount_Name": "該当なし",
+      "Condition1": "00",
+      "Condition1_Name": "該当なし",
+      "Condition2": "00",
+      "Condition2_Name": "該当なし",
+      "Condition3": "00",
+      "Condition3_Name": "該当なし"
+    }
+  }
+}

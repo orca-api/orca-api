@@ -35,8 +35,8 @@ RSpec.shared_examples "ApiStructを日レセAPIのレスポンスやハッシュ
                 describe "[" + empty_indices.join("][") + "]" do
                   it "属性の値はすべてnilであること" do
                     empty_indices.each do |index|
-                      inner_class.attribute_mappings do |inner_attr_name|
-                        expect(subject[index][inner_attr_name]).to be_nil
+                      inner_class.attribute_mappings.each do |inner_json_name, _|
+                        expect(subject[index].send(inner_json_name)).to be_nil
                       end
                     end
                   end

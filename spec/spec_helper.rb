@@ -2,7 +2,9 @@ require "bundler/setup"
 if ENV["COVERAGE"] || ENV["CI"]
   require "simplecov"
   SimpleCov.coverage_dir(File.join(ENV["CIRCLE_ARTIFACTS"], "coverage")) if ENV["CIRCLE_ARTIFACTS"]
-  SimpleCov.start
+  SimpleCov.start do
+    add_filter %w(/vendor/ /spec/)
+  end
 end
 require "rspec/its"
 require "webmock/rspec"

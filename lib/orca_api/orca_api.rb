@@ -8,6 +8,8 @@ require "securerandom"
 require_relative "orca_api/ssl_client_authentication"
 require_relative "orca_api/basic_authentication"
 
+require_relative "result"
+
 require_relative "patient_service"
 
 module OrcaApi
@@ -29,7 +31,7 @@ module OrcaApi
       @karte_uid ||= SecureRandom.uuid
     end
 
-    def call(path, params: {}, body: {}, http_method: :post)
+    def call(path, params: {}, body: nil, http_method: :post)
       case http_method
       when :get
         request_class = Net::HTTP::Get
@@ -43,7 +45,7 @@ module OrcaApi
 
       req = request_class.new("#{path}?#{query}")
 
-      if !body.empty?
+      if body
         req.body = body.to_json
       end
 
