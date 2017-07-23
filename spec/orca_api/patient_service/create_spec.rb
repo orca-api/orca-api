@@ -16,9 +16,18 @@ RSpec.describe OrcaApi::PatientService, "::Create" do
       }
 
       before do
-        body = double("OrcaApi::PatientService::Create::RequestBody")
-        expect(OrcaApi::PatientService::Create::RequestBody).to receive(:new).and_return(body).once
-        expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: body).and_return(response_json).once
+        expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).once { |_, body:|
+          req = body["patientmodreq"]
+          expect(req["Request_Number"]).to eq("01")
+          expect(req["Karte_Uid"]).to eq("karte_uid")
+          expect(req["Patient_ID"]).to eq("*")
+          expect(req["Patient_Mode"]).to eq("New")
+          expect(req["Orca_Uid"]).to eq("")
+          expect(req["Select_Answer"]).to eq("")
+          expect(req["Patient_Information"]).to eq(args.first)
+
+          response_json
+        }
       end
 
       its("ok?") { is_expected.to be true }
@@ -35,9 +44,18 @@ RSpec.describe OrcaApi::PatientService, "::Create" do
         }
 
         before do
-          body = double("OrcaApi::PatientService::Create::RequestBody")
-          expect(OrcaApi::PatientService::Create::RequestBody).to receive(:new).and_return(body).once
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: body).and_return(response_json).once
+          expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).once { |_, body:|
+            req = body["patientmodreq"]
+            expect(req["Request_Number"]).to eq("01")
+            expect(req["Karte_Uid"]).to eq("karte_uid")
+            expect(req["Patient_ID"]).to eq("*")
+            expect(req["Patient_Mode"]).to eq("New")
+            expect(req["Orca_Uid"]).to eq("")
+            expect(req["Select_Answer"]).to eq("")
+            expect(req["Patient_Information"]).to eq(args.first)
+
+            response_json
+          }
         end
 
         its("ok?") { is_expected.to be false }
@@ -51,23 +69,26 @@ RSpec.describe OrcaApi::PatientService, "::Create" do
         }
 
         before do
-          body = spy("OrcaApi::PatientService::Create::RequestBody")
-          expect(OrcaApi::PatientService::Create::RequestBody).to receive(:new).and_return(body).once
-
           count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: body).twice { |*_|
+          expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).twice { |_, body:|
+            req = body["patientmodreq"]
+            expect(req["Karte_Uid"]).to eq("karte_uid")
+            expect(req["Patient_ID"]).to eq("*")
+            expect(req["Patient_Mode"]).to eq("New")
+            expect(req["Patient_Information"]).to eq(args.first)
+
             count += 1
             case count
             when 1
-              expect(body).not_to have_received("request_number=")
-              expect(body).not_to have_received("orca_uid=")
-              expect(body).not_to have_received("select_answer=")
+              expect(req["Request_Number"]).to eq("01")
+              expect(req["Orca_Uid"]).to eq("")
+              expect(req["Select_Answer"]).to eq("")
 
               response_json
             when 2
-              expect(body).to have_received("request_number=").with("02")
-              expect(body).to have_received("orca_uid=").with(response_json.first[1]["Orca_Uid"])
-              expect(body).to have_received("select_answer=").with("Ok")
+              expect(req["Request_Number"]).to eq("02")
+              expect(req["Orca_Uid"]).to eq(response_json.first[1]["Orca_Uid"])
+              expect(req["Select_Answer"]).to eq("Ok")
 
               load_orca_api_response_json("orca12_patientmodv31_02_new_abnormal_patient_duplicated.json")
             end
