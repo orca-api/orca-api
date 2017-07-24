@@ -29,10 +29,8 @@ module OrcaApi
                  "Orca_Uid" => res.orca_uid,
                })
 
-        if !associations.empty?
-          associations.each do |association|
-            res.send("#{association}_result=", send("get_#{association}", id))
-          end
+        associations.each do |association|
+          res.send("#{association}_result=", send("get_#{association}", id))
         end
 
         res
