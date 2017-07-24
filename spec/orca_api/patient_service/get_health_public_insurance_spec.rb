@@ -38,17 +38,20 @@ RSpec.describe OrcaApi::PatientService, "::GetHealthPublicInsurance" do
       }
     end
 
-    it { is_expected.to be_kind_of(Hash) }
+    describe "health_public_insurance" do
+      subject { super().health_public_insurance }
 
-    %w(
-      HealthInsurance_Information
-      PublicInsurance_Information
-      HealthInsurance_Combination_Information
-    ).each do |name|
-      describe "[#{name}]" do
-        subject { super()[name] }
+      %w(
+        Patient_Information
+        HealthInsurance_Information
+        PublicInsurance_Information
+        HealthInsurance_Combination_Information
+      ).each do |name|
+        describe "[#{name}]" do
+          subject { super()[name] }
 
-        it { is_expected.to eq(response_json.first[1][name]) }
+          it { is_expected.to eq(response_json.first[1][name]) }
+        end
       end
     end
   end

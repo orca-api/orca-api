@@ -1,10 +1,12 @@
 # coding: utf-8
 
+require_relative "get/result"
+
 module OrcaApi
   class PatientService
     # 患者情報の取得
     module Get
-      def get(id)
+      def get(id, associations: [])
         api_path = "/orca12/patientmodv31"
         req_name = "patientmodreq"
 
@@ -18,9 +20,6 @@ module OrcaApi
           }
         }
         res = Result.new(orca_api.call(api_path, body: body))
-        if !res.ok?
-          # TODO: エラー処理
-        end
 
         unlock(api_path,
                req_name => {
@@ -30,7 +29,11 @@ module OrcaApi
                  "Orca_Uid" => res.orca_uid,
                })
 
-        res.patient_information
+        associations.each do |association|
+          res.send("#{association}_result=", send("get_#{association}", id))
+        end
+
+        res
       end
     end
   end
