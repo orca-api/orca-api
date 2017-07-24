@@ -18,9 +18,6 @@ module OrcaApi
           }
         }
         res = Result.new(orca_api.call(api_path, body: body))
-        if !res.ok?
-          # TODO: エラー処理
-        end
 
         unlock(api_path,
                req_name => {
@@ -30,7 +27,7 @@ module OrcaApi
                  "Orca_Uid" => res.orca_uid,
                })
 
-        res.patient_information
+        res
       end
     end
   end

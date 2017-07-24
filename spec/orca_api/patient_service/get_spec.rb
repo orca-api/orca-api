@@ -40,8 +40,8 @@ RSpec.describe OrcaApi::PatientService, "::Get" do
         }
       end
 
-      it { is_expected.to be_kind_of(Hash) }
-      it { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      its("ok?") { is_expected.to be true }
+      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
     end
   end
 end

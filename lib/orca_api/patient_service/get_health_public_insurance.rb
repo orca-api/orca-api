@@ -1,5 +1,7 @@
 # coding: utf-8
 
+require_relative "get_health_public_insurance/result"
+
 module OrcaApi
   class PatientService
     # 患者保険・公費情報の取得
@@ -19,9 +21,6 @@ module OrcaApi
           }
         }
         res = Result.new(orca_api.call(api_path, body: body))
-        if !res.ok?
-          # TODO: エラー処理
-        end
 
         unlock(api_path,
                req_name => {
@@ -31,14 +30,7 @@ module OrcaApi
                  "Patient_Information" => res.patient_information,
                })
 
-        keys = %w(
-          HealthInsurance_Information
-          PublicInsurance_Information
-          HealthInsurance_Combination_Information
-        )
-        res.raw.first[1].select { |k, _|
-          keys.include?(k)
-        }
+        res
       end
     end
   end
