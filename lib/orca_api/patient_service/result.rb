@@ -3,7 +3,7 @@
 require_relative "../result"
 
 module OrcaApi
-  class PatientService
+  class PatientService < Service
     # 汎用的な患者情報を扱う処理の結果を表現するクラス
     class Result < ::OrcaApi::Result
       def patient_information

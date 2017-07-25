@@ -3,7 +3,7 @@
 require_relative "create/result"
 
 module OrcaApi
-  class PatientService
+  class PatientService < Service
     # 患者情報の登録
     module Create
       def create(patient, allow_duplication: false)

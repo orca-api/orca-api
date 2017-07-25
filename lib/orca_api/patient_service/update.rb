@@ -1,7 +1,7 @@
 # coding: utf-8
 
 module OrcaApi
-  class PatientService
+  class PatientService < Service
     # 患者情報の更新
     module Update
       def update(id, patient_information)
