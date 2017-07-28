@@ -51,8 +51,6 @@ module OrcaApi
                        v
                      end
           end
-        else
-          raise ArgumentError("not supported: #{src.inspect}")
         end
         res
       end
