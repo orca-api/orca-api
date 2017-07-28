@@ -3,7 +3,7 @@
 require_relative "get_health_public_insurance/result"
 
 module OrcaApi
-  class PatientService
+  class PatientService < Service
     # 患者保険・公費情報の取得
     module GetHealthPublicInsurance
       def get_health_public_insurance(id)

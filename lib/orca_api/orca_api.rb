@@ -11,6 +11,7 @@ require_relative "orca_api/basic_authentication"
 require_relative "result"
 
 require_relative "patient_service"
+require_relative "insurance_service"
 
 module OrcaApi
   # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
@@ -67,6 +68,10 @@ module OrcaApi
 
     def new_patient_service
       PatientService.new(self)
+    end
+
+    def new_insurance_service
+      InsuranceService.new(self)
     end
   end
 end

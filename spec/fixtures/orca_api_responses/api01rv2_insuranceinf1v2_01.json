@@ -1,0 +1,2290 @@
+{
+  "insuranceinfres": {
+    "Information_Date": "2017-07-25",
+    "Information_Time": "22:06:56",
+    "Api_Result": "00",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Patient Info",
+    "Insurance_Information": {
+      "Base_Date": "2017-07-25",
+      "HealthInsurance_Information": [
+        {
+          "InsuranceProvider_Class": "002",
+          "InsuranceProvider_WholeName": "船員",
+          "InsuranceProvider_Identification_Number": "02",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "1",
+              "HealthInsuredPerson_Assistance_Name": "職務"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "下船"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "3",
+              "HealthInsuredPerson_Assistance_Name": "通勤"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "A",
+              "HealthInsuredPerson_Assistance_Name": "１割職務",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "B",
+              "HealthInsuredPerson_Assistance_Name": "１割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "C",
+              "HealthInsuredPerson_Assistance_Name": "１割通勤",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "D",
+              "HealthInsuredPerson_Assistance_Name": "２割職務",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "E",
+              "HealthInsuredPerson_Assistance_Name": "２割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "F",
+              "HealthInsuredPerson_Assistance_Name": "２割通勤",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "G",
+              "HealthInsuredPerson_Assistance_Name": "３割職務",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "H",
+              "HealthInsuredPerson_Assistance_Name": "３割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "I",
+              "HealthInsuredPerson_Assistance_Name": "３割通勤",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "003",
+          "InsuranceProvider_WholeName": "一般",
+          "InsuranceProvider_Identification_Number": "03",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "004",
+          "InsuranceProvider_WholeName": "特別",
+          "InsuranceProvider_Identification_Number": "04",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "006",
+          "InsuranceProvider_WholeName": "組合",
+          "InsuranceProvider_Identification_Number": "06",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "007",
+          "InsuranceProvider_WholeName": "自官",
+          "InsuranceProvider_Identification_Number": "07",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_WholeName": "協会",
+          "InsuranceProvider_Identification_Number": "01",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "031",
+          "InsuranceProvider_WholeName": "国公",
+          "InsuranceProvider_Identification_Number": "31",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "下船３月"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "B",
+              "HealthInsuredPerson_Assistance_Name": "１割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "E",
+              "HealthInsuredPerson_Assistance_Name": "２割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "H",
+              "HealthInsuredPerson_Assistance_Name": "３割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "032",
+          "InsuranceProvider_WholeName": "地公",
+          "InsuranceProvider_Identification_Number": "32",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "下船３月"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "B",
+              "HealthInsuredPerson_Assistance_Name": "１割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "E",
+              "HealthInsuredPerson_Assistance_Name": "２割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "H",
+              "HealthInsuredPerson_Assistance_Name": "３割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "033",
+          "InsuranceProvider_WholeName": "警察",
+          "InsuranceProvider_Identification_Number": "33",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "下船３月"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "B",
+              "HealthInsuredPerson_Assistance_Name": "１割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "E",
+              "HealthInsuredPerson_Assistance_Name": "２割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "H",
+              "HealthInsuredPerson_Assistance_Name": "３割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "034",
+          "InsuranceProvider_WholeName": "学校",
+          "InsuranceProvider_Identification_Number": "34",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "下船３月"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "B",
+              "HealthInsuredPerson_Assistance_Name": "１割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "E",
+              "HealthInsuredPerson_Assistance_Name": "２割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "H",
+              "HealthInsuredPerson_Assistance_Name": "３割下船",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "039",
+          "InsuranceProvider_WholeName": "後期高齢者",
+          "InsuranceProvider_Identification_Number": "39",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "1",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "3",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "040",
+          "InsuranceProvider_WholeName": "後期特療費",
+          "InsuranceProvider_Identification_Number": "39",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "1",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "3",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "0",
+              "HealthInsuredPerson_Assistance_Name": "無し"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "1",
+              "HealthInsuredPerson_Assistance_Name": "１割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "２割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "3",
+              "HealthInsuredPerson_Assistance_Name": "３割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "4",
+              "HealthInsuredPerson_Assistance_Name": "外１割 入０割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "5",
+              "HealthInsuredPerson_Assistance_Name": "外２割 入１割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "6",
+              "HealthInsuredPerson_Assistance_Name": "外３割 入２割"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "063",
+          "InsuranceProvider_WholeName": "退組合",
+          "InsuranceProvider_Identification_Number": "63",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "067",
+          "InsuranceProvider_WholeName": "退国保",
+          "InsuranceProvider_Identification_Number": "67",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "068",
+          "InsuranceProvider_WholeName": "特療費",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "0",
+              "HealthInsuredPerson_Assistance_Name": "無し"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "1",
+              "HealthInsuredPerson_Assistance_Name": "１割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "２割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "3",
+              "HealthInsuredPerson_Assistance_Name": "３割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "4",
+              "HealthInsuredPerson_Assistance_Name": "外１割 入０割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "5",
+              "HealthInsuredPerson_Assistance_Name": "外２割 入１割"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "6",
+              "HealthInsuredPerson_Assistance_Name": "外３割 入２割"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "069",
+          "InsuranceProvider_WholeName": "退特療費",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "072",
+          "InsuranceProvider_WholeName": "退国公",
+          "InsuranceProvider_Identification_Number": "72",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "073",
+          "InsuranceProvider_WholeName": "退地公",
+          "InsuranceProvider_Identification_Number": "73",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "074",
+          "InsuranceProvider_WholeName": "退警察",
+          "InsuranceProvider_Identification_Number": "74",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "075",
+          "InsuranceProvider_WholeName": "退学校",
+          "InsuranceProvider_Identification_Number": "75",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "7",
+              "HealthInsuredPerson_Assistance_Name": "３割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "8",
+              "HealthInsuredPerson_Assistance_Name": "２割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "9",
+              "HealthInsuredPerson_Assistance_Name": "１割",
+              "HealthInsuredPerson_Assistance_Mode": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_WholeName": "労災保険"
+        },
+        {
+          "InsuranceProvider_Class": "973",
+          "InsuranceProvider_WholeName": "自賠責保険"
+        },
+        {
+          "InsuranceProvider_Class": "975",
+          "InsuranceProvider_WholeName": "公害保険"
+        },
+        {
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_WholeName": "自費",
+          "HealthInsuredPerson_Assistance_Info": [
+            {
+              "HealthInsuredPerson_Assistance": "1",
+              "HealthInsuredPerson_Assistance_Name": "課税"
+            },
+            {
+              "HealthInsuredPerson_Assistance": "2",
+              "HealthInsuredPerson_Assistance_Name": "非課"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ],
+      "PublicInsurance_Information": [
+        {
+          "PublicInsurance_Class": "010",
+          "PublicInsurance_Name": "感３７の２",
+          "PublicInsurance_Identification_Number": "10"
+        },
+        {
+          "PublicInsurance_Class": "011",
+          "PublicInsurance_Name": "結核入院",
+          "PublicInsurance_Identification_Number": "11"
+        },
+        {
+          "PublicInsurance_Class": "012",
+          "PublicInsurance_Name": "生活保護",
+          "PublicInsurance_Identification_Number": "12"
+        },
+        {
+          "PublicInsurance_Class": "013",
+          "PublicInsurance_Name": "戦傷傷病",
+          "PublicInsurance_Identification_Number": "13"
+        },
+        {
+          "PublicInsurance_Class": "014",
+          "PublicInsurance_Name": "戦傷更正",
+          "PublicInsurance_Identification_Number": "14"
+        },
+        {
+          "PublicInsurance_Class": "015",
+          "PublicInsurance_Name": "更生",
+          "PublicInsurance_Identification_Number": "15"
+        },
+        {
+          "PublicInsurance_Class": "016",
+          "PublicInsurance_Name": "育成",
+          "PublicInsurance_Identification_Number": "16"
+        },
+        {
+          "PublicInsurance_Class": "017",
+          "PublicInsurance_Name": "児童療育",
+          "PublicInsurance_Identification_Number": "17"
+        },
+        {
+          "PublicInsurance_Class": "018",
+          "PublicInsurance_Name": "原爆認定",
+          "PublicInsurance_Identification_Number": "18"
+        },
+        {
+          "PublicInsurance_Class": "019",
+          "PublicInsurance_Name": "原爆一般",
+          "PublicInsurance_Identification_Number": "19"
+        },
+        {
+          "PublicInsurance_Class": "020",
+          "PublicInsurance_Name": "精神入院",
+          "PublicInsurance_Identification_Number": "20"
+        },
+        {
+          "PublicInsurance_Class": "021",
+          "PublicInsurance_Name": "精神通院",
+          "PublicInsurance_Identification_Number": "21"
+        },
+        {
+          "PublicInsurance_Class": "023",
+          "PublicInsurance_Name": "養育",
+          "PublicInsurance_Identification_Number": "23"
+        },
+        {
+          "PublicInsurance_Class": "024",
+          "PublicInsurance_Name": "療養介護",
+          "PublicInsurance_Identification_Number": "24"
+        },
+        {
+          "PublicInsurance_Class": "025",
+          "PublicInsurance_Name": "残留邦人等",
+          "PublicInsurance_Identification_Number": "25"
+        },
+        {
+          "PublicInsurance_Class": "028",
+          "PublicInsurance_Name": "感染症入院",
+          "PublicInsurance_Identification_Number": "28"
+        },
+        {
+          "PublicInsurance_Class": "029",
+          "PublicInsurance_Name": "新感染",
+          "PublicInsurance_Identification_Number": "29"
+        },
+        {
+          "PublicInsurance_Class": "030",
+          "PublicInsurance_Name": "心神喪失",
+          "PublicInsurance_Identification_Number": "30"
+        },
+        {
+          "PublicInsurance_Class": "038",
+          "PublicInsurance_Name": "肝炎治療",
+          "PublicInsurance_Identification_Number": "38"
+        },
+        {
+          "PublicInsurance_Class": "051",
+          "PublicInsurance_Name": "特定負有",
+          "PublicInsurance_Identification_Number": "51"
+        },
+        {
+          "PublicInsurance_Class": "052",
+          "PublicInsurance_Name": "小児特定",
+          "PublicInsurance_Identification_Number": "52"
+        },
+        {
+          "PublicInsurance_Class": "053",
+          "PublicInsurance_Name": "児童保護",
+          "PublicInsurance_Identification_Number": "53"
+        },
+        {
+          "PublicInsurance_Class": "054",
+          "PublicInsurance_Name": "難病",
+          "PublicInsurance_Identification_Number": "54"
+        },
+        {
+          "PublicInsurance_Class": "062",
+          "PublicInsurance_Name": "Ｂ型肝炎",
+          "PublicInsurance_Identification_Number": "62"
+        },
+        {
+          "PublicInsurance_Class": "066",
+          "PublicInsurance_Name": "石綿",
+          "PublicInsurance_Identification_Number": "66"
+        },
+        {
+          "PublicInsurance_Class": "079",
+          "PublicInsurance_Name": "障害児施設",
+          "PublicInsurance_Identification_Number": "79"
+        },
+        {
+          "PublicInsurance_Class": "091",
+          "PublicInsurance_Name": "特定負無",
+          "PublicInsurance_Identification_Number": "51"
+        },
+        {
+          "PublicInsurance_Class": "190",
+          "PublicInsurance_Name": "マル乳",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "191",
+          "PublicInsurance_Name": "マル福",
+          "PublicInsurance_Identification_Number": "91"
+        },
+        {
+          "PublicInsurance_Class": "192",
+          "PublicInsurance_Name": "マル精",
+          "PublicInsurance_Identification_Number": "92"
+        },
+        {
+          "PublicInsurance_Class": "390",
+          "PublicInsurance_Name": "３歳未満",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "391",
+          "PublicInsurance_Name": "松江・福祉",
+          "PublicInsurance_Identification_Number": "91"
+        },
+        {
+          "PublicInsurance_Class": "393",
+          "PublicInsurance_Name": "就学後大田",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "394",
+          "PublicInsurance_Name": "こども福社",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "600",
+          "PublicInsurance_Name": "乳幼児無料",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "620",
+          "PublicInsurance_Name": "就学後・無",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "621",
+          "PublicInsurance_Name": "福祉就後無",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "625",
+          "PublicInsurance_Name": "就学後大田",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "627",
+          "PublicInsurance_Name": "就学後・浜",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "628",
+          "PublicInsurance_Name": "就学後川益",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "629",
+          "PublicInsurance_Name": "福就後川益",
+          "PublicInsurance_Identification_Number": "90"
+        },
+        {
+          "PublicInsurance_Class": "705",
+          "PublicInsurance_Name": "福祉・大田",
+          "PublicInsurance_Identification_Number": "91"
+        },
+        {
+          "PublicInsurance_Class": "950",
+          "PublicInsurance_Name": "０７入所中"
+        },
+        {
+          "PublicInsurance_Class": "951",
+          "PublicInsurance_Name": "０８入所中"
+        },
+        {
+          "PublicInsurance_Class": "954",
+          "PublicInsurance_Name": "特例非該当"
+        },
+        {
+          "PublicInsurance_Class": "955",
+          "PublicInsurance_Name": "０１公該当"
+        },
+        {
+          "PublicInsurance_Class": "956",
+          "PublicInsurance_Name": "公費アイ　"
+        },
+        {
+          "PublicInsurance_Class": "957",
+          "PublicInsurance_Name": "公費ウエオ"
+        },
+        {
+          "PublicInsurance_Class": "958",
+          "PublicInsurance_Name": "特疾４回目"
+        },
+        {
+          "PublicInsurance_Class": "959",
+          "PublicInsurance_Name": "災害該当"
+        },
+        {
+          "PublicInsurance_Class": "960",
+          "PublicInsurance_Name": "減額（割）"
+        },
+        {
+          "PublicInsurance_Class": "961",
+          "PublicInsurance_Name": "減額（円）"
+        },
+        {
+          "PublicInsurance_Class": "962",
+          "PublicInsurance_Name": "免除"
+        },
+        {
+          "PublicInsurance_Class": "963",
+          "PublicInsurance_Name": "支払猶予"
+        },
+        {
+          "PublicInsurance_Class": "964",
+          "PublicInsurance_Name": "高額委任払"
+        },
+        {
+          "PublicInsurance_Class": "965",
+          "PublicInsurance_Name": "高額４回目"
+        },
+        {
+          "PublicInsurance_Class": "966",
+          "PublicInsurance_Name": "高額アイ　"
+        },
+        {
+          "PublicInsurance_Class": "967",
+          "PublicInsurance_Name": "高額ウエオ"
+        },
+        {
+          "PublicInsurance_Class": "968",
+          "PublicInsurance_Name": "後期該当"
+        },
+        {
+          "PublicInsurance_Class": "969",
+          "PublicInsurance_Name": "７５歳特例"
+        },
+        {
+          "PublicInsurance_Class": "970",
+          "PublicInsurance_Name": "第三者行為"
+        },
+        {
+          "PublicInsurance_Class": "972",
+          "PublicInsurance_Name": "長期"
+        },
+        {
+          "PublicInsurance_Class": "974",
+          "PublicInsurance_Name": "長期（上位"
+        },
+        {
+          "PublicInsurance_Class": "976",
+          "PublicInsurance_Name": "高齢非該当"
+        },
+        {
+          "PublicInsurance_Class": "977",
+          "PublicInsurance_Name": "後期非該当"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

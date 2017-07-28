@@ -1,24 +1,21 @@
 # coding: utf-8
 
+require_relative "service"
 require_relative "patient_service/result"
 require_relative "patient_service/get"
 require_relative "patient_service/get_health_public_insurance"
 require_relative "patient_service/create"
 require_relative "patient_service/update"
+require_relative "patient_service/update_health_public_insurance"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
-  class PatientService
+  class PatientService < Service
     include Get
     include GetHealthPublicInsurance
     include Create
     include Update
-
-    attr_reader :orca_api
-
-    def initialize(orca_api)
-      @orca_api = orca_api
-    end
+    include UpdateHealthPublicInsurance
 
     private
 

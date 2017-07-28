@@ -3,7 +3,7 @@
 require_relative "get/result"
 
 module OrcaApi
-  class PatientService
+  class PatientService < Service
     # 患者情報の取得
     module Get
       def get(id, associations: [])

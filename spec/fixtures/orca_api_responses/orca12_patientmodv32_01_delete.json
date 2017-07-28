@@ -3,48 +3,37 @@
     "Request_Number": "01",
     "Response_Number": "02",
     "Karte_Uid": "karte_uid",
-    "Orca_Uid": "1a98b336-41e9-4d96-8d14-d794ae6888e5",
-    "Information_Date": "2017-07-04",
-    "Information_Time": "14:27:21",
+    "Orca_Uid": "00fba639-140f-4692-aa0f-ac391760182b",
+    "Information_Date": "2017-07-28",
+    "Information_Time": "22:56:31",
     "Api_Result": "000",
     "Api_Result_Message": "検索処理終了",
     "Reskey": "Acceptance_Info",
     "Patient_Information": {
-      "Patient_ID": "00003",
-      "WholeName": "テスト　華子",
-      "WholeName_inKana": "テスト　ハナコ",
-      "BirthDate": "1928-05-06",
-      "Sex": "2"
+      "Patient_ID": "00209",
+      "WholeName": "東京　太郎",
+      "WholeName_inKana": "ヒガシキョウ　タロウ",
+      "BirthDate": "1935-02-03",
+      "Sex": "1"
     },
     "HealthInsurance_Information": {
       "HealthInsurance_Info": [
         {
-          "InsuranceProvider_Id": "0000000004",
+          "InsuranceProvider_Id": "0000000001",
           "InsuranceProvider_Class": "039",
           "InsuranceProvider_Number": "39322011",
           "InsuranceProvider_WholeName": "後期高齢者",
-          "HealthInsuredPerson_Number": "１２３４５６７８",
-          "HealthInsuredPerson_Assistance": "3",
-          "HealthInsuredPerson_Assistance_Name": "３割",
-          "RelationToInsuredPerson": "1",
-          "HealthInsuredPerson_WholeName": "テスト　華子",
-          "Certificate_StartDate": "2013-05-01",
-          "Certificate_ExpiredDate": "9999-12-31",
-          "Certificate_CheckDate": "2013-05-24"
-        },
-        {
-          "InsuranceProvider_Id": "0000000003",
-          "InsuranceProvider_Class": "039",
-          "InsuranceProvider_Number": "39322011",
-          "InsuranceProvider_WholeName": "後期高齢者",
-          "HealthInsuredPerson_Number": "１２３４５６７８",
+          "HealthInsuredPerson_Number": "６５４３２１",
           "HealthInsuredPerson_Assistance": "1",
           "HealthInsuredPerson_Assistance_Name": "１割",
           "RelationToInsuredPerson": "1",
-          "HealthInsuredPerson_WholeName": "テスト　華子",
-          "Certificate_StartDate": "2011-07-01",
-          "Certificate_ExpiredDate": "2013-04-30",
-          "Certificate_CheckDate": "2011-07-05"
+          "HealthInsuredPerson_WholeName": "東京　太郎",
+          "Certificate_StartDate": "2017-01-01",
+          "Certificate_ExpiredDate": "2017-12-31",
+          "Certificate_GetDate": "2017-01-03",
+          "Certificate_CheckDate": "2017-07-26"
+        },
+        {
         },
         {
         },
@@ -127,21 +116,14 @@
     "PublicInsurance_Information": {
       "PublicInsurance_Info": [
         {
-          "PublicInsurance_Id": "0000000004",
-          "PublicInsurance_Class": "051",
-          "PublicInsurance_Name": "特定負有",
-          "PublicInsurer_Number": "51326023",
-          "Certificate_IssuedDate": "2011-10-01",
-          "Certificate_ExpiredDate": "9999-12-31",
-          "Certificate_CheckDate": "2012-01-30"
+          "PublicInsurance_Id": "0000000001",
+          "PublicInsurance_Class": "969",
+          "PublicInsurance_Name": "７５歳特例",
+          "Certificate_IssuedDate": "2017-01-02",
+          "Certificate_ExpiredDate": "2017-01-31",
+          "Certificate_CheckDate": "2017-05-30"
         },
         {
-          "PublicInsurance_Id": "0000000006",
-          "PublicInsurance_Class": "967",
-          "PublicInsurance_Name": "高額（一般",
-          "Certificate_IssuedDate": "2011-10-01",
-          "Certificate_ExpiredDate": "9999-12-31",
-          "Certificate_CheckDate": "2012-04-26"
         },
         {
         },
@@ -264,100 +246,25 @@
     "HealthInsurance_Combination_Information": {
       "HealthInsurance_Combination_Info": [
         {
-          "Insurance_Combination_Number": "0012",
-          "Insurance_Combination_Rate_Admission": "0.30",
-          "Insurance_Combination_Rate_Outpatient": "0.30",
-          "Insurance_Combination_StartDate": "2013-05-01",
-          "Insurance_Combination_ExpiredDate": "9999-12-31",
-          "InsuranceProvider_Id": "0000000004",
-          "InsuranceProvider_Class": "039",
-          "InsuranceProvider_Number": "39322011",
-          "InsuranceProvider_WholeName": "後期高齢者",
-          "HealthInsuredPerson_Number": "１２３４５６７８",
-          "HealthInsuredPerson_Assistance": "3",
-          "HealthInsuredPerson_Assistance_Name": "３割",
-          "RelationToInsuredPerson": "1",
-          "PublicInsurance_Info": [
-            {
-              "PublicInsurance_Id": "0000000004",
-              "PublicInsurance_Class": "051",
-              "PublicInsurance_Name": "特定負有",
-              "PublicInsurer_Number": "51326023",
-              "Rate_Admission": "0.00",
-              "Money_Admission": "0",
-              "Rate_Outpatient": "0.00",
-              "Money_Outpatient": "0"
-            },
-            {
-            },
-            {
-            },
-            {
-            }
-          ]
-        },
-        {
-          "Insurance_Combination_Number": "0011",
-          "Insurance_Combination_Rate_Admission": "0.30",
-          "Insurance_Combination_Rate_Outpatient": "0.30",
-          "Insurance_Combination_StartDate": "2013-05-01",
-          "Insurance_Combination_ExpiredDate": "9999-12-31",
-          "InsuranceProvider_Id": "0000000004",
-          "InsuranceProvider_Class": "039",
-          "InsuranceProvider_Number": "39322011",
-          "InsuranceProvider_WholeName": "後期高齢者",
-          "HealthInsuredPerson_Number": "１２３４５６７８",
-          "HealthInsuredPerson_Assistance": "3",
-          "HealthInsuredPerson_Assistance_Name": "３割",
-          "RelationToInsuredPerson": "1"
-        },
-        {
-          "Insurance_Combination_Number": "0007",
+          "Insurance_Combination_Number": "0001",
           "Insurance_Combination_Rate_Admission": "0.10",
           "Insurance_Combination_Rate_Outpatient": "0.10",
-          "Insurance_Combination_StartDate": "2011-10-01",
-          "Insurance_Combination_ExpiredDate": "2013-04-30",
-          "InsuranceProvider_Id": "0000000003",
+          "Insurance_Combination_StartDate": "2017-01-01",
+          "Insurance_Combination_ExpiredDate": "2017-12-31",
+          "InsuranceProvider_Id": "0000000001",
           "InsuranceProvider_Class": "039",
           "InsuranceProvider_Number": "39322011",
           "InsuranceProvider_WholeName": "後期高齢者",
-          "HealthInsuredPerson_Number": "１２３４５６７８",
-          "HealthInsuredPerson_Assistance": "1",
-          "HealthInsuredPerson_Assistance_Name": "１割",
-          "RelationToInsuredPerson": "1",
-          "PublicInsurance_Info": [
-            {
-              "PublicInsurance_Id": "0000000004",
-              "PublicInsurance_Class": "051",
-              "PublicInsurance_Name": "特定負有",
-              "PublicInsurer_Number": "51326023",
-              "Rate_Admission": "0.00",
-              "Money_Admission": "0",
-              "Rate_Outpatient": "0.00",
-              "Money_Outpatient": "0"
-            },
-            {
-            },
-            {
-            },
-            {
-            }
-          ]
-        },
-        {
-          "Insurance_Combination_Number": "0004",
-          "Insurance_Combination_Rate_Admission": "0.10",
-          "Insurance_Combination_Rate_Outpatient": "0.10",
-          "Insurance_Combination_StartDate": "2011-07-01",
-          "Insurance_Combination_ExpiredDate": "2013-04-30",
-          "InsuranceProvider_Id": "0000000003",
-          "InsuranceProvider_Class": "039",
-          "InsuranceProvider_Number": "39322011",
-          "InsuranceProvider_WholeName": "後期高齢者",
-          "HealthInsuredPerson_Number": "１２３４５６７８",
+          "HealthInsuredPerson_Number": "６５４３２１",
           "HealthInsuredPerson_Assistance": "1",
           "HealthInsuredPerson_Assistance_Name": "１割",
           "RelationToInsuredPerson": "1"
+        },
+        {
+        },
+        {
+        },
+        {
         },
         {
         },

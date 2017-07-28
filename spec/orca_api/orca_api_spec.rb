@@ -163,4 +163,11 @@ RSpec.describe OrcaApi::OrcaApi do
     it { is_expected.to be_instance_of(OrcaApi::PatientService) }
     its(:orca_api) { is_expected.to eq(orca_api) }
   end
+
+  describe "#new_insurance_service" do
+    subject { orca_api.new_insurance_service }
+
+    it { is_expected.to be_instance_of(OrcaApi::InsuranceService) }
+    its(:orca_api) { is_expected.to eq(orca_api) }
+  end
 end
