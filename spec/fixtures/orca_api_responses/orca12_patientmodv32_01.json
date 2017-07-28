@@ -6,8 +6,8 @@
     "Orca_Uid": "1a98b336-41e9-4d96-8d14-d794ae6888e5",
     "Information_Date": "2017-07-04",
     "Information_Time": "14:27:21",
-    "Api_Result": "E50",
-    "Api_Result_Message": "保険・公費にエラーがあります。",
+    "Api_Result": "000",
+    "Api_Result_Message": "検索処理終了",
     "Reskey": "Acceptance_Info",
     "Patient_Information": {
       "Patient_ID": "00003",
@@ -652,112 +652,6 @@
         {
         },
         {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        },
-        {
-        }
-      ]
-    },
-    "Patient_Message_Information": {
-      "Patient_Message_Info": [
-        {
-          "Patient_Result": "APP2",
-          "Patient_Result_Message": "967 高額（一般"
         },
         {
         },
