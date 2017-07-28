@@ -1,0 +1,20 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "03",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "00fba639-140f-4692-aa0f-ac391760182b",
+    "Information_Date": "2017-07-28",
+    "Information_Time": "22:56:31",
+    "Api_Result": "000",
+    "Api_Result_Message": "登録処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00209",
+      "WholeName": "東京　太郎",
+      "WholeName_inKana": "ヒガシキョウ　タロウ",
+      "BirthDate": "1935-02-03",
+      "Sex": "1"
+    }
+  }
+}

@@ -6,6 +6,7 @@ require_relative "patient_service/get"
 require_relative "patient_service/get_health_public_insurance"
 require_relative "patient_service/create"
 require_relative "patient_service/update"
+require_relative "patient_service/update_health_public_insurance"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
@@ -14,6 +15,7 @@ module OrcaApi
     include GetHealthPublicInsurance
     include Create
     include Update
+    include UpdateHealthPublicInsurance
 
     private
 

@@ -33,7 +33,6 @@ RSpec.describe OrcaApi::PatientService, "::Update" do
           expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
           expect(req["Patient_ID"]).to eq(res01["Patient_Information"]["Patient_ID"])
           expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-          # TODO: これ、1の結果に引数をdeep_mergeしたものでないといけない。そうしないとクリアされてしまう。クリアしたければ、全部指定すればOK。
           expect(req["Patient_Information"]).to eq(updated_response_json.first[1]["Patient_Information"])
 
           updated_response_json

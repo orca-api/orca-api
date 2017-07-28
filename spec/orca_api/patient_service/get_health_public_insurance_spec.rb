@@ -47,7 +47,7 @@ RSpec.describe OrcaApi::PatientService, "::GetHealthPublicInsurance" do
         PublicInsurance_Information
         HealthInsurance_Combination_Information
       ).each do |name|
-        describe "[#{name}]" do
+        describe "[\"#{name}\"]" do
           subject { super()[name] }
 
           it { is_expected.to eq(response_json.first[1][name]) }
