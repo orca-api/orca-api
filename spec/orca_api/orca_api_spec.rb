@@ -157,17 +157,17 @@ RSpec.describe OrcaApi::OrcaApi do
     end
   end
 
-  describe "#new_patient_service" do
-    subject { orca_api.new_patient_service }
+  [
+    ["new_patient_service", OrcaApi::PatientService],
+    ["new_insurance_service", OrcaApi::InsuranceService],
+    ["new_department_service", OrcaApi::DepartmentService],
+    ["new_physician_service", OrcaApi::PhysicianService],
+  ].each do |method_name, service_class|
+    describe "##{method_name}" do
+      subject { orca_api.send(method_name) }
 
-    it { is_expected.to be_instance_of(OrcaApi::PatientService) }
-    its(:orca_api) { is_expected.to eq(orca_api) }
-  end
-
-  describe "#new_insurance_service" do
-    subject { orca_api.new_insurance_service }
-
-    it { is_expected.to be_instance_of(OrcaApi::InsuranceService) }
-    its(:orca_api) { is_expected.to eq(orca_api) }
+      it { is_expected.to be_instance_of(service_class) }
+      its(:orca_api) { is_expected.to eq(orca_api) }
+    end
   end
 end
