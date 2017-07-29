@@ -21,7 +21,7 @@ module OrcaApi
       end
     end
 
-    attr_reader :raw
+    attr_reader :raw, :body
     json_attr_reader :Api_Result, :Api_Result_Message, :Request_Number, :Response_Number, :Karte_Uid, :Orca_Uid
 
     def initialize(raw)

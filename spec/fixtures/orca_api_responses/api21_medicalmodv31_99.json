@@ -1,0 +1,17 @@
+{
+  "medicalv3res1": {
+    "Request_Number": "99",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "ff7b3f41-9967-4184-8dd3-2e215f6fd0ac",
+    "Information_Date": "2017-07-31",
+    "Information_Time": "15:08:11",
+    "Api_Result": "000",
+    "Api_Result_Message": "解除処理終了",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2017-07-31",
+    "Patient_Information": {
+      "Patient_ID": "4"
+    }
+  }
+}
