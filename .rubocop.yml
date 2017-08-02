@@ -144,3 +144,11 @@ Style/BracesAroundHashParameters:
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
   Enabled: false
+
+Style/NegatedWhile:
+  Enabled: false
+
+# Configuration parameters: EnforcedStyle, SupportedStyles.
+# SupportedStyles: leading, trailing
+Layout/DotPosition:
+  Enabled: false

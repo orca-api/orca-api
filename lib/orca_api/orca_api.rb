@@ -12,6 +12,8 @@ require_relative "result"
 
 require_relative "patient_service"
 require_relative "insurance_service"
+require_relative "department_service"
+require_relative "physician_service"
 
 module OrcaApi
   # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
@@ -66,12 +68,16 @@ module OrcaApi
       }
     end
 
-    def new_patient_service
-      PatientService.new(self)
-    end
-
-    def new_insurance_service
-      InsuranceService.new(self)
+    factory_methods = [
+      ["new_patient_service", PatientService],
+      ["new_insurance_service", InsuranceService],
+      ["new_department_service", DepartmentService],
+      ["new_physician_service", PhysicianService],
+    ]
+    factory_methods.each do |name, klass|
+      define_method(name) do
+        klass.new(self)
+      end
     end
   end
 end

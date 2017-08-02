@@ -1,0 +1,585 @@
+{
+  "medicalv3res3": {
+    "Request_Number": "04",
+    "Response_Number": "05",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c3497378-9f35-4d27-9a7a-53c38fad7584",
+    "Information_Date": "2017-07-31",
+    "Information_Time": "11:20:44",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2017-07-31",
+    "Base_Date": "2017-07-31",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "オルカ　太郎",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0009",
+        "Insurance_Combination_Rate": "1.0",
+        "InsuranceProvider_Class": "971",
+        "InsuranceProvider_WholeName": "労災保険",
+        "HealthInsuredPerson_Symbol": "短期給付"
+      }
+    },
+    "Medical_Information": {
+      "Medical_Info": [
+        {
+          "Medical_Class_Group": "12",
+          "Medical_Class": "120",
+          "Medical_Class_Name": "再診料",
+          "Medical_Class_Number": "1",
+          "Medical_Point": "145",
+          "Medication_Info": [
+            {
+              "Medication_Code": "101120010",
+              "Medication_Name": "再診料",
+              "Medication_Number": "1"
+            },
+            {
+              "Medication_Code": "112016070",
+              "Medication_Name": "時間外対応加算１",
+              "Medication_Number": "1"
+            },
+            {
+              "Medication_Code": "112015770",
+              "Medication_Name": "明細書発行体制等加算",
+              "Medication_Number": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "Medical_Class_Group": "12",
+          "Medical_Class": "120",
+          "Medical_Class_Name": "再診料",
+          "Medical_Class_Number": "1",
+          "Medical_Point": "52",
+          "Medication_Info": [
+            {
+              "Medication_Code": "112011010",
+              "Medication_Name": "外来管理加算",
+              "Medication_Number": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "Cd_Information": {
+      "Ic_Code": "01",
+      "Ic_Code_Name": "現金",
+      "Ic_Money": "2057",
+      "Ad_Money1": "0",
+      "Ad_Money2": "0",
+      "Ac_Money": "2057",
+      "Total_Ac_Money": "2057",
+      "Cd_Ac_Information": {
+        "Ai_Money": "667",
+        "Oe_Money": "0",
+        "Dg_Smoney": "0",
+        "Om_Smoney": "0",
+        "Pi_Smoney": "0",
+        "Lsi_Total_Money": "1390"
+      },
+      "Ac_Point_Information": {
+        "Ac_Ttl_Point": "58",
+        "Ac_Point_Detail": [
+          {
+            "AC_Point_Name": "初・再診料",
+            "AC_Point": "58"
+          },
+          {
+            "AC_Point_Name": "医学管理等",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "在宅療養",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "投薬",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "注射",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "処置",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "手術",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "麻酔",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "検査",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "画像診断",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "リハビリ",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "精神科専門",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "放射線治療",
+            "AC_Point": "0"
+          },
+          {
+            "AC_Point_Name": "病理診断",
+            "AC_Point": "0"
+          },
+          {
+          },
+          {
+          }
+        ]
+      }
+    }
+  }
+}
