@@ -27,7 +27,36 @@ RSpec.configure do |config|
   end
 end
 
-def load_orca_api_response_json(basename)
+def trim_response(hash)
+  result = {}
+  hash.each do |k, v|
+    case v
+    when Hash
+      result[k] = trim_response(v)
+    when Array
+      found = false
+      v.reverse.each do |v2|
+        if !v2.empty?
+          found = true
+        end
+        if found
+          result[k] ||= []
+          result[k].unshift(trim_response(v2))
+        end
+      end
+    else
+      result[k] = v
+    end
+  end
+  result
+end
+
+def load_orca_api_response_json(basename, trim = true)
   json_path = File.expand_path(File.join("../fixtures/orca_api_responses", basename), __FILE__)
-  JSON.parse(File.read(json_path))
+  res = JSON.parse(File.read(json_path))
+  if trim
+    trim_response(res)
+  else
+    res
+  end
 end
