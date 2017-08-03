@@ -98,7 +98,8 @@ module OrcaApi
           end
         end
 
-        if res.medical_information["Medical_Info"].any? { |i| i["Medical_Delete_Number"] } && !diagnosis["Delete_Number_Info"]
+        can_delete = res.medical_information["Medical_Info"].any? { |i| i["Medical_Delete_Number"] }
+        if can_delete && !diagnosis["Delete_Number_Info"]
           return EmptyDeleteNumberInfoError.new(res.raw)
         end
 
@@ -110,7 +111,7 @@ module OrcaApi
             "Patient_ID" => res.patient_information["Patient_ID"],
             "Perform_Date" => res.body["Perform_Date"],
             "Orca_Uid" => res.orca_uid,
-            "Medical_Mode" => "1",
+            "Medical_Mode" => (can_delete && diagnosis["Delete_Number_Info"] ? "1" : nil),
             "Delete_Number_Info" => diagnosis["Delete_Number_Info"],
             "Ic_Code" => diagnosis["Ic_Code"],
             "Ic_Money" => diagnosis["Ic_Money"],

@@ -152,6 +152,8 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
             expect(req["Perform_Time"]).to be_nil
             expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
             expect(req["Patient_Mode"]).to be_nil
+            expect(req["Medical_Mode"]).to be_nil
+            expect(req["Delete_Number_Info"]).to be_nil
             expect(req["Ic_Code"]).to eq(diagnosis["Ic_Code"])
             expect(req["Ic_Money"]).to eq(diagnosis["Ic_Money"])
             expect(req["Ad_Money1"]).to eq(diagnosis["Ad_Money1"])
@@ -399,6 +401,8 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
             expect(req["Perform_Time"]).to be_nil
             expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
             expect(req["Patient_Mode"]).to be_nil
+            expect(req["Medical_Mode"]).to be_nil
+            expect(req["Delete_Number_Info"]).to be_nil
             expect(req["Ic_Code"]).to be_nil
             expect(req["Ic_Money"]).to be_nil
             expect(req["Ad_Money1"]).to be_nil
@@ -744,6 +748,8 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
               expect(req["Perform_Time"]).to be_nil
               expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
               expect(req["Patient_Mode"]).to be_nil
+              expect(req["Medical_Mode"]).to be_nil
+              expect(req["Delete_Number_Info"]).to be_nil
               expect(req["Ic_Code"]).to eq(diagnosis["Ic_Code"])
               expect(req["Ic_Money"]).to eq(diagnosis["Ic_Money"])
               expect(req["Ad_Money1"]).to eq(diagnosis["Ad_Money1"])
@@ -1136,6 +1142,8 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
               expect(req["Perform_Time"]).to be_nil
               expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
               expect(req["Patient_Mode"]).to be_nil
+              expect(req["Medical_Mode"]).to be_nil
+              expect(req["Delete_Number_Info"]).to be_nil
               expect(req["Ic_Code"]).to eq(diagnosis["Ic_Code"])
               expect(req["Ic_Money"]).to eq(diagnosis["Ic_Money"])
               expect(req["Ad_Money1"]).to eq(diagnosis["Ad_Money1"])
