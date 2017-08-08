@@ -1,0 +1,245 @@
+{
+  "medicalv3res1": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c3497378-9f35-4d27-9a7a-53c38fad7584",
+    "Information_Date": "2017-07-31",
+    "Information_Time": "11:18:20",
+    "Api_Result": "W00",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2017-07-31",
+    "Perform_Time": "10:30:00",
+    "Temp_Medical_Flag": "False",
+    "Last_Date": "2014-06-13",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "オルカ　太郎",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0009",
+        "InsuranceProvider_Class": "971",
+        "InsuranceProvider_WholeName": "労災保険",
+        "HealthInsuredPerson_Symbol": "短期給付",
+        "Certificate_StartDate": "2013-10-10",
+        "Certificate_ExpiredDate": "9999-12-31"
+      }
+    },
+    "Medical_OffTime": "0",
+    "Medical_Information": [
+      {
+        "Medical_Info": [
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+                "Medication_Code": "101120010",
+                "Medication_Name": "再診料"
+              },
+              {
+                "Medication_Code": "112016070",
+                "Medication_Name": "時間外対応加算１"
+              },
+              {
+                "Medication_Code": "112015770",
+                "Medication_Name": "明細書発行体制等加算"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+                "Medication_Code": "112011010",
+                "Medication_Name": "外来管理加算"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ]
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ],
+    "Medical_Message_Information": {
+      "Medical_Warning_Info": [
+        {
+          "Medical_Warning": "W01",
+          "Medical_Warning_Message": "診療日を設定しました。"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
