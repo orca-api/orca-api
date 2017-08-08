@@ -9,6 +9,37 @@ module OrcaApi
 
     # 診療行為の登録
     module CreateMedicalPractice
+      def get_examination_fee(id, diagnosis)
+        body = {
+          "medicalv3req1" => {
+            "Request_Number" => "01",
+            "Karte_Uid" => orca_api.karte_uid,
+            "Patient_ID" => id.to_s,
+            "Perform_Date" => diagnosis["Perform_Date"],
+            "Perform_Time" => diagnosis["Perform_Time"],
+            "Orca_Uid" => "",
+            "Diagnosis_Information" => diagnosis["Diagnosis_Information"],
+          },
+        }
+        res = Result.new(orca_api.call("/api21/medicalmodv31", body: body))
+        if !res.ok?
+          return res
+        end
+
+        body = {
+          "medicalv3req1" => {
+            "Request_Number" => "99",
+            "Karte_Uid" => orca_api.karte_uid,
+            "Patient_ID" => id.to_s,
+            "Perform_Date" => res.body["Perform_Date"],
+            "Orca_Uid" => res.orca_uid,
+          },
+        }
+        orca_api.call("/api21/medicalmodv31", body: body)
+
+        res
+      end
+
       def create_medical_practice(id, diagnosis)
         locked = false
 

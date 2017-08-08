@@ -4,6 +4,88 @@ require "spec_helper"
 require_relative "shared_examples"
 
 RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_service_with_orca_api_mock: true do
+  describe "#get_examination_fee" do
+    let(:patient_id) { 4 }
+    let(:diagnosis) {
+      {
+        "Perform_Date" => "2017-07-31",
+        "Perform_Time" => "10:30:00",
+        "Diagnosis_Information" => {
+          "Department_Code" => "01",
+          "Physician_Code" => "10001",
+          "HealthInsurance_Information" => {
+            "Insurance_Combination_Number" => "0009",
+          },
+          "Medical_Information" => {
+            "OffTime" => "0",
+            "Doctors_Fee" => "02",
+            "Medical_Class" => "",
+            "Medical_Class_Name" => "",
+            "Medication_Info" => {
+              "Medication_Code" => "",
+              "Medication_Name" => "",
+            },
+          },
+        },
+      }
+    }
+    let(:args) {
+      [patient_id, diagnosis]
+    }
+    let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01.json") }
+
+    subject { patient_service.get_examination_fee(*args) }
+
+    before do
+      count = 0
+      prev_response_json = nil
+      expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+        count += 1
+        case count
+        when 1
+          expect(path).to eq("/api21/medicalmodv31")
+
+          req = body["medicalv3req1"]
+          expect(req["Request_Number"]).to eq("01")
+          expect(req["Karte_Uid"]).to eq("karte_uid")
+          expect(req["Patient_ID"]).to eq(patient_id.to_s)
+          expect(req["Perform_Date"]).to eq(diagnosis["Perform_Date"])
+          expect(req["Perform_Time"]).to eq(diagnosis["Perform_Time"])
+          expect(req["Orca_Uid"]).to eq("")
+          expect(req["Diagnosis_Information"]).to eq(diagnosis["Diagnosis_Information"])
+
+          prev_response_json = response_json
+          prev_response_json
+        when 2
+          expect(path).to eq("/api21/medicalmodv31")
+
+          req = body["medicalv3req1"]
+          res_body = prev_response_json.first[1]
+          expect(req["Request_Number"]).to eq("99")
+          expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+          expect(req["Patient_ID"]).to eq(patient_id.to_s)
+          expect(req["Perform_Date"]).to eq(res_body["Perform_Date"])
+          expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+
+          load_orca_api_response_json("api21_medicalmodv31_99.json")
+        end
+      }
+    end
+
+    its("ok?") { is_expected.to be true }
+    its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+
+    context "Perform_Dateが未指定であるためレスポンスがW00" do
+      let(:diagnosis) {
+        super().tap { |d| d.delete("Perform_Date") }
+      }
+      let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_W00.json") }
+
+      its("ok?") { is_expected.to be true }
+      its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+    end
+  end
+
   describe "#create_medical_practice" do
     let(:args) {
       [patient_id, diagnosis]

@@ -6,6 +6,10 @@ module OrcaApi
       # 診療行為の登録の結果を表現するクラス
       class Result < ::OrcaApi::PatientService::Result
         json_attr_reader :Invoice_Number, :Medical_Information, :Cd_Information
+
+        def ok?
+          api_result == "W00" || super()
+        end
       end
 
       # 診療行為が未指定であることを表現するクラス

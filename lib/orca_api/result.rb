@@ -50,7 +50,7 @@ module OrcaApi
 
     def initialize(raw)
       @raw = self.class.trim_response(raw)
-      @body = raw.first[1]
+      @body = @raw.first[1]
     end
 
     def ok?
