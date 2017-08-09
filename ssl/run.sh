@@ -14,14 +14,14 @@ openssl req \
         -subj '/O=ORCA-API'
 openssl ca \
         -config "$(pwd)/openssl.cnf" \
-	    -create_serial \
+        -create_serial \
         -out ca/cacert.pem \
         -days 1095 \
         -batch \
-		-keyfile ca/private/cakey.pem \
+        -keyfile ca/private/cakey.pem \
         -selfsign \
-		-extensions v3_ca \
-		-infiles ca/careq.pem
+        -extensions v3_ca \
+        -infiles ca/careq.pem
 
 # server cert
 openssl req \
