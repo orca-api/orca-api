@@ -1,0 +1,36 @@
+{
+  "acceptres": {
+    "Information_Date": "2017-08-09",
+    "Information_Time": "14:48:16",
+    "Api_Result": "00",
+    "Api_Result_Message": "受付登録終了",
+    "Reskey": "Acceptance_Info",
+    "Acceptance_Date": "2017-08-09",
+    "Acceptance_Time": "14:50:13",
+    "Acceptance_Id": "00006",
+    "Department_Code": "01",
+    "Department_WholeName": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "鈴木有二",
+    "Medical_Information": "01",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "山田太郎",
+      "WholeName_inKana": "ヤマダタロウ",
+      "BirthDate": "1980-07-07",
+      "Sex": "1",
+      "HealthInsurance_Information": [
+        {
+          "Insurance_Combination_Number": "0001",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_WholeName": "協会",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "山田太郎",
+          "Certificate_StartDate": "2017-07-12",
+          "Certificate_ExpiredDate": "9999-12-31"
+        }
+      ]
+    }
+  }
+}
