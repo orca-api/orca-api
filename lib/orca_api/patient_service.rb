@@ -8,6 +8,7 @@ require_relative "patient_service/create"
 require_relative "patient_service/update"
 require_relative "patient_service/update_health_public_insurance"
 require_relative "patient_service/create_medical_practice"
+require_relative "patient_service/check_contraindication"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
@@ -18,6 +19,7 @@ module OrcaApi
     include Update
     include UpdateHealthPublicInsurance
     include CreateMedicalPractice
+    include CheckContraindication
 
     private
 
