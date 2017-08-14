@@ -4,6 +4,7 @@ require_relative "service"
 require_relative "acceptance_service/result"
 
 module OrcaApi
+  # 受付業務を扱うクラス
   class AcceptanceService < Service
     # https://www.orca.med.or.jp/receipt/tec/api/acceptancelst.html
     def list(klass: "03", base_date: nil, department_code: nil, physician_code: nil, medical_information: nil)
@@ -66,6 +67,11 @@ module OrcaApi
       AcceptanceBuilder.new
     end
 
+    # AcceptanceService#createの引数を生成するクラス
+    #
+    #     AcceptanceBuilder.new.accept_at(Time.now).patient_id('00001').insurance_combination_number('01').to_h
+    #     # => { "Acceptance_Date" => "YYYY-MM-DD", "Acceptance_Time" => "HH:MM:SS", ... }
+    #
     class AcceptanceBuilder
       def initialize
         @data = {}

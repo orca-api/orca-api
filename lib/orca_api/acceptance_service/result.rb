@@ -7,6 +7,7 @@ module OrcaApi
     class Result < ::OrcaApi::Result
     end
 
+    # AcceptanceService#listメソッドの戻り値クラス
     class ListResult < Result
       def acceptance_date
         body["Acceptance_Date"]
