@@ -52,6 +52,17 @@ module OrcaApi
       unlock(locked_result)
     end
 
+    # 薬剤併用禁忌チェック
+    def check_contraindication(params)
+      body = {
+        "contraindication_checkreq" => {
+          "Request_Number" => "01",
+          "Karte_Uid" => orca_api.karte_uid,
+        }.merge(params),
+      }
+      CheckContraindicationResult.new(orca_api.call("/api01rv2/contraindicationcheckv2", body: body))
+    end
+
     private
 
     def call_request_number_01(diagnosis)

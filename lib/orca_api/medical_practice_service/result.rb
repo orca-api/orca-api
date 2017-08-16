@@ -3,8 +3,8 @@
 module OrcaApi
   class MedicalPracticeService < Service #:nodoc:
     # 診療行為の登録の結果を表現するクラス
-    class Result < ::OrcaApi::PatientService::Result
-      json_attr_reader :Invoice_Number, :Medical_Information, :Cd_Information
+    class Result < ::OrcaApi::Result
+      json_attr_reader :Patient_Information, :Invoice_Number, :Medical_Information, :Cd_Information
 
       def ok?
         api_result == "W00" || super()
@@ -35,6 +35,11 @@ module OrcaApi
       def message
         '削除可能な剤の削除指示が未指定です。'
       end
+    end
+
+    # 薬剤併用禁忌チェックの結果を表現するクラス
+    class CheckContraindicationResult < ::OrcaApi::Result
+      json_attr_reader :Perform_Month, :Patient_Information, :Medical_Information, :Symptom_Information
     end
   end
 end
