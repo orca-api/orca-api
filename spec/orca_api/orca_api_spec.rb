@@ -162,6 +162,7 @@ RSpec.describe OrcaApi::OrcaApi do
     ["new_insurance_service", OrcaApi::InsuranceService],
     ["new_department_service", OrcaApi::DepartmentService],
     ["new_physician_service", OrcaApi::PhysicianService],
+    ["new_medical_practice_service", OrcaApi::MedicalPracticeService],
   ].each do |method_name, service_class|
     describe "##{method_name}" do
       subject { orca_api.send(method_name) }

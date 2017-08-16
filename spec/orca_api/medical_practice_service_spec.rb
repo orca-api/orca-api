@@ -3,11 +3,8 @@
 require "spec_helper"
 require_relative "shared_examples"
 
-RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_service_with_orca_api_mock: true do
-  let(:patient_id) { 4 }
-  let(:args) {
-    [patient_id, diagnosis]
-  }
+RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
+  let(:service) { OrcaApi::MedicalPracticeService.new(orca_api) }
 
   def return_response_json(response_json)
     if response_json.is_a?(String)
@@ -23,7 +20,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
     req = body["medicalv3req1"]
     expect(req["Request_Number"]).to eq("01")
     expect(req["Karte_Uid"]).to eq("karte_uid")
-    expect(req["Patient_ID"]).to eq(patient_id.to_s)
+    expect(req["Patient_ID"]).to eq(diagnosis["Patient_ID"])
     expect(req["Perform_Date"]).to eq(diagnosis["Perform_Date"])
     expect(req["Perform_Time"]).to eq(diagnosis["Perform_Time"])
     expect(req["Orca_Uid"]).to eq("")
@@ -144,7 +141,6 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
     res_body = prev_response_json.first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
-    expect(req["Patient_ID"]).to eq(patient_id.to_s)
     expect(req["Perform_Date"]).to eq(res_body["Perform_Date"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
@@ -154,6 +150,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
   describe "#get_examination_fee" do
     let(:diagnosis) {
       {
+        "Patient_ID" => "4",
         "Perform_Date" => "2017-07-31",
         "Perform_Time" => "10:30:00",
         "Diagnosis_Information" => {
@@ -177,7 +174,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
     }
     let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01.json") }
 
-    subject { patient_service.get_examination_fee(*args) }
+    subject { service.get_examination_fee(diagnosis) }
 
     before do
       count = 0
@@ -212,6 +209,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
   describe "#calc_medical_practice_fee" do
     let(:diagnosis) {
       {
+        "Patient_ID" => "4",
         "Perform_Date" => "2017-07-31",
         "Perform_Time" => "10:30:00",
         "Base_Date" => "", # 収納発行日を診療日付以外とする時に設定
@@ -263,7 +261,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
       }
     }
 
-    subject { patient_service.calc_medical_practice_fee(*args) }
+    subject { service.calc_medical_practice_fee(diagnosis) }
 
     context "選択項目も削除可能な剤もない" do
       let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_04.json") }
@@ -318,7 +316,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         end
 
         its("ok?") { is_expected.to be false }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::CreateMedicalPractice::UnselectedError) }
+        it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
         its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
       end
@@ -401,7 +399,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         end
 
         its("ok?") { is_expected.to be false }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::CreateMedicalPractice::UnselectedError) }
+        it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
         its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
       end
@@ -480,7 +478,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         end
 
         its("ok?") { is_expected.to be false }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::CreateMedicalPractice::EmptyDeleteNumberInfoError) }
+        it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
       end
 
@@ -525,9 +523,10 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
   describe "#create_medical_practice" do
     let(:diagnosis) {
       {
+        "Base_Date" => "",
+        "Patient_ID" => "4",
         "Perform_Date" => "2017-07-31",
         "Perform_Time" => "10:30:00",
-        "Base_Date" => "",
         "Diagnosis_Information" => {
           "Department_Code" => "01",
           "Physician_Code" => "10001",
@@ -580,7 +579,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
       }
     }
 
-    subject { patient_service.create_medical_practice(*args) }
+    subject { service.create(diagnosis) }
 
     context "正常終了" do
       let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05.json") }
@@ -636,7 +635,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         end
 
         its("ok?") { is_expected.to be false }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::CreateMedicalPractice::UnselectedError) }
+        it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
         its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
       end
@@ -720,7 +719,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         end
 
         its("ok?") { is_expected.to be false }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::CreateMedicalPractice::UnselectedError) }
+        it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
         its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
       end
@@ -800,7 +799,7 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         end
 
         its("ok?") { is_expected.to be false }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::CreateMedicalPractice::EmptyDeleteNumberInfoError) }
+        it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
       end
 
@@ -841,5 +840,60 @@ RSpec.describe OrcaApi::PatientService, "::CreateMedicalPractice", patient_servi
         its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
       end
     end
+  end
+
+  describe "#check_contraindication" do
+    let(:patient_id) { 1 }
+    let(:params) {
+      {
+        "Patient_ID" => patient_id.to_s,
+        "Perform_Month" => "2017-08", # 診療年月(省略可能。未設定はシステム日付)
+        "Check_Term" => "", # チェック月数(省略可能。未設定はシステム管理の相互作用チェック期間)
+        # チェック薬剤情報(最大30件)
+        "Medical_Information" => [
+          {
+            "Medication_Code" => "620002477", # 薬剤コード
+            # "Medication_Name" => "ベザレックスＳＲ錠１００　１００ｍｇ", # 薬剤名称(省略可能)
+          },
+          {
+            "Medication_Code" => "610422262", # 薬剤コード
+            # "Medication_Name" => "クレストール錠２．５ｍｇ", # 薬剤名称(省略可能)
+          },
+        ],
+      }
+    }
+    let(:response_json) { load_orca_api_response_json("api01rv2_contraindicationcheckv2.json") }
+
+    subject { service.check_contraindication(params) }
+
+    before do
+      count = 0
+      prev_response_json = nil
+      expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+        count += 1
+        prev_response_json =
+          case count
+          when 1
+            expect(path).to eq("/api01rv2/contraindicationcheckv2")
+
+            req = body["contraindication_checkreq"]
+            expect(req["Request_Number"]).to eq("01")
+            expect(req["Karte_Uid"]).to eq("karte_uid")
+            expect(req["Patient_ID"]).to eq(patient_id.to_s)
+            expect(req["Perform_Month"]).to eq(params["Perform_Month"])
+            expect(req["Check_Term"]).to eq(params["Check_Term"])
+            expect(req["Medical_Information"]).to eq(params["Medical_Information"])
+
+            response_json
+          end
+        prev_response_json
+      }
+    end
+
+    its("ok?") { is_expected.to be true }
+    its(:perform_month) { is_expected.to eq(response_json.first[1]["Perform_Month"]) }
+    its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+    its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+    its(:symptom_information) { is_expected.to eq(response_json.first[1]["Symptom_Information"]) }
   end
 end
