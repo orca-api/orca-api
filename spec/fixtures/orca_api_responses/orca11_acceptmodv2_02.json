@@ -1,0 +1,35 @@
+{
+  "acceptres": {
+    "Information_Date": "2017-08-09",
+    "Information_Time": "11:51:00",
+    "Api_Result": "K1",
+    "Api_Result_Message": "受付削除終了",
+    "Api_Warning_Message_Information": [
+      {
+        "Api_Warning_Message": "受付日を自動設定しました"
+      },
+      {
+        "Api_Warning_Message": "受付時間を自動設定しました"
+      },
+      {
+        "Api_Warning_Message": "診療内容情報を自動設定しました"
+      }
+    ],
+    "Reskey": "Acceptance_Info",
+    "Acceptance_Date": "2017-08-09",
+    "Acceptance_Time": "12:05:29",
+    "Acceptance_Id": "00004",
+    "Department_Code": "01",
+    "Department_WholeName": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "鈴木有二",
+    "Medical_Information": "01",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "山田太郎",
+      "WholeName_inKana": "ヤマダタロウ",
+      "BirthDate": "1980-07-07",
+      "Sex": "1"
+    }
+  }
+}
