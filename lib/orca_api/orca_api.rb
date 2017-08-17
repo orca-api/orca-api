@@ -14,11 +14,8 @@ require_relative "patient_service"
 require_relative "insurance_service"
 require_relative "department_service"
 require_relative "physician_service"
-<<<<<<< HEAD
 require_relative "medical_practice_service"
-=======
 require_relative "acceptance_service"
->>>>>>> 受付サービスを追加した
 
 module OrcaApi
   # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
