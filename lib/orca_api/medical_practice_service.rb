@@ -142,9 +142,10 @@ module OrcaApi
           "Medical_Mode" => (can_delete && params["Delete_Number_Info"] ? "1" : nil),
           "Delete_Number_Info" => params["Delete_Number_Info"],
           "Ic_Code" => params["Ic_Code"],
-          "Ic_Money" => params["Ic_Money"],
-          "Ad_Money1" => params["Ad_Money1"],
-          "Ad_Money2" => params["Ad_Money2"],
+          "Ic_Request_Code" => params["Ic_Request_Code"],
+          "Ic_All_Code" => params["Ic_All_Code"],
+          "Cd_Information" => params["Cd_Information"],
+          "Print_Information" => params["Print_Information"],
         },
       }
       Result.new(orca_api.call("/api21/medicalmodv33", body: body))
@@ -161,9 +162,10 @@ module OrcaApi
           "Perform_Date" => res.body["Perform_Date"],
           "Orca_Uid" => res.orca_uid,
           "Ic_Code" => params["Ic_Code"],
-          "Ic_Money" => params["Ic_Money"],
-          "Ad_Money1" => params["Ad_Money1"],
-          "Ad_Money2" => params["Ad_Money2"],
+          "Ic_Request_Code" => params["Ic_Request_Code"],
+          "Ic_All_Code" => params["Ic_All_Code"],
+          "Cd_Information" => params["Cd_Information"],
+          "Print_Information" => params["Print_Information"],
         },
       }
       Result.new(orca_api.call("/api21/medicalmodv33", body: body))

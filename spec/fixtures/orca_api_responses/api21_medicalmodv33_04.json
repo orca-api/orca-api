@@ -502,83 +502,154 @@
     "Cd_Information": {
       "Ic_Code": "01",
       "Ic_Code_Name": "現金",
-      "Ic_Money": "2057",
-      "Ad_Money1": "0",
-      "Ad_Money2": "0",
-      "Ac_Money": "2057",
+      "Ic_Request_Code": "2",
+      "Ic_Request_Code_Name": "今回分・伝票の古い未収順に入金",
       "Total_Ac_Money": "2057",
-      "Cd_Ac_Information": {
-        "Ai_Money": "667",
-        "Oe_Money": "0",
-        "Dg_Smoney": "0",
-        "Om_Smoney": "0",
-        "Pi_Smoney": "0",
-        "Lsi_Total_Money": "1390"
+      "Total_Ic_Money": "2057",
+      "Max_Ac_Money": "2057",
+      "Cd_Information2": {
+        "Ic_Money": "2057",
+        "Ad_Money1": "0",
+        "Ad_Money2": "0",
+        "Ac_Money": "2057",
+        "Cd_Ac_Information": {
+          "Ai_Money": "667",
+          "Oe_Money": "0",
+          "Dg_Smoney": "0",
+          "Om_Smoney": "0",
+          "Pi_Smoney": "0",
+          "Lsi_Total_Money": "1390"
+        },
+        "Ac_Point_Information": {
+          "Ac_Ttl_Point": "58",
+          "Ac_Point_Detail": [
+            {
+              "Ac_Point_Name": "初・再診料",
+              "Ac_Point": "58",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "医学管理等",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "在宅療養",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "投薬",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "注射",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "処置",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "手術",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "麻酔",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "検査",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "画像診断",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "リハビリ",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "精神科専門",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "放射線治療",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "病理診断",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        "Oe_Etc_Information": {
+          "Oe_Etc_Detail": [
+            {
+              "Oe_Etc_Name": "診断書料１",
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Name": "その他",
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            }
+          ],
+          "Tax_In_Oe_Etc_Ttl_Money_Taxable": "0"
+        }
       },
-      "Ac_Point_Information": {
-        "Ac_Ttl_Point": "58",
-        "Ac_Point_Detail": [
-          {
-            "AC_Point_Name": "初・再診料",
-            "AC_Point": "58"
-          },
-          {
-            "AC_Point_Name": "医学管理等",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "在宅療養",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "投薬",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "注射",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "処置",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "手術",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "麻酔",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "検査",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "画像診断",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "リハビリ",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "精神科専門",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "放射線治療",
-            "AC_Point": "0"
-          },
-          {
-            "AC_Point_Name": "病理診断",
-            "AC_Point": "0"
-          },
-          {
-          },
-          {
-          }
-        ]
+      "Old_Total_Information": {
+        "Old_Total_Re_Money": "0",
+        "Old_Total_Ov_Money": "0"
       }
     }
   }
