@@ -55,14 +55,20 @@ RSpec.describe OrcaApi::Result do
     let(:response) { haori_ok_response }
 
     its(:raw) { is_expected.to eq(response) }
+    its(:body) { is_expected.to eq(response.first[1]) }
+    its("ok?") { is_expected.to be true }
+    its(:message) { is_expected.to eq("検索処理終了(000)") }
+
+    %i(api_result api_result_message request_number response_number karte_uid orca_uid).each do |sym|
+      it { is_expected.to be_respond_to(sym) }
+    end
+
     its(:api_result) { is_expected.to eq("000") }
     its(:api_result_message) { is_expected.to eq("検索処理終了") }
     its(:request_number) { is_expected.to eq("01") }
     its(:response_number) { is_expected.to eq("02") }
     its(:karte_uid) { is_expected.to eq("karte_uid") }
     its(:orca_uid) { is_expected.to eq("850a3c68-44a6-4306-a00e-f3306fdc6dad") }
-    its("ok?") { is_expected.to be true }
-    its(:message) { is_expected.to eq("検索処理終了(000)") }
   end
 
   context "HAORIの異常レスポンス" do
@@ -85,11 +91,13 @@ RSpec.describe OrcaApi::Result do
     its(:raw) { is_expected.to eq(response) }
     its(:api_result) { is_expected.to eq("00") }
     its(:api_result_message) { is_expected.to eq("処理終了") }
-    its(:request_number) { is_expected.to be_nil }
-    its(:response_number) { is_expected.to be_nil }
-    its(:karte_uid) { is_expected.to be_nil }
-    its(:orca_uid) { is_expected.to be_nil }
     its("ok?") { is_expected.to be true }
     its(:message) { is_expected.to eq("処理終了(00)") }
+
+    %w(request_number response_number karte_uid orca_uid).each do |name|
+      describe name do
+        it { expect { subject.send(name) }.to raise_error NoMethodError }
+      end
+    end
   end
 end
