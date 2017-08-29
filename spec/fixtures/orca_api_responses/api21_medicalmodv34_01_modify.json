@@ -1,0 +1,504 @@
+{
+  "medicalv3res4": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "f06f6d65-e664-4cbf-8866-b1b360dc2e83",
+    "Information_Date": "2017-08-29",
+    "Information_Time": "15:10:59",
+    "Api_Result": "000",
+    "Api_Result_Message": "確認処理終了",
+    "Reskey": "Medical Info",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1"
+    },
+    "Perform_Date": "2017-08-29",
+    "Invoice_Number": "0000857",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Sequential_Number": "1",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "オルカ　太郎",
+    "HealthInsurance_Information": {
+      "Insurance_Combination_Number": "0009",
+      "Insurance_Combination_Rate": "1.0",
+      "InsuranceProvider_Class": "971",
+      "InsuranceProvider_WholeName": "労災保険",
+      "HealthInsuredPerson_Symbol": "短期給付"
+    },
+    "Medical_Information": {
+      "Medical_Info": [
+        {
+          "Medical_Class_Group": "12",
+          "Medical_Class": "120",
+          "Medical_Class_Name": "再診料",
+          "Medical_Class_Number": "1",
+          "Medical_Point": "145",
+          "Medication_Info": [
+            {
+              "Medication_Code": "101120010",
+              "Medication_Name": "再診料",
+              "Medication_Number": "1"
+            },
+            {
+              "Medication_Code": "112016070",
+              "Medication_Name": "時間外対応加算１",
+              "Medication_Number": "1"
+            },
+            {
+              "Medication_Code": "112015770",
+              "Medication_Name": "明細書発行体制等加算",
+              "Medication_Number": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "Medical_Class_Group": "12",
+          "Medical_Class": "120",
+          "Medical_Class_Name": "再診料",
+          "Medical_Class_Number": "1",
+          "Medical_Point": "52",
+          "Medication_Info": [
+            {
+              "Medication_Code": "112011010",
+              "Medication_Name": "外来管理加算",
+              "Medication_Number": "1"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

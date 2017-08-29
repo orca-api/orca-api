@@ -14,7 +14,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     end
   end
 
-  def expect_request_number_01(path, body, response_json = "api21_medicalmodv31_01.json")
+  def expect_create_request_number_01(path, body, response_json = "api21_medicalmodv31_01.json")
     expect(path).to eq("/api21/medicalmodv31")
 
     req = body["medicalv3req1"]
@@ -36,7 +36,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     return_response_json(response_json)
   end
 
-  def expect_request_number_02(path, body, prev_response_json, response_json = "api21_medicalmodv32_02.json")
+  def expect_create_request_number_02(path, body, prev_response_json, response_json = "api21_medicalmodv32_02.json")
     expect(path).to eq("/api21/medicalmodv32")
 
     req = body["medicalv3req2"]
@@ -61,7 +61,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     return_response_json(response_json)
   end
 
-  def expect_request_number_03(path, body, prev_response_json, answer_index = nil, response_json = "api21_medicalmodv32_03.json")
+  def expect_create_request_number_03(path, body, prev_response_json,
+                                      answer_index = nil, response_json = "api21_medicalmodv32_03.json")
     expect(path).to eq("/api21/medicalmodv32")
 
     req = body["medicalv3req2"]
@@ -84,7 +85,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     return_response_json(response_json)
   end
 
-  def expect_request_number_04(path, body, prev_response_json, response_json = "api21_medicalmodv33_04.json")
+  def expect_create_request_number_04(path, body, prev_response_json, response_json = "api21_medicalmodv33_04.json")
     expect(path).to eq("/api21/medicalmodv33")
 
     req = body["medicalv3req3"]
@@ -113,7 +114,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     return_response_json(response_json)
   end
 
-  def expect_request_number_05(path, body, prev_response_json, response_json = "api21_medicalmodv33_05.json")
+  def expect_create_request_number_05(path, body, prev_response_json, response_json = "api21_medicalmodv33_05.json")
     expect(path).to eq("/api21/medicalmodv33")
 
     req = body["medicalv3req3"]
@@ -185,7 +186,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         prev_response_json =
           case count
           when 1
-            expect_request_number_01(path, body, response_json)
+            expect_create_request_number_01(path, body, response_json)
           when 2
             expect_unlock_call(path, body, prev_response_json)
           end
@@ -274,13 +275,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
           prev_response_json =
             case count
             when 1
-              expect_request_number_01(path, body)
+              expect_create_request_number_01(path, body)
             when 2
-              expect_request_number_02(path, body, prev_response_json)
+              expect_create_request_number_02(path, body, prev_response_json)
             when 3
-              expect_request_number_03(path, body, prev_response_json)
+              expect_create_request_number_03(path, body, prev_response_json)
             when 4
-              expect_request_number_04(path, body, prev_response_json, response_json)
+              expect_create_request_number_04(path, body, prev_response_json, response_json)
             when 5
               expect_unlock_call(path, body, prev_response_json)
             end
@@ -304,11 +305,11 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, response_json)
+                expect_create_request_number_03(path, body, prev_response_json, nil, response_json)
               when 4
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -343,15 +344,15 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
               when 4
-                expect_request_number_03(path, body, prev_response_json, 0)
+                expect_create_request_number_03(path, body, prev_response_json, 0)
               when 5
-                expect_request_number_04(path, body, prev_response_json, response_json)
+                expect_create_request_number_04(path, body, prev_response_json, response_json)
               when 6
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -385,13 +386,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
               when 4
-                expect_request_number_03(path, body, prev_response_json, 0, response_json)
+                expect_create_request_number_03(path, body, prev_response_json, 0, response_json)
               when 5
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -431,17 +432,17 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
               when 4
-                expect_request_number_03(path, body, prev_response_json, 0, "api21_medicalmodv32_03_select2.json")
+                expect_create_request_number_03(path, body, prev_response_json, 0, "api21_medicalmodv32_03_select2.json")
               when 5
-                expect_request_number_03(path, body, prev_response_json, 1)
+                expect_create_request_number_03(path, body, prev_response_json, 1)
               when 6
-                expect_request_number_04(path, body, prev_response_json, response_json)
+                expect_create_request_number_04(path, body, prev_response_json, response_json)
               when 7
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -466,11 +467,11 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, response_json)
+                expect_create_request_number_03(path, body, prev_response_json, nil, response_json)
               when 4
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -500,13 +501,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_delete.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_delete.json")
               when 4
-                expect_request_number_04(path, body, prev_response_json, response_json)
+                expect_create_request_number_04(path, body, prev_response_json, response_json)
               when 5
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -605,15 +606,15 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
           prev_response_json =
             case count
             when 1
-              expect_request_number_01(path, body)
+              expect_create_request_number_01(path, body)
             when 2
-              expect_request_number_02(path, body, prev_response_json)
+              expect_create_request_number_02(path, body, prev_response_json)
             when 3
-              expect_request_number_03(path, body, prev_response_json)
+              expect_create_request_number_03(path, body, prev_response_json)
             when 4
-              expect_request_number_04(path, body, prev_response_json)
+              expect_create_request_number_04(path, body, prev_response_json)
             when 5
-              expect_request_number_05(path, body, prev_response_json, response_json)
+              expect_create_request_number_05(path, body, prev_response_json, response_json)
             end
         }
       end
@@ -636,11 +637,11 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, response_json)
+                expect_create_request_number_03(path, body, prev_response_json, nil, response_json)
               when 4
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -675,17 +676,17 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
               when 4
-                expect_request_number_03(path, body, prev_response_json, 0)
+                expect_create_request_number_03(path, body, prev_response_json, 0)
               when 5
-                expect_request_number_04(path, body, prev_response_json)
+                expect_create_request_number_04(path, body, prev_response_json)
               when 6
-                expect_request_number_05(path, body, prev_response_json, response_json)
+                expect_create_request_number_05(path, body, prev_response_json, response_json)
               end
           }
         end
@@ -718,13 +719,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
               when 4
-                expect_request_number_03(path, body, prev_response_json, 0, response_json)
+                expect_create_request_number_03(path, body, prev_response_json, 0, response_json)
               when 5
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -764,19 +765,19 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_select.json")
               when 4
-                expect_request_number_03(path, body, prev_response_json, 0, "api21_medicalmodv32_03_select2.json")
+                expect_create_request_number_03(path, body, prev_response_json, 0, "api21_medicalmodv32_03_select2.json")
               when 5
-                expect_request_number_03(path, body, prev_response_json, 1)
+                expect_create_request_number_03(path, body, prev_response_json, 1)
               when 6
-                expect_request_number_04(path, body, prev_response_json)
+                expect_create_request_number_04(path, body, prev_response_json)
               when 7
-                expect_request_number_05(path, body, prev_response_json, response_json)
+                expect_create_request_number_05(path, body, prev_response_json, response_json)
               end
           }
         end
@@ -800,11 +801,11 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, response_json)
+                expect_create_request_number_03(path, body, prev_response_json, nil, response_json)
               when 4
                 expect_unlock_call(path, body, prev_response_json)
               end
@@ -834,15 +835,15 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_request_number_01(path, body)
+                expect_create_request_number_01(path, body)
               when 2
-                expect_request_number_02(path, body, prev_response_json)
+                expect_create_request_number_02(path, body, prev_response_json)
               when 3
-                expect_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_delete.json")
+                expect_create_request_number_03(path, body, prev_response_json, nil, "api21_medicalmodv32_03_delete.json")
               when 4
-                expect_request_number_04(path, body, prev_response_json)
+                expect_create_request_number_04(path, body, prev_response_json)
               when 5
-                expect_request_number_05(path, body, prev_response_json, response_json)
+                expect_create_request_number_05(path, body, prev_response_json, response_json)
               end
           }
         end
@@ -851,6 +852,227 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         its(:invoice_number) { is_expected.to eq(response_json.first[1]["Invoice_Number"]) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
         its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+      end
+    end
+  end
+
+  def expect_api21_medicalmodv34_01(path, body, patient_mode, response_json)
+    expect(path).to eq("/api21/medicalmodv34")
+
+    req = body["medicalv3req4"]
+    expect(req["Request_Number"]).to eq("01")
+    expect(req["Karte_Uid"]).to eq("karte_uid")
+    expect(req["Orca_Uid"]).to eq("")
+    expect(req["Patient_Mode"]).to eq(patient_mode)
+    %w(Patient_ID Perform_Date Invoice_Number Department_Code Insurance_Combination_Number Sequential_Number).each do |name|
+      expect(req[name]).to eq(params[name])
+    end
+
+    return_response_json(response_json)
+  end
+
+  def expect_api21_medicalmodv34_02(path, body, prev_response_json, response_json)
+    expect(path).to eq("/api21/medicalmodv34")
+
+    req = body["medicalv3req4"]
+    res_body = prev_response_json.first[1]
+
+    expect(req["Request_Number"]).to eq("02")
+    expect(req["Karte_Uid"]).to eq("karte_uid")
+    %w(Orca_Uid Perform_Date Invoice_Number Department_Code Sequential_Number).each do |name|
+      expect(req[name]).to eq(res_body[name])
+    end
+    expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
+    expect(req["Insurance_Combination_Number"]).to eq(res_body["HealthInsurance_Information"]["Insurance_Combination_Number"])
+    expect(req["Select_Answer"]).to eq("Ok")
+
+    return_response_json(response_json)
+  end
+
+  def expect_api21_medicalmodv34_99_call(path, body, prev_response_json)
+    expect(path).to eq("/api21/medicalmodv34")
+
+    req = body["medicalv3req4"]
+    res_body = prev_response_json.first[1]
+    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+    expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
+    expect(req["Perform_Date"]).to eq(res_body["Perform_Date"])
+    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+
+    load_orca_api_response_json("api21_medicalmodv34_99.json")
+  end
+
+  describe "#get" do
+    let(:params) {
+      {
+        "Patient_ID" => "4",
+        "Perform_Date" => "2017-08-29",
+        "Invoice_Number" => "0000857",
+        "Department_Code" => "",
+        "Insurance_Combination_Number" => "",
+        "Sequential_Number" => "",
+      }
+    }
+
+    subject { service.get(params) }
+
+    context "正常系" do
+      let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_modify.json") }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_api21_medicalmodv34_01(path, body, "Modify", response_json)
+            when 2
+              expect_api21_medicalmodv34_99_call(path, body, prev_response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be true }
+
+      %w(
+        Department_Code Department_Name Sequential_Number Physician_Code Physician_WholeName HealthInsurance_Information
+        Medical_Information
+      ).each do |name|
+        its(OrcaApi::Result.json_name_to_attr_name(name).to_sym) { is_expected.to eq(response_json.first[1][name]) }
+      end
+    end
+
+    context "異常系" do
+      context "他端末使用中" do
+        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_locked.json") }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_api21_medicalmodv34_01(path, body, "Modify", response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
+
+      context "受診履歴が存在しない" do
+        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_error.json") }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_api21_medicalmodv34_01(path, body, "Modify", response_json)
+              when 2
+                expect_api21_medicalmodv34_99_call(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
+    end
+  end
+
+  describe "#delete" do
+    let(:params) {
+      {
+        "Patient_ID" => "4",
+        "Perform_Date" => "2017-08-29",
+        "Invoice_Number" => "0000857",
+        "Department_Code" => "",
+        "Insurance_Combination_Number" => "",
+        "Sequential_Number" => "",
+      }
+    }
+
+    subject { service.delete(params) }
+
+    context "正常系" do
+      let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_02_delete.json") }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_api21_medicalmodv34_01(path, body, "Delete", "api21_medicalmodv34_01_delete.json")
+            when 2
+              expect_api21_medicalmodv34_02(path, body, prev_response_json, response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be true }
+
+      %w(
+        Department_Code Sequential_Number HealthInsurance_Information
+      ).each do |name|
+        its(OrcaApi::Result.json_name_to_attr_name(name).to_sym) { is_expected.to eq(response_json.first[1][name]) }
+      end
+    end
+
+    context "異常系" do
+      context "他端末使用中" do
+        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_locked.json") }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_api21_medicalmodv34_01(path, body, "Delete", response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
+
+      context "受診履歴が存在しない" do
+        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_error.json") }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_api21_medicalmodv34_01(path, body, "Delete", response_json)
+              when 2
+                expect_api21_medicalmodv34_99_call(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
       end
     end
   end

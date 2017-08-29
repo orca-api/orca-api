@@ -52,6 +52,36 @@ module OrcaApi
       unlock(locked_result)
     end
 
+    # 診療行為の取得
+    def get(params)
+      res = call_api21_medicalmodv34_01(params, "Modify")
+      if !res.locked?
+        locked_result = res
+      end
+      res
+    ensure
+      unlock_api21_medicalmodv34(locked_result)
+    end
+
+    # 診療行為の削除
+    def delete(params)
+      res = call_api21_medicalmodv34_01(params, "Delete")
+      if !res.locked?
+        locked_result = res
+      end
+      if res.api_result != "S30"
+        return res
+      end
+
+      res = call_api21_medicalmodv34_02(res)
+      if res.ok?
+        locked_result = nil
+      end
+      res
+    ensure
+      unlock_api21_medicalmodv34(locked_result)
+    end
+
     # 薬剤併用禁忌チェック
     def check_contraindication(params)
       body = {
@@ -209,6 +239,60 @@ module OrcaApi
           },
         }
         orca_api.call("/api21/medicalmodv31", body: body)
+        # TODO: エラー処理
+      end
+    end
+
+    def call_api21_medicalmodv34_01(params, patient_mode)
+      body = {
+        "medicalv3req4" => {
+          "Request_Number" => "01",
+          "Karte_Uid" => orca_api.karte_uid,
+          "Orca_Uid" => "",
+          "Patient_ID" => params["Patient_ID"],
+          "Perform_Date" => params["Perform_Date"],
+          "Patient_Mode" => patient_mode,
+          "Invoice_Number" => params["Invoice_Number"],
+          "Department_Code" => params["Department_Code"],
+          "Insurance_Combination_Number" => params["Insurance_Combination_Number"],
+          "Sequential_Number" => params["Sequential_Number"],
+        },
+      }
+      ::OrcaApi::Result.new(orca_api.call("/api21/medicalmodv34", body: body))
+    end
+
+    def call_api21_medicalmodv34_02(previous_result)
+      res = previous_result
+      body = {
+        "medicalv3req4" => {
+          "Request_Number" => res.response_number,
+          "Karte_Uid" => orca_api.karte_uid,
+          "Orca_Uid" => res.orca_uid,
+          "Patient_ID" => res.patient_information["Patient_ID"],
+          "Perform_Date" => res.perform_date,
+          "Patient_Mode" => "Delete",
+          "Invoice_Number" => res.invoice_number,
+          "Department_Code" => res.department_code,
+          "Insurance_Combination_Number" => res.health_insurance_information["Insurance_Combination_Number"],
+          "Sequential_Number" => res.sequential_number,
+          "Select_Answer" => "Ok",
+        },
+      }
+      ::OrcaApi::Result.new(orca_api.call("/api21/medicalmodv34", body: body))
+    end
+
+    def unlock_api21_medicalmodv34(locked_result)
+      if locked_result
+        body = {
+          "medicalv3req4" => {
+            "Request_Number" => "99",
+            "Karte_Uid" => orca_api.karte_uid,
+            "Patient_ID" => locked_result.patient_information["Patient_ID"],
+            "Perform_Date" => locked_result.perform_date,
+            "Orca_Uid" => locked_result.orca_uid,
+          },
+        }
+        orca_api.call("/api21/medicalmodv34", body: body)
         # TODO: エラー処理
       end
     end

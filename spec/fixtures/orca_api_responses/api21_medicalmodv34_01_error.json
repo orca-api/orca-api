@@ -1,0 +1,25 @@
+{
+  "medicalv3res4": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "e4066f9f-c3f6-4247-9d0c-e55d294b98d9",
+    "Information_Date": "2017-08-30",
+    "Information_Time": "10:48:51",
+    "Api_Result": "E22",
+    "Api_Result_Message": "該当の受診履歴が存在しません",
+    "Reskey": "Medical Info",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1"
+    },
+    "Perform_Date": "2017-08-29",
+    "Invoice_Number": "0000857",
+    "HealthInsurance_Information": {
+      "Insurance_Combination_Number": "0000"
+    }
+  }
+}
