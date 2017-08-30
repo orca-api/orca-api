@@ -90,7 +90,7 @@ module OrcaApi
           "Karte_Uid" => orca_api.karte_uid,
         }.merge(params),
       }
-      CheckContraindicationResult.new(orca_api.call("/api01rv2/contraindicationcheckv2", body: body))
+      ::OrcaApi::Result.new(orca_api.call("/api01rv2/contraindicationcheckv2", body: body))
     end
 
     private
