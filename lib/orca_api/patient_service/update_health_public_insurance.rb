@@ -1,7 +1,5 @@
 # coding: utf-8
 
-require_relative "get_health_public_insurance/result"
-
 module OrcaApi
   class PatientService < Service
     # 患者保険・公費情報の登録・更新・削除

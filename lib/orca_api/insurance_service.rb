@@ -1,7 +1,6 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "insurance_service/result"
 
 module OrcaApi
   # 保険・公費の種類を扱うサービスを表現したクラス

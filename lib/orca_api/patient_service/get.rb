@@ -1,11 +1,23 @@
 # coding: utf-8
 
-require_relative "get/result"
-
 module OrcaApi
   class PatientService < Service
     # 患者情報の取得
     module Get
+      # 患者情報の取得の結果を表現するクラス
+      class Result < ::OrcaApi::Result
+        %w(
+          health_public_insurance
+        ).each do |association_name|
+          result_name = "#{association_name}_result"
+          attr_accessor result_name
+
+          define_method(association_name) do
+            instance_variable_get("@#{result_name}").send(association_name)
+          end
+        end
+      end
+
       def get(id, associations: [])
         api_path = "/orca12/patientmodv31"
         req_name = "patientmodreq"
