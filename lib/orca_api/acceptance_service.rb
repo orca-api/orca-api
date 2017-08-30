@@ -1,11 +1,17 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "acceptance_service/result"
 
 module OrcaApi
   # 受付業務を扱うクラス
   class AcceptanceService < Service
+    # listメソッドの戻り値クラス
+    class ListResult < Result
+      def list
+        Array(body["Acceptlst_Information"])
+      end
+    end
+
     # https://www.orca.med.or.jp/receipt/tec/api/acceptancelst.html
     def list(klass: "03", base_date: nil, department_code: nil, physician_code: nil, medical_information: nil)
       api_path = "/api01rv2/acceptlstv2"
