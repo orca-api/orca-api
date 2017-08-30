@@ -1,11 +1,39 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "medical_practice_service/result"
 
 module OrcaApi
   # 診療行為を扱うサービスを表現したクラス
   class MedicalPracticeService < Service
+    # 診療行為の登録の結果を表現するクラス
+    class Result < ::OrcaApi::Result
+      def ok?
+        api_result == "W00" || super()
+      end
+    end
+
+    # 選択項目が未指定であることを表現するクラス
+    class UnselectedError < ::OrcaApi::PatientService::Result
+      def ok?
+        false
+      end
+
+      def message
+        '選択項目が未指定です。'
+      end
+    end
+
+    # 削除可能な剤の削除指示が未指定であることを表現するクラス
+    class EmptyDeleteNumberInfoError < ::OrcaApi::PatientService::Result
+      def ok?
+        false
+      end
+
+      def message
+        '削除可能な剤の削除指示が未指定です。'
+      end
+    end
+
     # 診察料情報の取得
     def get_examination_fee(params)
       res = call_request_number_01(params)
