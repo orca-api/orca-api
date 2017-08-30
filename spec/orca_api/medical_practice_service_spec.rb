@@ -206,6 +206,14 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       its("ok?") { is_expected.to be true }
       its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
     end
+
+    context "別端末使用中以外のエラー" do
+      let(:response_json) {
+        super().tap { |json| json.first[1]["Api_Result"] = "E20" }
+      }
+
+      its("ok?") { is_expected.to be false }
+    end
   end
 
   describe "#calc_medical_practice_fee" do
