@@ -4,8 +4,6 @@ module OrcaApi
   class MedicalPracticeService < Service #:nodoc:
     # 診療行為の登録の結果を表現するクラス
     class Result < ::OrcaApi::Result
-      json_attr_reader :Patient_Information, :Invoice_Number, :Medical_Information, :Cd_Information
-
       def ok?
         api_result == "W00" || super()
       end
@@ -13,8 +11,6 @@ module OrcaApi
 
     # 選択項目が未指定であることを表現するクラス
     class UnselectedError < ::OrcaApi::PatientService::Result
-      json_attr_reader :Medical_Information, :Medical_Select_Information
-
       def ok?
         false
       end
@@ -26,8 +22,6 @@ module OrcaApi
 
     # 削除可能な剤の削除指示が未指定であることを表現するクラス
     class EmptyDeleteNumberInfoError < ::OrcaApi::PatientService::Result
-      json_attr_reader :Medical_Information
-
       def ok?
         false
       end
