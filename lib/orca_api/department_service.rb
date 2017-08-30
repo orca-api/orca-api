@@ -1,7 +1,6 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "department_service/result"
 
 module OrcaApi
   # 診療科コードを扱うサービスを表現したクラス
