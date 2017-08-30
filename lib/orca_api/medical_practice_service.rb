@@ -37,7 +37,7 @@ module OrcaApi
     # 診察料情報の取得
     def get_examination_fee(params)
       res = call_request_number_01(params)
-      if res.ok?
+      if !res.locked?
         unlock(res)
       end
       res
@@ -46,9 +46,10 @@ module OrcaApi
     # 診療情報及び請求情報の取得
     def calc_medical_practice_fee(params)
       res = call_request_number_01(params)
-      if res.ok?
+      if !res.locked?
         locked_result = res
-      else
+      end
+      if !res.ok?
         return res
       end
 
@@ -60,9 +61,10 @@ module OrcaApi
     # 診療行為の登録
     def create(params)
       res = call_request_number_01(params)
-      if res.ok?
+      if !res.locked?
         locked_result = res
-      else
+      end
+      if !res.ok?
         return res
       end
 
@@ -92,7 +94,7 @@ module OrcaApi
     end
 
     # 診療行為の削除
-    def delete(params)
+    def destroy(params)
       res = call_api21_medicalmodv34_01(params, "Delete")
       if !res.locked?
         locked_result = res
