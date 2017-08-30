@@ -5,7 +5,7 @@ module OrcaApi
     # 患者情報の登録
     module Create
       # 患者情報の登録の結果を表現するクラス
-      class Result < ::OrcaApi::PatientService::Result
+      class Result < ::OrcaApi::Result
         def duplicated_patient_candidates
           @body["Patient2_Information"] || []
         end

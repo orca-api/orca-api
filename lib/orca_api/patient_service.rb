@@ -1,7 +1,6 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "patient_service/result"
 require_relative "patient_service/get"
 require_relative "patient_service/get_health_public_insurance"
 require_relative "patient_service/create"

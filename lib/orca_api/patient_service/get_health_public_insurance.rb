@@ -5,7 +5,7 @@ module OrcaApi
     # 患者保険・公費情報の取得
     module GetHealthPublicInsurance
       # 患者保険・公費情報の取得の結果を表現するクラス
-      class Result < ::OrcaApi::PatientService::Result
+      class Result < ::OrcaApi::Result
         KEYS = Set.new(
           %w(
             Patient_Information

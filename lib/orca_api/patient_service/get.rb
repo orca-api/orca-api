@@ -5,7 +5,7 @@ module OrcaApi
     # 患者情報の取得
     module Get
       # 患者情報の取得の結果を表現するクラス
-      class Result < ::OrcaApi::PatientService::Result
+      class Result < ::OrcaApi::Result
         %w(
           health_public_insurance
         ).each do |association_name|
