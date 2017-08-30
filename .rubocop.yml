@@ -48,6 +48,11 @@ Metrics/BlockLength:
 Metrics/LineLength:
   Max: 130
 
+# Configuration parameters: CountKeywordArgs.
+Metrics/ParameterLists:
+  Exclude:
+    - 'spec/**/*'
+
 Style/Documentation:
   Exclude:
     - 'spec/**/*'
