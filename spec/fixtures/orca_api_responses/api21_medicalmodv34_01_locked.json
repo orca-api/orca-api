@@ -1,0 +1,17 @@
+{
+  "medicalv3res4": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2017-08-30",
+    "Information_Time": "10:52:27",
+    "Api_Result": "E90",
+    "Api_Result_Message": "他端末使用中",
+    "Reskey": "Medical Info",
+    "Patient_Information": {
+      "Patient_ID": "00004"
+    },
+    "Perform_Date": "2017-08-29",
+    "Invoice_Number": "857"
+  }
+}

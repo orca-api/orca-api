@@ -46,19 +46,41 @@ module OrcaApi
     end
 
     attr_reader :raw, :body
-    json_attr_reader :Api_Result, :Api_Result_Message, :Request_Number, :Response_Number, :Karte_Uid, :Orca_Uid
 
     def initialize(raw)
       @raw = self.class.trim_response(raw)
       @body = @raw.first[1]
+      @attr_names = @body.keys.map { |key|
+        [self.class.json_name_to_attr_name(key).to_sym, key]
+      }.to_h
     end
 
     def ok?
       /\A0+\z/ =~ api_result ? true : false
     end
 
+    def locked?
+      api_result == "E90"
+    end
+
     def message
       "#{api_result_message}(#{api_result})"
+    end
+
+    def method_missing(symbol, *_)
+      if (key = @attr_names[symbol])
+        @body[key]
+      else
+        super
+      end
+    end
+
+    def respond_to_missing?(symbol, _)
+      if @attr_names.key?(symbol)
+        true
+      else
+        super
+      end
     end
   end
 end
