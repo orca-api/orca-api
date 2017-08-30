@@ -6,27 +6,135 @@ require_relative "shared_examples"
 RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
 
+  def return_response_json(response_json)
+    if response_json.is_a?(String)
+      load_orca_api_response_json(response_json)
+    else
+      response_json
+    end
+  end
+
+  def expect_orca12_patientmodv31_01(path, body, id, patient, patient_mode, response_json)
+    expect(path).to eq("/orca12/patientmodv31")
+
+    req = body["patientmodreq"]
+    expect(req["Request_Number"]).to eq("01")
+    expect(req["Karte_Uid"]).to eq("karte_uid")
+    expect(req["Patient_ID"]).to eq(id.to_s)
+    expect(req["Patient_Mode"]).to eq(patient_mode)
+    expect(req["Orca_Uid"]).to eq("")
+    expect(req["Select_Answer"]).to eq("")
+    expect(req["Patient_Information"]).to eq(patient)
+
+    return_response_json(response_json)
+  end
+
+  def expect_orca12_patientmodv31_02(path, body, prev_response_json, patient, patient_mode, response_json)
+    expect(path).to eq("/orca12/patientmodv31")
+
+    req = body["patientmodreq"]
+    res_body = prev_response_json.first[1]
+    expect(req["Request_Number"]).to eq(res_body["Response_Number"])
+    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+    expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
+    expect(req["Patient_Mode"]).to eq(patient_mode)
+    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+    expect(req["Select_Answer"]).to eq("Ok")
+    expect(req["Patient_Information"]).to eq(patient)
+
+    return_response_json(response_json)
+  end
+
+  def expect_orca12_patientmodv31_99(path, body, prev_response_json)
+    expect(path).to eq("/orca12/patientmodv31")
+
+    req = body["patientmodreq"]
+    res_body = prev_response_json.first[1]
+    expect(req["Request_Number"]).to eq("99")
+    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+    expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
+    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+
+    load_orca_api_response_json("orca12_patientmodv31_99.json")
+  end
+
+  def expect_orca12_patientmodv32_01(path, body, patient_id, response_json)
+    expect(path).to eq("/orca12/patientmodv32")
+
+    req = body["patientmodreq"]
+    expect(req["Request_Number"]).to eq("01")
+    expect(req["Karte_Uid"]).to eq("karte_uid")
+    expect(req["Orca_Uid"]).to eq("")
+    expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
+
+    return_response_json(response_json)
+  end
+
+  def expect_orca12_patientmodv32_02(path, body, prev_response_json, health_public_insurance, response_json)
+    expect(path).to eq("/orca12/patientmodv32")
+
+    req = body["patientmodreq"]
+    res_body = prev_response_json.first[1]
+    expect(req["Request_Number"]).to eq(res_body["Response_Number"])
+    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+    expect(req["Patient_Information"]).to eq(res_body["Patient_Information"])
+    expect(req["HealthInsurance_Information"]).to eq(health_public_insurance["HealthInsurance_Information"])
+    expect(req["PublicInsurance_Information"]).to eq(health_public_insurance["PublicInsurance_Information"])
+
+    return_response_json(response_json)
+  end
+
+  def expect_orca12_patientmodv32_03(path, body, prev_response_json, response_json)
+    expect(path).to eq("/orca12/patientmodv32")
+
+    req = body["patientmodreq"]
+    res_body = prev_response_json.first[1]
+    expect(req["Request_Number"]).to eq(res_body["Response_Number"])
+    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+    expect(req["Patient_Information"]).to eq(res_body["Patient_Information"])
+    expect(req["HealthInsurance_Information"]).to eq(res_body["HealthInsurance_Information"])
+    expect(req["PublicInsurance_Information"]).to eq(res_body["PublicInsurance_Information"])
+
+    return_response_json(response_json)
+  end
+
+  def expect_orca12_patientmodv32_99(path, body, prev_response_json)
+    expect(path).to eq("/orca12/patientmodv32")
+
+    req = body["patientmodreq"]
+    res_body = prev_response_json.first[1]
+    expect(req["Request_Number"]).to eq("99")
+    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
+    expect(req["Patient_Information"]["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
+    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
+
+    load_orca_api_response_json("orca12_patientmodv32_99.json")
+  end
+
   describe "#create" do
+    let(:patient_information) { response_json.first[1]["Patient_Information"] }
+
     subject { service.create(*args) }
 
     context "二重登録疑いの患者が存在しない" do
       let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_new.json") }
       let(:args) {
-        [response_json.first[1]["Patient_Information"]]
+        [patient_information]
       }
 
       before do
-        expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).once { |_, body:|
-          req = body["patientmodreq"]
-          expect(req["Request_Number"]).to eq("01")
-          expect(req["Karte_Uid"]).to eq("karte_uid")
-          expect(req["Patient_ID"]).to eq("*")
-          expect(req["Patient_Mode"]).to eq("New")
-          expect(req["Orca_Uid"]).to eq("")
-          expect(req["Select_Answer"]).to eq("")
-          expect(req["Patient_Information"]).to eq(args.first)
-
-          response_json
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, "*", patient_information, "New", response_json)
+            end
+          prev_response_json
         }
       end
 
@@ -40,21 +148,20 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
       describe "登録に失敗する" do
         let(:args) {
-          [response_json.first[1]["Patient_Information"]]
+          [patient_information]
         }
 
         before do
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).once { |_, body:|
-            req = body["patientmodreq"]
-            expect(req["Request_Number"]).to eq("01")
-            expect(req["Karte_Uid"]).to eq("karte_uid")
-            expect(req["Patient_ID"]).to eq("*")
-            expect(req["Patient_Mode"]).to eq("New")
-            expect(req["Orca_Uid"]).to eq("")
-            expect(req["Select_Answer"]).to eq("")
-            expect(req["Patient_Information"]).to eq(args.first)
-
-            response_json
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, "*", patient_information, "New", response_json)
+              end
+            prev_response_json
           }
         end
 
@@ -64,34 +171,25 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       describe "引数にallow_duplication: trueを指定すると強制的に登録する" do
+        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_new_abnormal_patient_duplicated.json") }
         let(:args) {
-          [response_json.first[1]["Patient_Information"], { allow_duplication: true }]
+          [patient_information, { allow_duplication: true }]
         }
 
         before do
           count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).twice { |_, body:|
-            req = body["patientmodreq"]
-            expect(req["Karte_Uid"]).to eq("karte_uid")
-            expect(req["Patient_ID"]).to eq("*")
-            expect(req["Patient_Mode"]).to eq("New")
-            expect(req["Patient_Information"]).to eq(args.first)
-
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
             count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
-              expect(req["Orca_Uid"]).to eq("")
-              expect(req["Select_Answer"]).to eq("")
-
-              response_json
-            when 2
-              expect(req["Request_Number"]).to eq("02")
-              expect(req["Orca_Uid"]).to eq(response_json.first[1]["Orca_Uid"])
-              expect(req["Select_Answer"]).to eq("Ok")
-
-              load_orca_api_response_json("orca12_patientmodv31_02_new_abnormal_patient_duplicated.json")
-            end
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, "*", patient_information, "New",
+                                               "orca12_patientmodv31_01_new_abnormal_patient_duplicated.json")
+              when 2
+                expect_orca12_patientmodv31_02(path, body, prev_response_json, patient_information, "New", response_json)
+              end
+            prev_response_json
           }
         end
 
@@ -111,28 +209,17 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
       before do
         count = 0
-        expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).twice { |_, body:|
-          req = body["patientmodreq"]
-
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
           count += 1
-          case count
-          when 1
-            expect(req["Request_Number"]).to eq("01")
-            expect(req["Karte_Uid"]).to eq("karte_uid")
-            expect(req["Patient_ID"]).to eq(patient_id.to_s)
-            expect(req["Patient_Mode"]).to eq("Modify")
-            expect(req["Orca_Uid"]).to eq("")
-
-            response_json
-          when 2
-            expect(req["Request_Number"]).to eq("99")
-            res01 = response_json.first[1]
-            expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-            expect(req["Patient_ID"]).to eq(res01["Patient_Information"]["Patient_ID"])
-            expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-
-            load_orca_api_response_json("orca12_patientmodv31_99.json")
-          end
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
+            when 2
+              expect_orca12_patientmodv31_99(path, body, prev_response_json)
+            end
+          prev_response_json
         }
       end
 
@@ -147,51 +234,21 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
       before do
         count = 0
+        prev_response_json = nil
         expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
-          req = body["patientmodreq"]
-
           count += 1
-          case count
-          when 1
-            expect(path).to eq("/orca12/patientmodv31")
-
-            expect(req["Request_Number"]).to eq("01")
-            expect(req["Karte_Uid"]).to eq("karte_uid")
-            expect(req["Patient_ID"]).to eq(patient_id.to_s)
-            expect(req["Patient_Mode"]).to eq("Modify")
-            expect(req["Orca_Uid"]).to eq("")
-
-            response_json
-          when 2
-            expect(path).to eq("/orca12/patientmodv31")
-
-            expect(req["Request_Number"]).to eq("99")
-            res01 = response_json.first[1]
-            expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-            expect(req["Patient_ID"]).to eq(res01["Patient_Information"]["Patient_ID"])
-            expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-
-            load_orca_api_response_json("orca12_patientmodv31_99.json")
-          when 3
-            expect(path).to eq("/orca12/patientmodv32")
-
-            expect(req["Request_Number"]).to eq("01")
-            expect(req["Karte_Uid"]).to eq("karte_uid")
-            expect(req["Orca_Uid"]).to eq("")
-            expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
-
-            insurance_response_json
-          when 4
-            expect(path).to eq("/orca12/patientmodv32")
-
-            expect(req["Request_Number"]).to eq("99")
-            res01 = insurance_response_json.first[1]
-            expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-            expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-            expect(req["Patient_Information"]).to eq(res01["Patient_Information"])
-
-            load_orca_api_response_json("orca12_patientmodv32_99.json")
-          end
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
+            when 2
+              expect_orca12_patientmodv31_99(path, body, prev_response_json)
+            when 3
+              expect_orca12_patientmodv32_01(path, body, patient_id, insurance_response_json)
+            when 4
+              expect_orca12_patientmodv32_99(path, body, prev_response_json)
+            end
+          prev_response_json
         }
       end
 
@@ -221,50 +278,40 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     subject { service.update(*args) }
 
     let(:patient_id) { 1 }
-    let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify.json") }
+    let(:args) {
+      [patient_id, patient_information]
+    }
 
     before do
       count = 0
-      expect(orca_api).to receive(:call).with("/orca12/patientmodv31", body: instance_of(Hash)).twice { |_, body:|
-        req = body["patientmodreq"]
-        expect(req["Patient_Mode"]).to eq("Modify")
-
+      prev_response_json = nil
+      expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
         count += 1
-        case count
-        when 1
-          expect(req["Request_Number"]).to eq("01")
-          expect(req["Karte_Uid"]).to eq("karte_uid")
-          expect(req["Patient_ID"]).to eq(patient_id.to_s)
-          expect(req["Orca_Uid"]).to eq("")
-
-          get_response_json
-        when 2
-          res01 = get_response_json.first[1]
-          expect(req["Request_Number"]).to eq("02")
-          expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-          expect(req["Patient_ID"]).to eq(res01["Patient_Information"]["Patient_ID"])
-          expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-          expect(req["Patient_Information"]).to eq(updated_response_json.first[1]["Patient_Information"])
-
-          updated_response_json
-        end
+        prev_response_json =
+          case count
+          when 1
+            expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify",
+                                           "orca12_patientmodv31_01_modify.json")
+          when 2
+            expect_orca12_patientmodv31_02(path, body, prev_response_json, response_json.first[1]["Patient_Information"],
+                                           "Modify", response_json)
+          end
+        prev_response_json
       }
     end
 
     context "すべての値を指定する" do
-      let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
-      let(:args) {
-        [patient_id, updated_response_json.first[1]["Patient_Information"]]
-      }
+      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
+      let(:patient_information) { response_json.first[1]["Patient_Information"] }
 
       its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(updated_response_json.first[1]["Patient_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
     end
 
     context "一部を指定する" do
-      let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_parts.json") }
-      let(:args) {
-        patient_information = {
+      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_parts.json") }
+      let(:patient_information) {
+        {
           "BirthDate" => "1975-05-05",
           "Home_Address_Information" => {
             "Address_ZipCode" => "6900055",
@@ -278,21 +325,18 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
           },
           "Death_Flag" => "1",
         }
-        [patient_id, patient_information]
       }
 
       its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(updated_response_json.first[1]["Patient_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
     end
 
     context "まったく指定しない" do
-      let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_none.json") }
-      let(:args) {
-        [patient_id, {}]
-      }
+      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_none.json") }
+      let(:patient_information) { {} }
 
       its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(updated_response_json.first[1]["Patient_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
     end
   end
 
@@ -304,27 +348,17 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
     before do
       count = 0
-      expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).twice { |_, body:|
-        req = body["patientmodreq"]
-
+      prev_response_json = nil
+      expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
         count += 1
-        case count
-        when 1
-          expect(req["Request_Number"]).to eq("01")
-          expect(req["Karte_Uid"]).to eq("karte_uid")
-          expect(req["Orca_Uid"]).to eq("")
-          expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
-
-          response_json
-        when 2
-          expect(req["Request_Number"]).to eq("99")
-          res01 = response_json.first[1]
-          expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-          expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-          expect(req["Patient_Information"]).to eq(res01["Patient_Information"])
-
-          load_orca_api_response_json("orca12_patientmodv32_99.json")
-        end
+        prev_response_json =
+          case count
+          when 1
+            expect_orca12_patientmodv32_01(path, body, patient_id, response_json)
+          when 2
+            expect_orca12_patientmodv32_99(path, body, response_json)
+          end
+        prev_response_json
       }
     end
 
@@ -357,39 +391,19 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     context "正常系" do
       before do
         count = 0
-        expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).exactly(3) { |_, body:|
-          req = body["patientmodreq"]
-
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(3) { |path, body:|
           count += 1
-          case count
-          when 1
-            expect(req["Request_Number"]).to eq("01")
-            expect(req["Karte_Uid"]).to eq("karte_uid")
-            expect(req["Orca_Uid"]).to eq("")
-            expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
-
-            get_response_json
-          when 2
-            expect(req["Request_Number"]).to eq("02")
-            res01 = get_response_json.first[1]
-            expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-            expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-            expect(req["Patient_Information"]).to eq(res01["Patient_Information"])
-            expect(req["HealthInsurance_Information"]).to eq(health_public_insurance["HealthInsurance_Information"])
-            expect(req["PublicInsurance_Information"]).to eq(health_public_insurance["PublicInsurance_Information"])
-
-            checked_response_json
-          when 3
-            expect(req["Request_Number"]).to eq("03")
-            res01 = checked_response_json.first[1]
-            expect(req["Karte_Uid"]).to eq(res01["Karte_Uid"])
-            expect(req["Orca_Uid"]).to eq(res01["Orca_Uid"])
-            expect(req["Patient_Information"]).to eq(res01["Patient_Information"])
-            expect(req["HealthInsurance_Information"]).to eq(res01["HealthInsurance_Information"])
-            expect(req["PublicInsurance_Information"]).to eq(res01["PublicInsurance_Information"])
-
-            updated_response_json
-          end
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv32_01(path, body, patient_id, get_response_json)
+            when 2
+              expect_orca12_patientmodv32_02(path, body, prev_response_json, health_public_insurance, checked_response_json)
+            when 3
+              expect_orca12_patientmodv32_03(path, body, prev_response_json, updated_response_json)
+            end
+          prev_response_json
         }
       end
 
