@@ -94,7 +94,7 @@ module OrcaApi
     end
 
     # 診療行為の削除
-    def delete(params)
+    def destroy(params)
       res = call_api21_medicalmodv34_01(params, "Delete")
       if !res.locked?
         locked_result = res

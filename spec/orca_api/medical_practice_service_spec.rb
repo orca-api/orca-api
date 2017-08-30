@@ -998,7 +998,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     end
   end
 
-  describe "#delete" do
+  describe "#destroy" do
     let(:params) {
       {
         "Patient_ID" => "4",
@@ -1010,7 +1010,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       }
     }
 
-    subject { service.delete(params) }
+    subject { service.destroy(params) }
 
     context "正常系" do
       let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_02_delete.json") }
