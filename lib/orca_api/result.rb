@@ -59,6 +59,10 @@ module OrcaApi
       /\A0+\z/ =~ api_result ? true : false
     end
 
+    def locked?
+      api_result == "E90"
+    end
+
     def message
       "#{api_result_message}(#{api_result})"
     end

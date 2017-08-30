@@ -47,6 +47,20 @@ RSpec.describe OrcaApi::Result do
     }
   }
 
+  let(:locked_response) {
+    {
+      "medicalv3res4" => {
+        "Request_Number" => "01",
+        "Response_Number" => "01",
+        "Karte_Uid" => "karte_uid",
+        "Information_Date" => "2017-08-30",
+        "Information_Time" => "10:52:27",
+        "Api_Result" => "E90",
+        "Api_Result_Message" => "他端末使用中",
+      }
+    }
+  }
+
   let(:result) { described_class.new(response) }
 
   subject { result }
@@ -99,5 +113,15 @@ RSpec.describe OrcaApi::Result do
         it { expect { subject.send(name) }.to raise_error NoMethodError }
       end
     end
+  end
+
+  context "他端末使用中のレスポンス" do
+    let(:response) { locked_response }
+
+    its(:raw) { is_expected.to eq(response) }
+    its(:body) { is_expected.to eq(response.first[1]) }
+    its("ok?") { is_expected.to be false }
+    its("locked?") { is_expected.to be true }
+    its(:message) { is_expected.to eq("他端末使用中(E90)") }
   end
 end
