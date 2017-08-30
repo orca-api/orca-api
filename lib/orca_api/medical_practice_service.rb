@@ -5,7 +5,7 @@ require_relative "service"
 module OrcaApi
   # 診療行為を扱うサービスを表現したクラス
   class MedicalPracticeService < Service
-    # 診療行為の登録の結果を表現するクラス
+    # 診療行為の登録・削除・訂正の結果を表現するクラス
     class Result < ::OrcaApi::Result
       def ok?
         api_result == "W00" || super()
@@ -13,7 +13,7 @@ module OrcaApi
     end
 
     # 選択項目が未指定であることを表現するクラス
-    class UnselectedError < ::OrcaApi::PatientService::Result
+    class UnselectedError < Result
       def ok?
         false
       end
@@ -24,7 +24,7 @@ module OrcaApi
     end
 
     # 削除可能な剤の削除指示が未指定であることを表現するクラス
-    class EmptyDeleteNumberInfoError < ::OrcaApi::PatientService::Result
+    class EmptyDeleteNumberInfoError < Result
       def ok?
         false
       end
@@ -286,7 +286,7 @@ module OrcaApi
           "Sequential_Number" => params["Sequential_Number"],
         },
       }
-      ::OrcaApi::Result.new(orca_api.call("/api21/medicalmodv34", body: body))
+      Result.new(orca_api.call("/api21/medicalmodv34", body: body))
     end
 
     def call_api21_medicalmodv34_02(previous_result)
@@ -306,7 +306,7 @@ module OrcaApi
           "Select_Answer" => "Ok",
         },
       }
-      ::OrcaApi::Result.new(orca_api.call("/api21/medicalmodv34", body: body))
+      Result.new(orca_api.call("/api21/medicalmodv34", body: body))
     end
 
     def unlock_api21_medicalmodv34(locked_result)
