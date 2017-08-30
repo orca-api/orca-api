@@ -1,11 +1,16 @@
 # coding: utf-8
 
-require_relative "create/result"
-
 module OrcaApi
   class PatientService < Service
     # 患者情報の登録
     module Create
+      # 患者情報の登録の結果を表現するクラス
+      class Result < ::OrcaApi::PatientService::Result
+        def duplicated_patient_candidates
+          @body["Patient2_Information"] || []
+        end
+      end
+
       def create(patient, allow_duplication: false)
         api_path = "/orca12/patientmodv31"
         body = {

@@ -1,11 +1,27 @@
 # coding: utf-8
 
-require_relative "get_health_public_insurance/result"
-
 module OrcaApi
   class PatientService < Service
     # 患者保険・公費情報の取得
     module GetHealthPublicInsurance
+      # 患者保険・公費情報の取得の結果を表現するクラス
+      class Result < ::OrcaApi::PatientService::Result
+        KEYS = Set.new(
+          %w(
+            Patient_Information
+            HealthInsurance_Information
+            PublicInsurance_Information
+            HealthInsurance_Combination_Information
+          )
+        )
+
+        def health_public_insurance
+          @body.select { |k, _|
+            KEYS.include?(k)
+          } || {}
+        end
+      end
+
       def get_health_public_insurance(id)
         api_path = "/orca12/patientmodv32"
         req_name = "patientmodreq"
