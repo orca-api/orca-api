@@ -1,34 +1,30 @@
 {
-  "medicalv3res4": {
-    "Request_Number": "01",
-    "Response_Number": "02",
+  "medicalv3res2": {
+    "Request_Number": "03",
+    "Response_Number": "04",
     "Karte_Uid": "karte_uid",
     "Orca_Uid": "f06f6d65-e664-4cbf-8866-b1b360dc2e83",
-    "Information_Date": "2017-08-29",
-    "Information_Time": "15:10:59",
+    "Information_Date": "2017-08-31",
+    "Information_Time": "16:39:28",
     "Api_Result": "000",
-    "Api_Result_Message": "確認処理終了",
+    "Api_Result_Message": "処理終了",
     "Reskey": "Medical Info",
+    "Perform_Date": "2017-07-31",
+    "Perform_Time": "10:30:00",
+    "Invoice_Number": "0000853",
     "Patient_Information": {
       "Patient_ID": "00004",
       "WholeName": "テスト　次朗",
       "WholeName_inKana": "テスト　ジロウ",
       "BirthDate": "1970-01-25",
-      "Sex": "1"
-    },
-    "Perform_Date": "2017-07-31",
-    "Invoice_Number": "0000853",
-    "Department_Code": "01",
-    "Department_Name": "内科",
-    "Sequential_Number": "1",
-    "Physician_Code": "10001",
-    "Physician_WholeName": "オルカ　太郎",
-    "HealthInsurance_Information": {
-      "Insurance_Combination_Number": "0009",
-      "Insurance_Combination_Rate": "1.0",
-      "InsuranceProvider_Class": "971",
-      "InsuranceProvider_WholeName": "労災保険",
-      "HealthInsuredPerson_Symbol": "短期給付"
+      "Sex": "1",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0009",
+        "Insurance_Combination_Rate": "1.0",
+        "InsuranceProvider_Class": "971",
+        "InsuranceProvider_WholeName": "労災保険",
+        "HealthInsuredPerson_Symbol": "短期給付"
+      }
     },
     "Medical_Information": {
       "Medical_Info": [

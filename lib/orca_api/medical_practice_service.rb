@@ -45,22 +45,11 @@ module OrcaApi
 
     # 診療情報及び請求情報の取得
     def calc_medical_practice_fee(params)
-      if params["Invoice_Number"]
-        if (di = params["Diagnosis_Information"])
-          department_code = di["Department_Code"]
-          if (hii = di["HealthInsurance_Information"])
-            insurance_combination_number = hii["Insurance_Combination_Number"]
-          end
-        end
-        res = call_api21_medicalmodv34_01(
-          params.merge(
-            "Department_Code" => department_code,
-            "Insurance_Combination_Number" => insurance_combination_number
-          ), "Modify"
-        )
-      else
-        res = call_api21_medicalmodv31_01(params)
-      end
+      res = if params["Invoice_Number"]
+              call_api21_medicalmodv34_01(params, "Modify")
+            else
+              call_api21_medicalmodv31_01(params)
+            end
       if !res.locked?
         locked_result = res
       end
@@ -75,22 +64,11 @@ module OrcaApi
 
     # 診療行為の登録
     def create(params)
-      if params["Invoice_Number"]
-        if (di = params["Diagnosis_Information"])
-          department_code = di["Department_Code"]
-          if (hii = di["HealthInsurance_Information"])
-            insurance_combination_number = hii["Insurance_Combination_Number"]
-          end
-        end
-        res = call_api21_medicalmodv34_01(
-          params.merge(
-            "Department_Code" => department_code,
-            "Insurance_Combination_Number" => insurance_combination_number
-          ), "Modify"
-        )
-      else
-        res = call_api21_medicalmodv31_01(params)
-      end
+      res = if params["Invoice_Number"]
+              call_api21_medicalmodv34_01(params, "Modify")
+            else
+              call_api21_medicalmodv31_01(params)
+            end
       if !res.locked?
         locked_result = res
       end
@@ -214,8 +192,8 @@ module OrcaApi
         "Orca_Uid" => res.orca_uid,
       }
       if res.body["Invoice_Number"]
-        req["Invoice_Number"] = res.invoice_number
         req["Patient_Mode"] = "Modify"
+        req["Invoice_Number"] = res.invoice_number
       end
       if answer
         req["Select_Answer"] = answer["Select_Answer"]
