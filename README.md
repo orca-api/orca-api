@@ -5,6 +5,7 @@ orca_apiは、[日医標準レセプトソフト](https://www.orca.med.or.jp/rec
 ## 使い方
 
  * [基本設計書](https://github.com/medley-inc/orca-api/wiki/%E5%9F%BA%E6%9C%AC%E8%A8%AD%E8%A8%88%E6%9B%B8)
+ * [サンプルコード](https://github.com/medley-inc/orca-api/wiki/%E3%82%B5%E3%83%B3%E3%83%97%E3%83%AB%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%A0)
 
 ## 開発者向け情報
 
