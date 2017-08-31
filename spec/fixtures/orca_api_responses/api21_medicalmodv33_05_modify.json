@@ -1,34 +1,34 @@
 {
-  "medicalv3res4": {
-    "Request_Number": "01",
-    "Response_Number": "02",
+  "medicalv3res3": {
+    "Request_Number": "05",
+    "Response_Number": "00",
     "Karte_Uid": "karte_uid",
     "Orca_Uid": "f06f6d65-e664-4cbf-8866-b1b360dc2e83",
-    "Information_Date": "2017-08-29",
-    "Information_Time": "15:10:59",
+    "Information_Date": "2017-08-31",
+    "Information_Time": "17:37:07",
     "Api_Result": "000",
-    "Api_Result_Message": "確認処理終了",
+    "Api_Result_Message": "登録正常終了",
     "Reskey": "Medical Info",
+    "Perform_Date": "2017-07-31",
+    "Perform_Time": "10:30:00",
+    "Base_Date": "2017-08-31",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "オルカ　太郎",
     "Patient_Information": {
       "Patient_ID": "00004",
       "WholeName": "テスト　次朗",
       "WholeName_inKana": "テスト　ジロウ",
       "BirthDate": "1970-01-25",
-      "Sex": "1"
-    },
-    "Perform_Date": "2017-07-31",
-    "Invoice_Number": "0000853",
-    "Department_Code": "01",
-    "Department_Name": "内科",
-    "Sequential_Number": "1",
-    "Physician_Code": "10001",
-    "Physician_WholeName": "オルカ　太郎",
-    "HealthInsurance_Information": {
-      "Insurance_Combination_Number": "0009",
-      "Insurance_Combination_Rate": "1.0",
-      "InsuranceProvider_Class": "971",
-      "InsuranceProvider_WholeName": "労災保険",
-      "HealthInsuredPerson_Symbol": "短期給付"
+      "Sex": "1",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0009",
+        "Insurance_Combination_Rate": "1.0",
+        "InsuranceProvider_Class": "971",
+        "InsuranceProvider_WholeName": "労災保険",
+        "HealthInsuredPerson_Symbol": "短期給付"
+      }
     },
     "Medical_Information": {
       "Medical_Info": [
@@ -499,6 +499,179 @@
         {
         }
       ]
+    },
+    "Invoice_Number": "0000853",
+    "Cd_Information": {
+      "Ic_Code": "01",
+      "Ic_Code_Name": "現金",
+      "Ic_Request_Code": "1",
+      "Ic_Request_Code_Name": "今回請求分のみ入力",
+      "Total_Ac_Money": "0",
+      "Total_Ic_Money": "0",
+      "Cd_Information2": {
+        "Ic_Money": "0",
+        "Ad_Money1": "0",
+        "Ad_Money2": "0",
+        "Ac_Money": "2057",
+        "Cd_Ac_Information": {
+          "Ai_Money": "667",
+          "Oe_Money": "0",
+          "Dg_Smoney": "0",
+          "Om_Smoney": "0",
+          "Pi_Smoney": "0",
+          "Lsi_Total_Money": "1390"
+        },
+        "Ac_Point_Information": {
+          "Ac_Ttl_Point": "58",
+          "Ac_Point_Detail": [
+            {
+              "Ac_Point_Name": "初・再診料",
+              "Ac_Point": "58",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "医学管理等",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "在宅療養",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "投薬",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "注射",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "処置",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "手術",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "麻酔",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "検査",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "画像診断",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "リハビリ",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "精神科専門",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "放射線治療",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+              "Ac_Point_Name": "病理診断",
+              "Ac_Point": "0",
+              "Me_Money": "0"
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        "Oe_Etc_Information": {
+          "Oe_Etc_Detail": [
+            {
+              "Oe_Etc_Name": "診断書料１",
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Name": "その他",
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            },
+            {
+              "Oe_Etc_Money_Non_Taxable": "0",
+              "Oe_Etc_Money_Taxable": "0"
+            }
+          ],
+          "Tax_In_Oe_Etc_Ttl_Money_Taxable": "0"
+        },
+        "Old_Money_Information": {
+          "Old_Ic_Money": "2057",
+          "Old_Ac_Money": "2057",
+          "Old_Ad_Money1": "0",
+          "Old_Ad_Money2": "0"
+        }
+      },
+      "Old_Total_Information": {
+        "Old_Total_Re_Money": "0",
+        "Old_Total_Ov_Money": "0"
+      }
+    },
+    "Print_Information": {
+      "Print_Prescription_Class": "0",
+      "Print_Prescription_Class_Name": "発行なし",
+      "Print_Invoice_Receipt_Class": "0",
+      "Print_Invoice_Receipt_Class_Name": "発行なし",
+      "Print_Statement_Class": "0",
+      "Print_Statement_Class_Name": "発行なし",
+      "Print_Medicine_Information_Class": "0",
+      "Print_Medicine_Information_Class_Name": "発行なし",
+      "Print_Medication_Note_Class": "0",
+      "Print_Medication_Note_Class_Name": "発行なし",
+      "Print_Appointment_Form_Class": "0",
+      "Print_Appointment_Form_Class_Name": "発行なし"
     }
   }
 }
