@@ -36,16 +36,16 @@ module OrcaApi
 
     # 診察料情報の取得
     def get_examination_fee(params)
-      res = call_request_number_01(params)
+      res = call_api21_medicalmodv31_01(params)
       if !res.locked?
-        unlock(res)
+        unlock_api21_medicalmodv31(res)
       end
       res
     end
 
     # 診療情報及び請求情報の取得
     def calc_medical_practice_fee(params)
-      res = call_request_number_01(params)
+      res = call_api21_medicalmodv31_01(params)
       if !res.locked?
         locked_result = res
       end
@@ -55,12 +55,12 @@ module OrcaApi
 
       calc_medical_practice_fee_without_unlock(params, res)
     ensure
-      unlock(locked_result)
+      unlock_api21_medicalmodv31(locked_result)
     end
 
     # 診療行為の登録
     def create(params)
-      res = call_request_number_01(params)
+      res = call_api21_medicalmodv31_01(params)
       if !res.locked?
         locked_result = res
       end
@@ -73,13 +73,13 @@ module OrcaApi
         return res
       end
 
-      res = call_request_number_05(params, res)
+      res = call_api21_medicalmodv33_05(params, res)
       if res.ok?
         locked_result = nil
       end
       res
     ensure
-      unlock(locked_result)
+      unlock_api21_medicalmodv31(locked_result)
     end
 
     # 診療行為の取得
@@ -125,7 +125,7 @@ module OrcaApi
 
     private
 
-    def call_request_number_01(params)
+    def call_api21_medicalmodv31_01(params)
       body = {
         "medicalv3req1" => {
           "Request_Number" => "01",
@@ -140,7 +140,7 @@ module OrcaApi
       Result.new(orca_api.call("/api21/medicalmodv31", body: body))
     end
 
-    def call_request_number_02(params, previous_result)
+    def call_api21_medicalmodv32_02(params, previous_result)
       res = previous_result
       body = {
         "medicalv3req2" => {
@@ -165,7 +165,7 @@ module OrcaApi
       Result.new(orca_api.call("/api21/medicalmodv32", body: body))
     end
 
-    def call_request_number_03(previous_result, answer = nil)
+    def call_api21_medicalmodv32_03(previous_result, answer = nil)
       res = previous_result
       body = {
         "medicalv3req2" => {
@@ -183,7 +183,7 @@ module OrcaApi
       Result.new(orca_api.call("/api21/medicalmodv32", body: body))
     end
 
-    def call_request_number_04(params, previous_result)
+    def call_api21_medicalmodv33_04(params, previous_result)
       res = previous_result
 
       can_delete = res.medical_information["Medical_Info"].any? { |i| i["Medical_Delete_Number"] }
@@ -211,7 +211,7 @@ module OrcaApi
       Result.new(orca_api.call("/api21/medicalmodv33", body: body))
     end
 
-    def call_request_number_05(params, previous_result)
+    def call_api21_medicalmodv33_05(params, previous_result)
       res = previous_result
       body = {
         "medicalv3req3" => {
@@ -232,12 +232,12 @@ module OrcaApi
     end
 
     def calc_medical_practice_fee_without_unlock(params, get_examination_fee_result)
-      res = call_request_number_02(params, get_examination_fee_result)
+      res = call_api21_medicalmodv32_02(params, get_examination_fee_result)
       if !res.ok?
         return res
       end
 
-      res = call_request_number_03(res)
+      res = call_api21_medicalmodv32_03(res)
       while !res.ok?
         if res.body["Medical_Select_Flag"] == "True"
           if params["Medical_Select_Information"]
@@ -246,7 +246,7 @@ module OrcaApi
             }
           end
           if answer
-            res = call_request_number_03(res, answer)
+            res = call_api21_medicalmodv32_03(res, answer)
           else
             return UnselectedError.new(res.raw)
           end
@@ -255,10 +255,10 @@ module OrcaApi
         end
       end
 
-      call_request_number_04(params, res)
+      call_api21_medicalmodv33_04(params, res)
     end
 
-    def unlock(locked_result)
+    def unlock_api21_medicalmodv31(locked_result)
       if locked_result
         body = {
           "medicalv3req1" => {
