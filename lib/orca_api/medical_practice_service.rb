@@ -45,7 +45,22 @@ module OrcaApi
 
     # 診療情報及び請求情報の取得
     def calc_medical_practice_fee(params)
-      res = call_api21_medicalmodv31_01(params)
+      if params["Invoice_Number"]
+        if (di = params["Diagnosis_Information"])
+          department_code = di["Department_Code"]
+          if (hii = di["HealthInsurance_Information"])
+            insurance_combination_number = hii["Insurance_Combination_Number"]
+          end
+        end
+        res = call_api21_medicalmodv34_01(
+          params.merge(
+            "Department_Code" => department_code,
+            "Insurance_Combination_Number" => insurance_combination_number
+          ), "Modify"
+        )
+      else
+        res = call_api21_medicalmodv31_01(params)
+      end
       if !res.locked?
         locked_result = res
       end
@@ -60,7 +75,22 @@ module OrcaApi
 
     # 診療行為の登録
     def create(params)
-      res = call_api21_medicalmodv31_01(params)
+      if params["Invoice_Number"]
+        if (di = params["Diagnosis_Information"])
+          department_code = di["Department_Code"]
+          if (hii = di["HealthInsurance_Information"])
+            insurance_combination_number = hii["Insurance_Combination_Number"]
+          end
+        end
+        res = call_api21_medicalmodv34_01(
+          params.merge(
+            "Department_Code" => department_code,
+            "Insurance_Combination_Number" => insurance_combination_number
+          ), "Modify"
+        )
+      else
+        res = call_api21_medicalmodv31_01(params)
+      end
       if !res.locked?
         locked_result = res
       end
@@ -142,45 +172,55 @@ module OrcaApi
 
     def call_api21_medicalmodv32_02(params, previous_result)
       res = previous_result
-      body = {
-        "medicalv3req2" => {
-          "Request_Number" => res.response_number,
-          "Karte_Uid" => res.karte_uid,
-          "Patient_ID" => res.patient_information["Patient_ID"],
-          "Perform_Date" => res.body["Perform_Date"],
-          "Perform_Time" => res.body["Perform_Time"],
-          "Orca_Uid" => res.orca_uid,
-          "Diagnosis_Information" => {
-            "Department_Code" => res.body["Department_Code"],
-            "Physician_Code" => res.body["Physician_Code"],
-            "HealthInsurance_Information" => res.patient_information["HealthInsurance_Information"],
-            "Outside_Class" => params["Diagnosis_Information"]["Outside_Class"],
-            "Medical_OffTime" => res.body["Medical_OffTime"],
-            "Medical_Information" => {
-              "Medical_Info" => params["Diagnosis_Information"]["Medical_Information"]["Medical_Info"],
-            }
-          },
-        },
+      res_body = res.body
+      req = {
+        "Request_Number" => res.response_number,
+        "Karte_Uid" => res.karte_uid,
+        "Patient_ID" => res.patient_information["Patient_ID"],
+        "Perform_Date" => res_body["Perform_Date"],
+        "Orca_Uid" => res.orca_uid,
+        "Diagnosis_Information" => {
+          "Department_Code" => res_body["Department_Code"],
+          "Physician_Code" => res_body["Physician_Code"],
+          "Outside_Class" => params["Diagnosis_Information"]["Outside_Class"],
+          "Medical_Information" => {
+            "Medical_Info" => params["Diagnosis_Information"]["Medical_Information"]["Medical_Info"],
+          }
+        }
       }
-      Result.new(orca_api.call("/api21/medicalmodv32", body: body))
+      if res_body["Invoice_Number"]
+        req["Perform_Time"] = params["Perform_Time"]
+        req["Invoice_Number"] = res_body["Invoice_Number"]
+        req["Patient_Mode"] = "Modify"
+        req["Diagnosis_Information"]["HealthInsurance_Information"] = res.health_insurance_information
+        req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
+      else
+        req["Perform_Time"] = res_body["Perform_Time"]
+        req["Diagnosis_Information"]["HealthInsurance_Information"] =
+          res.patient_information["HealthInsurance_Information"]
+        req["Diagnosis_Information"]["Medical_OffTime"] = res_body["Medical_OffTime"]
+      end
+      Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
     end
 
     def call_api21_medicalmodv32_03(previous_result, answer = nil)
       res = previous_result
-      body = {
-        "medicalv3req2" => {
-          "Request_Number" => res.response_number,
-          "Karte_Uid" => res.karte_uid,
-          "Patient_ID" => res.patient_information["Patient_ID"],
-          "Perform_Date" => res.body["Perform_Date"],
-          "Perform_Time" => res.body["Perform_Time"],
-          "Orca_Uid" => res.orca_uid,
-        },
+      req = {
+        "Request_Number" => res.response_number,
+        "Karte_Uid" => res.karte_uid,
+        "Patient_ID" => res.patient_information["Patient_ID"],
+        "Perform_Date" => res.body["Perform_Date"],
+        "Perform_Time" => res.body["Perform_Time"],
+        "Orca_Uid" => res.orca_uid,
       }
-      if answer
-        body["medicalv3req2"]["Select_Answer"] = answer["Select_Answer"]
+      if res.body["Invoice_Number"]
+        req["Invoice_Number"] = res.invoice_number
+        req["Patient_Mode"] = "Modify"
       end
-      Result.new(orca_api.call("/api21/medicalmodv32", body: body))
+      if answer
+        req["Select_Answer"] = answer["Select_Answer"]
+      end
+      Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
     end
 
     def call_api21_medicalmodv33_04(params, previous_result)
@@ -191,44 +231,46 @@ module OrcaApi
         return EmptyDeleteNumberInfoError.new(res.raw)
       end
 
-      body = {
-        "medicalv3req3" => {
-          "Request_Number" => res.response_number,
-          "Karte_Uid" => res.karte_uid,
-          "Base_Date" => params["Base_Date"],
-          "Patient_ID" => res.patient_information["Patient_ID"],
-          "Perform_Date" => res.body["Perform_Date"],
-          "Orca_Uid" => res.orca_uid,
-          "Medical_Mode" => (can_delete && params["Delete_Number_Info"] ? "1" : nil),
-          "Delete_Number_Info" => params["Delete_Number_Info"],
-          "Ic_Code" => params["Ic_Code"],
-          "Ic_Request_Code" => params["Ic_Request_Code"],
-          "Ic_All_Code" => params["Ic_All_Code"],
-          "Cd_Information" => params["Cd_Information"],
-          "Print_Information" => params["Print_Information"],
-        },
+      req = {
+        "Request_Number" => res.response_number,
+        "Karte_Uid" => res.karte_uid,
+        "Base_Date" => params["Base_Date"],
+        "Patient_ID" => res.patient_information["Patient_ID"],
+        "Perform_Date" => res.body["Perform_Date"],
+        "Orca_Uid" => res.orca_uid,
+        "Medical_Mode" => (can_delete && params["Delete_Number_Info"] ? "1" : nil),
+        "Delete_Number_Info" => params["Delete_Number_Info"],
+        "Ic_Code" => params["Ic_Code"],
+        "Ic_Request_Code" => params["Ic_Request_Code"],
+        "Ic_All_Code" => params["Ic_All_Code"],
+        "Cd_Information" => params["Cd_Information"],
+        "Print_Information" => params["Print_Information"],
       }
-      Result.new(orca_api.call("/api21/medicalmodv33", body: body))
+      if params["Invoice_Number"]
+        req["Patient_Mode"] = "Modify"
+      end
+      Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }))
     end
 
     def call_api21_medicalmodv33_05(params, previous_result)
       res = previous_result
-      body = {
-        "medicalv3req3" => {
-          "Request_Number" => res.response_number,
-          "Karte_Uid" => res.karte_uid,
-          "Base_Date" => params["Base_Date"],
-          "Patient_ID" => res.patient_information["Patient_ID"],
-          "Perform_Date" => res.body["Perform_Date"],
-          "Orca_Uid" => res.orca_uid,
-          "Ic_Code" => params["Ic_Code"],
-          "Ic_Request_Code" => params["Ic_Request_Code"],
-          "Ic_All_Code" => params["Ic_All_Code"],
-          "Cd_Information" => params["Cd_Information"],
-          "Print_Information" => params["Print_Information"],
-        },
+      req = {
+        "Request_Number" => res.response_number,
+        "Karte_Uid" => res.karte_uid,
+        "Base_Date" => params["Base_Date"],
+        "Patient_ID" => res.patient_information["Patient_ID"],
+        "Perform_Date" => res.body["Perform_Date"],
+        "Orca_Uid" => res.orca_uid,
+        "Ic_Code" => params["Ic_Code"],
+        "Ic_Request_Code" => params["Ic_Request_Code"],
+        "Ic_All_Code" => params["Ic_All_Code"],
+        "Cd_Information" => params["Cd_Information"],
+        "Print_Information" => params["Print_Information"],
       }
-      Result.new(orca_api.call("/api21/medicalmodv33", body: body))
+      if params["Invoice_Number"]
+        req["Patient_Mode"] = "Modify"
+      end
+      Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }))
     end
 
     def calc_medical_practice_fee_without_unlock(params, get_examination_fee_result)
