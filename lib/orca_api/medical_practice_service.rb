@@ -332,7 +332,7 @@ module OrcaApi
     end
 
     def unlock_api21_medicalmodv34(locked_result)
-      if locked_result
+      if locked_result && locked_result.respond_to?(:orca_uid)
         body = {
           "medicalv3req4" => {
             "Request_Number" => "99",
