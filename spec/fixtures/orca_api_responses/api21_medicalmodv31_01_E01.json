@@ -1,0 +1,13 @@
+{
+  "medicalv3res1": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2017-09-08",
+    "Information_Time": "14:03:27",
+    "Api_Result": "E01",
+    "Api_Result_Message": "患者番号が未設定です",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2017-09-08"
+  }
+}

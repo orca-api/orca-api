@@ -241,45 +241,75 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         },
       }
     }
-    let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01.json") }
 
     subject { service.get_examination_fee(params) }
 
-    before do
-      count = 0
-      prev_response_json = nil
-      expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
-        count += 1
-        prev_response_json =
-          case count
-          when 1
-            expect_api21_medicalmodv31_01(path, body, response_json)
-          when 2
-            expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
-          end
-        prev_response_json
-      }
-    end
+    context "患者情報をロックする" do
+      let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01.json") }
 
-    its("ok?") { is_expected.to be true }
-    its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-
-    context "Perform_Dateが未指定であるためレスポンスがW00" do
-      let(:params) {
-        super().tap { |d| d.delete("Perform_Date") }
-      }
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_W00.json") }
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_api21_medicalmodv31_01(path, body, response_json)
+            when 2
+              expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
+            end
+          prev_response_json
+        }
+      end
 
       its("ok?") { is_expected.to be true }
       its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+
+      context "Perform_Dateが未指定であるためレスポンスがW00" do
+        let(:params) {
+          super().tap { |d| d.delete("Perform_Date") }
+        }
+        let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_W00.json") }
+
+        its("ok?") { is_expected.to be true }
+        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+      end
+
+      context "別端末使用中以外のエラー" do
+        let(:response_json) {
+          super().tap { |json| json.first[1]["Api_Result"] = "E20" }
+        }
+
+        its("ok?") { is_expected.to be false }
+      end
     end
 
-    context "別端末使用中以外のエラー" do
-      let(:response_json) {
-        super().tap { |json| json.first[1]["Api_Result"] = "E20" }
-      }
+    context "患者情報をロックしない" do
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_api21_medicalmodv31_01(path, body, response_json)
+            end
+          prev_response_json
+        }
+      end
 
-      its("ok?") { is_expected.to be false }
+      context "患者情報が未指定" do
+        let(:params) {
+          super().tap { |h|
+            h.delete("Patient_ID")
+          }
+        }
+        let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_E01.json") }
+
+        its("ok?") { is_expected.to be false }
+      end
     end
   end
 
