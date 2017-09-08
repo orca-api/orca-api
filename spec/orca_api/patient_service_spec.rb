@@ -207,24 +207,48 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     context "患者情報のみ取得する" do
       subject { service.get(patient_id) }
 
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
-            when 2
-              expect_orca12_patientmodv31_99(path, body, prev_response_json)
-            end
-          prev_response_json
-        }
+      context "正常系" do
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
+              when 2
+                expect_orca12_patientmodv31_99(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be true }
+        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
       end
 
-      its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      context "異常系" do
+        let(:patient_id) { 2000 }
+        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify_E10.json") }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      end
     end
 
     context "関連情報として患者保険・公費情報も取得する" do
