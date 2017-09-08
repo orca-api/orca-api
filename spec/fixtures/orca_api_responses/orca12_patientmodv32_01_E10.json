@@ -1,0 +1,15 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2017-09-08",
+    "Information_Time": "13:46:40",
+    "Api_Result": "E10",
+    "Api_Result_Message": "患者番号に該当する患者が存在しません",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "2000"
+    }
+  }
+}
