@@ -120,6 +120,8 @@ module OrcaApi
       unlock_api21_medicalmodv34(locked_result)
     end
 
+    alias update create
+
     # 薬剤併用禁忌チェック
     def check_contraindication(params)
       body = {

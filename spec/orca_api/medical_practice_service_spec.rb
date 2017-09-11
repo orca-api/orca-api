@@ -661,7 +661,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     end
   end
 
-  describe "#create" do
+  shared_examples "#create,#update" do
     let(:params) {
       {
         "Patient_ID" => "4",
@@ -732,8 +732,6 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         },
       }
     }
-
-    subject { service.create(params) }
 
     context "正常終了" do
       let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05.json") }
@@ -1068,6 +1066,12 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     end
   end
 
+  describe "#create" do
+    include_examples "#create,#update"
+
+    subject { service.create(params) }
+  end
+
   describe "#get" do
     let(:params) {
       {
@@ -1175,6 +1179,12 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         its("ok?") { is_expected.to be false }
       end
     end
+  end
+
+  describe "#update" do
+    include_examples "#create,#update"
+
+    subject { service.update(params) }
   end
 
   describe "#destroy" do
