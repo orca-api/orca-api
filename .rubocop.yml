@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - 'tmp/**/*'
     - 'vendor/**/*'
+    - 'example/**/*'
 
 Metrics/AbcSize:
   Max: 35
