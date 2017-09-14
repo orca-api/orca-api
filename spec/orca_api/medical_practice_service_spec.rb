@@ -6,14 +6,6 @@ require_relative "shared_examples"
 RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
   let(:service) { OrcaApi::MedicalPracticeService.new(orca_api) }
 
-  def return_response_json(response_json)
-    if response_json.is_a?(String)
-      load_orca_api_response_json(response_json)
-    else
-      response_json
-    end
-  end
-
   def expect_api21_medicalmodv31_01(path, body, response_json = "api21_medicalmodv31_01.json")
     expect(path).to eq("/api21/medicalmodv31")
 

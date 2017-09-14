@@ -60,3 +60,11 @@ def load_orca_api_response_json(basename, trim = true)
     res
   end
 end
+
+def return_response_json(response_json)
+  if response_json.is_a?(String)
+    load_orca_api_response_json(response_json)
+  else
+    response_json
+  end
+end
