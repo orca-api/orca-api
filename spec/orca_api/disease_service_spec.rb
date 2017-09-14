@@ -6,14 +6,6 @@ require_relative "shared_examples"
 RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
 
-  def expect_api01rv2_diseasegetv2(path, params, body, args, response_json)
-    expect(path).to eq("/api01rv2/diseasegetv2")
-    expect(params).to eq({ "class" => "01" })
-    expect(body["disease_inforeq"]).to eq(args)
-
-    return_response_json(response_json)
-  end
-
   describe "#get" do
     let(:args) {
       {
@@ -23,6 +15,14 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
     }
 
     subject { service.get(args) }
+
+    def expect_api01rv2_diseasegetv2(path, params, body, args, response_json)
+      expect(path).to eq("/api01rv2/diseasegetv2")
+      expect(params).to eq({ "class" => "01" })
+      expect(body["disease_inforeq"]).to eq(args)
+
+      return_response_json(response_json)
+    end
 
     before do
       count = 0
@@ -52,6 +52,141 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
       let(:response_json) { load_orca_api_response_json("api01rv2_diseasegetv2_10.json") }
 
       its("ok?") { is_expected.to be false }
+    end
+  end
+
+  describe "#update" do
+    let(:args) {
+      {
+        "Patient_ID" => "1",
+        "Base_Month" => "",
+        "Perform_Date" => "",
+        "Perform_Time" => "",
+        "Diagnosis_Information" => {
+          "Department_Code" => "01",
+        },
+        "Disease_Information" => [
+          {
+            "Disease_Insurance_Class" => "05",
+            "Disease_Code" => "",
+            "Disease_Name" => "",
+            "Disease_Single" => [
+              {
+                "Disease_Single_Code" => "5319009",
+                "Disease_Single_Name" => "胃潰瘍",
+              },
+            ],
+            "Disease_Supplement" => {
+              "Disease_Scode1" => "",
+              "Disease_Scode2" => "",
+              "Disease_Scode3" => "",
+              "Disease_Sname" => "右膝",
+            },
+            "Disease_InOut" => "",
+            "Disease_Category" => "",
+            "Disease_SuspectedFlag" => "",
+            "Disease_StartDate" => "2017-07-15",
+            "Disease_EndDate" => "",
+            "Disease_OutCome" => "",
+            "Disease_Karte_Name" => "",
+            "Disease_Class" => "",
+            "Insurance_Combination_Number" => "",
+            "Disease_Receipt_Print" => "",
+            "Disease_Receipt_Print_Period" => "",
+            "Insurance_Disease" => "False",
+            "Discharge_Certificate" => "",
+            "Main_Disease_Class" => "",
+            "Sub_Disease_Class" => "",
+          },
+          {
+            "Department_Code" => "01",
+            "Disease_Name" => "両変形性膝関節症",
+            "Disease_Single" => [
+              {
+                "Disease_Single_Code" => "ZZZ2057",
+                "Disease_Single_Name" => "両",
+              },
+              {
+                "Disease_Single_Code" => "7153018",
+                "Disease_Single_Name" => "変形性膝関節症",
+              },
+            ],
+            "Disease_StartDate" => "2017-06-01",
+            "Insurance_Disease" => "False",
+          },
+          {
+            "Department_Code" => "01",
+            "Disease_Name" => "慢性心不全の疑い",
+            "Disease_Single" => [
+              {
+                "Disease_Single_Code" => "4289018",
+                "Disease_Single_Name" => "慢性心不全",
+              },
+              {
+                "Disease_Single_Code" => "ZZZ8002",
+                "Disease_Single_Name" => "の疑い",
+              },
+            ],
+            "Disease_SuspectedFlag" => "S",
+            "Disease_StartDate" => "2014-08-01",
+            "Disease_OutCome" => "O", # 削除
+            "Disease_Class" => "05",
+            "Insurance_Disease" => "False",
+          },
+          {
+            "Department_Code" => "01",
+            "Disease_Name" => "食思不振",
+            "Disease_Code" => "0000999",
+            "Disease_StartDate" => "2012-10-23",
+            "Insurance_Disease" => "False",
+          },
+        ],
+      }
+    }
+
+    subject { service.update(args) }
+
+    def expect_orca22_diseasev2(path, body, args, response_json)
+      expect(path).to eq("/orca22/diseasev2")
+      expect(body["diseasereq"]).to eq(args)
+
+      return_response_json(response_json)
+    end
+
+    before do
+      count = 0
+      prev_response_json = nil
+      expect(orca_api).to receive(:call).exactly(1) { |path, body:|
+        count += 1
+        prev_response_json =
+          case count
+          when 1
+            expect_orca22_diseasev2(path, body, args, response_json)
+          end
+        prev_response_json
+      }
+    end
+
+    context "正常系" do
+      let(:response_json) { load_orca_api_response_json("orca22_diseasev2.json") }
+
+      its("ok?") { is_expected.to be true }
+      its(:disease_unmatch_information) { is_expected.to eq(response_json.first[1]["Disease_Unmatch_Information"]) }
+    end
+
+    context "異常系" do
+      context "エラー" do
+        let(:response_json) { load_orca_api_response_json("orca22_diseasev2_E42.json") }
+
+        its("ok?") { is_expected.to be false }
+        its(:disease_message_information) { is_expected.to eq(response_json.first[1]["Disease_Message_Information"]) }
+      end
+
+      context "他端末使用中" do
+        let(:response_json) { load_orca_api_response_json("orca22_diseasev2_E90.json") }
+
+        its("ok?") { is_expected.to be false }
+      end
     end
   end
 end
