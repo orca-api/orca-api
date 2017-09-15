@@ -221,7 +221,7 @@ module OrcaApi
     end
 
     def deep_merge_for_request_body(dest, src)
-      res = dest.clone || {}
+      res = dest&.clone || {}
       case src
       when Hash
         src.each do |k, v|
