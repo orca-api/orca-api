@@ -86,6 +86,38 @@ module OrcaApi
       unlock_orca12_patientmodv31(locked_result)
     end
 
+    # 患者情報の削除
+    def destroy(id)
+      res = Result.new(call_orca12_patientmodv31_01(id, nil, "Delete"))
+      if !res.locked?
+        locked_result = res
+      end
+      if !res.ok?
+        return res
+      end
+      res = Result.new(call_orca12_patientmodv31_02(res.patient_information, "Delete", res))
+      if res.api_result != "S20"
+        return res
+      end
+      res = Result.new(call_orca12_patientmodv31_02(res.patient_information, "Delete", res))
+      if res.ok?
+        # 該当患者に受診履歴、病名等の入力がない場合
+        locked_result = nil
+        return res
+      end
+      if res.api_result != "S20"
+        return res
+      end
+      # 該当患者に受診履歴、病名等の入力がある場合
+      res = Result.new(call_orca12_patientmodv31_02(res.patient_information, "Delete", res))
+      if res.ok?
+        locked_result = nil
+      end
+      res
+    ensure
+      unlock_orca12_patientmodv31(locked_result)
+    end
+
     # 患者保険・公費情報の取得
     def get_health_public_insurance(id)
       res = call_orca12_patientmodv32_01(id)
@@ -221,7 +253,7 @@ module OrcaApi
     end
 
     def deep_merge_for_request_body(dest, src)
-      res = dest.clone || {}
+      res = dest&.clone || {}
       case src
       when Hash
         src.each do |k, v|
