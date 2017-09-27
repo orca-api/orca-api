@@ -17,6 +17,7 @@ require_relative "physician_service"
 require_relative "medical_practice_service"
 require_relative "acceptance_service"
 require_relative "disease_service"
+require_relative "form_data_service"
 
 module OrcaApi
   # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
@@ -79,6 +80,7 @@ module OrcaApi
       ["new_medical_practice_service", MedicalPracticeService],
       ["new_acceptance_service", AcceptanceService],
       ["new_disease_service", DiseaseService],
+      ["new_form_data_service", FormDataService]
     ]
     factory_methods.each do |name, klass|
       define_method(name) do

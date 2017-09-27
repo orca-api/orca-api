@@ -1,0 +1,283 @@
+{
+  "Information_Date": "2017-09-26",
+  "Information_Time": "20:10:52",
+  "Api_Result": "0000",
+  "Api_Result_Message": "処理終了",
+  "Form_ID": "shohosen",
+  "Form_Name": "処方せん",
+  "Print_Date": "2017-09-26",
+  "Print_Time": "18:57:32",
+  "Patient": {
+    "ID": "00001",
+    "Name": "吉田海苔",
+    "KanaName": "ヨシダノリ",
+    "BirthDate": "1970-04-04",
+    "Sex": "1"
+  },
+  "Forms": [
+    {
+      "data": {
+        "Form_ID": "shohosen",
+        "Printer": "lp1",
+        "Perform_Date": "2017-09-26",
+        "IssuedDate": "2017-09-26",
+        "Department_Code": "01",
+        "EditPageNumber_Flg": "0",
+        "Patient": {
+          "ID": "00001",
+          "Name": "吉田海苔",
+          "KanaName": "ヨシダノリ",
+          "BirthDate": "1970-04-04",
+          "Sex": "1"
+        },
+        "Insurance_Combination_Information": {
+          "Number": "0001",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Name": "協会",
+          "HealthInsuredPerson_Age": "047",
+          "HealthInsuredPerson_Rate": "030",
+          "HealthInsuredPerson_Rate_Class": "0",
+          "HealthInsurance_Information": {
+            "RelationToInsuredPerson": "1",
+            "Certificate_StartDate": "2017-09-26",
+            "Certificate_ExpiredDate": "9999-12-31"
+          }
+        },
+        "Hospital": {
+          "Prefectures_Number": "13",
+          "Code": "1234567",
+          "Name": [
+            "医療法人　オルカ医院",
+            "",
+            ""
+          ],
+          "ZipCode": "1130021",
+          "Address": [
+            "東 京都文京区本駒込２－２８－１６",
+            "",
+            ""
+          ],
+          "PhoneNumber": "03-3946-0001"
+        },
+        "IncludingNarcotic_Flg": "0",
+        "IncludingUnchangeable_Flg": "0",
+        "Rp": [
+          {
+            "Medical_Class": "21",
+            "Count": "007",
+            "Unit_Name": "日分",
+            "Medication": [
+              {
+                "Name": "【般】リトドリン塩酸塩錠５ｍｇ",
+                "Amount": "00003.00000",
+                "Unit_Name": "錠",
+                "Code": "610406047",
+                "Generic_Flg": "1",
+                "Generic_Code": "2590004F1010"
+              },
+              {
+                "Name": "【★ただし１日１回まで】",
+                "Code": "001000008",
+                "Generic_Flg": "0"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ]
+      }
+    }
+  ]
+}
