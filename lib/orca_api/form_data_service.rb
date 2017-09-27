@@ -1,7 +1,6 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "result"
 
 module OrcaApi
   # 帳票データAPI
@@ -11,12 +10,10 @@ module OrcaApi
   class FormDataService < Service
     # 帳票データAPIの呼び出し結果を扱うクラス
     class Result < Result
-      def initialize(raw)
-        @body = @raw = raw
-        @attr_names = @body.keys.map { |key|
-          [self.class.json_name_to_attr_name(key).to_sym, key]
-        }.to_h
+      def initialize(response)
+        super(response, false)
       end
+      alias_method :body, :raw
     end
 
     def get(data_id)

@@ -45,14 +45,17 @@ module OrcaApi
       result
     end
 
-    attr_reader :raw, :body
+    attr_reader :raw
 
-    def initialize(raw)
-      @raw = self.class.trim_response(raw)
-      @body = @raw.first[1]
-      @attr_names = @body.keys.map { |key|
+    def initialize(raw, trim = true)
+      @raw = trim ? self.class.trim_response(raw) : raw
+      @attr_names = body.keys.map { |key|
         [self.class.json_name_to_attr_name(key).to_sym, key]
       }.to_h
+    end
+
+    def body
+      @body ||= @raw.first[1]
     end
 
     def ok?
@@ -69,7 +72,7 @@ module OrcaApi
 
     def method_missing(symbol, *_)
       if (key = @attr_names[symbol])
-        @body[key]
+        body[key]
       else
         super
       end
