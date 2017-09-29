@@ -630,6 +630,67 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         include_examples "結果が正しいこと"
       end
 
+      context "患者保険だけを登録する(New)" do
+        let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv32_01_new.json") }
+        let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv32_02_new_only_health_insurance.json") }
+        let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv32_03_new_only_health_insurance.json") }
+
+        let(:health_public_insurance) {
+          {
+            "HealthInsurance_Information" => {
+              "HealthInsurance_Info" => [
+                {
+                  "InsuranceProvider_Mode" => "New",
+                  "InsuranceProvider_Id" => "0",
+                  "InsuranceProvider_Class" => "039",
+                  "InsuranceProvider_Number" => "39322011",
+                  "InsuranceProvider_WholeName" => "後期高齢者",
+                  "HealthInsuredPerson_Number" => "１２３４５６",
+                  "HealthInsuredPerson_Assistance" => "1",
+                  "HealthInsuredPerson_Assistance_Name" => "１割",
+                  "RelationToInsuredPerson" => "1",
+                  "HealthInsuredPerson_WholeName" => "東京　太郎",
+                  "Certificate_StartDate" => "2017-01-01",
+                  "Certificate_ExpiredDate" => "2017-12-31",
+                  "Certificate_GetDate" => "2017-01-03",
+                  "Certificate_CheckDate" => "2017-07-26",
+                },
+              ],
+            },
+          }
+        }
+
+        include_examples "結果が正しいこと"
+      end
+
+      context "患者公費だけを登録する(New)" do
+        let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv32_01_new.json") }
+        let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv32_02_new_only_public_insurance.json") }
+        let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv32_03_new_only_public_insurance.json") }
+
+        let(:health_public_insurance) {
+          {
+            "PublicInsurance_Information" => {
+              "PublicInsurance_Info" => [
+                {
+                  "PublicInsurance_Mode" => "Modify",
+                  "PublicInsurance_Id" =>  "0000000001",
+                  "PublicInsurance_Class" => "969",
+                  "PublicInsurance_Name" => "７５歳特例",
+                  "PublicInsurer_Number" => "",
+                  "PublicInsuredPerson_Number" => "",
+                  "Certificate_IssuedDate" => "2017-01-02",
+                  "Certificate_ExpiredDate" => "2017-12-31",
+                  "Certificate_CheckDate" => "2017-05-30",
+                },
+              ],
+            },
+          }
+        }
+
+        include_examples "結果が正しいこと"
+      end
+
       context "患者保険・公費を更新する(Modify)" do
         let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv32_01_modify.json") }
         let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv32_02_modify.json") }

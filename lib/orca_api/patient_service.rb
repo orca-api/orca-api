@@ -225,17 +225,19 @@ module OrcaApi
 
     def call_orca12_patientmodv32_03(previous_result)
       res = previous_result
-      body = {
-        "patientmodreq" => {
-          "Request_Number" => res.response_number,
-          "Karte_Uid" => orca_api.karte_uid,
-          "Orca_Uid" => res.orca_uid,
-          "Patient_Information" => res.patient_information,
-          "HealthInsurance_Information" => res.health_insurance_information,
-          "PublicInsurance_Information" => res.public_insurance_information,
-        }
+      req = {
+        "Request_Number" => res.response_number,
+        "Karte_Uid" => orca_api.karte_uid,
+        "Orca_Uid" => res.orca_uid,
+        "Patient_Information" => res.patient_information,
       }
-      HealthPublicInsuranceResult.new(orca_api.call("/orca12/patientmodv32", body: body))
+      if res.body["HealthInsurance_Information"]
+        req["HealthInsurance_Information"] = res.body["HealthInsurance_Information"]
+      end
+      if res.body["PublicInsurance_Information"]
+        req["PublicInsurance_Information"] = res.body["PublicInsurance_Information"]
+      end
+      HealthPublicInsuranceResult.new(orca_api.call("/orca12/patientmodv32", body: { "patientmodreq" => req }))
     end
 
     def unlock_orca12_patientmodv32(locked_result)
