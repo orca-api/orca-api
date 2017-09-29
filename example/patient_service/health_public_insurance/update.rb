@@ -15,14 +15,17 @@ patient_service = @orca_api.new_patient_service
 
 patient_id = ARGV.shift
 health_or_public = ARGV.shift
-mode, insurance_id = (case ARGV.shift.downcase
-                      when "new"
-                        ["New", "0"]
-                      when "modify"
-                        ["Modify", ARGV.shift]
-                      when "delete"
-                        ["Delete", ARGV.shift]
-                      end)
+mode, insurance_id =
+  (case (s = ARGV.shift.downcase)
+   when "new"
+     ["New", "0"]
+   when "modify"
+     ["Modify", ARGV.shift]
+   when "delete"
+     ["Delete", ARGV.shift]
+   else
+     raise "mode is not new or modify or delete: #{s}"
+   end)
 
 template = {
   "HealthInsurance_Information" => { # 保険情報
