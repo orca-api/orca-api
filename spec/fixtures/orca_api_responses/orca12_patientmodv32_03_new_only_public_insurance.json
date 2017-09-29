@@ -1,0 +1,150 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "03",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "a208633c-9a6c-4b05-b7ac-6700379199c4",
+    "Information_Date": "2017-09-29",
+    "Information_Time": "16:13:49",
+    "Api_Result": "000",
+    "Api_Result_Message": "登録処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00210",
+      "WholeName": "東京　太郎",
+      "WholeName_inKana": "ヒガシキョウ　タロウ",
+      "BirthDate": "1935-02-03",
+      "Sex": "1"
+    },
+    "PublicInsurance_Information": {
+      "PublicInsurance_Info": [
+        {
+          "PublicInsurance_Id": "0000000005",
+          "PublicInsurance_Class": "968",
+          "PublicInsurance_Name": "後期該当",
+          "Certificate_IssuedDate": "2017-01-01",
+          "Certificate_ExpiredDate": "2017-12-31",
+          "Certificate_CheckDate": "2017-09-29"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
