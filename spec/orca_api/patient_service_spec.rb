@@ -943,4 +943,39 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
     end
   end
+
+  %w(AccidentInsurance).each do |class_name|
+    klass = OrcaApi::PatientService.const_get(class_name)
+    method_suffix = OrcaApi::Result.json_name_to_attr_name(class_name)
+
+    describe klass.to_s do
+      let(:patient_id) { 1 }
+      let(:inner_service) { double(klass.name) }
+      let(:result) { double("Result") }
+
+      before do
+        expect(klass).to receive(:new).with(orca_api).once.and_return(inner_service)
+      end
+
+      describe "#get_#{method_suffix}" do
+        subject { service.send("get_#{method_suffix}", patient_id) }
+
+        it "#{klass}.new(orca_api).get(patient_id)を呼び出すこと" do
+          expect(inner_service).to receive(:get).with(patient_id).once.and_return(result)
+          expect(subject).to be(result)
+        end
+      end
+
+      describe "#update_#{method_suffix}" do
+        let(:params) { {} }
+
+        subject { service.send("update_#{method_suffix}", patient_id, params) }
+
+        it "#{klass}.new(orca_api).update(patient_id, params)を呼び出すこと" do
+          expect(inner_service).to receive(:update).with(patient_id, params).once.and_return(result)
+          expect(subject).to be(result)
+        end
+      end
+    end
+  end
 end

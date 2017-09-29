@@ -1,0 +1,665 @@
+{
+  "patientmodv3res3": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "26a72b23-e890-40bf-a346-2e4460371687",
+    "Information_Date": "2017-09-27",
+    "Information_Time": "23:55:12",
+    "Api_Result": "000",
+    "Api_Result_Message": "検索処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1"
+    },
+    "Accident_Insurance_Information": {
+      "Accident_Insurance_Info": [
+        {
+          "InsuranceProvider_Id": "0000000004",
+          "PublicInsurance_Id": "0000000000",
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_Name": "労災保険",
+          "Accident_Insurance": "1",
+          "Accident_Insurance_WholeName": "短期給付",
+          "Disease_Date": "2013-10-10",
+          "Accident_StartDate": "2013-10-10",
+          "Accident_ExpiredDate": "9999-12-31",
+          "Accident_Insurance_Number": "12345678901",
+          "Accident_Class": "1",
+          "Accident_Class_Name": "業務中の災害",
+          "Labor_Station_Code": "12349",
+          "Accident_Continuous": "1",
+          "Accident_Continuous_Name": "初診",
+          "Outcome_Reason": "3",
+          "Outcome_Reason_Name": "継続",
+          "Limbs_Exception": "0",
+          "Limbs_Exception_Name": "なし",
+          "Liability_Office_Information": {
+            "L_WholeName": "松江共同",
+            "Prefecture_Information": {
+              "P_WholeName": "島根",
+              "P_Class": "4",
+              "P_Class_Name": "県"
+            },
+            "City_Information": {
+              "C_WholeName": "松江",
+              "C_Class": "2",
+              "C_Class_Name": "市"
+            }
+          },
+          "Accident_Base_Month": "2013-10",
+          "Accident_Receipt_Count": "001"
+        },
+        {
+          "InsuranceProvider_Id": "0000000005",
+          "PublicInsurance_Id": "0000000000",
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_Name": "労災保険",
+          "Accident_Insurance": "1",
+          "Accident_Insurance_WholeName": "短期給付",
+          "Disease_Location": "２個め",
+          "Disease_Date": "2013-10-10",
+          "Accident_StartDate": "2013-10-10",
+          "Accident_ExpiredDate": "9999-12-31",
+          "Accident_Class": "1",
+          "Accident_Class_Name": "業務中の災害",
+          "Accident_Continuous": "1",
+          "Accident_Continuous_Name": "初診",
+          "Outcome_Reason": "3",
+          "Outcome_Reason_Name": "継続",
+          "Limbs_Exception": "0",
+          "Limbs_Exception_Name": "なし",
+          "Liability_Office_Information": {
+            "Prefecture_Information": {
+              "P_WholeName": "島根",
+              "P_Class": "4",
+              "P_Class_Name": "県"
+            }
+          },
+          "Accident_Base_Month": "2013-10",
+          "Accident_Receipt_Count": "001"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "HealthInsurance_Combination_Information": {
+      "HealthInsurance_Combination_Info": [
+        {
+          "Insurance_Combination_Number": "0010",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2015-01-08",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000006",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Number": "３４２２３３４４４",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+          "Insurance_Combination_Number": "0009",
+          "Insurance_Combination_Rate_Admission": "0.00",
+          "Insurance_Combination_Rate_Outpatient": "0.00",
+          "Insurance_Combination_StartDate": "2013-10-10",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000004",
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_WholeName": "労災保険",
+          "HealthInsuredPerson_Symbol": "短期給付"
+        },
+        {
+          "Insurance_Combination_Number": "0008",
+          "Insurance_Combination_Rate_Admission": "0.00",
+          "Insurance_Combination_Rate_Outpatient": "0.00",
+          "Insurance_Combination_StartDate": "2013-10-10",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000005",
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_WholeName": "労災保険",
+          "HealthInsuredPerson_Symbol": "短期給付",
+          "HealthInsuredPerson_Number": "２個め"
+        },
+        {
+          "Insurance_Combination_Number": "0007",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2010-04-01",
+          "Insurance_Combination_ExpiredDate": "2011-11-30",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "１２",
+          "HealthInsuredPerson_Number": "３４５６７",
+          "RelationToInsuredPerson": "1",
+          "PublicInsurance_Info": [
+            {
+              "PublicInsurance_Id": "0000000003",
+              "PublicInsurance_Class": "051",
+              "PublicInsurance_Name": "特定負有",
+              "PublicInsurer_Number": "51326023",
+              "Rate_Admission": "0.00",
+              "Money_Admission": "0",
+              "Rate_Outpatient": "0.00",
+              "Money_Outpatient": "0"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "Insurance_Combination_Number": "0004",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2012-06-01",
+          "Insurance_Combination_ExpiredDate": "2014-05-31",
+          "InsuranceProvider_Id": "0000000003",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会（任）",
+          "HealthInsuredPerson_Symbol": "３４",
+          "HealthInsuredPerson_Number": "５６７８９",
+          "HealthInsuredPerson_Continuation": "2",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+          "Insurance_Combination_Number": "0003",
+          "Insurance_Combination_Rate_Admission": "1.00",
+          "Insurance_Combination_Rate_Outpatient": "1.00",
+          "Insurance_Combination_StartDate": "2012-03-06",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000002",
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_WholeName": "自費",
+          "HealthInsuredPerson_Assistance": "1",
+          "HealthInsuredPerson_Assistance_Name": "課税",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+          "Insurance_Combination_Number": "0001",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2010-01-01",
+          "Insurance_Combination_ExpiredDate": "2012-05-30",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "１２",
+          "HealthInsuredPerson_Number": "３４５６７",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

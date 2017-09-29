@@ -1,0 +1,554 @@
+{
+  "patientmodv3res3": {
+    "Request_Number": "02",
+    "Response_Number": "03",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "6788bc70-a7ef-4a31-9ea4-4c75e561754b",
+    "Information_Date": "2017-09-30",
+    "Information_Time": "00:04:04",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00210",
+      "WholeName": "東京　太郎",
+      "WholeName_inKana": "ヒガシキョウ　タロウ",
+      "BirthDate": "1935-02-03",
+      "Sex": "1"
+    },
+    "Accident_Insurance_Information": {
+      "Accident_Insurance_Info": [
+        {
+          "Accident_Mode": "Modify",
+          "InsuranceProvider_Id": "0000000009",
+          "PublicInsurance_Id": "0000000000",
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_Name": "労災保険",
+          "Accident_Insurance": "1",
+          "Accident_Insurance_WholeName": "短期給付",
+          "Disease_Location": "肩腰",
+          "Disease_Date": "2017-09-30",
+          "Accident_StartDate": "2017-09-30",
+          "Accident_ExpiredDate": "9999-12-31",
+          "Accident_Insurance_Number": "12345678901",
+          "Accident_Class": "1",
+          "Accident_Class_Name": "業務中の災害",
+          "Labor_Station_Code": "12349",
+          "Accident_Continuous": "1",
+          "Accident_Continuous_Name": "初診",
+          "Outcome_Reason": "3",
+          "Outcome_Reason_Name": "継続",
+          "Limbs_Exception": "0",
+          "Limbs_Exception_Name": "なし",
+          "Liability_Office_Information": {
+            "L_WholeName": "松江共同",
+            "Prefecture_Information": {
+              "P_WholeName": "島根",
+              "P_Class": "4",
+              "P_Class_Name": "県"
+            },
+            "City_Information": {
+              "C_WholeName": "松江",
+              "C_Class": "2",
+              "C_Class_Name": "市"
+            }
+          },
+          "Accident_Base_Month": "2017-09",
+          "Accident_Receipt_Count": "001"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "HealthInsurance_Combination_Information": {
+      "HealthInsurance_Combination_Info": [
+        {
+          "Insurance_Combination_Number": "0009",
+          "Insurance_Combination_Rate_Admission": "0.00",
+          "Insurance_Combination_Rate_Outpatient": "0.00",
+          "Insurance_Combination_StartDate": "2017-09-30",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000009",
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_WholeName": "労災保険",
+          "HealthInsuredPerson_Symbol": "短期給付",
+          "HealthInsuredPerson_Number": "肩腰"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
