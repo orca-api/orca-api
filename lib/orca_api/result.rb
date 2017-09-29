@@ -47,6 +47,10 @@ module OrcaApi
       @body ||= @raw.first[1]
     end
 
+    def [](key)
+      body[key]
+    end
+
     def ok?
       /\A0+\z/ =~ api_result ? true : false
     end
