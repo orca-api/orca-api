@@ -1,6 +1,7 @@
 # coding: utf-8
 
 require_relative "service"
+require_relative "patient_service/accident_insurance"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
@@ -147,6 +148,19 @@ module OrcaApi
       res
     ensure
       unlock_orca12_patientmodv32(locked_result)
+    end
+
+    %w(AccidentInsurance).each do |class_name|
+      klass = const_get(class_name)
+      method_suffix = Result.json_name_to_attr_name(class_name)
+
+      define_method("get_#{method_suffix}") do |*args|
+        klass.new(orca_api).get(*args)
+      end
+
+      define_method("update_#{method_suffix}") do |*args|
+        klass.new(orca_api).update(*args)
+      end
     end
 
     private

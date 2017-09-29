@@ -1,0 +1,20 @@
+{
+  "patientmodv3res3": {
+    "Request_Number": "99",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "26a72b23-e890-40bf-a346-2e4460371687",
+    "Information_Date": "2017-09-27",
+    "Information_Time": "23:55:13",
+    "Api_Result": "000",
+    "Api_Result_Message": "解除処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1"
+    }
+  }
+}

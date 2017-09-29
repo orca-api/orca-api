@@ -1,7 +1,5 @@
 # coding: utf-8
 
-require "ostruct"
-
 module OrcaApi
   # 日レセAPIの呼び出し結果を扱うクラス
   class Result
@@ -10,15 +8,6 @@ module OrcaApi
         .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
         .gsub(/([a-z\d])([A-Z])/, '\1_\2')
         .downcase
-    end
-
-    def self.json_attr_reader(*names)
-      names.map(&:to_s).each do |name|
-        attr_name = json_name_to_attr_name(name)
-        define_method(attr_name) do
-          @body[name]
-        end
-      end
     end
 
     def self.trim_response(hash)
@@ -56,6 +45,10 @@ module OrcaApi
 
     def body
       @body ||= @raw.first[1]
+    end
+
+    def [](key)
+      body[key]
     end
 
     def ok?
