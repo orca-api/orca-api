@@ -501,6 +501,11 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
   %w(
     HealthPublicInsurance
     AccidentInsurance
+    Income
+    Pension
+    Maiden
+    SpecialNotes
+    Personally
   ).each do |class_name|
     klass = OrcaApi::PatientService.const_get(class_name)
     method_suffix = OrcaApi::Result.json_name_to_attr_name(class_name)

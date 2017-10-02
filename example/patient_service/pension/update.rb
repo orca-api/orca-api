@@ -25,16 +25,16 @@ mode =
    end)
 
 params = {
-  "Income_Information" => { # 低所得者２情報（低所得者履歴）
-    "Income_Mode" => mode, # 処理区分/6/Modify：更新、Delete：削除　※２
-    "Income_Info" => [ # 20
+  "Pension_Information" => { # 低所得者１情報（年金履歴）
+    "Pension_Mode" => mode, # 処理区分/6/Modify：更新、Delete：削除　※２
+    "Pension_Info" => [ # 20
       {
-        "Income_StartDate" => "2017-09-01", # 認定開始日/10/必須
-        "Income_ExpiredDate" => "9999-12-31", # 認定終了日/10
-        "Income_Reduction_Date" => "2017-09-30", # 標準負担額減額開始日/10
-        "Income_Long_Period_Date" => "", # 長期入院該当年月日/10
-        "Income_Certificate_Code" => "0", # 認定範囲区分/1/※３
-        "Income_Boundary_Code" => "1", # 境界層該当区分/1/0:境界層非該当、1:境界層該当
+        "Pension_StartDate" => "2017-09-01", # 認定開始日/10/必須
+        "Pension_ExpiredDate" => "9999-12-31", # 認定終了日/10
+        "Pension_Reduction_Date" => "2017-09-30", # 標準負担額減額開始日/10
+        "Pension_Welfare_Code" => "1", # 老齢福祉年金受給者証区分/1/0:無し、1:有り
+        "Pension_Certificate_Code" => "0", # 認定範囲区分/1/※３
+        "Pension_Boundary_Code" => "1", # 境界層該当区分/1/0:境界層非該当、1:境界層該当
       },
     ],
   }
@@ -48,10 +48,10 @@ params = {
 # 　　　 3：食事標準負担額のみ対象
 # 　　　 4：地方公費＋食事標準負担額対象
 
-result = patient_service.update_income(patient_id, params)
+result = patient_service.update_pension(patient_id, params)
 if result.ok?
   pp result.patient_information
-  pp result["Income_Information"]
+  pp result["Pension_Information"]
 else
   error(result)
 end
