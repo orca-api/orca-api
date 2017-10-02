@@ -1,15 +1,15 @@
 {
   "diseaseres": {
-    "Information_Date": "2017-09-14",
-    "Information_Time": "15:48:05",
+    "Information_Date": "2017-10-02",
+    "Information_Time": "11:47:42",
     "Api_Result": "E90",
     "Api_Result_Message": "他端末で使用中です。",
     "Reskey": "Acceptance_Info",
-    "Perform_Date": "2017-09-14",
-    "Perform_Time": "15:48:05",
+    "Perform_Date": "2017-10-02",
+    "Perform_Time": "11:47:42",
     "Department_Code": "01",
     "Department_Name": "内科",
-    "Patient_ID": "1",
-    "Base_Month": "2017-09"
+    "Patient_ID": "210",
+    "Base_Month": "2017-10"
   }
 }

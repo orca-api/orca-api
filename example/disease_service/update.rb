@@ -1,10 +1,22 @@
 # -*- coding: utf-8 -*-
+
+if ![1, 2].include?(ARGV.length)
+  $stderr.puts(<<-EOS)
+Usage:
+  upadte.rb <patient_id> ["delete"]
+  EOS
+  exit(1)
+end
+
 require_relative "../common"
 
 disease_service = @orca_api.new_disease_service
 
+patient_id = ARGV.shift
+disease_out_come = (ARGV.shift || "").downcase == "delete" ? "O" : ""
+
 params = {
-  "Patient_ID" => ARGV.shift, # 患者番号/20/必須
+  "Patient_ID" => patient_id, # 患者番号/20/必須
   "Base_Month" => "", # 基準月/7/（空白時はシステム日の属する月）。基準月に有効な病名でリクエスト内に設定されていない日レセの病名情報を返却する。(日レセにのみ存在する病名)
   "Perform_Date" => "", # 実施年月日/10
   "Perform_Time" => "", # 実施時間/8
@@ -22,18 +34,18 @@ params = {
           "Disease_Single_Name" => "胃潰瘍", # 単独病名/20
         },
       ],
-      "Disease_Supplement" => { # 補足コメント情報/※２
-        "Disease_Scode1" => "", # 補足コメントコード１/10
-        "Disease_Scode2" => "", # 補足コメントコード２/10
-        "Disease_Scode3" => "", # 補足コメントコード３/10
-        "Disease_Sname" => "右膝", # 補足コメント/40
-      },
+      "Disease_Supplement_Name" => "右膝", # 補足コメント情報/40/※２
+      "Disease_Supplement_Single_Code" => [  # 補足コメントコード情報(繰り返し　３)/3/※２
+        {
+          "Disease_Supplement_Single_Code" => "", # 補足コメントコード/10
+        },
+      ],
       "Disease_InOut" => "", # 入外区分（I：入院、O：入院外、空白：入外）/1
       "Disease_Category" => "", # 主病フラグ（PD：主疾患）/2
       "Disease_SuspectedFlag" => "", # 疑いフラグ（S：疑い）/1
       "Disease_StartDate" => "2017-07-15", # 開始日/10/必須
       "Disease_EndDate" => "", # 転帰日/10
-      "Disease_OutCome" => "", # 転帰区分/2/※６
+      "Disease_OutCome" => disease_out_come, # 転帰区分/2/※６
       "Disease_Karte_Name" => "", # カルテ病名/80/※３
       "Disease_Class" => "", # 疾患区分（０３：皮膚科特定疾患指導管理料（１）、０４：皮膚科特定疾患指導管理料（２）、０５：:特定疾患療養管理料、０７：てんかん指導料、０８：特定疾患療養管理料又はてんかん指導料、０９：難病外来指導管理料）/4/※４
       "Insurance_Combination_Number" => "", # 保険組合せ番号/4/労災、公害、自賠責、第三者行為は必須　　　 ※５
@@ -58,7 +70,7 @@ params = {
         },
       ],
       "Disease_StartDate" => "2017-06-01",
-      #"Disease_OutCome" => "O", # 削除
+      "Disease_OutCome" => disease_out_come,
       "Insurance_Disease" => "False",
     },
     {
@@ -76,16 +88,8 @@ params = {
       ],
       "Disease_SuspectedFlag" => "S",
       "Disease_StartDate" => "2014-08-01",
-      #"Disease_OutCome" => "O", # 削除
+      "Disease_OutCome" => disease_out_come,
       "Disease_Class" => "05",
-      "Insurance_Disease" => "False",
-    },
-    {
-      "Department_Code" => "01",
-      "Disease_Name" => "食思不振",
-      "Disease_Code" => "0000999",
-      "Disease_StartDate" => "2012-10-23",
-      #"Disease_OutCome" => "O", # 削除
       "Insurance_Disease" => "False",
     },
   ],

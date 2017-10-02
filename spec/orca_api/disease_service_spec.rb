@@ -76,12 +76,12 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
                 "Disease_Single_Name" => "胃潰瘍",
               },
             ],
-            "Disease_Supplement" => {
-              "Disease_Scode1" => "",
-              "Disease_Scode2" => "",
-              "Disease_Scode3" => "",
-              "Disease_Sname" => "右膝",
-            },
+            "Disease_Supplement_Name" => "右膝",
+            "Disease_Supplement_Single_Code" => [
+              {
+                "Disease_Supplement_Single_Code" => "",
+              },
+            ],
             "Disease_InOut" => "",
             "Disease_Category" => "",
             "Disease_SuspectedFlag" => "",
@@ -133,21 +133,14 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
             "Disease_Class" => "05",
             "Insurance_Disease" => "False",
           },
-          {
-            "Department_Code" => "01",
-            "Disease_Name" => "食思不振",
-            "Disease_Code" => "0000999",
-            "Disease_StartDate" => "2012-10-23",
-            "Insurance_Disease" => "False",
-          },
         ],
       }
     }
 
     subject { service.update(args) }
 
-    def expect_orca22_diseasev2(path, body, args, response_json)
-      expect(path).to eq("/orca22/diseasev2")
+    def expect_orca22_diseasev3(path, body, args, response_json)
+      expect(path).to eq("/orca22/diseasev3")
       expect(body["diseasereq"]).to eq(args)
 
       return_response_json(response_json)
@@ -161,14 +154,14 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
         prev_response_json =
           case count
           when 1
-            expect_orca22_diseasev2(path, body, args, response_json)
+            expect_orca22_diseasev3(path, body, args, response_json)
           end
         prev_response_json
       }
     end
 
     context "正常系" do
-      let(:response_json) { load_orca_api_response_json("orca22_diseasev2.json") }
+      let(:response_json) { load_orca_api_response_json("orca22_diseasev3.json") }
 
       its("ok?") { is_expected.to be true }
       its(:disease_unmatch_information) { is_expected.to eq(response_json.first[1]["Disease_Unmatch_Information"]) }
@@ -176,14 +169,14 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
 
     context "異常系" do
       context "エラー" do
-        let(:response_json) { load_orca_api_response_json("orca22_diseasev2_E42.json") }
+        let(:response_json) { load_orca_api_response_json("orca22_diseasev3_E42.json") }
 
         its("ok?") { is_expected.to be false }
         its(:disease_message_information) { is_expected.to eq(response_json.first[1]["Disease_Message_Information"]) }
       end
 
       context "他端末使用中" do
-        let(:response_json) { load_orca_api_response_json("orca22_diseasev2_E90.json") }
+        let(:response_json) { load_orca_api_response_json("orca22_diseasev3_E90.json") }
 
         its("ok?") { is_expected.to be false }
       end
