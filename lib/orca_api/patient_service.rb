@@ -1,8 +1,6 @@
 # coding: utf-8
 
 require_relative "service"
-require_relative "patient_service/health_public_insurance"
-require_relative "patient_service/accident_insurance"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
@@ -108,9 +106,15 @@ module OrcaApi
     %w(
       HealthPublicInsurance
       AccidentInsurance
+      Income
+      Pension
+      Maiden
+      SpecialNotes
+      Personally
     ).each do |class_name|
-      klass = const_get(class_name)
       method_suffix = Result.json_name_to_attr_name(class_name)
+      require_relative "patient_service/#{method_suffix}"
+      klass = const_get(class_name)
 
       define_method("get_#{method_suffix}") do |*args|
         klass.new(orca_api).get(*args)

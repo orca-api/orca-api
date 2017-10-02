@@ -1,0 +1,20 @@
+{
+  "patientmodv3res4": {
+    "Request_Number": "02",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "232b0e65-7599-42b6-8b9f-ccbc25250745",
+    "Information_Date": "2017-10-02",
+    "Information_Time": "14:04:45",
+    "Api_Result": "000",
+    "Api_Result_Message": "登録処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1"
+    }
+  }
+}
