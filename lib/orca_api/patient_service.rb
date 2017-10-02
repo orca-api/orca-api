@@ -6,6 +6,9 @@ require_relative "patient_service/accident_insurance"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
+  #
+  # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v031.pdf
+  # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v031_err.pdf
   class PatientService < Service
     # 患者情報の登録の結果を表現するクラス
     class CreateResult < ::OrcaApi::Result
@@ -71,7 +74,7 @@ module OrcaApi
     end
 
     # 患者情報の削除
-    def destroy(id)
+    def destroy(id, force: false)
       res = Result.new(call_orca12_patientmodv31_01(id, nil, "Delete"))
       if !res.locked?
         locked_result = res
@@ -89,7 +92,7 @@ module OrcaApi
         locked_result = nil
         return res
       end
-      if res.api_result != "S20"
+      if res.api_result != "S20" || !force
         return res
       end
       # 該当患者に受診履歴、病名等の入力がある場合
