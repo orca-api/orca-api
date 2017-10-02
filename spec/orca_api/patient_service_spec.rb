@@ -362,8 +362,9 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
   describe "#destroy" do
     let(:patient_id) { 1 }
+    let(:args) { [patient_id] }
 
-    subject { service.destroy(patient_id) }
+    subject { service.destroy(*args) }
 
     context "正常系" do
       let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_delete_000.json") }
@@ -402,36 +403,75 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       context "受診のある患者" do
-        before do
-          count = 0
-          prev_response_json = nil
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
-            count += 1
-            prev_response_json =
-              case count
-              when 1
-                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", "orca12_patientmodv31_01_delete.json")
-              when 2
-                patient = prev_response_json.first[1]["Patient_Information"]
-                expect_orca12_patientmodv31_02(
-                  path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_1.json"
-                )
-              when 3
-                patient = prev_response_json.first[1]["Patient_Information"]
-                expect_orca12_patientmodv31_02(
-                  path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_2.json"
-                )
-              when 4
-                patient = prev_response_json.first[1]["Patient_Information"]
-                expect_orca12_patientmodv31_02(
-                  path, body, prev_response_json, patient, "Delete", response_json
-                )
-              end
-            prev_response_json
-          }
+        context "強制削除しない" do
+          let(:args) { [patient_id, { force: false }] }
+          let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_delete_S20_2.json") }
+
+          before do
+            count = 0
+            prev_response_json = nil
+            locked_result = nil
+            expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
+              count += 1
+              prev_response_json =
+                case count
+                when 1
+                  locked_result = load_orca_api_response_json("orca12_patientmodv31_01_delete.json")
+                  expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", locked_result)
+                when 2
+                  patient = prev_response_json.first[1]["Patient_Information"]
+                  expect_orca12_patientmodv31_02(
+                    path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_1.json"
+                  )
+                when 3
+                  patient = prev_response_json.first[1]["Patient_Information"]
+                  expect_orca12_patientmodv31_02(
+                    path, body, prev_response_json, patient, "Delete", response_json
+                  )
+                when 4
+                  expect_orca12_patientmodv31_99(path, body, locked_result)
+                end
+              prev_response_json
+            }
+          end
+
+          its("ok?") { is_expected.to be false }
         end
 
-        include_examples "ok"
+        context "強制削除する" do
+          let(:args) { [patient_id, { force: true }] }
+
+          before do
+            count = 0
+            prev_response_json = nil
+            expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
+              count += 1
+              prev_response_json =
+                case count
+                when 1
+                  expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", "orca12_patientmodv31_01_delete.json")
+                when 2
+                  patient = prev_response_json.first[1]["Patient_Information"]
+                  expect_orca12_patientmodv31_02(
+                    path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_1.json"
+                  )
+                when 3
+                  patient = prev_response_json.first[1]["Patient_Information"]
+                  expect_orca12_patientmodv31_02(
+                    path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_2.json"
+                  )
+                when 4
+                  patient = prev_response_json.first[1]["Patient_Information"]
+                  expect_orca12_patientmodv31_02(
+                    path, body, prev_response_json, patient, "Delete", response_json
+                  )
+                end
+              prev_response_json
+            }
+          end
+
+          include_examples "ok"
+        end
       end
     end
 
