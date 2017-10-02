@@ -1,16 +1,16 @@
 {
   "diseaseres": {
-    "Information_Date": "2017-09-14",
-    "Information_Time": "23:04:22",
+    "Information_Date": "2017-10-02",
+    "Information_Time": "11:44:56",
     "Api_Result": "000",
     "Api_Result_Message": "処理実施終了",
     "Reskey": "Acceptance_Info",
-    "Perform_Date": "2017-09-14",
-    "Perform_Time": "23:04:22",
+    "Perform_Date": "2017-10-02",
+    "Perform_Time": "11:44:56",
     "Department_Code": "01",
     "Department_Name": "内科",
-    "Patient_ID": "208",
-    "Base_Month": "2017-09",
+    "Patient_ID": "210",
+    "Base_Month": "2017-10",
     "Disease_Unmatch_Information": {
       "Disease_Unmatch_Information_Overflow": "False"
     }
