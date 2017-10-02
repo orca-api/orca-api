@@ -1,0 +1,91 @@
+{
+  "patientmodv3res4": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "70929d59-a997-4f4c-9604-2e727db4d96a",
+    "Information_Date": "2017-10-02",
+    "Information_Time": "14:04:32",
+    "Api_Result": "000",
+    "Api_Result_Message": "検索処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1"
+    },
+    "Income_Information": {
+      "Income_Info": [
+        {
+          "Income_StartDate": "2017-09-01",
+          "Income_ExpiredDate": "9999-12-31",
+          "Income_Reduction_Date": "2017-09-30",
+          "Income_Certificate_Code": "0",
+          "Income_Certificate_Code_Name": "すべて対象",
+          "Income_Boundary_Code": "1",
+          "Income_Boundary_Code_Name": "境界層該当"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "Personally_Information": {
+      "Personally_Info": {
+        "Community_Disease": [
+          {
+            "Target_Disease": "False"
+          },
+          {
+            "Target_Disease": "False"
+          },
+          {
+            "Target_Disease": "False"
+          },
+          {
+            "Target_Disease": "False"
+          }
+        ],
+        "Community_Disease2": "False",
+        "Community_Disease3": "False"
+      }
+    }
+  }
+}

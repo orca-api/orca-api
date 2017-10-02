@@ -1,0 +1,40 @@
+{
+  "patientmodv3res4": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "dcffc68b-ecc7-48a9-af4a-1b832b778b22",
+    "Information_Date": "2017-10-02",
+    "Information_Time": "14:04:24",
+    "Api_Result": "000",
+    "Api_Result_Message": "検索処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1"
+    },
+    "Personally_Information": {
+      "Personally_Info": {
+        "Community_Disease": [
+          {
+            "Target_Disease": "False"
+          },
+          {
+            "Target_Disease": "False"
+          },
+          {
+            "Target_Disease": "False"
+          },
+          {
+            "Target_Disease": "False"
+          }
+        ],
+        "Community_Disease2": "False",
+        "Community_Disease3": "False"
+      }
+    }
+  }
+}

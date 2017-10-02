@@ -3,6 +3,7 @@
 require_relative "service"
 require_relative "patient_service/health_public_insurance"
 require_relative "patient_service/accident_insurance"
+require_relative "patient_service/income"
 
 module OrcaApi
   # 患者情報を扱うサービスを表現したクラス
@@ -108,6 +109,7 @@ module OrcaApi
     %w(
       HealthPublicInsurance
       AccidentInsurance
+      Income
     ).each do |class_name|
       klass = const_get(class_name)
       method_suffix = Result.json_name_to_attr_name(class_name)
