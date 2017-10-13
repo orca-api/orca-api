@@ -11,12 +11,27 @@ module OrcaApi
     PATH = "/orca23/incomev3".freeze
     REQUEST_NAME = "incomev3req".freeze
 
+    # 請求一覧
     def list(args)
       res = call_01("01", args)
       if !res.locked?
         unlock(res)
       end
       res
+    end
+
+    # 入金
+    def update(args)
+      res = call_01("02", args)
+      if !res.locked?
+        locked_result = res
+      end
+      if !res.ok?
+        return res
+      end
+      call_02("01", args, res)
+    ensure
+      unlock(locked_result)
     end
 
     private
@@ -26,6 +41,20 @@ module OrcaApi
         "Request_Number" => "01",
         "Request_Mode" => mode,
         "Karte_Uid" => orca_api.karte_uid
+      )
+      Result.new(orca_api.call(PATH, body: { REQUEST_NAME => req }))
+    end
+
+    def call_02(mode, args, previous_result)
+      res = previous_result
+      req = args.merge(
+        "Request_Number" => "02",
+        "Request_Mode" => mode,
+        "Karte_Uid" => orca_api.karte_uid,
+        "Orca_Uid" => res.orca_uid,
+        "Patient_ID" => res["Patient_ID"],
+        "InOut" => res["Income_Detail"]["InOut"],
+        "Invoice_Number" => res["Income_Detail"]["Invoice_Number"]
       )
       Result.new(orca_api.call(PATH, body: { REQUEST_NAME => req }))
     end
