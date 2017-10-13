@@ -46,6 +46,15 @@ end
 @orca_api.karte_uid = ENV["ORCA_API_KARTE_UID"]
 
 ########################################################################
+## 結果の整形
+def print_result(result, *keys)
+  hash = keys.map { |key|
+    [key, result[key]]
+  }.to_h
+  pp(hash)
+end
+
+########################################################################
 ## エラー処理
 def error(result)
   if result.ok?
