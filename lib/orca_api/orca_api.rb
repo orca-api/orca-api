@@ -10,15 +10,6 @@ require_relative "orca_api/basic_authentication"
 
 require_relative "result"
 
-require_relative "patient_service"
-require_relative "insurance_service"
-require_relative "department_service"
-require_relative "physician_service"
-require_relative "medical_practice_service"
-require_relative "acceptance_service"
-require_relative "disease_service"
-require_relative "form_data_service"
-
 module OrcaApi
   # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
   class OrcaApi
@@ -27,6 +18,13 @@ module OrcaApi
     attr_accessor :port
     attr_writer :karte_uid
     attr_accessor :debug_output
+
+    def self.underscore(name)
+      name.
+        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+        gsub(/([a-z\d])([A-Z])/, '\1_\2').
+        downcase
+    end
 
     def initialize(host, authentication, port = 8000)
       @host = host
@@ -72,19 +70,24 @@ module OrcaApi
       }
     end
 
-    factory_methods = [
-      ["new_patient_service", PatientService],
-      ["new_insurance_service", InsuranceService],
-      ["new_department_service", DepartmentService],
-      ["new_physician_service", PhysicianService],
-      ["new_medical_practice_service", MedicalPracticeService],
-      ["new_acceptance_service", AcceptanceService],
-      ["new_disease_service", DiseaseService],
-      ["new_form_data_service", FormDataService]
-    ]
-    factory_methods.each do |name, klass|
-      define_method(name) do
-        klass.new(self)
+    service_class_names = %w(
+      PatientService
+      InsuranceService
+      DepartmentService
+      PhysicianService
+      MedicalPracticeService
+      AcceptanceService
+      DiseaseService
+      FormDataService
+    )
+    service_class_names.each do |name|
+      s = underscore(name)
+
+      require_relative s
+
+      service_class = ::OrcaApi.const_get(name)
+      define_method("new_#{s}") do
+        service_class.new(self)
       end
     end
   end
