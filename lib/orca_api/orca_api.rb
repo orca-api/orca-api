@@ -79,6 +79,7 @@ module OrcaApi
       AcceptanceService
       DiseaseService
       FormDataService
+      IncomeService
     )
     service_class_names.each do |name|
       s = underscore(name)
