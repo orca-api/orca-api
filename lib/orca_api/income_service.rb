@@ -20,6 +20,15 @@ module OrcaApi
       res
     end
 
+    # 請求確認
+    def get(args)
+      res = call_01("02", args)
+      if !res.locked?
+        unlock(res)
+      end
+      res
+    end
+
     # 入金
     def update(args)
       res = call_01("02", args)
