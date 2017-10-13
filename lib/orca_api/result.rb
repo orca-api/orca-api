@@ -4,10 +4,10 @@ module OrcaApi
   # 日レセAPIの呼び出し結果を扱うクラス
   class Result
     def self.json_name_to_attr_name(name)
-      name
-        .gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2')
-        .gsub(/([a-z\d])([A-Z])/, '\1_\2')
-        .downcase
+      name.
+        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
+        gsub(/([a-z\d])([A-Z])/, '\1_\2').
+        downcase
     end
 
     def self.trim_response(hash)
