@@ -48,9 +48,13 @@ end
 ########################################################################
 ## 結果の整形
 def print_result(result, *keys)
-  hash = keys.map { |key|
-    [key, result[key]]
-  }.to_h
+  if keys.empty?
+    hash = result.body
+  else
+    hash = keys.map { |key|
+      [key, result[key]]
+    }.to_h
+  end
   pp(hash)
 end
 
