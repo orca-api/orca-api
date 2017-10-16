@@ -20,7 +20,7 @@ invoice_number = ARGV.shift
 args = {
   "Patient_ID" => patient_id, # 患者番号/必須/20
   "InOut" => in_out, # 入外区分、I:入院/O:外来/必須/1
-  "Invoice_Number" => invoice_number, # 請求一覧指示区分/1:指定した期間内の請求一覧、2:指定した期間内の未収（過入）金のある請求一覧、3:指定した期間内に入返金が行われた請求一覧/任意/1/未設定時の初期値は"1"
+  "Invoice_Number" => invoice_number, # 伝票番号/必須/7
 }
 result = income_service.get(args)
 if result.ok?
