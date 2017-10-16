@@ -38,22 +38,20 @@ module OrcaApi
     #
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api3
     def update(args)
-      res = call_01("02", args)
-      if !res.locked?
-        locked_result = res
-      end
-      if !res.ok?
-        return res
-      end
-      call_02("01", args, res)
-    ensure
-      unlock(locked_result)
+      update_process(args, "01")
     end
 
     # 履歴修正
     #
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api4
     def update_history(args)
+      update_process(args, "02")
+    end
+
+    private
+
+    # 更新処理の共通処理
+    def update_process(args, mode)
       res = call_01("02", args)
       if !res.locked?
         locked_result = res
@@ -61,12 +59,10 @@ module OrcaApi
       if !res.ok?
         return res
       end
-      call_02("02", args, res)
+      call_02(mode, args, res)
     ensure
       unlock(locked_result)
     end
-
-    private
 
     def call_01(mode, args)
       req = args.merge(
