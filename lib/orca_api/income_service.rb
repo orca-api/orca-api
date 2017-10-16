@@ -48,6 +48,13 @@ module OrcaApi
       update_process(args, "02")
     end
 
+    # 入金取消
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api5
+    def cancel(args)
+      update_process(args, "03")
+    end
+
     private
 
     # 更新処理の共通処理
