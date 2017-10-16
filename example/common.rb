@@ -55,6 +55,7 @@ def print_result(result, *keys)
       [key, result[key]]
     }.to_h
   end
+  puts "＊＊＊＊＊正常終了＊＊＊＊＊"
   pp(hash)
 end
 
