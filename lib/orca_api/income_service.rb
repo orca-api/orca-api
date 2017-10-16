@@ -5,6 +5,7 @@ require_relative "service"
 module OrcaApi
   # 患者収納情報を扱うサービスを表現したクラス
   #
+  # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667
   # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api023.pdf
   # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_shunou.data/api023_err.pdf
   class IncomeService < Service
@@ -12,6 +13,8 @@ module OrcaApi
     REQUEST_NAME = "incomev3req".freeze
 
     # 請求一覧
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api1
     def list(args)
       res = call_01("01", args)
       if !res.locked?
@@ -21,6 +24,8 @@ module OrcaApi
     end
 
     # 請求確認
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api2
     def get(args)
       res = call_01("02", args)
       if !res.locked?
@@ -30,6 +35,8 @@ module OrcaApi
     end
 
     # 入金
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api3
     def update(args)
       res = call_01("02", args)
       if !res.locked?
@@ -39,6 +46,22 @@ module OrcaApi
         return res
       end
       call_02("01", args, res)
+    ensure
+      unlock(locked_result)
+    end
+
+    # 履歴修正
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api4
+    def update_history(args)
+      res = call_01("02", args)
+      if !res.locked?
+        locked_result = res
+      end
+      if !res.ok?
+        return res
+      end
+      call_02("02", args, res)
     ensure
       unlock(locked_result)
     end
