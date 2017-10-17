@@ -112,7 +112,7 @@ module OrcaApi
       SpecialNotes
       Personally
     ).each do |class_name|
-      method_suffix = Result.json_name_to_attr_name(class_name)
+      method_suffix = OrcaApi.underscore(class_name)
       require_relative "patient_service/#{method_suffix}"
       klass = const_get(class_name)
 

@@ -3,13 +3,6 @@
 module OrcaApi
   # 日レセAPIの呼び出し結果を扱うクラス
   class Result
-    def self.json_name_to_attr_name(name)
-      name.
-        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
-        gsub(/([a-z\d])([A-Z])/, '\1_\2').
-        downcase
-    end
-
     def self.trim_response(hash)
       result = {}
       hash.each do |k, v|
@@ -39,7 +32,7 @@ module OrcaApi
     def initialize(raw, trim = true)
       @raw = trim ? self.class.trim_response(raw) : raw
       @attr_names = body.keys.map { |key|
-        [self.class.json_name_to_attr_name(key).to_sym, key]
+        [OrcaApi.underscore(key).to_sym, key]
       }.to_h
     end
 

@@ -508,7 +508,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     Personally
   ).each do |class_name|
     klass = OrcaApi::PatientService.const_get(class_name)
-    method_suffix = OrcaApi::Result.json_name_to_attr_name(class_name)
+    method_suffix = OrcaApi::OrcaApi.underscore(class_name)
 
     describe klass.to_s do
       let(:patient_id) { 1 }
