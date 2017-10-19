@@ -1,0 +1,483 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "16:39:26",
+    "Api_Result": "00000",
+    "Api_Result_Message": "正常終了",
+    "Request_Number": "01",
+    "Request_Mode": "02",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Patient_ID": "00001",
+    "Income_Detail": {
+      "Perform_Date": "2012-01-10",
+      "Perform_End_Date": "2012-01-10",
+      "IssuedDate": "2012-01-10",
+      "InOut": "I",
+      "Invoice_Number": "0000013",
+      "Insurance_Combination_Number": "0001",
+      "Rate_Cd": " 30",
+      "Department_Code": "10",
+      "Cd_Information": {
+        "Ac_Money": "      6030",
+        "Ic_Money": "     11000",
+        "Ai_Money": "      5250",
+        "Oe_Money": "         0",
+        "Meal_Smoney": "       780"
+      },
+      "Ac_Point_Information": {
+        "Ac_Ttl_Point": "      1750",
+        "Ac_Point_Detail": [
+          {
+            "Ac_Point_Code": "A00",
+            "Ac_Point_Name": "初・再診料",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "B00",
+            "Ac_Point_Name": "医学管理等",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "C00",
+            "Ac_Point_Name": "在宅療養",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "F00",
+            "Ac_Point_Name": "投薬",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "G00",
+            "Ac_Point_Name": "注射",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "J00",
+            "Ac_Point_Name": "処置",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "K00",
+            "Ac_Point_Name": "手術",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "L00",
+            "Ac_Point_Name": "麻酔",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "D00",
+            "Ac_Point_Name": "検査",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "E00",
+            "Ac_Point_Name": "画像診断",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "H00",
+            "Ac_Point_Name": "リハビリ",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "I00",
+            "Ac_Point_Name": "精神科専門",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "M00",
+            "Ac_Point_Name": "放射線治療",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "N00",
+            "Ac_Point_Name": "病理診断",
+            "Ac_Point": "         0"
+          },
+          {
+            "Ac_Point_Code": "A10",
+            "Ac_Point_Name": "入院料",
+            "Ac_Point": "      1750"
+          },
+          {
+          }
+        ]
+      },
+      "Oe_Etc_Information": {
+        "Oe_Etc_Detail": [
+          {
+            "Oe_Etc_Number": " 1",
+            "Oe_Etc_Name": "予防接種"
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+            "Oe_Etc_Number": "10",
+            "Oe_Etc_Name": "分娩介助料"
+          }
+        ]
+      },
+      "Meal_Cost": "      1996"
+    },
+    "Income_History": [
+      {
+        "History_Number": " 1",
+        "Processing_Date": "2012-01-10",
+        "Processing_Time": "13:09",
+        "Ac_Money": "      6030",
+        "Ic_Money": "       500",
+        "State": "9",
+        "State_Name": "請求",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 2",
+        "Processing_Date": "2017-10-13",
+        "Processing_Time": "14:32",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 3",
+        "Processing_Date": "2017-10-13",
+        "Processing_Time": "14:32",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 4",
+        "Processing_Date": "2017-10-13",
+        "Processing_Time": "14:32",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 5",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "11:14",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 6",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "12:08",
+        "Ic_Money": "       300",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 7",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "12:13",
+        "Ic_Money": "      -300",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 8",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "12:13",
+        "Ic_Money": "      -500",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 9",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:37",
+        "Ic_Money": "      1500",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "10",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:49",
+        "Ic_Money": "      1500",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "11",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:49",
+        "Ic_Money": "      -970",
+        "State": "4",
+        "State_Name": "返金"
+      },
+      {
+        "History_Number": "12",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "14:27",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "13",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:33",
+        "Ic_Money": "     -1000",
+        "State": "4",
+        "State_Name": "返金"
+      },
+      {
+        "History_Number": "14",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:34",
+        "Ic_Money": "     -6030",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "15",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:34",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "16",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "16:01",
+        "Ic_Money": "     -1000",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "17",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "16:02",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "18",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "16:08",
+        "Ic_Money": "     10000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}

@@ -61,9 +61,21 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
     attr_names = case mode
                  when "01"
                    %w(
+                     Processing_Date
+                     Processing_Time
+                     Ic_Money
+                     Ic_Code
+                     Force_Flg
                    )
                  when "02"
                    %w(
+                     History_Number
+                     Processing_Date
+                     Processing_Time
+                     Ad_Money1
+                     Ad_Money2
+                     Ic_Money
+                     Ic_Code
                    )
                  when "03"
                    %w(
@@ -347,7 +359,6 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           "Ic_Money" => ic_money,
           "Ic_Code" => "",
           "Force_Flg" => force,
-
         }
       }
 
@@ -411,6 +422,73 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
 
           let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
           let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01_E0107.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+
+        context "他端末使用中" do
+          include_context "ロックを伴う/他端末使用中"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+      end
+    end
+
+    describe "#update_history" do
+      let(:lock_request_mode) { "02" }
+      let(:request_mode) { "02" }
+
+      let(:patient_id) { "1" }
+      let(:invoice_number) { "13" }
+      let(:history_number) { "1" }
+      let(:ic_money) { "1000" }
+      let(:args) {
+        {
+          "Patient_ID" => patient_id,
+          "InOut" => "I",
+          "Invoice_Number" => invoice_number,
+          "History_Number" => history_number,
+          "Processing_Date" => "",
+          "Processing_Time" => "",
+          "Ad_Money1" => "",
+          "Ad_Money2" => "",
+          "Ic_Money" => ic_money,
+          "Ic_Code" => "",
+        }
+      }
+
+      subject { service.update_history(args) }
+
+      context "正常系" do
+        include_context "ロックを伴う"
+
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update_history.json") }
+        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_02.json") }
+
+        its("ok?") { is_expected.to be true }
+
+        %w(
+          Patient_ID
+          InOut
+          Invoice_Number
+          Ac_Money
+          Ic_Money
+          Unpaid_Money
+          State
+          State_Name
+          Income_Detail_Information
+        ).each do |json_name|
+          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+        end
+      end
+
+      context "異常系" do
+        context "他の端末より同じカルテＵＩＤでの接続があります。" do
+          include_context "ロックを伴わない"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
 
           its("ok?") { is_expected.to be false }
         end
