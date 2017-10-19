@@ -83,7 +83,17 @@ end
 module CallWithWriteResponse
   def call(path, params: {}, body: nil, http_method: :post)
     res = OrcaApi::Result.new(super, false)
-    s = JSON.pretty_generate(res.raw)
+    if res.body["Orca_Uid"]
+      orca_uid = res.body["Orca_Uid"]
+      res.body["Orca_Uid"] = "c585dc3e-fa42-4f45-b02f-5a4166d0721d"
+      begin
+        s = JSON.pretty_generate(res.raw)
+      ensure
+        res.body["Orca_Uid"] = orca_uid
+      end
+    else
+      s = JSON.pretty_generate(res.raw)
+    end
     parts = []
     parts << path[1..-1].gsub("/", "_")
     if res["Request_Number"]
