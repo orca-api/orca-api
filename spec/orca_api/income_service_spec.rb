@@ -79,9 +79,15 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
                    )
                  when "03"
                    %w(
+                     Processing_Date
+                     Processing_Time
+                     Ic_Money
+                     Ic_Code
                    )
                  when "04"
                    %w(
+                     Processing_Date
+                     Processing_Time
                    )
                  when "05"
                    %w(
@@ -542,6 +548,60 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           State
           State_Name
           Income_Detail_Information
+        ).each do |json_name|
+          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+        end
+      end
+
+      context "異常系" do
+        context "他の端末より同じカルテＵＩＤでの接続があります。" do
+          include_context "ロックを伴わない"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+
+        context "他端末使用中" do
+          include_context "ロックを伴う/他端末使用中"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+      end
+    end
+
+    describe "#pay_back" do
+      let(:lock_request_mode) { "02" }
+      let(:request_mode) { "04" }
+
+      let(:patient_id) { "1" }
+      let(:invoice_number) { "13" }
+      let(:args) {
+        {
+          "Patient_ID" => patient_id,
+          "InOut" => "I",
+          "Invoice_Number" => invoice_number,
+          "Processing_Date" => "",
+          "Processing_Time" => "",
+        }
+      }
+
+      subject { service.pay_back(args) }
+
+      context "正常系" do
+        include_context "ロックを伴う"
+
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_pay_back.json") }
+        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_04.json") }
+
+        its("ok?") { is_expected.to be true }
+
+        %w(
+          Patient_ID
+          InOut
+          Invoice_Number
         ).each do |json_name|
           its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
         end
