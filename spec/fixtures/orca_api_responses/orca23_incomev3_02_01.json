@@ -1,0 +1,338 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "15:34:24",
+    "Api_Result": "00000",
+    "Api_Result_Message": "正常終了",
+    "Request_Number": "02",
+    "Request_Mode": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Patient_ID": "00001",
+    "InOut": "I",
+    "Invoice_Number": "0000013",
+    "Ac_Money": "      6030",
+    "Ic_Money": "      1000",
+    "Unpaid_Money": "      5030",
+    "State": "2",
+    "State_Name": "未入金",
+    "Income_History": [
+      {
+        "History_Number": " 1",
+        "Processing_Date": "2012-01-10",
+        "Processing_Time": "13:09",
+        "Ac_Money": "      6030",
+        "Ic_Money": "       500",
+        "State": "9",
+        "State_Name": "請求",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 2",
+        "Processing_Date": "2017-10-13",
+        "Processing_Time": "14:32",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 3",
+        "Processing_Date": "2017-10-13",
+        "Processing_Time": "14:32",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 4",
+        "Processing_Date": "2017-10-13",
+        "Processing_Time": "14:32",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 5",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "11:14",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 6",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "12:08",
+        "Ic_Money": "       300",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 7",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "12:13",
+        "Ic_Money": "      -300",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 8",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "12:13",
+        "Ic_Money": "      -500",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 9",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:37",
+        "Ic_Money": "      1500",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "10",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:49",
+        "Ic_Money": "      1500",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "11",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:49",
+        "Ic_Money": "      -970",
+        "State": "4",
+        "State_Name": "返金"
+      },
+      {
+        "History_Number": "12",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "14:27",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "13",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:33",
+        "Ic_Money": "     -1000",
+        "State": "4",
+        "State_Name": "返金"
+      },
+      {
+        "History_Number": "14",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:34",
+        "Ic_Money": "     -6030",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": "15",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:34",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}

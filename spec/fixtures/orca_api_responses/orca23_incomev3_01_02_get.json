@@ -1,7 +1,7 @@
 {
   "incomev3res": {
     "Information_Date": "2017-10-19",
-    "Information_Time": "13:44:16",
+    "Information_Time": "15:49:39",
     "Api_Result": "00000",
     "Api_Result_Message": "正常終了",
     "Request_Number": "01",
@@ -249,12 +249,42 @@
         "State_Name": "返金"
       },
       {
+        "History_Number": "12",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "14:27",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
       },
       {
+        "History_Number": "13",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:33",
+        "Ic_Money": "     -1000",
+        "State": "4",
+        "State_Name": "返金"
       },
       {
+        "History_Number": "14",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:34",
+        "Ic_Money": "     -6030",
+        "State": "6",
+        "State_Name": "入金取消",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
       },
       {
+        "History_Number": "15",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "15:34",
+        "Ic_Money": "      1000",
+        "State": "2",
+        "State_Name": "入金",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
       },
       {
       },
