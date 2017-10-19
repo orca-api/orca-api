@@ -74,3 +74,35 @@ def error(result)
     pp result.body
   end
 end
+
+########################################################################
+## モンキーパッチ
+
+# 自動テストのための日レセAPIのレスポンスを格納したファイルを
+# spec/fixtures/orca_api_responses 以下に生成するためのモンキーパッチ
+module CallWithWriteResponse
+  def call(path, params: {}, body: nil, http_method: :post)
+    res = OrcaApi::Result.new(super, false)
+    s = JSON.pretty_generate(res.raw)
+    parts = []
+    parts << path[1..-1].gsub("/", "_")
+    if res["Request_Number"]
+      parts << res["Request_Number"]
+    end
+    if res["Request_Mode"]
+      parts << res["Request_Mode"]
+    end
+    if !res.ok?
+      parts << res.api_result
+    end
+    fixture_path = File.expand_path("../../spec/fixtures/orca_api_responses/#{parts.join('_')}.json", __FILE__)
+    File.open(fixture_path, "w") do |f|
+      f.puts(s)
+    end
+    res.raw
+  end
+end
+
+if ENV["ORCA_API_WRITE_RESPONSE"]
+  OrcaApi::OrcaApi.prepend(CallWithWriteResponse)
+end
