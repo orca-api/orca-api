@@ -46,6 +46,20 @@ end
 @orca_api.karte_uid = ENV["ORCA_API_KARTE_UID"]
 
 ########################################################################
+## 結果の整形
+def print_result(result, *keys)
+  if keys.empty?
+    hash = result.body
+  else
+    hash = keys.map { |key|
+      [key, result[key]]
+    }.to_h
+  end
+  puts "＊＊＊＊＊正常終了＊＊＊＊＊"
+  pp(hash)
+end
+
+########################################################################
 ## エラー処理
 def error(result)
   if result.ok?
@@ -59,4 +73,46 @@ def error(result)
     puts "レスポンスボディ:"
     pp result.body
   end
+end
+
+########################################################################
+## モンキーパッチ
+
+# 自動テストのための日レセAPIのレスポンスを格納したファイルを
+# spec/fixtures/orca_api_responses 以下に生成するためのモンキーパッチ
+module CallWithWriteResponse
+  def call(path, params: {}, body: nil, http_method: :post)
+    res = OrcaApi::Result.new(super, false)
+    if res.body["Orca_Uid"]
+      orca_uid = res.body["Orca_Uid"]
+      res.body["Orca_Uid"] = "c585dc3e-fa42-4f45-b02f-5a4166d0721d"
+      begin
+        s = JSON.pretty_generate(res.raw)
+      ensure
+        res.body["Orca_Uid"] = orca_uid
+      end
+    else
+      s = JSON.pretty_generate(res.raw)
+    end
+    parts = []
+    parts << path[1..-1].gsub("/", "_")
+    if res["Request_Number"]
+      parts << res["Request_Number"]
+    end
+    if res["Request_Mode"]
+      parts << res["Request_Mode"]
+    end
+    if !res.ok?
+      parts << res.api_result
+    end
+    fixture_path = File.expand_path("../../spec/fixtures/orca_api_responses/#{parts.join('_')}.json", __FILE__)
+    File.open(fixture_path, "w") do |f|
+      f.puts(s)
+    end
+    res.raw
+  end
+end
+
+if ENV["ORCA_API_WRITE_RESPONSE"]
+  OrcaApi::OrcaApi.prepend(CallWithWriteResponse)
 end

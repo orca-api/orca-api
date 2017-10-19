@@ -1,0 +1,12 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "13:39:11",
+    "Api_Result": "E1038",
+    "Api_Result_Message": "他の端末より同じカルテＵＩＤでの接続があります。",
+    "Request_Number": "01",
+    "Request_Mode": "02",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid"
+  }
+}

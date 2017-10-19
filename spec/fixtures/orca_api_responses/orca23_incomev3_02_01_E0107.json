@@ -1,0 +1,13 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "14:27:38",
+    "Api_Result": "E0107",
+    "Api_Result_Message": "過入金になります。入金できません。",
+    "Request_Number": "02",
+    "Request_Mode": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d"
+  }
+}
