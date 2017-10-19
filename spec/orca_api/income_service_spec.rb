@@ -478,6 +478,69 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           Unpaid_Money
           State
           State_Name
+          Income_History
+        ).each do |json_name|
+          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+        end
+      end
+
+      context "異常系" do
+        context "他の端末より同じカルテＵＩＤでの接続があります。" do
+          include_context "ロックを伴わない"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+
+        context "他端末使用中" do
+          include_context "ロックを伴う/他端末使用中"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+      end
+    end
+
+    describe "#cancel" do
+      let(:lock_request_mode) { "02" }
+      let(:request_mode) { "03" }
+
+      let(:patient_id) { "1" }
+      let(:invoice_number) { "13" }
+      let(:ic_money) { "-500" }
+      let(:args) {
+        {
+          "Patient_ID" => patient_id,
+          "InOut" => "I",
+          "Invoice_Number" => invoice_number,
+          "Processing_Date" => "",
+          "Processing_Time" => "",
+          "Ic_Money" => ic_money,
+          "Ic_Code" => "",
+        }
+      }
+
+      subject { service.cancel(args) }
+
+      context "正常系" do
+        include_context "ロックを伴う"
+
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_cancel.json") }
+        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_03.json") }
+
+        its("ok?") { is_expected.to be true }
+
+        %w(
+          Patient_ID
+          InOut
+          Invoice_Number
+          Ac_Money
+          Ic_Money
+          Unpaid_Money
+          State
+          State_Name
           Income_Detail_Information
         ).each do |json_name|
           its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
