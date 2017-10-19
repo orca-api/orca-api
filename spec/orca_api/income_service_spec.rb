@@ -301,7 +301,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       context "正常系" do
         include_context "正常な日レセAPI呼び出し"
 
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_#{method_name}.json") }
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_#{lock_request_mode}_#{method_name}.json") }
         let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_#{request_mode}.json") }
 
         its("ok?") { is_expected.to be true }
@@ -323,7 +323,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           prev_response_json =
             case count
             when 1
-              expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
+              expect_orca23_incomev3_01(path, body, lock_request_mode, make_lock_args(args), lock_response_json)
             when 2
               expect_orca23_incomev3_02(path, body, request_mode, args, prev_response_json, response_json)
             when 3
@@ -344,13 +344,13 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
+                expect_orca23_incomev3_01(path, body, lock_request_mode, make_lock_args(args), lock_response_json)
               end
             prev_response_json
           }
         end
 
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_#{lock_request_mode}_E1038.json") }
 
         its("ok?") { is_expected.to be false }
       end
@@ -364,7 +364,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
             prev_response_json =
               case count
               when 1
-                expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
+                expect_orca23_incomev3_01(path, body, lock_request_mode, make_lock_args(args), lock_response_json)
               when 2
                 expect_orca23_incomev3_99(path, body, prev_response_json)
               end
@@ -372,9 +372,24 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           }
         end
 
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_#{lock_request_mode}_E9999.json") }
 
         its("ok?") { is_expected.to be false }
+      end
+
+      def make_lock_args(args)
+        if args.key?("InOut") && args.key?("Invoice_Number")
+          args
+        else
+          args.merge(
+            "Information_Class" => "1",
+            "Start_Month" => "0000-01",
+            "Selection" => {
+              "First" => "1",
+              "Last" => "1",
+            }
+          )
+        end
       end
     end
 
@@ -546,6 +561,95 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         {
           "Patient_ID" => "1",
           "InOut" => "I",
+          "Invoice_Number" => "13",
+          "Processing_Date" => "",
+          "Processing_Time" => "",
+        }
+      }
+
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+        Ac_Money
+        Ic_Money
+        Unpaid_Money
+        State
+        State_Name
+        Income_History
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
+    end
+
+    describe "#bulk_recalculate" do
+      let(:method_name) { "bulk_recalculate" }
+      let(:lock_request_mode) { "01" }
+      let(:request_mode) { "06" }
+
+      let(:args) {
+        {
+          "Patient_ID" => "1",
+          "Perform_Month" => "2014-06",
+          "Processing_Date" => "",
+          "Processing_Time" => "",
+        }
+      }
+
+      json_names = %w(
+        Patient_ID
+        Income_Information
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
+    end
+
+    describe "#bulk_update" do
+      let(:method_name) { "bulk_update" }
+      let(:lock_request_mode) { "01" }
+      let(:request_mode) { "07" }
+
+      let(:args) {
+        {
+          "Patient_ID" => "1",
+          "Income_Information" => [
+            {
+              "InOut" => "O",
+              "Invoice_Number" => "749",
+              "Processing_Date" => "",
+              "Processing_Time" => "",
+              "Ic_Class" => "1",
+              "Ic_Money" => "1060",
+              "Ic_Code" => "",
+              "Force_Ic" => "",
+            },
+            {
+              "InOut" => "O",
+              "Invoice_Number" => "750",
+              "Processing_Date" => "",
+              "Processing_Time" => "",
+              "Ic_Class" => "2",
+              "Ic_Money" => "960",
+              "Ic_Code" => "",
+              "Force_Ic" => "",
+            },
+          ]
+        }
+      }
+
+      json_names = %w(
+        Patient_ID
+        Income_Information
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
+    end
+
+    describe "#destroy" do
+      let(:method_name) { "destroy" }
+      let(:lock_request_mode) { "01" }
+      let(:request_mode) { "08" }
+
+      let(:args) {
+        {
+          "Patient_ID" => "1",
           "Invoice_Number" => "13",
           "Processing_Date" => "",
           "Processing_Time" => "",
