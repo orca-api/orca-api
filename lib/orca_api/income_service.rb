@@ -17,9 +17,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api1
     def list(args)
       res = call_01("01", args)
-      if !res.locked?
-        unlock(res)
-      end
+      unlock(res)
       res
     end
 
@@ -28,9 +26,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api2
     def get(args)
       res = call_01("02", args)
-      if !res.locked?
-        unlock(res)
-      end
+      unlock(res)
       res
     end
 
