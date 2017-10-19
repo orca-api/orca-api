@@ -295,6 +295,24 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       end
     end
 
+    shared_context "ロックを伴う/他端末使用中" do
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).exactly(2) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
+            when 2
+              expect_orca23_incomev3_99(path, body, prev_response_json)
+            end
+          prev_response_json
+        }
+      end
+    end
+
     shared_context "ロックを伴わない" do
       before do
         count = 0
@@ -377,6 +395,14 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       end
 
       context "異常系" do
+        context "他の端末より同じカルテＵＩＤでの接続があります。" do
+          include_context "ロックを伴わない"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+
         context "過入金" do
           include_context "ロックを伴う"
 
@@ -385,6 +411,14 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
 
           let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
           let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01_E0107.json") }
+
+          its("ok?") { is_expected.to be false }
+        end
+
+        context "他端末使用中" do
+          include_context "ロックを伴う/他端末使用中"
+
+          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
 
           its("ok?") { is_expected.to be false }
         end

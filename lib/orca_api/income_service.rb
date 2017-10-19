@@ -89,10 +89,7 @@ module OrcaApi
     private
 
     def common_update_process(args, mode)
-      res = lock(args)
-      if !res.locked?
-        locked_result = res
-      end
+      res = locked_result = lock(args)
       if !res.ok?
         return res
       end
