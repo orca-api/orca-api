@@ -1,0 +1,1457 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "11:58:08",
+    "Api_Result": "00000",
+    "Api_Result_Message": "正常終了",
+    "Request_Number": "01",
+    "Request_Mode": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Patient_ID": "00001",
+    "Income_Information_Overflow": "False",
+    "Income_Information": [
+      {
+        "Perform_Date": "2011-12-24",
+        "IssuedDate": "2011-12-24",
+        "InOut": "O",
+        "Invoice_Number": "0000103",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1110",
+        "Ic_Money": "      1110",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-03-26",
+        "IssuedDate": "2012-01-05",
+        "InOut": "O",
+        "Invoice_Number": "0000117",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      3180",
+        "Ic_Money": "      3180",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-02-26",
+        "IssuedDate": "2012-01-06",
+        "InOut": "O",
+        "Invoice_Number": "0000118",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      4200",
+        "Ic_Money": "      4200",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-01-10",
+        "Perform_End_Date": "2012-01-10",
+        "IssuedDate": "2012-01-10",
+        "InOut": "I",
+        "Invoice_Number": "0000013",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "10",
+        "Ac_Money": "      6030",
+        "Ic_Money": "      6030",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済",
+        "Type": "1"
+      },
+      {
+        "Perform_Date": "2012-01-20",
+        "IssuedDate": "2012-01-20",
+        "InOut": "O",
+        "Invoice_Number": "0000134",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      4210",
+        "Ic_Money": "      4210",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-01-06",
+        "IssuedDate": "2012-01-23",
+        "InOut": "O",
+        "Invoice_Number": "0000123",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1110",
+        "Ic_Money": "      1110",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-01-23",
+        "IssuedDate": "2012-01-23",
+        "InOut": "O",
+        "Invoice_Number": "0000135",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      5314",
+        "Ic_Money": "      5314",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-01-24",
+        "IssuedDate": "2012-01-24",
+        "InOut": "O",
+        "Invoice_Number": "0000136",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       620",
+        "Ic_Money": "       620",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-01-25",
+        "IssuedDate": "2012-01-25",
+        "InOut": "O",
+        "Invoice_Number": "0000137",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      2600",
+        "Ic_Money": "      2600",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-02-15",
+        "Perform_End_Date": "2012-02-17",
+        "IssuedDate": "2012-02-15",
+        "InOut": "I",
+        "Invoice_Number": "0000015",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "10",
+        "Ac_Money": "         0",
+        "Ic_Money": "         0",
+        "Unpaid_Money": "         0",
+        "State": "3",
+        "State_Name": "請求取消",
+        "Type": "1"
+      },
+      {
+        "Perform_Date": "2012-03-09",
+        "IssuedDate": "2012-03-09",
+        "InOut": "O",
+        "Invoice_Number": "0000174",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       460",
+        "Ic_Money": "       460",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-03-13",
+        "IssuedDate": "2012-03-13",
+        "InOut": "O",
+        "Invoice_Number": "0000175",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       610",
+        "Ic_Money": "       610",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-03-15",
+        "IssuedDate": "2012-03-15",
+        "InOut": "O",
+        "Invoice_Number": "0000180",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       570",
+        "Ic_Money": "       570",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-04-05",
+        "IssuedDate": "2012-03-15",
+        "InOut": "O",
+        "Invoice_Number": "0000182",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      2510",
+        "Ic_Money": "      2510",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-04-06",
+        "IssuedDate": "2012-03-29",
+        "InOut": "O",
+        "Invoice_Number": "0000199",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       630",
+        "Ic_Money": "       630",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-05-01",
+        "IssuedDate": "2012-04-03",
+        "InOut": "O",
+        "Invoice_Number": "0000201",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1530",
+        "Ic_Money": "      1530",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-04-20",
+        "IssuedDate": "2012-04-20",
+        "InOut": "O",
+        "Invoice_Number": "0000219",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       370",
+        "Ic_Money": "       370",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-04-27",
+        "IssuedDate": "2012-04-27",
+        "InOut": "O",
+        "Invoice_Number": "0000236",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       580",
+        "Ic_Money": "       580",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-04-29",
+        "IssuedDate": "2012-05-01",
+        "InOut": "O",
+        "Invoice_Number": "0000237",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1620",
+        "Ic_Money": "      1620",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-05-01",
+        "IssuedDate": "2012-05-16",
+        "InOut": "O",
+        "Invoice_Number": "0000263",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "10",
+        "Ac_Money": "       100",
+        "Ic_Money": "       100",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-05-21",
+        "IssuedDate": "2012-05-21",
+        "InOut": "O",
+        "Invoice_Number": "0000266",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       360",
+        "Ic_Money": "       360",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-06-18",
+        "IssuedDate": "2012-06-18",
+        "InOut": "O",
+        "Invoice_Number": "0000308",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1180",
+        "Ic_Money": "      1180",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-06-18",
+        "IssuedDate": "2012-06-18",
+        "InOut": "O",
+        "Invoice_Number": "0000309",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       370",
+        "Ic_Money": "       370",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-07-24",
+        "IssuedDate": "2012-07-24",
+        "InOut": "O",
+        "Invoice_Number": "0000330",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1640",
+        "Ic_Money": "      1640",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-08-01",
+        "IssuedDate": "2012-08-01",
+        "InOut": "O",
+        "Invoice_Number": "0000337",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      2540",
+        "Ic_Money": "      2540",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-08-08",
+        "IssuedDate": "2012-08-08",
+        "InOut": "O",
+        "Invoice_Number": "0000355",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1360",
+        "Ic_Money": "      1360",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-09-21",
+        "IssuedDate": "2012-09-01",
+        "InOut": "O",
+        "Invoice_Number": "0000343",
+        "Insurance_Combination_Number": "0020",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1450",
+        "Ic_Money": "      1450",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-10-16",
+        "IssuedDate": "2012-10-16",
+        "InOut": "O",
+        "Invoice_Number": "0000364",
+        "Group_Invoice_Number": "0000364",
+        "Insurance_Combination_Number": "0020",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       640",
+        "Ic_Money": "       640",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2012-11-07",
+        "IssuedDate": "2012-11-07",
+        "InOut": "O",
+        "Invoice_Number": "0000398",
+        "Insurance_Combination_Number": "0020",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       630",
+        "Ic_Money": "       630",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2013-04-10",
+        "IssuedDate": "2013-04-10",
+        "InOut": "O",
+        "Invoice_Number": "0000536",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1180",
+        "Ic_Money": "      1180",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2013-04-11",
+        "IssuedDate": "2013-04-11",
+        "InOut": "O",
+        "Invoice_Number": "0000537",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "       630",
+        "Ic_Money": "       630",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2013-05-17",
+        "IssuedDate": "2013-05-17",
+        "InOut": "O",
+        "Invoice_Number": "0000555",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      4750",
+        "Ic_Money": "      4750",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2013-05-31",
+        "IssuedDate": "2014-03-14",
+        "InOut": "O",
+        "Invoice_Number": "0000556",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      4000",
+        "Ic_Money": "      4000",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2014-05-13",
+        "IssuedDate": "2014-05-13",
+        "InOut": "O",
+        "Invoice_Number": "0000698",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1320",
+        "Ic_Money": "      1320",
+        "Unpaid_Money": "         0",
+        "State": "1",
+        "State_Name": "入金済"
+      },
+      {
+        "Perform_Date": "2014-06-18",
+        "IssuedDate": "2014-06-18",
+        "InOut": "O",
+        "Invoice_Number": "0000749",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1060",
+        "Ic_Money": "        10",
+        "Unpaid_Money": "      1050",
+        "State": "2",
+        "State_Name": "未入金"
+      },
+      {
+        "Perform_Date": "2014-06-18",
+        "IssuedDate": "2014-06-18",
+        "InOut": "O",
+        "Invoice_Number": "0000750",
+        "Insurance_Combination_Number": "0001",
+        "Rate_Cd": " 30",
+        "Department_Code": "01",
+        "Ac_Money": "      1060",
+        "Ic_Money": "      1020",
+        "Unpaid_Money": "        40",
+        "State": "2",
+        "State_Name": "未入金"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ],
+    "Unpaid_Money_Total_Information": {
+      "Unpaid_Money_Total_Outpatient": "      1090"
+    }
+  }
+}

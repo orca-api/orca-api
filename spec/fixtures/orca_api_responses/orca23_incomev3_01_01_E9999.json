@@ -1,0 +1,13 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "12:20:39",
+    "Api_Result": "E9999",
+    "Api_Result_Message": "他端末で使用中です。",
+    "Request_Number": "01",
+    "Request_Mode": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d"
+  }
+}

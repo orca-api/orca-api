@@ -148,7 +148,7 @@ module OrcaApi
     end
 
     def unlock(locked_result)
-      if locked_result # && locked_result.respond_to?(:orca_uid)
+      if locked_result && locked_result.respond_to?(:orca_uid)
         req = {
           "Request_Number" => "99",
           "Karte_Uid" => orca_api.karte_uid,
