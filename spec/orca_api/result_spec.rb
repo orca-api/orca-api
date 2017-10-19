@@ -47,20 +47,6 @@ RSpec.describe OrcaApi::Result do
     }
   }
 
-  let(:locked_response) {
-    {
-      "medicalv3res4" => {
-        "Request_Number" => "01",
-        "Response_Number" => "01",
-        "Karte_Uid" => "karte_uid",
-        "Information_Date" => "2017-08-30",
-        "Information_Time" => "10:52:27",
-        "Api_Result" => "E90",
-        "Api_Result_Message" => "他端末使用中",
-      }
-    }
-  }
-
   let(:result) { described_class.new(response) }
 
   subject { result }
@@ -116,12 +102,50 @@ RSpec.describe OrcaApi::Result do
   end
 
   context "他端末使用中のレスポンス" do
-    let(:response) { locked_response }
+    context "E90" do
+      let(:response) {
+        {
+          "medicalv3res4" => {
+            "Request_Number" => "01",
+            "Response_Number" => "01",
+            "Karte_Uid" => "karte_uid",
+            "Information_Date" => "2017-08-30",
+            "Information_Time" => "10:52:27",
+            "Api_Result" => "E90",
+            "Api_Result_Message" => "他端末使用中",
+          }
+        }
+      }
 
-    its(:raw) { is_expected.to eq(response) }
-    its(:body) { is_expected.to eq(response.first[1]) }
-    its("ok?") { is_expected.to be false }
-    its("locked?") { is_expected.to be true }
-    its(:message) { is_expected.to eq("他端末使用中(E90)") }
+      its(:raw) { is_expected.to eq(response) }
+      its(:body) { is_expected.to eq(response.first[1]) }
+      its("ok?") { is_expected.to be false }
+      its("locked?") { is_expected.to be true }
+      its(:message) { is_expected.to eq("他端末使用中(E90)") }
+    end
+
+    context "E9999" do
+      let(:response) {
+        {
+          "incomev3res" => {
+            "Information_Date" => "2017-10-19",
+            "Information_Time" => "12:20:39",
+            "Api_Result" => "E9999",
+            "Api_Result_Message" => "他端末で使用中です。",
+            "Request_Number" => "01",
+            "Request_Mode" => "01",
+            "Response_Number" => "01",
+            "Karte_Uid" => "karte_uid",
+            "Orca_Uid" => "877718f1-7dbc-4e08-bd2c-8788a858b3a2"
+          }
+        }
+      }
+
+      its(:raw) { is_expected.to eq(response) }
+      its(:body) { is_expected.to eq(response.first[1]) }
+      its("ok?") { is_expected.to be false }
+      its("locked?") { is_expected.to be true }
+      its(:message) { is_expected.to eq("他端末で使用中です。(E9999)") }
+    end
   end
 end

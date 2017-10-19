@@ -3,6 +3,8 @@
 module OrcaApi
   # 日レセAPIの呼び出し結果を扱うクラス
   class Result
+    LOCKED_API_RESULT = Set.new(%w(E90 E9999))
+
     def self.trim_response(hash)
       result = {}
       hash.each do |k, v|
@@ -49,7 +51,7 @@ module OrcaApi
     end
 
     def locked?
-      api_result == "E90"
+      LOCKED_API_RESULT.include?(api_result)
     end
 
     def message
