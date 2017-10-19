@@ -293,7 +293,26 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
   end
 
   describe "更新処理" do
-    shared_context "ロックを伴う" do
+    shared_examples "更新処理が期待通りに動作すること" do |json_names|
+      subject { service.send(method_name, args) }
+
+      context "正常系" do
+        include_context "正常な日レセAPI呼び出し"
+
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_#{method_name}.json") }
+        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_#{request_mode}.json") }
+
+        its("ok?") { is_expected.to be true }
+
+        json_names.each do |json_name|
+          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+        end
+      end
+
+      include_examples "他端末使用中に期待通りに動作すること"
+    end
+
+    shared_context "正常な日レセAPI呼び出し" do
       before do
         count = 0
         prev_response_json = nil
@@ -313,37 +332,47 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       end
     end
 
-    shared_context "ロックを伴う/他端末使用中" do
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).exactly(2) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
-            when 2
-              expect_orca23_incomev3_99(path, body, prev_response_json)
-            end
-          prev_response_json
-        }
-      end
-    end
+    shared_examples "他端末使用中に期待通りに動作すること" do
+      context "他の端末より同じカルテＵＩＤでの接続があります。" do
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).exactly(1) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
+              end
+            prev_response_json
+          }
+        end
 
-    shared_context "ロックを伴わない" do
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).exactly(1) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
-            end
-          prev_response_json
-        }
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
+
+        its("ok?") { is_expected.to be false }
+      end
+
+      context "他端末使用中" do
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).exactly(2) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca23_incomev3_01(path, body, lock_request_mode, args, lock_response_json)
+              when 2
+                expect_orca23_incomev3_99(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
+
+        its("ok?") { is_expected.to be false }
       end
     end
 
@@ -351,15 +380,15 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "01" }
 
-      let(:patient_id) { "1" }
-      let(:invoice_number) { "13" }
       let(:ic_money) { "1000" }
       let(:force) { "False" }
+
+      let(:method_name) { "update" }
       let(:args) {
         {
-          "Patient_ID" => patient_id,
+          "Patient_ID" => "1",
           "InOut" => "I",
-          "Invoice_Number" => invoice_number,
+          "Invoice_Number" => "13",
           "Processing_Date" => "",
           "Processing_Time" => "",
           "Ic_Money" => ic_money,
@@ -368,74 +397,44 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         }
       }
 
-      subject { service.update(args) }
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+        Ac_Money
+        Ic_Money
+        Unpaid_Money
+        State
+        State_Name
+        Income_History
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names do
+        let(:ic_money) { "1000" }
+      end
 
-      context "正常系" do
-        include_context "ロックを伴う"
+      context "過入金" do
+        include_context "正常な日レセAPI呼び出し"
 
-        shared_examples "結果が正しいこと" do
-          its("ok?") { is_expected.to be true }
-
-          %w(
-            Patient_ID
-            InOut
-            Invoice_Number
-            Ac_Money
-            Ic_Money
-            Unpaid_Money
-            State
-            State_Name
-            Income_History
-          ).each do |json_name|
-            its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
-          end
-        end
-
-        context "過入金ではない" do
-          let(:ic_money) { "1000" }
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01.json") }
-
-          include_examples "結果が正しいこと"
-        end
-
-        context "過入金" do
+        context "強制入金" do
           let(:ic_money) { "10000" }
           let(:force) { "True" }
 
           let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
           let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01_force.json") }
 
-          include_examples "結果が正しいこと"
-        end
-      end
+          its("ok?") { is_expected.to be true }
 
-      context "異常系" do
-        context "他の端末より同じカルテＵＩＤでの接続があります。" do
-          include_context "ロックを伴わない"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
-
-          its("ok?") { is_expected.to be false }
+          json_names.each do |json_name|
+            its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+          end
         end
 
-        context "過入金" do
-          include_context "ロックを伴う"
-
+        context "強制入金ではない" do
           let(:ic_money) { "10000" }
           let(:force) { "False" }
 
           let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
           let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01_E0107.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-
-        context "他端末使用中" do
-          include_context "ロックを伴う/他端末使用中"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
 
           its("ok?") { is_expected.to be false }
         end
@@ -446,184 +445,88 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "02" }
 
-      let(:patient_id) { "1" }
-      let(:invoice_number) { "13" }
-      let(:history_number) { "1" }
-      let(:ic_money) { "1000" }
+      let(:method_name) { "update_history" }
       let(:args) {
         {
-          "Patient_ID" => patient_id,
+          "Patient_ID" => "1",
           "InOut" => "I",
-          "Invoice_Number" => invoice_number,
-          "History_Number" => history_number,
+          "Invoice_Number" => "13",
+          "History_Number" => "18",
           "Processing_Date" => "",
           "Processing_Time" => "",
           "Ad_Money1" => "",
           "Ad_Money2" => "",
-          "Ic_Money" => ic_money,
+          "Ic_Money" => "2000",
           "Ic_Code" => "",
         }
       }
 
-      subject { service.update_history(args) }
-
-      context "正常系" do
-        include_context "ロックを伴う"
-
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update_history.json") }
-        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_02.json") }
-
-        its("ok?") { is_expected.to be true }
-
-        %w(
-          Patient_ID
-          InOut
-          Invoice_Number
-          Ac_Money
-          Ic_Money
-          Unpaid_Money
-          State
-          State_Name
-          Income_History
-        ).each do |json_name|
-          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
-        end
-      end
-
-      context "異常系" do
-        context "他の端末より同じカルテＵＩＤでの接続があります。" do
-          include_context "ロックを伴わない"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-
-        context "他端末使用中" do
-          include_context "ロックを伴う/他端末使用中"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-      end
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+        Ac_Money
+        Ic_Money
+        Unpaid_Money
+        State
+        State_Name
+        Income_History
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
     end
 
     describe "#cancel" do
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "03" }
 
-      let(:patient_id) { "1" }
-      let(:invoice_number) { "13" }
-      let(:ic_money) { "-500" }
+      let(:method_name) { "cancel" }
       let(:args) {
         {
-          "Patient_ID" => patient_id,
+          "Patient_ID" => "1",
           "InOut" => "I",
-          "Invoice_Number" => invoice_number,
+          "Invoice_Number" => "13",
           "Processing_Date" => "",
           "Processing_Time" => "",
-          "Ic_Money" => ic_money,
+          "Ic_Money" => "-500",
           "Ic_Code" => "",
         }
       }
 
-      subject { service.cancel(args) }
-
-      context "正常系" do
-        include_context "ロックを伴う"
-
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_cancel.json") }
-        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_03.json") }
-
-        its("ok?") { is_expected.to be true }
-
-        %w(
-          Patient_ID
-          InOut
-          Invoice_Number
-          Ac_Money
-          Ic_Money
-          Unpaid_Money
-          State
-          State_Name
-          Income_Detail_Information
-        ).each do |json_name|
-          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
-        end
-      end
-
-      context "異常系" do
-        context "他の端末より同じカルテＵＩＤでの接続があります。" do
-          include_context "ロックを伴わない"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-
-        context "他端末使用中" do
-          include_context "ロックを伴う/他端末使用中"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-      end
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+        Ac_Money
+        Ic_Money
+        Unpaid_Money
+        State
+        State_Name
+        Income_Detail_Information
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
     end
 
     describe "#pay_back" do
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "04" }
 
-      let(:patient_id) { "1" }
-      let(:invoice_number) { "13" }
+      let(:method_name) { "pay_back" }
       let(:args) {
         {
-          "Patient_ID" => patient_id,
+          "Patient_ID" => "1",
           "InOut" => "I",
-          "Invoice_Number" => invoice_number,
+          "Invoice_Number" => "13",
           "Processing_Date" => "",
           "Processing_Time" => "",
         }
       }
 
-      subject { service.pay_back(args) }
-
-      context "正常系" do
-        include_context "ロックを伴う"
-
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_pay_back.json") }
-        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_04.json") }
-
-        its("ok?") { is_expected.to be true }
-
-        %w(
-          Patient_ID
-          InOut
-          Invoice_Number
-        ).each do |json_name|
-          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
-        end
-      end
-
-      context "異常系" do
-        context "他の端末より同じカルテＵＩＤでの接続があります。" do
-          include_context "ロックを伴わない"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-
-        context "他端末使用中" do
-          include_context "ロックを伴う/他端末使用中"
-
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
-
-          its("ok?") { is_expected.to be false }
-        end
-      end
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
     end
   end
 end
