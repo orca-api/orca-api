@@ -91,6 +91,8 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
                    )
                  when "05"
                    %w(
+                     Processing_Date
+                     Processing_Time
                    )
                  when "06"
                    %w(
@@ -377,13 +379,13 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
     end
 
     describe "#update" do
+      let(:method_name) { "update" }
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "01" }
 
       let(:ic_money) { "1000" }
       let(:force) { "False" }
 
-      let(:method_name) { "update" }
       let(:args) {
         {
           "Patient_ID" => "1",
@@ -442,10 +444,10 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
     end
 
     describe "#update_history" do
+      let(:method_name) { "update_history" }
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "02" }
 
-      let(:method_name) { "update_history" }
       let(:args) {
         {
           "Patient_ID" => "1",
@@ -476,10 +478,10 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
     end
 
     describe "#cancel" do
+      let(:method_name) { "cancel" }
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "03" }
 
-      let(:method_name) { "cancel" }
       let(:args) {
         {
           "Patient_ID" => "1",
@@ -501,16 +503,16 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         Unpaid_Money
         State
         State_Name
-        Income_Detail_Information
+        Income_History
       )
       include_examples "更新処理が期待通りに動作すること", json_names
     end
 
     describe "#pay_back" do
+      let(:method_name) { "pay_back" }
       let(:lock_request_mode) { "02" }
       let(:request_mode) { "04" }
 
-      let(:method_name) { "pay_back" }
       let(:args) {
         {
           "Patient_ID" => "1",
@@ -525,6 +527,41 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         Patient_ID
         InOut
         Invoice_Number
+        Ac_Money
+        Ic_Money
+        Unpaid_Money
+        State
+        State_Name
+        Income_History
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
+    end
+
+    describe "#recalculate" do
+      let(:method_name) { "recalculate" }
+      let(:lock_request_mode) { "02" }
+      let(:request_mode) { "05" }
+
+      let(:args) {
+        {
+          "Patient_ID" => "1",
+          "InOut" => "I",
+          "Invoice_Number" => "13",
+          "Processing_Date" => "",
+          "Processing_Time" => "",
+        }
+      }
+
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+        Ac_Money
+        Ic_Money
+        Unpaid_Money
+        State
+        State_Name
+        Income_History
       )
       include_examples "更新処理が期待通りに動作すること", json_names
     end

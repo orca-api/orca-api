@@ -1,0 +1,260 @@
+{
+  "incomev3res": {
+    "Information_Date": "2017-10-19",
+    "Information_Time": "17:24:06",
+    "Api_Result": "00000",
+    "Api_Result_Message": "正常終了",
+    "Request_Number": "02",
+    "Request_Mode": "05",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Patient_ID": "00001",
+    "InOut": "O",
+    "Invoice_Number": "0000013",
+    "Ac_Money": "     23690",
+    "Ic_Money": "     23690",
+    "Unpaid_Money": "         0",
+    "State": "1",
+    "State_Name": "入金済",
+    "Income_History": [
+      {
+        "History_Number": " 1",
+        "Processing_Date": "2011-04-20",
+        "Processing_Time": "11:58",
+        "Ac_Money": "     22680",
+        "Ic_Money": "     22680",
+        "State": "1",
+        "State_Name": "請求",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 2",
+        "Processing_Date": "2011-05-31",
+        "Processing_Time": "11:39",
+        "Ac_Money": "      1010",
+        "Ic_Money": "      1010",
+        "State": "8",
+        "State_Name": "診療訂正",
+        "Ic_Code": "01",
+        "Ic_Code_Name": "現金"
+      },
+      {
+        "History_Number": " 3",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:50",
+        "Ac_Money": "         0",
+        "Ic_Money": "         0",
+        "State": "3",
+        "State_Name": "再計算"
+      },
+      {
+        "History_Number": " 4",
+        "Processing_Date": "2017-10-16",
+        "Processing_Time": "14:51",
+        "Ac_Money": "         0",
+        "Ic_Money": "         0",
+        "State": "3",
+        "State_Name": "再計算"
+      },
+      {
+        "History_Number": " 5",
+        "Processing_Date": "2017-10-19",
+        "Processing_Time": "17:24",
+        "Ac_Money": "         0",
+        "Ic_Money": "         0",
+        "State": "3",
+        "State_Name": "再計算"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}
