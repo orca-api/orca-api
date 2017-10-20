@@ -481,6 +481,35 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
         its("ok?") { is_expected.to be false }
       end
+
+      context "Request_Number=2のときにエラーが発生" do
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(3) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", "orca12_patientmodv31_01_delete.json")
+              when 2
+                response_json = load_orca_api_response_json("orca12_patientmodv31_02_delete_S20_1.json")
+                response_json.first[1]["Api_Result"] = "E80"
+                response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+
+                patient = prev_response_json.first[1]["Patient_Information"]
+                expect_orca12_patientmodv31_02(
+                  path, body, prev_response_json, patient, "Delete", response_json
+                )
+              when 3
+                expect_orca12_patientmodv31_99(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
     end
   end
 
