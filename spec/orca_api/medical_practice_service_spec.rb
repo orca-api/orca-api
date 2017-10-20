@@ -305,6 +305,30 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     end
   end
 
+  shared_examples "初回エラー: この労災保険の診察は既に入力済みです。初診料は算定できません。(E40)" do
+    context "初回エラー: この労災保険の診察は既に入力済みです。初診料は算定できません。(E40)" do
+      let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_E40.json") }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_api21_medicalmodv31_01(path, body, response_json)
+            when 2
+              expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be false }
+    end
+  end
+
   describe "#calc_medical_practice_fee" do
     let(:params) {
       {
@@ -652,6 +676,62 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       its("ok?") { is_expected.to be true }
       its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
       its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+    end
+
+    context "異常系" do
+      include_examples "初回エラー: この労災保険の診察は既に入力済みです。初診料は算定できません。(E40)"
+
+      context "Request_Number=2のときにエラーが発生" do
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(3) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_api21_medicalmodv31_01(path, body)
+              when 2
+                response_json = load_orca_api_response_json("api21_medicalmodv32_02.json")
+                response_json.first[1]["Api_Result"] = "E80"
+                response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+                expect_api21_medicalmodv32_02(path, body, prev_response_json, response_json)
+              when 3
+                expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
+
+      context "Request_Number=3のときにエラーが発生" do
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_api21_medicalmodv31_01(path, body)
+              when 2
+                expect_api21_medicalmodv32_02(path, body, prev_response_json)
+              when 3
+                response_json = load_orca_api_response_json("api21_medicalmodv32_03.json")
+                response_json.first[1]["Api_Result"] = "E80"
+                response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+                expect_api21_medicalmodv32_03(path, body, prev_response_json, nil, response_json)
+              when 4
+                expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
     end
   end
 
@@ -1058,6 +1138,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
       its("ok?") { is_expected.to be false }
     end
+
+    include_examples "初回エラー: この労災保険の診察は既に入力済みです。初診料は算定できません。(E40)"
   end
 
   describe "#create" do
