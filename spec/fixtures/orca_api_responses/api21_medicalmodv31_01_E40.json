@@ -1,18 +1,17 @@
 {
   "medicalv3res1": {
     "Request_Number": "01",
-    "Response_Number": "02",
+    "Response_Number": "01",
     "Karte_Uid": "karte_uid",
     "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
-    "Information_Date": "2017-07-31",
-    "Information_Time": "11:18:20",
-    "Api_Result": "000",
-    "Api_Result_Message": "処理終了",
+    "Information_Date": "2017-10-20",
+    "Information_Time": "11:48:39",
+    "Api_Result": "E40",
+    "Api_Result_Message": "この労災保険の診察は既に入力済みです。初診料は算定できません。",
     "Reskey": "Medical Info",
-    "Perform_Date": "2017-07-31",
-    "Perform_Time": "10:30:00",
+    "Perform_Date": "2017-10-20",
     "Temp_Medical_Flag": "False",
-    "Last_Date": "2014-06-13",
+    "Last_Date": "2017-07-31",
     "Department_Code": "01",
     "Department_Name": "内科",
     "Physician_Code": "10001",
@@ -37,46 +36,13 @@
       {
         "Medical_Info": [
           {
-            "Medical_Class": "120",
-            "Medical_Class_Name": "再診料",
+            "Medical_Class": "110",
+            "Medical_Class_Name": "初診料",
             "Medical_Class_Number": "1",
             "Medication_Info": [
               {
-                "Medication_Code": "101120010",
-                "Medication_Name": "再診料"
-              },
-              {
-                "Medication_Code": "112016070",
-                "Medication_Name": "時間外対応加算１"
-              },
-              {
-                "Medication_Code": "112015770",
-                "Medication_Name": "明細書発行体制等加算"
-              },
-              {
-              },
-              {
-              },
-              {
-              },
-              {
-              },
-              {
-              },
-              {
-              },
-              {
-              }
-            ]
-          },
-          {
-            "Medical_Class": "120",
-            "Medical_Class_Name": "再診料",
-            "Medical_Class_Number": "1",
-            "Medication_Info": [
-              {
-                "Medication_Code": "112011010",
-                "Medication_Name": "外来管理加算"
+                "Medication_Code": "101110010",
+                "Medication_Name": "初診料"
               },
               {
               },
@@ -97,6 +63,8 @@
               {
               }
             ]
+          },
+          {
           },
           {
           },
@@ -134,6 +102,112 @@
       },
       {
       }
-    ]
+    ],
+    "Medical_Message_Information": {
+      "Medical_Warning_Info": [
+        {
+          "Medical_Warning": "W01",
+          "Medical_Warning_Message": "診療日を設定しました。"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
   }
 }
