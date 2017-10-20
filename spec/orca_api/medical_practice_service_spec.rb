@@ -414,6 +414,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be false }
+        its(:message) { is_expected.to eq("選択項目が未指定です。") }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
         its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
@@ -576,6 +577,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be false }
+        its(:message) { is_expected.to eq("削除可能な剤の削除指示が未指定です。") }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError) }
         its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
       end
