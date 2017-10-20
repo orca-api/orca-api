@@ -196,54 +196,9 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     let(:patient_id) { 1 }
     let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify.json") }
 
-    context "患者情報のみ取得する" do
-      subject { service.get(patient_id) }
+    subject { service.get(patient_id) }
 
-      context "正常系" do
-        before do
-          count = 0
-          prev_response_json = nil
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
-            count += 1
-            prev_response_json =
-              case count
-              when 1
-                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
-              when 2
-                expect_orca12_patientmodv31_99(path, body, prev_response_json)
-              end
-            prev_response_json
-          }
-        end
-
-        its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-      end
-
-      context "異常系" do
-        let(:patient_id) { 2000 }
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify_E10.json") }
-
-        before do
-          count = 0
-          prev_response_json = nil
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
-            count += 1
-            prev_response_json =
-              case count
-              when 1
-                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
-              end
-            prev_response_json
-          }
-        end
-
-        its("ok?") { is_expected.to be false }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-      end
-    end
-
-    context "関連情報を指定する" do
+    context "正常系" do
       before do
         count = 0
         prev_response_json = nil
@@ -260,22 +215,30 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         }
       end
 
-      [
-        ["患者保険・公費情報", :health_public_insurance],
-      ].each do |name, association_symbol|
-        context "#{name}(#{association_symbol.inspect})" do
-          let(:association_result) { double("Result") }
+      its("ok?") { is_expected.to be true }
+      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+    end
 
-          subject { service.get(patient_id, associations: [association_symbol]) }
+    context "異常系" do
+      let(:patient_id) { 2000 }
+      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify_E10.json") }
 
-          before do
-            expect(service).to receive("get_#{association_symbol}").with(patient_id).and_return(association_result)
-          end
-
-          its("ok?") { is_expected.to be true }
-          its("#{association_symbol}_result") { is_expected.to be(association_result) }
-        end
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
+            end
+          prev_response_json
+        }
       end
+
+      its("ok?") { is_expected.to be false }
+      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
     end
   end
 

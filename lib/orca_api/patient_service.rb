@@ -15,20 +15,6 @@ module OrcaApi
       end
     end
 
-    # 患者情報の取得の結果を表現するクラス
-    class GetResult < ::OrcaApi::Result
-      %w(
-        health_public_insurance
-      ).each do |association_name|
-        result_name = "#{association_name}_result"
-        attr_accessor result_name
-
-        define_method(association_name) do
-          instance_variable_get("@#{result_name}").send(association_name)
-        end
-      end
-    end
-
     # 患者情報の登録
     def create(patient_information, allow_duplication: false)
       res = CreateResult.new(call_orca12_patientmodv31_01("*", patient_information, "New"))
@@ -39,16 +25,11 @@ module OrcaApi
     end
 
     # 患者情報の取得
-    def get(id, associations: [])
-      res = GetResult.new(call_orca12_patientmodv31_01(id, nil, "Modify"))
+    def get(id)
+      res = Result.new(call_orca12_patientmodv31_01(id, nil, "Modify"))
       if !res.locked?
         unlock_orca12_patientmodv31(res)
       end
-
-      associations.each do |association|
-        res.send("#{association}_result=", send("get_#{association}", id))
-      end
-
       res
     end
 
