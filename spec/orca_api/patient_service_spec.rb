@@ -245,81 +245,104 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
   describe "#update" do
     subject { service.update(*args) }
 
-    let(:patient_id) { 1 }
     let(:args) {
       [patient_id, patient_information]
     }
-    let(:response_json_01) {
-      "orca12_patientmodv31_01_modify.json"
-    }
 
-    before do
-      count = 0
-      prev_response_json = nil
-      expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
-        count += 1
-        prev_response_json =
-          case count
-          when 1
-            expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json_01)
-          when 2
-            expect_orca12_patientmodv31_02(path, body, prev_response_json, response_json.first[1]["Patient_Information"],
-                                           "Modify", response_json)
-          end
-        prev_response_json
-      }
-    end
+    context "正常系" do
+      let(:patient_id) { 1 }
+      let(:response_json_01) { "orca12_patientmodv31_01_modify.json" }
 
-    context "すべての値を指定する" do
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
-      let(:patient_information) { response_json.first[1]["Patient_Information"] }
-
-      its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-    end
-
-    context "あらたに自宅情報を指定する" do
-      let(:response_json_01) {
-        res = load_orca_api_response_json("orca12_patientmodv31_01_modify.json")
-        res["patientmodres"]["Patient_Information"].delete("Home_Address_Information")
-        res
-      }
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
-      let(:patient_information) { response_json.first[1]["Patient_Information"] }
-
-      its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-    end
-
-    context "一部を指定する" do
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_parts.json") }
-      let(:patient_information) {
-        {
-          "BirthDate" => "1975-05-05",
-          "Home_Address_Information" => {
-            "Address_ZipCode" => "6900055",
-          },
-          "Home2_Information" => {
-            "WholeName" => "",
-            "Address_ZipCode" => "",
-            "WholeAddress1" => "",
-            "WholeAddress2" => nil,
-            "PhoneNumber" => nil
-          },
-          "Death_Flag" => "1",
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json_01)
+            when 2
+              expect_orca12_patientmodv31_02(path, body, prev_response_json, response_json.first[1]["Patient_Information"],
+                                             "Modify", response_json)
+            end
+          prev_response_json
         }
-      }
+      end
 
-      its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      context "すべての値を指定する" do
+        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
+        let(:patient_information) { response_json.first[1]["Patient_Information"] }
+
+        its("ok?") { is_expected.to be true }
+        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      end
+
+      context "あらたに自宅情報を指定する" do
+        let(:response_json_01) {
+          res = load_orca_api_response_json("orca12_patientmodv31_01_modify.json")
+          res["patientmodres"]["Patient_Information"].delete("Home_Address_Information")
+          res
+        }
+        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
+        let(:patient_information) { response_json.first[1]["Patient_Information"] }
+
+        its("ok?") { is_expected.to be true }
+        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      end
+
+      context "一部を指定する" do
+        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_parts.json") }
+        let(:patient_information) {
+          {
+            "BirthDate" => "1975-05-05",
+            "Home_Address_Information" => {
+              "Address_ZipCode" => "6900055",
+            },
+            "Home2_Information" => {
+              "WholeName" => "",
+              "Address_ZipCode" => "",
+              "WholeAddress1" => "",
+              "WholeAddress2" => nil,
+              "PhoneNumber" => nil
+            },
+            "Death_Flag" => "1",
+          }
+        }
+
+        its("ok?") { is_expected.to be true }
+        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      end
+
+      context "まったく指定しない" do
+        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_none.json") }
+        let(:patient_information) { {} }
+
+        its("ok?") { is_expected.to be true }
+        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      end
     end
 
-    context "まったく指定しない" do
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_none.json") }
+    context "異常系" do
+      let(:patient_id) { 9999 }
+      let(:response_json_01) { "orca12_patientmodv31_01_E10.json" }
       let(:patient_information) { {} }
 
-      its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json_01)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be false }
     end
   end
 
