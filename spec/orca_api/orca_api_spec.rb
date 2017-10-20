@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "spec_helper"
 
 # 日レセAPIの実行結果のうち、実行日時のような実行時に決定する値以外が等しいかどうかを検証する

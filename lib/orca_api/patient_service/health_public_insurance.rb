@@ -1,5 +1,3 @@
-# coding: utf-8
-
 module OrcaApi
   class PatientService < Service
     # 患者保険・公費情報を扱うサービス

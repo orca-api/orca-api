@@ -1,5 +1,3 @@
-# coding: utf-8
-
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "orca_api/version"
@@ -32,16 +30,16 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.15"
+  spec.add_development_dependency "guard"
+  spec.add_development_dependency "guard-rspec"
+  spec.add_development_dependency "guard-rubocop"
+  spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-its"
-  spec.add_development_dependency "webmock"
-  spec.add_development_dependency "pry-byebug"
-  spec.add_development_dependency "rubocop", "~> 0.49.1"
-  spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "guard"
-  spec.add_development_dependency "guard-rubocop"
-  spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "rspec_junit_formatter"
+  spec.add_development_dependency "rubocop", "~> 0.51.0"
   spec.add_development_dependency "rubocop-junit-formatter"
+  spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "webmock"
 end

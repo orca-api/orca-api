@@ -1,5 +1,3 @@
-# coding: utf-8
-
 require "uri"
 require "net/http"
 require "json"
