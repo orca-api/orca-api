@@ -1,5 +1,3 @@
-# coding: utf-8
-
 module OrcaApi
   # 各種情報を扱うサービスを表現したクラス
   class Service

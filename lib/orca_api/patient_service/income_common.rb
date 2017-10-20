@@ -1,5 +1,3 @@
-# coding: utf-8
-
 module OrcaApi
   class PatientService < Service
     # 所得者情報・旧姓履歴・特記事項・患者個別情報を扱うサービスの共通処理

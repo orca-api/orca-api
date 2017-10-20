@@ -1,5 +1,3 @@
-# coding: utf-8
-
 module OrcaApi
   class OrcaApi
     # BASIC認証を表現するクラス
