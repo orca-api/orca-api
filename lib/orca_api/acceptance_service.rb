@@ -101,11 +101,7 @@ module OrcaApi
       end
 
       def to_h
-        if @health_insurance.empty?
-          @data
-        else
-          @data.merge('HealthInsurance_Information' => @health_insurance)
-        end
+        @data.merge('HealthInsurance_Information' => @health_insurance)
       end
     end
   end
