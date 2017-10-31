@@ -82,7 +82,14 @@ end
 # spec/fixtures/orca_api_responses 以下に生成するためのモンキーパッチ
 module CallWithWriteResponse
   def call(path, params: {}, body: nil, http_method: :post)
-    res = OrcaApi::Result.new(super, false)
+    raw = super
+    res =
+      begin
+        OrcaApi::Result.new(raw, false)
+      rescue
+        OrcaApi::FormResult.new(raw)
+      end
+
     if res.body["Orca_Uid"]
       orca_uid = res.body["Orca_Uid"]
       res.body["Orca_Uid"] = "c585dc3e-fa42-4f45-b02f-5a4166d0721d"

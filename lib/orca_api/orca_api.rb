@@ -7,6 +7,7 @@ require_relative "orca_api/ssl_client_authentication"
 require_relative "orca_api/basic_authentication"
 
 require_relative "result"
+require_relative "form_result"
 
 module OrcaApi
   # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
@@ -78,6 +79,7 @@ module OrcaApi
       DiseaseService
       FormDataService
       IncomeService
+      PrintService
     )
     service_class_names.each do |name|
       s = underscore(name)

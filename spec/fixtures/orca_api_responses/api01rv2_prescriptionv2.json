@@ -1,0 +1,295 @@
+{
+  "Information_Date": "2017-10-31",
+  "Information_Time": "15:38:44",
+  "Api_Result": "0000",
+  "Api_Result_Message": "処理終了",
+  "Form_ID": "shohosen",
+  "Form_Name": "処方せん",
+  "Print_Date": "2017-10-31",
+  "Print_Time": "15:38:44",
+  "Patient": {
+    "ID": "00216",
+    "Name": "テスト　カンジャ",
+    "KanaName": "テスト　カンジャ",
+    "BirthDate": "1927-04-04",
+    "Sex": "1"
+  },
+  "Forms": [
+    {
+      "data": {
+        "Form_ID": "shohosen",
+        "Printer": "PDF",
+        "Perform_Date": "2017-10-30",
+        "IssuedDate": "2017-10-30",
+        "Department_Code": "01",
+        "EditPageNumber_Flg": "0",
+        "Patient": {
+          "ID": "00216",
+          "Name": "テスト　カンジャ",
+          "KanaName": "テスト　カンジャ",
+          "BirthDate": "1927-04-04",
+          "Sex": "1"
+        },
+        "Insurance_Combination_Information": {
+          "Number": "0001",
+          "InsuranceProvider_Class": "039",
+          "InsuranceProvider_Name": "後期高齢者",
+          "HealthInsuredPerson_Age": "090",
+          "HealthInsuredPerson_Rate": "010",
+          "HealthInsuredPerson_Rate_Class": "0",
+          "Partial_Cost_Payment_Class": "1",
+          "HealthInsurance_Information": {
+            "InsuranceProvider_Number": "39322011",
+            "HealthInsuredPerson_Number": "１２３４５６",
+            "HealthInsuredPerson_Assistance": "1",
+            "RelationToInsuredPerson": "1",
+            "Certificate_StartDate": "2017-01-01",
+            "Certificate_ExpiredDate": "2017-12-31"
+          }
+        },
+        "Hospital": {
+          "Prefectures_Number": "13",
+          "Code": "1234567",
+          "Name": [
+            "ＯＲＣＡクリニック",
+            "",
+            ""
+          ],
+          "ZipCode": "1130021",
+          "Address": [
+            "東京都文京区本駒込２－２８－１６",
+            "",
+            ""
+          ],
+          "PhoneNumber": "03-3946-0001"
+        },
+        "Doctor": {
+          "Code": "10001",
+          "Name": "オルカ　太郎"
+        },
+        "IncludingNarcotic_Flg": "0",
+        "IncludingUnchangeable_Flg": "0",
+        "Rp": [
+          {
+            "Medical_Class": "21",
+            "Count": "001",
+            "Unit_Name": "日分",
+            "Medication": [
+              {
+                "Name": "ウイントマイロンシロップ５％",
+                "Amount": "00001.00000",
+                "Unit_Name": "ｍＬ",
+                "Code": "620006852",
+                "Generic_Flg": "0",
+                "Generic_Code": "6241001Q1073"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ],
+        "Memo2": [
+          "（高一）",
+          "",
+          "",
+          ""
+        ],
+        "Qr_ID": "1#93cfbee9-4bc8-40d7-80d0-24068426af98"
+      }
+    }
+  ]
+}
