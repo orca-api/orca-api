@@ -8,11 +8,11 @@ module OrcaApi
   class PrintService < Service
     # 帳票印刷リクエスト
     #
-    # @param [String or Symbol] type
-    #   帳票の種別。shohosen = 処方箋、okusuri_techo = お薬手帳
-    # @param [String or Integer] patient_id
+    # @param [String] type
+    #   帳票種別。shohosen = 処方箋、okusuri_techo = お薬手帳
+    # @param [String] patient_id
     #   患者番号
-    # @param [String or Integer] invoice_number
+    # @param [String] invoice_number
     #   伝票番号
     # @param [Boolean] outside_class
     #   院内・院外区分。true = 院外、false = 院内
@@ -40,6 +40,8 @@ module OrcaApi
       when "okusuri_techo"
         path = "/api01rv2/medicinenotebookv2"
         request_name = "medicine_notebookv2req"
+      else
+        raise ArgumentError, "対応していない帳票種別です: #{type}"
       end
 
       req = {
