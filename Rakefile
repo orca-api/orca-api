@@ -24,9 +24,9 @@ task :bump_up_version do
 
   File.open(path, 'r+') do |f|
     lines = []
-    while line = f.gets
-      if /(\s*VERSION =\s*)/.match(line)
-        line = %Q'#{$1}"#{next_version}".freeze\n'
+    while (line = f.gets)
+      if (md = /(\s*VERSION =\s*)/.match(line))
+        line = %'#{md[1]}"#{next_version}".freeze\n'
       end
       lines << line
     end
