@@ -16,6 +16,7 @@
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
 guard :rubocop do
+  watch("Rakefile")
   watch(%r{.+\.rb$})
   watch(%r{(?:.+/)?\.rubocop(?:_todo)?\.yml$}) { |m| File.dirname(m[0]) }
 end
