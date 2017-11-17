@@ -17,6 +17,7 @@ Gem::Specification.new do |spec|
   # to allow pushing to a single host or delete this section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
+    spec.metadata["yard.run"] = "yri" # use "yard" to build full HTML docs.
   else
     raise "RubyGems 2.0 or newer is required to protect against " \
       "public gem pushes."
@@ -30,11 +31,13 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_development_dependency "bundler", "~> 1.15"
+  spec.add_development_dependency "github-markup"
   spec.add_development_dependency "guard"
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "guard-rubocop"
   spec.add_development_dependency "pry-byebug"
   spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "redcarpet"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rspec_junit_formatter"
@@ -42,4 +45,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-junit-formatter"
   spec.add_development_dependency "simplecov"
   spec.add_development_dependency "webmock"
+  spec.add_development_dependency "yard"
 end
