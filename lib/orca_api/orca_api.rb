@@ -51,11 +51,12 @@ module OrcaApi
     #   ポートを指定しない場合は http だと 80 番、https だと 443 番ポートを指定したものとみなす。
     # @param [Hash] options
     #   * :user (String)
-    #     ユーザー名。uriのユーザー名よりもこちらを優先する。
+    #     ユーザー名。ただし、uriのユーザー名が優先される。
     #   * :password (String)
-    #     パスワード。uriのパスワードよりもこちらを優先する。
+    #     パスワード。ただし、uriのパスワードが優先される。
     #   * :use_ssl (Boolean)
-    #     SSL通信を行うかどうか
+    #     SSL通信を行うかどうか。
+    #     ただし、uriのスキーマがhttpsだった場合、この値に関わらずtrueを指定したものとして扱われる。
     #   * :ssl (Hash)
     #     SSL通信に関するオプション
     #     * :ca_file (String)

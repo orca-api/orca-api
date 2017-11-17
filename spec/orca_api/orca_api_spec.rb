@@ -29,8 +29,23 @@ RSpec.describe OrcaApi::OrcaApi do
       let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
       let(:options) { {} }
 
-      %i(user password).each do |sym|
-        its(sym) { is_expected.to eq(URI.parse(uri).send(sym)) }
+      shared_examples "認証情報が正しいこと" do
+        %i(user password).each do |sym|
+          its(sym) { is_expected.to eq(URI.parse(uri).send(sym)) }
+        end
+      end
+
+      include_examples "認証情報が正しいこと"
+
+      describe "optionsよりもuriのほうが優先順位が高い" do
+        let(:options) {
+          {
+            user: "options_ormaster",
+            password: "options_ormaster_password",
+          }
+        }
+
+        include_examples "認証情報が正しいこと"
       end
     end
 
@@ -66,6 +81,12 @@ RSpec.describe OrcaApi::OrcaApi do
       its(:verify_mode) { is_expected.to eq(OpenSSL::SSL::VERIFY_PEER) }
       its(:cert) { is_expected.to eq(options[:ssl][:p12].certificate) }
       its(:key) { is_expected.to eq(options[:ssl][:p12].key) }
+
+      describe "use_sslよりもuriにhttpsを指定することが優先される" do
+        let(:options) { super().merge(use_ssl: false) }
+
+        its(:use_ssl) { is_expected.to be(true) }
+      end
 
       describe "verify_mode" do
         subject { super().verify_mode }
