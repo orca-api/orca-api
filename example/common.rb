@@ -1,40 +1,52 @@
-#!/usr/bin/env ruby
-# -*- coding: utf-8 -*-
+# サンプルプログラムの共通処理
+#
+# 日レセの認証情報は以下の環境変数で指定することを想定している。
+#
+#  | 環境変数名            | 説明                                                     |
+#  | --------------------- | -------------------------------------------------------- |
+#  | ORCA_API_URI          | 接続先のスキーマ、ユーザ名、パスワード、ホスト、ポート   |
+#  | ORCA_API_CA_FILE      | CA証明書のパス                                           |
+#  | ORCA_API_P12_PATH     | クライアント証明書のパス                                 |
+#  | ORCA_API_P12_PASSWORD | クライアント証明書のパスワード                           |
+#  | ORCA_API_DEBUG        | 通信のデバッグ出力フラグ                                 |
+#  | ORCA_API_KARTE_UID    | カルテUID                                                |
+#
+# 設定例)
+#
+#   export ORCA_API_URI="https://ormaster:ormaster@192.168.1.10:8000"
+#   export ORCA_API_CA_FILE="/path/to/ca.crt"
+#   export ORCA_API_P12_PATH="/path/to/client_cert.p12"
+#   export ORCA_API_P12_PASSWORD="client cert password string"
+#   export ORCA_API_DEBUG="1"
+#   export ORCA_API_KARTE_UID="karte_uid"
 
 require "orca_api"
 require "pp"
+require "uri"
 
 ########################################################################
 ## 基本設定
 
-host = ENV["ORCA_API_HOST"] || "localhost"
-port = ENV["ORCA_API_PORT"] || 8000
+uri_str = ENV["ORCA_API_URI"] || "https://ormaster:ormaster@localhost:8000"
+uri = URI.parse(uri_str)
 
-# Ginbeeではアカウント名はチェックしないためorca等、任意のものでよい。
-account = ENV["ORCA_API_ACCOUNT"] || "ormaster"
-password = ENV["ORCA_API_PASSWORD"] || "ormaster"
+options = {}
 
 # https://www.orca.med.or.jp/receipt/use/glserver_ssl_client_verification2.html に従って作成した証明書を想定
-ca_file = ENV["ORCA_API_CA_FILE"]
-cert_path = ENV["ORCA_API_CERT_PATH"]
-key_path = ENV["ORCA_API_KEY_PATH"]
+if uri.scheme == 'https'
+  require "openssl"
+
+  options[:ssl] = {}
+  options[:ssl][:ca_file] = ENV["ORCA_API_CA_FILE"]
+  if (p12_path = ENV["ORCA_API_P12_PATH"]) && File.exist?(p12_path)
+    options[:ssl][:p12] = OpenSSL::PKCS12.new(File.read(p12_path), ENV["ORCA_API_P12_PASSWORD"])
+  end
+end
 
 ########################################################################
 ## 接続
 
-authentications = []
-
-# SSLクライアント認証
-if [ca_file, cert_path, key_path].all? { |s| s && File.exist?(s) }
-  ssl_auth = OrcaApi::OrcaApi::SslClientAuthentication.new(ca_file, cert_path, key_path)
-  authentications.push(ssl_auth)
-end
-
-# BASIC認証
-basic_auth = OrcaApi::OrcaApi::BasicAuthentication.new(account, password)
-authentications.push(basic_auth)
-
-@orca_api = OrcaApi::OrcaApi.new(host, authentications, port)
+@orca_api = OrcaApi::OrcaApi.new(uri_str, options)
 
 # デバッグ
 if ENV["ORCA_API_DEBUG"]

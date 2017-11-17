@@ -18,20 +18,140 @@ RSpec::Matchers.define :be_api_result_equal_to do |expected|
 end
 
 RSpec.describe OrcaApi::OrcaApi do
-  let(:options) { ["example.com", double("authentication"), 18000] }
-  let(:orca_api) { OrcaApi::OrcaApi.new(*options) }
+  let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
+  let(:options) { {} }
+  let(:orca_api) { OrcaApi::OrcaApi.new(uri, options) }
 
   describe ".new" do
     subject { orca_api }
 
-    its(:host) { is_expected.to eq(options[0]) }
-    its(:authentication) { is_expected.to eq(options[1]) }
-    its(:port) { is_expected.to eq(options[2]) }
+    context "uriで認証情報を指定する" do
+      let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
+      let(:options) { {} }
 
-    describe "portは省略可能" do
-      let(:options) { ["example.com", double("authentication")] }
+      %i(user password).each do |sym|
+        its(sym) { is_expected.to eq(URI.parse(uri).send(sym)) }
+      end
+    end
 
-      its(:port) { is_expected.to eq(8000) }
+    context "optionsで認証情報を指定する" do
+      let(:uri) { "http://example.com" }
+      let(:options) {
+        {
+          user: "ormaster",
+          password: "ormaster_password",
+        }
+      }
+
+      %i(user password).each do |sym|
+        its(sym) { is_expected.to eq(options[sym]) }
+      end
+    end
+
+    context "HTTPS + クライアント証明書を指定する" do
+      let(:uri) { "https://ormaster:ormaster_password@example.com:18000" }
+      let(:options) {
+        {
+          ssl: {
+            ca_file: "path/to/ca_file",
+            ca_path: "path/to/ca_path",
+            p12: double("OpenSSL::PKCS12", certificate: "CERTIFICATE", key: "KEY"),
+          }
+        }
+      }
+
+      its(:use_ssl) { is_expected.to be(true) }
+      its(:ca_file) { is_expected.to eq(options[:ssl][:ca_file]) }
+      its(:ca_path) { is_expected.to eq(options[:ssl][:ca_path]) }
+      its(:verify_mode) { is_expected.to eq(OpenSSL::SSL::VERIFY_PEER) }
+      its(:cert) { is_expected.to eq(options[:ssl][:p12].certificate) }
+      its(:key) { is_expected.to eq(options[:ssl][:p12].key) }
+
+      describe "verify_mode" do
+        subject { super().verify_mode }
+
+        let(:options) {
+          opts = super()
+          if !verify_mode.nil?
+            opts[:ssl][:verify_mode] = verify_mode
+          end
+          if !verify.nil?
+            opts[:ssl][:verify] = verify
+          end
+          opts
+        }
+
+        context "verify_modeを指定する" do
+          let(:verify_mode) { OpenSSL::SSL::VERIFY_FAIL_IF_NO_PEER_CERT }
+          let(:verify) { nil }
+
+          it { is_expected.to eq(verify_mode) }
+        end
+
+        context "verify_modeを指定しない" do
+          let(:verify_mode) { nil }
+
+          context "verifyにtrueを指定する" do
+            let(:verify) { true }
+
+            it { is_expected.to eq(OpenSSL::SSL::VERIFY_PEER) }
+          end
+
+          context "verifyにfalseを指定する" do
+            let(:verify) { false }
+
+            it { is_expected.to eq(OpenSSL::SSL::VERIFY_NONE) }
+          end
+
+          context "verifyにtrueを指定しない" do
+            let(:verify) { nil }
+
+            it { is_expected.to eq(OpenSSL::SSL::VERIFY_PEER) }
+          end
+        end
+      end
+
+      describe "クライアント証明書と鍵" do
+        context "p12を指定する" do
+          let(:options) {
+            {
+              ssl: {
+                p12: double("OpenSSL::PKCS12", certificate: "CERTIFICATE", key: "KEY"),
+              }
+            }
+          }
+
+          its(:cert) { is_expected.to eq(options[:ssl][:p12].certificate) }
+          its(:key) { is_expected.to eq(options[:ssl][:p12].key) }
+        end
+
+        context "p12を指定しない" do
+          context "certとkeyを指定する" do
+            let(:options) {
+              {
+                ssl: {
+                  cert: "CERTIFICATE",
+                  key: "KEY",
+                }
+              }
+            }
+
+            its(:cert) { is_expected.to eq(options[:ssl][:cert]) }
+            its(:key) { is_expected.to eq(options[:ssl][:key]) }
+          end
+
+          context "certとkeyを指定しない" do
+            let(:options) {
+              {
+                ssl: {}
+              }
+            }
+
+            its(:cert) { is_expected.to be_nil }
+            its(:key) { is_expected.to be_nil }
+          end
+        end
+      end
     end
   end
 
@@ -59,7 +179,6 @@ RSpec.describe OrcaApi::OrcaApi do
 
     before do
       allow(Net::HTTP).to receive(:new).and_return(http)
-      orca_api = OrcaApi::OrcaApi.new("example.com", spy("authentication"))
       orca_api.debug_output = $stdout
       orca_api.call("/path/to/api")
     end
@@ -69,8 +188,10 @@ RSpec.describe OrcaApi::OrcaApi do
 
   describe "#call" do
     shared_examples "日レセAPIを呼び出せること" do
-      let(:options) { ["example.com", authentication, 18000] }
-      let(:url) { "#{http_scheme}://#{options[0]}:#{options[2]}" }
+      let(:request_url) {
+        u = URI.parse(uri)
+        "#{u.scheme}://#{u.host}:#{u.port}"
+      }
       let(:result) {
         load_orca_api_response_json(path[1..-1].gsub("/", "_") + ".json")
       }
@@ -80,10 +201,10 @@ RSpec.describe OrcaApi::OrcaApi do
       }
 
       before do
-        query = params.merge(format: "json").map { |k, v| "#{k}=#{v}" }.join("&")
-        stub_request(http_method, URI.join(url, path, "?#{query}"))
-          .with(body: body ? body.to_json : nil)
-          .to_return(body: result.to_json)
+        query = URI.encode_www_form(params.merge(format: "json"))
+        stub_request(http_method, URI.join(request_url, path, "?#{query}")).
+          with(body: body ? body.to_json : nil).
+          to_return(body: result.to_json)
       end
 
       describe "/api01rv2/patientgetv2" do
@@ -117,37 +238,36 @@ RSpec.describe OrcaApi::OrcaApi do
       end
     end
 
-    context "BASIC認証" do
-      let(:authentication) { OrcaApi::OrcaApi::BasicAuthentication.new("ormaster", "ormaster") }
-      let(:http_scheme) { "http" }
+    context "HTTP + BASIC認証" do
+      let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
+      let(:options) { {} }
 
       include_examples "日レセAPIを呼び出せること"
     end
 
-    context "SSLクライアント認証+BASIC認証" do
-      let(:authentication) {
-        ssl_auth = OrcaApi::OrcaApi::SslClientAuthentication.new("ca_file", "cert_path", "key_path")
-        allow(ssl_auth).to receive(:cert).and_return("cert")
-        allow(ssl_auth).to receive(:key).and_return("key")
-        expect(ssl_auth).to receive(:apply).once.and_call_original
-
-        basic_auth = OrcaApi::OrcaApi::BasicAuthentication.new("ormaster", "ormaster")
-        expect(basic_auth).to receive(:apply).once.and_call_original
-
-        [ssl_auth, basic_auth]
+    context "HTTPS + クライアント証明書 + BASIC認証" do
+      let(:uri) { "https://ormaster:ormaster_password@example.com:18000" }
+      let(:options) {
+        {
+          ssl: {
+            ca_file: "path/to/ca_file",
+            p12: double("OpenSSL::PKCS12", certificate: "CERTIFICATE", key: "KEY"),
+          }
+        }
       }
-      let(:http_scheme) { "https" }
 
       include_examples "日レセAPIを呼び出せること"
     end
 
     context "bodyにハッシュ以外のオブジェクトを指定する" do
+      let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
+      let(:options) { {} }
+
       # HACK: spyにはもともとto_jsonというメソッドが定義されているため、明示的に指定する必要がある
       let(:body) { spy("body", to_json: "json") }
 
       before do
         allow(Net::HTTP).to receive(:new).and_return(spy("Net::HTTP"))
-        orca_api = OrcaApi::OrcaApi.new("example.com", [])
         orca_api.call("/path/to/api", body: body)
       end
 
