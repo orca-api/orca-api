@@ -9,4 +9,4 @@ dependencies:
 test:
   post:
     - bundle exec rake rubocop
-    - bundle exec rake yardoc
+    - bundle exec rake yard
