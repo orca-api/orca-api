@@ -41,6 +41,9 @@ end
 task default: [:spec, :rubocop]
 
 YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb']
-  t.stats_options = ['--list-undoc']
+  t.files = ["lib/**/*.rb"]
+  t.stats_options = ["--list-undoc"]
+  if ENV["CIRCLE_ARTIFACTS"]
+    t.options = ["--output-dir", File.join(ENV["CIRCLE_ARTIFACTS"], "doc")]
+  end
 end
