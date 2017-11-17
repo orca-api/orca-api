@@ -7,20 +7,35 @@ require_relative "result"
 require_relative "form_result"
 
 module OrcaApi
-  # 日医標準レセプトソフト APIを呼び出すため低レベルインタフェースを提供するクラス
+  # 日医レセAPIを呼び出すため低レベルインタフェースを提供するクラス
+  #
+  # リクエスト毎に日レセAPIの接続先を切り替えられるように、接続・認証情報をこのクラスのオブジェクトに保持する。
+  # また、スレッド毎に別のオブジェクトを生成することを想定しており、
+  # 同じオブジェクトに複数のスレッドからアクセスすることはできない。
+  #
+  # 基本的には、例レベルインタフェースを使わなくても電子カルテのアプリケーションが組めるように、
+  # 高レベルインターフェースを提供する。
+  #
+  # `OrcaApi::OrcaApi#debug_output=` に IO オブジェクトを設定すると、日レセAPIとのやりとりを IO に出力できる。
+  #
+  # ```ruby
+  # orca_api.debug_output = $stdout
+  # ```
+  #
+  # 接続・認証に関するサンプルプログラムは `/example/common.rb` を参照。
   class OrcaApi
-    attr_accessor :host
-    attr_accessor :port
-    attr_accessor :user
-    attr_accessor :password
-    attr_accessor :use_ssl
-    attr_accessor :ca_file
-    attr_accessor :ca_path
-    attr_accessor :verify_mode
-    attr_accessor :cert
-    attr_accessor :key
-    attr_writer :karte_uid
-    attr_accessor :debug_output
+    attr_accessor :host # ホスト名
+    attr_accessor :port # ポート番号
+    attr_accessor :user # ユーザー名
+    attr_accessor :password # パスワード
+    attr_accessor :use_ssl # SSL通信をするかどうか
+    attr_accessor :ca_file # CA証明書のパス
+    attr_accessor :ca_path # CA証明書を格納しているディレクトリのパス
+    attr_accessor :verify_mode # サーバ証明書の検証モード
+    attr_accessor :cert # クライアント証明書
+    attr_accessor :key # 暗号鍵
+    attr_writer :karte_uid # カルテUID
+    attr_accessor :debug_output # デバッグに使う `IO` オブジェクト
 
     def self.underscore(name)
       name.
@@ -29,6 +44,36 @@ module OrcaApi
         downcase
     end
 
+    # @param uri [String]
+    #   接続先のURI。
+    #   スキーマはhttpとhttpsに対応。ただし、https以外を指定された場合は強制的にhttpでの通信とみなす。
+    #   認証情報は https://username:password@hostname として指定できる。
+    #   ポートを指定しない場合は http だと 80 番、https だと 443 番ポートを指定したものとみなす。
+    # @param [Hash] options
+    #   * :user (String)
+    #     ユーザー名。uriのユーザー名よりもこちらを優先する。
+    #   * :password (String)
+    #     パスワード。uriのパスワードよりもこちらを優先する。
+    #   * :use_ssl (Boolean)
+    #     SSL通信を行うかどうか
+    #   * :ssl (Hash)
+    #     SSL通信に関するオプション
+    #     * :ca_file (String)
+    #       CA証明書のパス
+    #     * :ca_path (String)
+    #       CA証明書を格納しているディレクトリのパス
+    #     * :verify (Boolean) [true]
+    #       サーバ証明書を検証するかどうか
+    #     * :verify_mode (Integer)
+    #       サーバ証明書の検証モード。
+    #       `OpenSSL::SSL` モジュールに定義されている `VERIFY_`　から始まる定数を指定することを想定。
+    #     * :p12 (OpenSSL::PKCS12)
+    #       PKCS#12 (秘密鍵、証明書、関連するCA証明書を1つのファイルに保存する形式)のクライアント証明書
+    #     * :cert (OpenSSL::X509::Certificate)
+    #       クライアント証明書
+    #     * :key (OpenSSL::PKey::PKey)
+    #       暗号鍵。
+    #       鍵の種類に応じて `OpenSSL::PKey::RSA` 等の適切なクラスのインスタンスを指定する。
     def initialize(uri, options = {})
       uri = URI.parse(uri)
       @host = uri.host
