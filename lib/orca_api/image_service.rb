@@ -15,10 +15,8 @@ module OrcaApi
         orca_api.call(
           "/api01rv2/imagegetv2",
           body: {
-            "data" => {
-              "imagegetv2req" => {
-                "Image_ID" => image_id,
-              }
+            "imagegetv2req" => {
+              "Image_ID" => image_id,
             }
           },
           &->(res) { res.body }
