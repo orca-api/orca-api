@@ -11,17 +11,19 @@ module OrcaApi
     # @param [String] image_id イメージID
     # @return [BinaryResult] 画像データをZIP圧縮したバイナリを格納した `BinaryResult` オブジェクト
     def get(image_id)
-      BinaryResult.new(orca_api.call(
-        "/api01rv2/imagegetv2'",
-        body: {
-          "data" => {
-            "imagegetv2req" => {
-              "Image_ID" => image_id,
+      BinaryResult.new(
+        orca_api.call(
+          "/api01rv2/imagegetv2",
+          body: {
+            "data" => {
+              "imagegetv2req" => {
+                "Image_ID" => image_id,
+              }
             }
-          }
-        },
-        &->(res) { res.body }
-      ))
+          },
+          &->(res) { res.body }
+        )
+      )
     end
   end
 end
