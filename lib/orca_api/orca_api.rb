@@ -91,11 +91,40 @@ module OrcaApi
       @karte_uid ||= SecureRandom.uuid
     end
 
+    # 任意の日レセAPIを呼び出す
+    #
+    # 引数paramsやbodyの内容のチェックは行わない。
+    #
+    # 結果はRubyのオブジェクト(HashやArray等)が返る。処理結果を番号で格納したApi_Resultでさえ、
+    # 値のフォーマットや意味が様々であるため、結果の内容のチェックも行わない。
+    #
+    # @param [String] path
+    #   エンドポイント
+    # @param [Hash{String,Symbol=>String}] params
+    #   リクエストパラメータ
+    # @param [#to_json,nil] body
+    #   リクエストボディ。
+    #   nilとfalse以外が指定された場合、 `#to_json` を呼び出してJSON形式に変換してからリクエストボディに指定する。
+    # @param [:get,:post] http_method (:post)
+    #   HTTPメソッド
+    # @yield [response]
+    #   HTTPレスポンスをパーズするブロックを指定する。省略可能。
+    # @yieldparam response [Net::HTTPResponse]
+    #   HTTPレスポンス
+    # @yieldreturn [Object]
+    #   このメソッドの戻り値となるオブジェクトを返す
+    # @return [Object]
+    #   ブロックが指定された場合、HTTPレスポンスをブロックパラメータに指定して、ブロックを呼び出した結果を返す。
+    #   そうでない場合、HTTPレスポンスのbodyをJSON形式として扱い、Rubyのオブジェクトに解析した結果を返す。
     def call(path, params: {}, body: nil, http_method: :post)
       req = make_request(http_method, path, params, body)
       new_http.start { |http|
         res = http.request(req)
-        JSON.parse(res.body)
+        if block_given?
+          yield(res)
+        else
+          JSON.parse(res.body)
+        end
       }
     end
 
@@ -110,6 +139,7 @@ module OrcaApi
       FormDataService
       IncomeService
       PrintService
+      ImageService
     )
     service_class_names.each do |name|
       s = underscore(name)
