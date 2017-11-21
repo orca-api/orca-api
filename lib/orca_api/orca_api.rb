@@ -121,7 +121,7 @@ module OrcaApi
         when Net::HTTPSuccess
           res.body
         else
-          raise HttpError.new(res)
+          raise HttpError, res
         end
       }
     end
