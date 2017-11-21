@@ -255,6 +255,7 @@ RSpec.describe OrcaApi::OrcaApi do
         {
           ssl: {
             ca_file: "path/to/ca_file",
+            ca_path: "path/to/ca_path",
             p12: double("OpenSSL::PKCS12", certificate: "CERTIFICATE", key: "KEY"),
           }
         }
