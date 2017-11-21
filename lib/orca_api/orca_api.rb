@@ -7,6 +7,8 @@ require_relative "result"
 require_relative "form_result"
 require_relative "binary_result"
 
+require_relative "error"
+
 module OrcaApi
   # 日医レセAPIを呼び出すため低レベルインタフェースを提供するクラス
   #
@@ -115,7 +117,12 @@ module OrcaApi
       req = make_request(http_method, path, params, body)
       new_http.start { |http|
         res = http.request(req)
-        res.body
+        case res
+        when Net::HTTPSuccess
+          res.body
+        else
+          raise HttpError.new(res)
+        end
       }
     end
 
