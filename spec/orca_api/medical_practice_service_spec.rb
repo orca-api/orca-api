@@ -3,6 +3,7 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
   let(:service) { OrcaApi::MedicalPracticeService.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   def expect_api21_medicalmodv31_01(path, body, response_json = "api21_medicalmodv31_01.json")
     expect(path).to eq("/api21/medicalmodv31")
@@ -31,7 +32,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
     req = body["medicalv3req2"]
     req_diagnosis = req["Diagnosis_Information"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
@@ -64,7 +65,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv32")
 
     req = body["medicalv3req2"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
@@ -92,7 +93,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv33")
 
     req = body["medicalv3req3"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
@@ -125,7 +126,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv33")
 
     req = body["medicalv3req3"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
@@ -151,13 +152,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv31")
 
     req = body["medicalv3req1"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Perform_Date"]).to eq(res_body["Perform_Date"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
-    load_orca_api_response_json("api21_medicalmodv31_99.json")
+    load_orca_api_response("api21_medicalmodv31_99.json")
   end
 
   def expect_api21_medicalmodv34_01(path, body, patient_mode, response_json)
@@ -179,7 +180,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv34")
 
     req = body["medicalv3req4"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
 
     expect(req["Request_Number"]).to eq("02")
     expect(req["Karte_Uid"]).to eq("karte_uid")
@@ -197,13 +198,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv34")
 
     req = body["medicalv3req4"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
     expect(req["Perform_Date"]).to eq(res_body["Perform_Date"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
-    load_orca_api_response_json("api21_medicalmodv34_99.json")
+    load_orca_api_response("api21_medicalmodv34_99.json")
   end
 
   describe "#get_examination_fee" do
@@ -235,7 +236,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     subject { service.get_examination_fee(params) }
 
     context "患者情報をロックする" do
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv31_01.json") }
 
       before do
         count = 0
@@ -254,21 +255,23 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+      its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
 
       context "Perform_Dateが未指定であるためレスポンスがW00" do
         let(:params) {
           super().tap { |d| d.delete("Perform_Date") }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_W00.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv31_01_W00.json") }
 
         its("ok?") { is_expected.to be true }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
       end
 
       context "別端末使用中以外のエラー" do
         let(:response_json) {
-          super().tap { |json| json.first[1]["Api_Result"] = "E20" }
+          data = parse_json(super(), false)
+          data.first[1]["Api_Result"] = "E20"
+          data.to_json
         }
 
         its("ok?") { is_expected.to be false }
@@ -296,7 +299,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             h.delete("Patient_ID")
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_E01.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv31_01_E01.json") }
 
         its("ok?") { is_expected.to be false }
       end
@@ -305,7 +308,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
   shared_examples "初回エラー: この労災保険の診察は既に入力済みです。初診料は算定できません。(E40)" do
     context "初回エラー: この労災保険の診察は既に入力済みです。初診料は算定できません。(E40)" do
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv31_01_E40.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv31_01_E40.json") }
 
       before do
         count = 0
@@ -384,7 +387,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     subject { service.calc_medical_practice_fee(params) }
 
     context "選択項目も削除可能な剤もない" do
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_04.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv33_04.json") }
 
       before do
         count = 0
@@ -408,13 +411,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-      its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+      its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+      its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
     end
 
     context "選択項目がある" do
       context "選択項目を指定していない" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv32_03_select.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv32_03_select.json") }
 
         before do
           count = 0
@@ -438,8 +441,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         its("ok?") { is_expected.to be false }
         its(:message) { is_expected.to eq("選択項目が未指定です。") }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:medical_select_information) { is_expected.to eq(response_data.first[1]["Medical_Select_Information"]) }
       end
 
       context "選択項目を指定する" do
@@ -454,7 +457,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_04.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv33_04.json") }
 
         before do
           count = 0
@@ -480,8 +483,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
       end
 
       context "選択項目が2つあるが、1つしか指定していない" do
@@ -496,7 +499,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv32_03_select2.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv32_03_select2.json") }
 
         before do
           count = 0
@@ -521,8 +524,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
         its("ok?") { is_expected.to be false }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:medical_select_information) { is_expected.to eq(response_data.first[1]["Medical_Select_Information"]) }
       end
 
       context "2つの選択項目を指定する" do
@@ -542,7 +545,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_04.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv33_04.json") }
 
         before do
           count = 0
@@ -570,14 +573,14 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
       end
     end
 
     context "削除可能な剤がある" do
       context "削除可能な剤の削除指示を指定していない" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv32_03_delete.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv32_03_delete.json") }
 
         before do
           count = 0
@@ -601,7 +604,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         its("ok?") { is_expected.to be false }
         its(:message) { is_expected.to eq("削除可能な剤の削除指示が未指定です。") }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
       end
 
       context "削除可能な剤の削除指示を指定する" do
@@ -612,7 +615,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_04.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv33_04.json") }
 
         before do
           count = 0
@@ -636,8 +639,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
       end
     end
 
@@ -648,7 +651,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         }
       }
 
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_04_modify.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv33_04_modify.json") }
 
       before do
         count = 0
@@ -672,8 +675,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-      its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+      its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+      its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
     end
 
     context "異常系" do
@@ -690,10 +693,10 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
               when 1
                 expect_api21_medicalmodv31_01(path, body)
               when 2
-                response_json = load_orca_api_response_json("api21_medicalmodv32_02.json")
-                response_json.first[1]["Api_Result"] = "E80"
-                response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
-                expect_api21_medicalmodv32_02(path, body, prev_response_json, response_json)
+                data = parse_json(load_orca_api_response("api21_medicalmodv32_02.json"), false)
+                data.first[1]["Api_Result"] = "E80"
+                data.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+                expect_api21_medicalmodv32_02(path, body, prev_response_json, data.to_json)
               when 3
                 expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
               end
@@ -717,10 +720,10 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
               when 2
                 expect_api21_medicalmodv32_02(path, body, prev_response_json)
               when 3
-                response_json = load_orca_api_response_json("api21_medicalmodv32_03.json")
-                response_json.first[1]["Api_Result"] = "E80"
-                response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
-                expect_api21_medicalmodv32_03(path, body, prev_response_json, nil, response_json)
+                data = parse_json(load_orca_api_response("api21_medicalmodv32_03.json"), false)
+                data.first[1]["Api_Result"] = "E80"
+                data.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+                expect_api21_medicalmodv32_03(path, body, prev_response_json, nil, data.to_json)
               when 4
                 expect_unlock_api21_medicalmodv31(path, body, prev_response_json)
               end
@@ -806,7 +809,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     }
 
     context "正常終了" do
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv33_05.json") }
 
       before do
         count = 0
@@ -830,14 +833,14 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:invoice_number) { is_expected.to eq(response_json.first[1]["Invoice_Number"]) }
-      its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-      its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+      its(:invoice_number) { is_expected.to eq(response_data.first[1]["Invoice_Number"]) }
+      its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+      its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
     end
 
     context "選択項目がある" do
       context "選択項目を指定していない" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv32_03_select.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv32_03_select.json") }
 
         before do
           count = 0
@@ -860,8 +863,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
         its("ok?") { is_expected.to be false }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:medical_select_information) { is_expected.to eq(response_data.first[1]["Medical_Select_Information"]) }
       end
 
       context "選択項目を指定する" do
@@ -876,7 +879,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv33_05.json") }
 
         before do
           count = 0
@@ -902,9 +905,9 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:invoice_number) { is_expected.to eq(response_json.first[1]["Invoice_Number"]) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+        its(:invoice_number) { is_expected.to eq(response_data.first[1]["Invoice_Number"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
       end
 
       context "選択項目が2つあるが、1つしか指定していない" do
@@ -919,7 +922,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv32_03_select2.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv32_03_select2.json") }
 
         before do
           count = 0
@@ -944,8 +947,8 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
         its("ok?") { is_expected.to be false }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::UnselectedError) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:medical_select_information) { is_expected.to eq(response_json.first[1]["Medical_Select_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:medical_select_information) { is_expected.to eq(response_data.first[1]["Medical_Select_Information"]) }
       end
 
       context "2つの選択項目を指定する" do
@@ -965,7 +968,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv33_05.json") }
 
         before do
           count = 0
@@ -993,15 +996,15 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:invoice_number) { is_expected.to eq(response_json.first[1]["Invoice_Number"]) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+        its(:invoice_number) { is_expected.to eq(response_data.first[1]["Invoice_Number"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
       end
     end
 
     context "削除可能な剤がある" do
       context "削除可能な剤の削除指示を指定していない" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv32_03_delete.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv32_03_delete.json") }
 
         before do
           count = 0
@@ -1024,7 +1027,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
         its("ok?") { is_expected.to be false }
         it { is_expected.to be_kind_of(OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
       end
 
       context "削除可能な剤の削除指示を指定する" do
@@ -1035,7 +1038,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
             ]
           }
         }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv33_05.json") }
 
         before do
           count = 0
@@ -1059,9 +1062,9 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:invoice_number) { is_expected.to eq(response_json.first[1]["Invoice_Number"]) }
-        its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-        its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+        its(:invoice_number) { is_expected.to eq(response_data.first[1]["Invoice_Number"]) }
+        its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+        its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
       end
     end
 
@@ -1072,7 +1075,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         }
       }
 
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05_modify.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv33_05_modify.json") }
 
       before do
         count = 0
@@ -1096,9 +1099,9 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:invoice_number) { is_expected.to eq(response_json.first[1]["Invoice_Number"]) }
-      its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-      its(:cd_information) { is_expected.to eq(response_json.first[1]["Cd_Information"]) }
+      its(:invoice_number) { is_expected.to eq(response_data.first[1]["Invoice_Number"]) }
+      its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+      its(:cd_information) { is_expected.to eq(response_data.first[1]["Cd_Information"]) }
     end
 
     context "訂正時にエラー" do
@@ -1109,7 +1112,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         }
       }
 
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv33_05_modify_error.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv33_05_modify_error.json") }
 
       before do
         count = 0
@@ -1161,7 +1164,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     subject { service.get(params) }
 
     context "正常系" do
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_modify.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_modify.json") }
 
       before do
         count = 0
@@ -1185,13 +1188,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         Department_Code Department_Name Sequential_Number Physician_Code Physician_WholeName HealthInsurance_Information
         Medical_Information
       ).each do |name|
-        its(OrcaApi::OrcaApi.underscore(name).to_sym) { is_expected.to eq(response_json.first[1][name]) }
+        its(OrcaApi::OrcaApi.underscore(name).to_sym) { is_expected.to eq(response_data.first[1][name]) }
       end
     end
 
     context "異常系" do
       context "他端末使用中" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_locked.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_locked.json") }
 
         before do
           count = 0
@@ -1211,7 +1214,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       context "受診履歴が存在しない" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_E22.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_E22.json") }
 
         before do
           count = 0
@@ -1234,7 +1237,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
       context "患者番号が未指定" do
         let(:params) { {} }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_E01.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_E01.json") }
 
         before do
           count = 0
@@ -1276,7 +1279,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     subject { service.destroy(params) }
 
     context "正常系" do
-      let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_02_delete.json") }
+      let(:response_json) { load_orca_api_response("api21_medicalmodv34_02_delete.json") }
 
       before do
         count = 0
@@ -1299,13 +1302,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       %w(
         Department_Code Sequential_Number HealthInsurance_Information
       ).each do |name|
-        its(OrcaApi::OrcaApi.underscore(name).to_sym) { is_expected.to eq(response_json.first[1][name]) }
+        its(OrcaApi::OrcaApi.underscore(name).to_sym) { is_expected.to eq(response_data.first[1][name]) }
       end
     end
 
     context "異常系" do
       context "他端末使用中" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_locked.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_locked.json") }
 
         before do
           count = 0
@@ -1325,7 +1328,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
 
       context "受診履歴が存在しない" do
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_E22.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_E22.json") }
 
         before do
           count = 0
@@ -1348,7 +1351,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
       context "患者番号が未指定" do
         let(:params) { {} }
-        let(:response_json) { load_orca_api_response_json("api21_medicalmodv34_01_E01.json") }
+        let(:response_json) { load_orca_api_response("api21_medicalmodv34_01_E01.json") }
 
         before do
           count = 0
@@ -1389,7 +1392,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         ],
       }
     }
-    let(:response_json) { load_orca_api_response_json("api01rv2_contraindicationcheckv2.json") }
+    let(:response_json) { load_orca_api_response("api01rv2_contraindicationcheckv2.json") }
 
     subject { service.check_contraindication(params) }
 
@@ -1418,9 +1421,9 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     end
 
     its("ok?") { is_expected.to be true }
-    its(:perform_month) { is_expected.to eq(response_json.first[1]["Perform_Month"]) }
-    its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-    its(:medical_information) { is_expected.to eq(response_json.first[1]["Medical_Information"]) }
-    its(:symptom_information) { is_expected.to eq(response_json.first[1]["Symptom_Information"]) }
+    its(:perform_month) { is_expected.to eq(response_data.first[1]["Perform_Month"]) }
+    its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
+    its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
+    its(:symptom_information) { is_expected.to eq(response_data.first[1]["Symptom_Information"]) }
   end
 end

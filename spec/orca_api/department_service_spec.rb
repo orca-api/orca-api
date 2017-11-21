@@ -3,9 +3,10 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::DepartmentService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   describe "#list" do
-    let(:response_json) { load_orca_api_response_json("api01rv2_system01lstv2_01.json") }
+    let(:response_json) { load_orca_api_response("api01rv2_system01lstv2_01.json") }
 
     before do
       body = {
@@ -19,7 +20,7 @@ RSpec.describe OrcaApi::DepartmentService, orca_api_mock: true do
 
     shared_examples "結果が正しいこと" do
       its("ok?") { is_expected.to be true }
-      its(:department_information) { is_expected.to eq(response_json.first[1]["Department_Information"]) }
+      its(:department_information) { is_expected.to eq(response_data.first[1]["Department_Information"]) }
     end
 
     context "引数を省略する" do

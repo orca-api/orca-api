@@ -1,22 +1,5 @@
 require "spec_helper"
 
-# 日レセAPIの実行結果のうち、実行日時のような実行時に決定する値以外が等しいかどうかを検証する
-RSpec::Matchers.define :be_api_result_equal_to do |expected|
-  exclude_keys = %w(
-    Information_Date
-    Information_Time
-  )
-  match do |actual|
-    response_name = expected.keys.first
-    exclude_keys.each do |k|
-      expected[response_name][k] = actual[response_name][k]
-    end
-    actual == expected
-  end
-
-  diffable
-end
-
 RSpec.describe OrcaApi::OrcaApi do
   let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
   let(:options) { {} }
@@ -214,7 +197,7 @@ RSpec.describe OrcaApi::OrcaApi do
         "#{u.scheme}://#{u.host}:#{u.port}"
       }
       let(:result) {
-        load_orca_api_response_json(path[1..-1].gsub("/", "_") + ".json")
+        load_orca_api_response(path[1..-1].gsub("/", "_") + ".json")
       }
 
       subject {
@@ -225,7 +208,7 @@ RSpec.describe OrcaApi::OrcaApi do
         query = URI.encode_www_form(params.merge(format: "json"))
         stub_request(http_method, URI.join(request_url, path, "?#{query}")).
           with(body: body ? body.to_json : nil).
-          to_return(body: result.to_json)
+          to_return(body: result)
       end
 
       describe "/api01rv2/patientgetv2" do
@@ -236,7 +219,7 @@ RSpec.describe OrcaApi::OrcaApi do
         let(:body) { nil }
         let(:http_method) { :get }
 
-        it { is_expected.to be_api_result_equal_to(result) }
+        it { is_expected.to eq(result) }
       end
 
       describe "/api01rv2/patientlst1v2" do
@@ -255,7 +238,7 @@ RSpec.describe OrcaApi::OrcaApi do
         }
         let(:http_method) { :post }
 
-        it { is_expected.to be_api_result_equal_to(result) }
+        it { is_expected.to eq(result) }
       end
     end
 
@@ -272,6 +255,7 @@ RSpec.describe OrcaApi::OrcaApi do
         {
           ssl: {
             ca_file: "path/to/ca_file",
+            ca_path: "path/to/ca_path",
             p12: double("OpenSSL::PKCS12", certificate: "CERTIFICATE", key: "KEY"),
           }
         }
@@ -294,6 +278,19 @@ RSpec.describe OrcaApi::OrcaApi do
 
       it { expect(body).to have_received(:to_json) }
     end
+
+    context "異常系" do
+      context "HTTPのレスポンスが200以外" do
+        it do
+          u = URI.parse(uri)
+          request_url = "#{u.scheme}://#{u.host}:#{u.port}"
+          path = "/api01rv2/imagegetv2"
+          query = URI.encode_www_form({ format: "json" })
+          stub_request(:post, URI.join(request_url, path, "?#{query}")).to_return(body: "", status: 404)
+          expect { orca_api.call(path) }.to raise_error(OrcaApi::HttpError)
+        end
+      end
+    end
   end
 
   [
@@ -307,6 +304,7 @@ RSpec.describe OrcaApi::OrcaApi do
     ["new_form_data_service", OrcaApi::FormDataService],
     ["new_income_service", OrcaApi::IncomeService],
     ["new_print_service", OrcaApi::PrintService],
+    ["new_image_service", OrcaApi::ImageService],
   ].each do |method_name, service_class|
     describe "##{method_name}" do
       subject { orca_api.send(method_name) }

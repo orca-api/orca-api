@@ -6,16 +6,8 @@ module OrcaApi
   # @see https://www.orca.med.or.jp/receipt/tec/push-api/report_data_api.html
   # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/push-api/1.api_information.pdf 帳票データ取得APIについて
   class FormDataService < Service
-    # 帳票データAPIの呼び出し結果を扱うクラス
-    class Result < Result
-      def initialize(response)
-        super(response, false)
-      end
-      alias_method :body, :raw
-    end
-
     def get(data_id)
-      Result.new(
+      FormResult.new(
         orca_api.call("/api01rv2/formdatagetv2",
                       body: {
                         "data" => {

@@ -3,9 +3,10 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   describe "#list" do
-    let(:response_json) { load_orca_api_response_json("api01rv2_acceptlstv2_03.json") }
+    let(:response_json) { load_orca_api_response("api01rv2_acceptlstv2_03.json") }
 
     it "ListResultを返すこと" do
       allow(orca_api).to receive(:call)
@@ -14,8 +15,8 @@ RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
 
       result = service.list
       expect(result.ok?).to be true
-      expect(result.acceptance_date).to eq response_json["acceptlstres"]["Acceptance_Date"]
-      expect(result.list).to eq response_json["acceptlstres"]["Acceptlst_Information"]
+      expect(result.acceptance_date).to eq response_data["acceptlstres"]["Acceptance_Date"]
+      expect(result.list).to eq response_data["acceptlstres"]["Acceptlst_Information"]
     end
 
     context "with arguments" do
@@ -91,7 +92,7 @@ RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
   end
 
   describe "#create" do
-    let(:response_json) { load_orca_api_response_json("orca11_acceptmodv2_01.json") }
+    let(:response_json) { load_orca_api_response("orca11_acceptmodv2_01.json") }
 
     it "リクエスト内容が正しいこと" do
       time = Time.parse("2017-08-09T12:34:56")
@@ -128,7 +129,7 @@ RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
   end
 
   describe "#destroy" do
-    let(:response_json) { load_orca_api_response_json("orca11_acceptmodv2_02.json") }
+    let(:response_json) { load_orca_api_response("orca11_acceptmodv2_02.json") }
     let(:acceptance_id) { SecureRandom.hex }
     let(:patient_id) { SecureRandom.hex }
 

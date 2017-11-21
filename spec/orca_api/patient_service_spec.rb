@@ -3,6 +3,7 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   def expect_orca12_patientmodv31_01(path, body, id, patient, patient_mode, response_json)
     expect(path).to eq("/orca12/patientmodv31")
@@ -23,7 +24,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     expect(path).to eq("/orca12/patientmodv31")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
@@ -39,13 +40,13 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     expect(path).to eq("/orca12/patientmodv31")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
-    load_orca_api_response_json("orca12_patientmodv31_99.json")
+    load_orca_api_response("orca12_patientmodv31_99.json")
   end
 
   def expect_orca12_patientmodv32_01(path, body, patient_id, response_json)
@@ -64,7 +65,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     expect(path).to eq("/orca12/patientmodv32")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
@@ -79,7 +80,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     expect(path).to eq("/orca12/patientmodv32")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
@@ -94,22 +95,22 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     expect(path).to eq("/orca12/patientmodv32")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_Information"]["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
-    load_orca_api_response_json("orca12_patientmodv32_99.json")
+    load_orca_api_response("orca12_patientmodv32_99.json")
   end
 
   describe "#create" do
-    let(:patient_information) { response_json.first[1]["Patient_Information"] }
+    let(:patient_information) { response_data.first[1]["Patient_Information"] }
 
     subject { service.create(*args) }
 
     context "二重登録疑いの患者が存在しない" do
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_new.json") }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new.json") }
       let(:args) {
         [patient_information]
       }
@@ -129,12 +130,12 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
       its(:duplicated_patient_candidates) { is_expected.to eq([]) }
     end
 
     context "二重登録疑いの患者が存在する" do
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_new_abnormal_patient_duplicated.json") }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new_abnormal_patient_duplicated.json") }
 
       describe "登録に失敗する" do
         let(:args) {
@@ -156,12 +157,12 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be false }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-        its(:duplicated_patient_candidates) { is_expected.to eq(response_json.first[1]["Patient2_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
+        its(:duplicated_patient_candidates) { is_expected.to eq(response_data.first[1]["Patient2_Information"]) }
       end
 
       describe "引数にallow_duplication: trueを指定すると強制的に登録する" do
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_new_abnormal_patient_duplicated.json") }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_new_abnormal_patient_duplicated.json") }
         let(:args) {
           [patient_information, { allow_duplication: true }]
         }
@@ -184,15 +185,15 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         end
 
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-        its(:duplicated_patient_candidates) { is_expected.to eq(response_json.first[1]["Patient2_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
+        its(:duplicated_patient_candidates) { is_expected.to eq(response_data.first[1]["Patient2_Information"]) }
       end
     end
   end
 
   describe "#get" do
     let(:patient_id) { 1 }
-    let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify.json") }
+    let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_modify.json") }
 
     subject { service.get(patient_id) }
 
@@ -214,12 +215,12 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
     end
 
     context "異常系" do
       let(:patient_id) { 2000 }
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_modify_E10.json") }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_modify_E10.json") }
 
       before do
         count = 0
@@ -236,7 +237,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       its("ok?") { is_expected.to be false }
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
     end
   end
 
@@ -261,7 +262,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
             when 1
               expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json_01)
             when 2
-              expect_orca12_patientmodv31_02(path, body, prev_response_json, response_json.first[1]["Patient_Information"],
+              expect_orca12_patientmodv31_02(path, body, prev_response_json, response_data.first[1]["Patient_Information"],
                                              "Modify", response_json)
             end
           prev_response_json
@@ -269,28 +270,28 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       context "すべての値を指定する" do
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
-        let(:patient_information) { response_json.first[1]["Patient_Information"] }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_modify_whole.json") }
+        let(:patient_information) { response_data.first[1]["Patient_Information"] }
 
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
       end
 
       context "あらたに自宅情報を指定する" do
         let(:response_json_01) {
-          res = load_orca_api_response_json("orca12_patientmodv31_01_modify.json")
-          res["patientmodres"]["Patient_Information"].delete("Home_Address_Information")
-          res
+          data = parse_json(load_orca_api_response("orca12_patientmodv31_01_modify.json"), false)
+          data["patientmodres"]["Patient_Information"].delete("Home_Address_Information")
+          data.to_json
         }
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_whole.json") }
-        let(:patient_information) { response_json.first[1]["Patient_Information"] }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_modify_whole.json") }
+        let(:patient_information) { response_data.first[1]["Patient_Information"] }
 
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
       end
 
       context "一部を指定する" do
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_parts.json") }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_modify_parts.json") }
         let(:patient_information) {
           {
             "BirthDate" => "1975-05-05",
@@ -309,15 +310,15 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         }
 
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
       end
 
       context "まったく指定しない" do
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_modify_none.json") }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_modify_none.json") }
         let(:patient_information) { {} }
 
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
       end
     end
 
@@ -351,11 +352,11 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     subject { service.destroy(*args) }
 
     context "正常系" do
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_delete_000.json") }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_delete_000.json") }
 
       shared_examples "ok" do
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
+        its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
       end
 
       context "受診のない患者" do
@@ -369,12 +370,12 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
               when 1
                 expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", "orca12_patientmodv31_01_delete.json")
               when 2
-                patient = prev_response_json.first[1]["Patient_Information"]
+                patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                 expect_orca12_patientmodv31_02(
                   path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_1.json"
                 )
               when 3
-                patient = prev_response_json.first[1]["Patient_Information"]
+                patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                 expect_orca12_patientmodv31_02(
                   path, body, prev_response_json, patient, "Delete", response_json
                 )
@@ -389,7 +390,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       context "受診のある患者" do
         context "強制削除しない" do
           let(:args) { [patient_id, { force: false }] }
-          let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_02_delete_S20_2.json") }
+          let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_delete_S20_2.json") }
 
           before do
             count = 0
@@ -400,15 +401,15 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
               prev_response_json =
                 case count
                 when 1
-                  locked_result = load_orca_api_response_json("orca12_patientmodv31_01_delete.json")
+                  locked_result = load_orca_api_response("orca12_patientmodv31_01_delete.json")
                   expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", locked_result)
                 when 2
-                  patient = prev_response_json.first[1]["Patient_Information"]
+                  patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                   expect_orca12_patientmodv31_02(
                     path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_1.json"
                   )
                 when 3
-                  patient = prev_response_json.first[1]["Patient_Information"]
+                  patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                   expect_orca12_patientmodv31_02(
                     path, body, prev_response_json, patient, "Delete", response_json
                   )
@@ -435,17 +436,17 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
                 when 1
                   expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", "orca12_patientmodv31_01_delete.json")
                 when 2
-                  patient = prev_response_json.first[1]["Patient_Information"]
+                  patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                   expect_orca12_patientmodv31_02(
                     path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_1.json"
                   )
                 when 3
-                  patient = prev_response_json.first[1]["Patient_Information"]
+                  patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                   expect_orca12_patientmodv31_02(
                     path, body, prev_response_json, patient, "Delete", "orca12_patientmodv31_02_delete_S20_2.json"
                   )
                 when 4
-                  patient = prev_response_json.first[1]["Patient_Information"]
+                  patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                   expect_orca12_patientmodv31_02(
                     path, body, prev_response_json, patient, "Delete", response_json
                   )
@@ -461,7 +462,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
     context "異常系" do
       context "患者番号に該当する患者が存在しません" do
-        let(:response_json) { load_orca_api_response_json("orca12_patientmodv31_01_delete_E10.json") }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_delete_E10.json") }
 
         before do
           count = 0
@@ -491,13 +492,13 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
               when 1
                 expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Delete", "orca12_patientmodv31_01_delete.json")
               when 2
-                response_json = load_orca_api_response_json("orca12_patientmodv31_02_delete_S20_1.json")
-                response_json.first[1]["Api_Result"] = "E80"
-                response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+                data = parse_json(load_orca_api_response("orca12_patientmodv31_02_delete_S20_1.json"), false)
+                data.first[1]["Api_Result"] = "E80"
+                data.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
 
-                patient = prev_response_json.first[1]["Patient_Information"]
+                patient = parse_json(prev_response_json).first[1]["Patient_Information"]
                 expect_orca12_patientmodv31_02(
-                  path, body, prev_response_json, patient, "Delete", response_json
+                  path, body, prev_response_json, patient, "Delete", data.to_json
                 )
               when 3
                 expect_orca12_patientmodv31_99(path, body, prev_response_json)

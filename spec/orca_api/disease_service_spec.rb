@@ -3,6 +3,7 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   describe "#get" do
     let(:args) {
@@ -38,16 +39,16 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
 
     context "正常系" do
       let(:patient_id) { 1 }
-      let(:response_json) { load_orca_api_response_json("api01rv2_diseasegetv2.json") }
+      let(:response_json) { load_orca_api_response("api01rv2_diseasegetv2.json") }
 
       its("ok?") { is_expected.to be true }
-      its(:disease_infores) { is_expected.to eq(response_json.first[1]["Disease_Infores"]) }
-      its(:disease_information) { is_expected.to eq(response_json.first[1]["Disease_Information"]) }
+      its(:disease_infores) { is_expected.to eq(response_data.first[1]["Disease_Infores"]) }
+      its(:disease_information) { is_expected.to eq(response_data.first[1]["Disease_Information"]) }
     end
 
     context "異常系" do
       let(:patient_id) { 9999 }
-      let(:response_json) { load_orca_api_response_json("api01rv2_diseasegetv2_10.json") }
+      let(:response_json) { load_orca_api_response("api01rv2_diseasegetv2_10.json") }
 
       its("ok?") { is_expected.to be false }
     end
@@ -159,22 +160,22 @@ RSpec.describe OrcaApi::DiseaseService, orca_api_mock: true do
     end
 
     context "正常系" do
-      let(:response_json) { load_orca_api_response_json("orca22_diseasev3.json") }
+      let(:response_json) { load_orca_api_response("orca22_diseasev3.json") }
 
       its("ok?") { is_expected.to be true }
-      its(:disease_unmatch_information) { is_expected.to eq(response_json.first[1]["Disease_Unmatch_Information"]) }
+      its(:disease_unmatch_information) { is_expected.to eq(response_data.first[1]["Disease_Unmatch_Information"]) }
     end
 
     context "異常系" do
       context "エラー" do
-        let(:response_json) { load_orca_api_response_json("orca22_diseasev3_E42.json") }
+        let(:response_json) { load_orca_api_response("orca22_diseasev3_E42.json") }
 
         its("ok?") { is_expected.to be false }
-        its(:disease_message_information) { is_expected.to eq(response_json.first[1]["Disease_Message_Information"]) }
+        its(:disease_message_information) { is_expected.to eq(response_data.first[1]["Disease_Message_Information"]) }
       end
 
       context "他端末使用中" do
-        let(:response_json) { load_orca_api_response_json("orca22_diseasev3_E90.json") }
+        let(:response_json) { load_orca_api_response("orca22_diseasev3_E90.json") }
 
         its("ok?") { is_expected.to be false }
       end

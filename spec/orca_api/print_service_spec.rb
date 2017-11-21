@@ -3,6 +3,7 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::PrintService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json, false) }
 
   describe "#create" do
     let(:patient_id) { "00216" }
@@ -19,7 +20,7 @@ RSpec.describe OrcaApi::PrintService, orca_api_mock: true do
         Patient
         Forms
       ).each do |json_name|
-        its([json_name]) { is_expected.to eq(response_json[json_name]) }
+        its([json_name]) { is_expected.to eq(response_data[json_name]) }
       end
     end
 
@@ -51,7 +52,7 @@ RSpec.describe OrcaApi::PrintService, orca_api_mock: true do
       end
 
       context "正常系" do
-        let(:response_json) { load_orca_api_response_json("#{json_prefix}.json", false) }
+        let(:response_json) { load_orca_api_response("#{json_prefix}.json") }
 
         include_examples "結果が正しいこと"
 
@@ -67,7 +68,7 @@ RSpec.describe OrcaApi::PrintService, orca_api_mock: true do
         context "存在しない伝票番号を指定する" do
           let(:invoice_number) { "0000862" }
 
-          let(:response_json) { load_orca_api_response_json("#{json_prefix}_0105.json", false) }
+          let(:response_json) { load_orca_api_response("#{json_prefix}_0105.json") }
 
           its("ok?") { is_expected.to be(false) }
         end

@@ -45,14 +45,14 @@ RSpec.describe OrcaApi::Result do
     }
   }
 
-  let(:result) { described_class.new(response) }
+  let(:raw) { response.to_json }
 
-  subject { result }
+  subject { described_class.new(raw) }
 
   context "HAORIの正常レスポンス" do
     let(:response) { haori_ok_response }
 
-    its(:raw) { is_expected.to eq(response) }
+    its(:raw) { is_expected.to eq(raw) }
     its(:body) { is_expected.to eq(response.first[1]) }
     its("ok?") { is_expected.to be true }
     its(:message) { is_expected.to eq("検索処理終了(000)") }
@@ -72,7 +72,7 @@ RSpec.describe OrcaApi::Result do
   context "HAORIの異常レスポンス" do
     let(:response) { haori_ng_response }
 
-    its(:raw) { is_expected.to eq(response) }
+    its(:raw) { is_expected.to eq(raw) }
     its(:api_result) { is_expected.to eq("S20") }
     its(:api_result_message) { is_expected.to eq("選択項目があります。選択結果を返却してください。") }
     its(:request_number) { is_expected.to eq("01") }
@@ -86,7 +86,7 @@ RSpec.describe OrcaApi::Result do
   context "HAORIではない正常レスポンス" do
     let(:response) { not_haori_ok_response }
 
-    its(:raw) { is_expected.to eq(response) }
+    its(:raw) { is_expected.to eq(raw) }
     its(:api_result) { is_expected.to eq("00") }
     its(:api_result_message) { is_expected.to eq("処理終了") }
     its("ok?") { is_expected.to be true }
@@ -115,7 +115,7 @@ RSpec.describe OrcaApi::Result do
         }
       }
 
-      its(:raw) { is_expected.to eq(response) }
+      its(:raw) { is_expected.to eq(raw) }
       its(:body) { is_expected.to eq(response.first[1]) }
       its("ok?") { is_expected.to be false }
       its("locked?") { is_expected.to be true }
@@ -139,7 +139,7 @@ RSpec.describe OrcaApi::Result do
         }
       }
 
-      its(:raw) { is_expected.to eq(response) }
+      its(:raw) { is_expected.to eq(raw) }
       its(:body) { is_expected.to eq(response.first[1]) }
       its("ok?") { is_expected.to be false }
       its("locked?") { is_expected.to be true }
