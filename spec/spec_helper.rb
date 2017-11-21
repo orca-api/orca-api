@@ -49,9 +49,13 @@ def trim_response(hash)
   result
 end
 
-def load_orca_api_response_json(basename, trim = true)
-  json_path = File.expand_path(File.join("../fixtures/orca_api_responses", basename), __FILE__)
-  res = JSON.parse(File.read(json_path))
+def load_orca_api_response(basename)
+  path = File.expand_path(File.join("fixtures/orca_api_responses", basename), __dir__)
+  File.read(path)
+end
+
+def parse_json(raw, trim = true)
+  res = JSON.parse(raw)
   if trim
     trim_response(res)
   else
@@ -60,8 +64,8 @@ def load_orca_api_response_json(basename, trim = true)
 end
 
 def return_response_json(response_json)
-  if response_json.is_a?(String)
-    load_orca_api_response_json(response_json)
+  if /.json$/ =~ response_json
+    load_orca_api_response(response_json)
   else
     response_json
   end

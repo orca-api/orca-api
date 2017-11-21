@@ -27,17 +27,21 @@ module OrcaApi
       result
     end
 
+    def self.parse(raw)
+      trim_response(JSON.parse(raw)).first[1]
+    end
+
     attr_reader :raw
 
-    def initialize(raw, trim = true)
-      @raw = trim ? self.class.trim_response(raw) : raw
+    def initialize(raw)
+      @raw = raw
       @attr_names = body.keys.map { |key|
         [OrcaApi.underscore(key).to_sym, key]
       }.to_h
     end
 
     def body
-      @body ||= @raw.first[1]
+      @body ||= self.class.parse(@raw)
     end
 
     def [](key)

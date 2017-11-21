@@ -3,6 +3,7 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   def expect_orca23_incomev3_01(path, body, mode, args, response_json)
     expect(path).to eq(OrcaApi::IncomeService::PATH)
@@ -44,7 +45,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
     expect(path).to eq(OrcaApi::IncomeService::PATH)
 
     req = body[OrcaApi::IncomeService::REQUEST_NAME]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("02")
     expect(req["Request_Mode"]).to eq(mode)
     expect(req["Karte_Uid"]).to eq(orca_api.karte_uid)
@@ -115,12 +116,12 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
     expect(path).to eq(OrcaApi::IncomeService::PATH)
 
     req = body[OrcaApi::IncomeService::REQUEST_NAME]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(orca_api.karte_uid)
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
-    load_orca_api_response_json("orca23_incomev3_99.json")
+    load_orca_api_response("orca23_incomev3_99.json")
   end
 
   describe "参照処理" do
@@ -191,14 +192,14 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
             Income_Information
             Unpaid_Money_Total_Information
           ).each do |json_name|
-            its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+            its([json_name]) { is_expected.to eq(response_data.first[1][json_name]) }
           end
         end
 
         context "Information_Class = 1:指定した期間内の請求一覧" do
           let(:information_class) { "1" }
           let(:start_month) { "2012-01" }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_01_information_class_1.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_01_information_class_1.json") }
 
           include_examples "結果が正しいこと"
         end
@@ -206,7 +207,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         context "Information_Class = 2:指定した期間内の未収（過入）金のある請求一覧" do
           let(:information_class) { "2" }
           let(:start_month) { "2012-01" }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_01_information_class_2.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_01_information_class_2.json") }
 
           include_examples "結果が正しいこと"
         end
@@ -214,7 +215,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         context "Information_Class = 3:指定した期間内に入返金が行われた請求一覧" do
           let(:information_class) { "2" }
           let(:start_date) { "2012-01-01" }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_01_information_class_3.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_01_information_class_3.json") }
 
           include_examples "結果が正しいこと"
         end
@@ -226,7 +227,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
 
           let(:information_class) { "1" }
           let(:start_month) { "2012-01" }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_01_E1038.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_01_E1038.json") }
 
           its("ok?") { is_expected.to be false }
         end
@@ -236,7 +237,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
 
           let(:information_class) { "1" }
           let(:start_month) { "2012-01" }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_01_E9999.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_01_E9999.json") }
 
           its("ok?") { is_expected.to be false }
         end
@@ -261,14 +262,14 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       context "正常系" do
         include_context "ロックを伴う"
 
-        let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_02_get.json") }
+        let(:response_json) { load_orca_api_response("orca23_incomev3_01_02_get.json") }
 
         its("ok?") { is_expected.to be true }
 
         %w(
           Income_Detail
         ).each do |json_name|
-          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+          its([json_name]) { is_expected.to eq(response_data.first[1][json_name]) }
         end
       end
 
@@ -276,7 +277,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         context "他の端末より同じカルテＵＩＤでの接続があります。" do
           include_context "ロックを伴わない"
 
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E1038.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_02_E1038.json") }
 
           its("ok?") { is_expected.to be false }
         end
@@ -284,7 +285,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         context "他端末使用中" do
           include_context "ロックを伴う"
 
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_01_02_E9999.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_01_02_E9999.json") }
 
           its("ok?") { is_expected.to be false }
         end
@@ -299,13 +300,13 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
       context "正常系" do
         include_context "正常な日レセAPI呼び出し"
 
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_#{lock_request_mode}_#{method_name}.json") }
-        let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_#{request_mode}.json") }
+        let(:lock_response_json) { load_orca_api_response("orca23_incomev3_01_#{lock_request_mode}_#{method_name}.json") }
+        let(:response_json) { load_orca_api_response("orca23_incomev3_02_#{request_mode}.json") }
 
         its("ok?") { is_expected.to be true }
 
         json_names.each do |json_name|
-          its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+          its([json_name]) { is_expected.to eq(response_data.first[1][json_name]) }
         end
       end
 
@@ -348,7 +349,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           }
         end
 
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_#{lock_request_mode}_E1038.json") }
+        let(:lock_response_json) { load_orca_api_response("orca23_incomev3_01_#{lock_request_mode}_E1038.json") }
 
         its("ok?") { is_expected.to be false }
       end
@@ -370,7 +371,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           }
         end
 
-        let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_#{lock_request_mode}_E9999.json") }
+        let(:lock_response_json) { load_orca_api_response("orca23_incomev3_01_#{lock_request_mode}_E9999.json") }
 
         its("ok?") { is_expected.to be false }
       end
@@ -434,13 +435,13 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           let(:ic_money) { "10000" }
           let(:force) { "True" }
 
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01_force.json") }
+          let(:lock_response_json) { load_orca_api_response("orca23_incomev3_01_02_update.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_02_01_force.json") }
 
           its("ok?") { is_expected.to be true }
 
           json_names.each do |json_name|
-            its([json_name]) { is_expected.to eq(response_json.first[1][json_name]) }
+            its([json_name]) { is_expected.to eq(response_data.first[1][json_name]) }
           end
         end
 
@@ -448,8 +449,8 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           let(:ic_money) { "10000" }
           let(:force) { "False" }
 
-          let(:lock_response_json) { load_orca_api_response_json("orca23_incomev3_01_02_update.json") }
-          let(:response_json) { load_orca_api_response_json("orca23_incomev3_02_01_E0107.json") }
+          let(:lock_response_json) { load_orca_api_response("orca23_incomev3_01_02_update.json") }
+          let(:response_json) { load_orca_api_response("orca23_incomev3_02_01_E0107.json") }
 
           its("ok?") { is_expected.to be false }
         end

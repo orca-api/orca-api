@@ -3,6 +3,7 @@ require_relative "../shared_examples"
 
 RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json) }
 
   def expect_orca12_patientmodv33_01(path, body, patient_id, response_json)
     expect(path).to eq("/orca12/patientmodv33")
@@ -20,7 +21,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
     expect(path).to eq("/orca12/patientmodv33")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
@@ -34,7 +35,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
     expect(path).to eq("/orca12/patientmodv33")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
@@ -48,13 +49,13 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
     expect(path).to eq("/orca12/patientmodv33")
 
     req = body["patientmodreq"]
-    res_body = prev_response_json.first[1]
+    res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
     expect(req["Patient_Information"]["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
-    load_orca_api_response_json("orca12_patientmodv33_99.json")
+    load_orca_api_response("orca12_patientmodv33_99.json")
   end
 
   describe "#get" do
@@ -62,7 +63,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
     context "正常系" do
       let(:patient_id) { 4 }
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv33_01.json") }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv33_01.json") }
 
       before do
         count = 0
@@ -82,13 +83,13 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
       its("ok?") { is_expected.to be true }
 
-      its(:patient_information) { is_expected.to eq(response_json.first[1]["Patient_Information"]) }
-      its(:accident_insurance_information) { is_expected.to eq(response_json.first[1]["Accident_Insurance_Information"]) }
+      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
+      its(:accident_insurance_information) { is_expected.to eq(response_data.first[1]["Accident_Insurance_Information"]) }
     end
 
     context "異常系" do
       let(:patient_id) { 2000 }
-      let(:response_json) { load_orca_api_response_json("orca12_patientmodv33_01_E10.json") }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv33_01_E10.json") }
 
       before do
         count = 0
@@ -137,19 +138,19 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
       shared_examples "結果が正しいこと" do
         its("ok?") { is_expected.to be true }
-        its(:patient_information) { is_expected.to eq(updated_response_json.first[1]["Patient_Information"]) }
+        its(:patient_information) { is_expected.to eq(parse_json(updated_response_json).first[1]["Patient_Information"]) }
 
         describe '["Accident_Insurance_Information"]' do
           subject { super()["Accident_Insurance_Information"] }
 
-          it { is_expected.to eq(updated_response_json.first[1]["Accident_Insurance_Information"]) }
+          it { is_expected.to eq(parse_json(updated_response_json).first[1]["Accident_Insurance_Information"]) }
         end
       end
 
       context "患者労災・自賠責保険を登録する(New)" do
-        let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv33_01_new.json") }
-        let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv33_02_new.json") }
-        let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv33_03_new.json") }
+        let(:get_response_json) { load_orca_api_response("orca12_patientmodv33_01_new.json") }
+        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv33_02_new.json") }
+        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_new.json") }
 
         let(:params) {
           {
@@ -197,9 +198,9 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
       end
 
       context "患者労災・自賠責保険を更新する(Modify)" do
-        let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv33_01_modify.json") }
-        let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv33_02_modify.json") }
-        let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv33_03_modify.json") }
+        let(:get_response_json) { load_orca_api_response("orca12_patientmodv33_01_modify.json") }
+        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv33_02_modify.json") }
+        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_modify.json") }
 
         let(:params) {
           {
@@ -247,9 +248,9 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
       end
 
       context "患者労災・自賠責保険を削除する(Delete)" do
-        let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv33_01_delete.json") }
-        let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv33_02_delete.json") }
-        let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv33_03_delete.json") }
+        let(:get_response_json) { load_orca_api_response("orca12_patientmodv33_01_delete.json") }
+        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv33_02_delete.json") }
+        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_delete.json") }
 
         let(:params) {
           {
@@ -298,10 +299,10 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
     end
 
     context "異常系" do
-      let(:get_response_json) { load_orca_api_response_json("orca12_patientmodv33_01_new.json") }
-      let(:checked_response_json) { load_orca_api_response_json("orca12_patientmodv33_02_new.json") }
-      let(:updated_response_json) { load_orca_api_response_json("orca12_patientmodv33_03_new.json") }
-      let(:abort_response_json) { load_orca_api_response_json("orca12_patientmodv33_99.json") }
+      let(:get_response_json) { load_orca_api_response("orca12_patientmodv33_01_new.json") }
+      let(:checked_response_json) { load_orca_api_response("orca12_patientmodv33_02_new.json") }
+      let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_new.json") }
+      let(:abort_response_json) { load_orca_api_response("orca12_patientmodv33_99.json") }
 
       let(:params) { {} }
 
@@ -316,9 +317,10 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
             when 1
               expect(req["Request_Number"]).to eq("01")
 
-              get_response_json.first[1]["Api_Result"] = "E90"
-              get_response_json.first[1]["Api_Result_Message"] = "他端末使用中"
-              get_response_json
+              data = parse_json(get_response_json, false)
+              data.first[1]["Api_Result"] = "E90"
+              data.first[1]["Api_Result_Message"] = "他端末使用中"
+              data.to_json
             end
           }
         end
@@ -361,9 +363,10 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
             when 2
               expect(req["Request_Number"]).to eq("02")
 
-              checked_response_json.first[1]["Api_Result"] = "E50"
-              checked_response_json.first[1]["Api_Result_Message"] = "保険・公費にエラーがあります。"
-              checked_response_json
+              data = parse_json(checked_response_json, false)
+              data.first[1]["Api_Result"] = "E50"
+              data.first[1]["Api_Result_Message"] = "保険・公費にエラーがあります。"
+              data.to_json
             when 3
               expect(req["Request_Number"]).to eq("99")
 
@@ -422,9 +425,10 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
             when 3
               expect(req["Request_Number"]).to eq("03")
 
-              updated_response_json.first[1]["Api_Result"] = "E80"
-              updated_response_json.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
-              updated_response_json
+              data = parse_json(updated_response_json, false)
+              data.first[1]["Api_Result"] = "E80"
+              data.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+              data.to_json
             when 4
               expect(req["Request_Number"]).to eq("99")
 

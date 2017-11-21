@@ -1,5 +1,4 @@
 require_relative "service"
-require_relative "binary_result"
 
 module OrcaApi
   # 画像データ取得API
@@ -18,8 +17,7 @@ module OrcaApi
             "imagegetv2req" => {
               "Image_ID" => image_id,
             }
-          },
-          &->(res) { res.body }
+          }
         )
       )
     end

@@ -3,6 +3,7 @@ require_relative "shared_examples"
 
 RSpec.describe OrcaApi::FormDataService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
+  let(:response_data) { parse_json(response_json, false) }
 
   describe "#get" do
     let(:data_id) { SecureRandom.hex }
@@ -15,14 +16,14 @@ RSpec.describe OrcaApi::FormDataService, orca_api_mock: true do
     end
 
     context "正常系" do
-      let(:response_json) { load_orca_api_response_json("api01rv2_formdatagetv2.json", false) }
+      let(:response_json) { load_orca_api_response("api01rv2_formdatagetv2.json") }
 
       its("ok?") { is_expected.to be true }
-      its("forms") { is_expected.to eq response_json["Forms"] }
+      its("forms") { is_expected.to eq response_data["Forms"] }
     end
 
     context "エラーレスポンスの場合" do
-      let(:response_json) { load_orca_api_response_json("api01rv2_formdatagetv2_0001.json", false) }
+      let(:response_json) { load_orca_api_response("api01rv2_formdatagetv2_0001.json") }
 
       its("ok?") { is_expected.to be false }
     end

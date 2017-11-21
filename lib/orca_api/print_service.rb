@@ -1,5 +1,4 @@
 require_relative "service"
-require_relative "form_result"
 
 module OrcaApi
   # 帳票印刷を扱うサービスを表現したクラス

@@ -5,6 +5,7 @@ require "securerandom"
 
 require_relative "result"
 require_relative "form_result"
+require_relative "binary_result"
 
 module OrcaApi
   # 日医レセAPIを呼び出すため低レベルインタフェースを提供するクラス
@@ -107,12 +108,6 @@ module OrcaApi
     #   nilとfalse以外が指定された場合、 `#to_json` を呼び出してJSON形式に変換してからリクエストボディに指定する。
     # @param [:get,:post] http_method (:post)
     #   HTTPメソッド
-    # @yield [response]
-    #   HTTPレスポンスをパーズするブロックを指定する。省略可能。
-    # @yieldparam response [Net::HTTPResponse]
-    #   HTTPレスポンス
-    # @yieldreturn [Object]
-    #   このメソッドの戻り値となるオブジェクトを返す
     # @return [Object]
     #   ブロックが指定された場合、HTTPレスポンスをブロックパラメータに指定して、ブロックを呼び出した結果を返す。
     #   そうでない場合、HTTPレスポンスのbodyをJSON形式として扱い、Rubyのオブジェクトに解析した結果を返す。
@@ -120,11 +115,7 @@ module OrcaApi
       req = make_request(http_method, path, params, body)
       new_http.start { |http|
         res = http.request(req)
-        if block_given?
-          yield(res)
-        else
-          JSON.parse(res.body)
-        end
+        res.body
       }
     end
 
