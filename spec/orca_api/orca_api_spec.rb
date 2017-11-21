@@ -278,6 +278,19 @@ RSpec.describe OrcaApi::OrcaApi do
 
       it { expect(body).to have_received(:to_json) }
     end
+
+    context "異常系" do
+      context "HTTPのレスポンスが200以外" do
+        it do
+          u = URI.parse(uri)
+          request_url = "#{u.scheme}://#{u.host}:#{u.port}"
+          path = "/api01rv2/imagegetv2"
+          query = URI.encode_www_form({ format: "json" })
+          stub_request(:post, URI.join(request_url, path, "?#{query}")).to_return(body: "", status: 404)
+          expect { orca_api.call(path) }.to raise_error(OrcaApi::HttpError)
+        end
+      end
+    end
   end
 
   [
