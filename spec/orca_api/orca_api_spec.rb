@@ -280,14 +280,27 @@ RSpec.describe OrcaApi::OrcaApi do
     end
 
     context "異常系" do
+      let(:request_url) {
+        u = URI.parse(uri)
+        "#{u.scheme}://#{u.host}:#{u.port}"
+      }
+      let(:query) { URI.encode_www_form({ format: "json" }) }
+
       context "HTTPのレスポンスが200以外" do
         it do
-          u = URI.parse(uri)
-          request_url = "#{u.scheme}://#{u.host}:#{u.port}"
           path = "/api01rv2/imagegetv2"
-          query = URI.encode_www_form({ format: "json" })
           stub_request(:post, URI.join(request_url, path, "?#{query}")).to_return(body: "", status: 404)
+
           expect { orca_api.call(path) }.to raise_error(OrcaApi::HttpError)
+        end
+      end
+
+      context "リクエストのヘッダとボディが1MiB以上であるため、Net::HTTP#requestでErrno::EPIPEの例外が発生する" do
+        it do
+          path = "/api01rv2/patientlst1v2"
+          stub_request(:post, URI.join(request_url, path, "?#{query}")).to_raise(Errno::EPIPE)
+
+          expect { orca_api.call(path) }.to raise_error(Errno::EPIPE)
         end
       end
     end
