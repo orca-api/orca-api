@@ -1,0 +1,7 @@
+{
+  "patientlst1req": {
+    "Base_StartDate": "2012-06-01",
+    "Base_EndDate": "2012-06-30",
+    "Contain_TestPatient_Flag": 1
+  }
+}
