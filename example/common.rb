@@ -23,6 +23,7 @@
 require "orca_api"
 require "pp"
 require "uri"
+require "pry-byebug"
 
 ########################################################################
 ## 基本設定
