@@ -139,6 +139,7 @@ module OrcaApi
       IncomeService
       PrintService
       ImageService
+      ReceiptService
     )
     service_class_names.each do |name|
       s = underscore(name)
