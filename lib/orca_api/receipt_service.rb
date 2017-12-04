@@ -59,5 +59,39 @@ module OrcaApi
 
       Result.new(orca_api.call("/orca42/receiptmakev3", body: { "receipt_makev3req" => req }))
     end
+
+    def created(args)
+      req = args.merge(
+        {
+          "Request_Number" => "02",
+          "Karte_Uid" => orca_api.karte_uid,
+        }
+      )
+
+      Result.new(orca_api.call("/orca42/receiptmakev3", body: { "receipt_makev3req" => req }))
+    end
+
+    def print(args)
+      req = args.merge(
+        {
+          "Request_Number" => "01",
+          "Karte_Uid" => orca_api.karte_uid,
+        }
+      )
+
+      Result.new(orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req }))
+    end
+
+    def printed(args)
+      req = args.merge(
+        {
+          "Request_Number" => "02",
+          "Karte_Uid" => orca_api.karte_uid,
+        }
+      )
+
+      Result.new(orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req }))
+    end
+
   end
 end
