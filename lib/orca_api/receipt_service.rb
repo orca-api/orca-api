@@ -92,6 +92,5 @@ module OrcaApi
 
       Result.new(orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req }))
     end
-
   end
 end
