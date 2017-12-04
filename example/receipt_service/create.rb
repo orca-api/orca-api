@@ -4,8 +4,8 @@ Usage:
   create.rb all <Perform_Month> <InOut> <Print_Mode> <Submission_Mode>
   create.rb <Patient_ID>:<Patient_Perform_Month>[,<Patient_ID>:<Patient_Perform_Month>] <InOut> <Print_Mode> <Submission_Mode>
     Perform_Month: YYYY-mm-dd
-    InOut: I or O
-    Print_Mode: Check or No
+    InOut: i or o
+    Print_Mode: check or normal
     Submission_Mode: 01 or 02 or 03 or 04 or 05 or 06 or 07 or 08 or 09
       01:医保, 02:全件, 03:社保, 04:国保, 05:広域 労災, 06:自賠責, 07:新様式, 08:従来様式, 09:第三者行為 公害
   EOS
@@ -15,7 +15,7 @@ end
 require_relative "../common"
 
 argv0 = ARGV.shift
-if argv0 == "all"
+if argv0.downcase == "all"
   receipt_mode = "All"
   perform_month = ARGV.shift
   patients = []
@@ -27,7 +27,7 @@ else
   }
 end
 in_out = ARGV.shift.upcase
-print_mode = ARGV.shift.downcase == "check" ? "Check" : ""
+print_mode = ARGV.shift.downcase == "check" ? "Check" : "Normal"
 submission_mode = ARGV.shift
 
 service = @orca_api.new_receipt_service
@@ -49,9 +49,61 @@ args["Patient_Information"] = patients.map { |patient_id, patient_perform_month|
   }
 }
 
+# ※２　個別作成でCheck(点検用)のとき、点検用は平成２０年４月診療分から対応のため診療年月が平成２０年３月以前の場合は提出用として作成します。
+# ※３　医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09
+
+# 作成指示
 result = service.create(args)
 if result.ok?
   print_result(result)
 else
   error(result)
+  exit
 end
+
+# 作成確認
+args["Orca_Uid"] = result["Orca_Uid"]
+
+result = service.created(args)
+while !result.ok? && result.api_result == "E70"
+  print_result(result)
+  sleep(1)
+  result = service.created(args)
+end
+
+if result.ok?
+  print_result(result)
+else
+  error(result)
+  exit
+end
+
+# 印刷指示
+args["Print_Mode"] = "All" # 印刷モード/5/All：全件印刷 All以外：個別印刷
+
+result = service.print(args)
+if result.ok?
+  print_result(result)
+else
+  error(result)
+  exit
+end
+
+data_id_information = result["Data_Id_Information"]
+
+# 印刷結果確認
+result = service.printed(args)
+while !result.ok? && result.api_result == "E70"
+  print_result(result)
+  sleep(1)
+  result = service.printed(args)
+end
+
+if result.ok?
+  print_result(result)
+else
+  error(result)
+end
+
+puts "＊＊＊＊＊ＩＤ一覧＊＊＊＊＊"
+pp data_id_information
