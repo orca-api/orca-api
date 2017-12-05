@@ -90,7 +90,6 @@ end
 data_id_information = result["Data_Id_Information"]
 
 # 印刷結果確認
-
 while (result = service.printed(args)).doing?
   print_result(result)
   sleep(1)
