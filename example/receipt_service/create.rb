@@ -64,11 +64,9 @@ end
 # 作成確認
 args["Orca_Uid"] = result["Orca_Uid"]
 
-result = service.created(args)
-while !result.ok? && result.api_result == "E70"
+while (result = service.created(args)).doing?
   print_result(result)
   sleep(1)
-  result = service.created(args)
 end
 
 if result.ok?
@@ -92,11 +90,10 @@ end
 data_id_information = result["Data_Id_Information"]
 
 # 印刷結果確認
-result = service.printed(args)
-while !result.ok? && result.api_result == "E70"
+
+while (result = service.printed(args)).doing?
   print_result(result)
   sleep(1)
-  result = service.printed(args)
 end
 
 if result.ok?
