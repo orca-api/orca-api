@@ -17,7 +17,6 @@ RSpec.describe OrcaApi::ReceiptService, orca_api_mock: true do
         "Patient_Information" => [],
       }
     }
-    let(:response_json) { load_orca_api_response("orca42_receiptmakev3_01.json") }
 
     subject { service.create(args) }
 
@@ -55,8 +54,18 @@ RSpec.describe OrcaApi::ReceiptService, orca_api_mock: true do
       }
     end
 
-    its("ok?") { is_expected.to be(true) }
-    its(["Response_Number"]) { is_expected.to eq("02") }
-    its(["Orca_Uid"]) { is_expected.to eq("c585dc3e-fa42-4f45-b02f-5a4166d0721d") }
+    context "正常系" do
+      let(:response_json) { load_orca_api_response("orca42_receiptmakev3_01.json") }
+
+      its("ok?") { is_expected.to be(true) }
+      its(["Response_Number"]) { is_expected.to eq("02") }
+      its(["Orca_Uid"]) { is_expected.to eq("c585dc3e-fa42-4f45-b02f-5a4166d0721d") }
+    end
+
+    context "異常系" do
+      let(:response_json) { load_orca_api_response("orca42_receiptmakev3_01_E13.json") }
+
+      its("ok?") { is_expected.to be(false) }
+    end
   end
 end
