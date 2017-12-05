@@ -120,9 +120,7 @@ module OrcaApi
     #   * "Receipt_Mode" (String)
     #     処理区分。All：一括作成　All以外：個別作成。
     #   * "Print_Mode" (String)
-    #     印刷モード。Check：点検用　Check以外：提出用。
-    #     個別作成でCheck(点検用)のとき、点検用は平成２０年４月診療分から対応のため、
-    #     診療年月が平成２０年３月以前の場合は提出用として作成します。
+    #     印刷モード。All：全件印刷 All以外：個別印刷
     #   * "Submission_Mode" (String)
     #     提出先。必須。
     #     医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09。
@@ -166,6 +164,27 @@ module OrcaApi
       Result.new(orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req }))
     end
 
+    # レセプト印刷:印刷結果確認
+    #
+    # @param [Hash] args
+    #   * "Orca_Uid" (String)
+    #     オルカUID。必須。
+    #   * "Perform_Date" (String)
+    #     実施年月日。YYYY-mm-dd形式。
+    #   * "Perform_Month" (String)
+    #     診療年月。処理区分がAll のとき必須。
+    #   * "InOut" (String)
+    #     入外区分。必須。I：入院、O：入院外。
+    #   * "Receipt_Mode" (String)
+    #     処理区分。All：一括作成　All以外：個別作成。
+    #   * "Submission_Mode" (String)
+    #     提出先。必須。
+    #     医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09。
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    #
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3.pdf
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3_err.pdf
     def printed(args)
       req = args.merge(
         {
