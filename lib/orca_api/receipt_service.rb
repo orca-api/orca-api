@@ -59,15 +59,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptmakev3.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptmakev3_err.pdf
     def create(args)
-      req = args.merge(
-        {
-          "Request_Number" => "01",
-          "Karte_Uid" => orca_api.karte_uid,
-          "Orca_Uid" => "",
-        }
-      )
-
-      Result.new(orca_api.call("/orca42/receiptmakev3", body: { "receipt_makev3req" => req }))
+      Result.new(call_make("01", args.merge("Orca_Uid" => "")))
     end
 
     # レセプト作成:作成確認
@@ -96,14 +88,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptmakev3.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptmakev3_err.pdf
     def created(args)
-      req = args.merge(
-        {
-          "Request_Number" => "02",
-          "Karte_Uid" => orca_api.karte_uid,
-        }
-      )
-
-      CheckResult.new(orca_api.call("/orca42/receiptmakev3", body: { "receipt_makev3req" => req }))
+      CheckResult.new(call_make("02", args))
     end
 
     # レセプト印刷:印刷指示
@@ -154,14 +139,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3_err.pdf
     def print(args)
-      req = args.merge(
-        {
-          "Request_Number" => "01",
-          "Karte_Uid" => orca_api.karte_uid,
-        }
-      )
-
-      Result.new(orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req }))
+      Result.new(call_print("01", args))
     end
 
     # レセプト印刷:印刷結果確認
@@ -186,14 +164,31 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3_err.pdf
     def printed(args)
+      CheckResult.new(call_print("02", args))
+    end
+
+    private
+
+    def call_make(request_number, args)
       req = args.merge(
         {
-          "Request_Number" => "02",
+          "Request_Number" => request_number,
           "Karte_Uid" => orca_api.karte_uid,
         }
       )
 
-      CheckResult.new(orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req }))
+      orca_api.call("/orca42/receiptmakev3", body: { "receipt_makev3req" => req })
+    end
+
+    def call_print(request_number, args)
+      req = args.merge(
+        {
+          "Request_Number" => request_number,
+          "Karte_Uid" => orca_api.karte_uid,
+        }
+      )
+
+      orca_api.call("/orca42/receiptprintv3", body: { "receipt_printv3req" => req })
     end
   end
 end
