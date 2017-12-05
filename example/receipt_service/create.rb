@@ -45,7 +45,7 @@ args = {
 args["Patient_Information"] = patients.map { |patient_id, patient_perform_month|
   {
     "Patient_ID" => patient_id, # 患者番号/20
-    "Patient_Perfrm_Month" => patient_perfrm_month, # 診療年月/7
+    "Patient_Perform_Month" => patient_perform_month, # 診療年月/7
   }
 }
 
