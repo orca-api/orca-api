@@ -1,0 +1,14 @@
+{
+  "receipt_makev3res": {
+    "Request_Number": "02",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-04",
+    "Information_Time": "15:20:26",
+    "Api_Result": "E41",
+    "Api_Result_Message": "対象の処理はありません。",
+    "Reskey": "Acceptance_Info",
+    "Perform_Month": "2017-11"
+  }
+}

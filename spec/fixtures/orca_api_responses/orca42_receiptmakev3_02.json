@@ -1,0 +1,194 @@
+{
+  "receipt_makev3res": {
+    "Request_Number": "02",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-05",
+    "Information_Time": "15:35:41",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理確認終了",
+    "Reskey": "Acceptance_Info",
+    "Perform_Title": "入院外労災個別作成分",
+    "Print_Order1": "カナ氏名順",
+    "All_Count": "0001",
+    "All_Number_Of_Sheets": "0001",
+    "Receipt_Information": {
+      "Submission_Information": [
+        {
+          "Submission_Position": "00001",
+          "Detail_Information": [
+            {
+              "Detail_Position": "00001",
+              "Submission_Identification": "05",
+              "Submission_Code": "7071",
+              "Submission_Type": "短期給付（業務災害）",
+              "Count": "0001",
+              "Number_Of_Sheets": "0001"
+            },
+            {
+              "Detail_Position": "00002",
+              "Submission_Identification": "05",
+              "Submission_Code": "7072",
+              "Submission_Type": "短期給付（通勤災害）",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00003",
+              "Submission_Identification": "05",
+              "Submission_Code": "7073",
+              "Submission_Type": "短期給付（続紙）",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00004",
+              "Submission_Identification": "05",
+              "Submission_Code": "7091",
+              "Submission_Type": "傷病年金（業務災害）",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00005",
+              "Submission_Identification": "05",
+              "Submission_Code": "7092",
+              "Submission_Type": "傷病年金（通勤災害）",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00006",
+              "Submission_Identification": "05",
+              "Submission_Code": "7093",
+              "Submission_Type": "傷病年金（続紙）",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00007",
+              "Submission_Identification": "05",
+              "Submission_Code": "7021",
+              "Submission_Type": "アフターケア",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00008",
+              "Submission_Identification": "05",
+              "Submission_Code": "7023",
+              "Submission_Type": "アフターケア（続紙）",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00009",
+              "Submission_Identification": "05",
+              "Submission_Code": "7051",
+              "Submission_Type": "公務災害",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+              "Detail_Position": "00025",
+              "Submission_Identification": "99",
+              "Submission_Code": "0000",
+              "Submission_Type": "レセプト種別不明",
+              "Count": "0000",
+              "Number_Of_Sheets": "0000"
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

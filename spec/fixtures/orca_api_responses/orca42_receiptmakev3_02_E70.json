@@ -1,0 +1,13 @@
+{
+  "receipt_makev3res": {
+    "Request_Number": "02",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-05",
+    "Information_Time": "15:35:40",
+    "Api_Result": "E70",
+    "Api_Result_Message": "レセプト作成処理中です【公務災害・印刷データ編集（労災）】",
+    "Reskey": "Acceptance_Info"
+  }
+}
