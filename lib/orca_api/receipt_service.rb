@@ -82,7 +82,7 @@ module OrcaApi
     #   * "Submission_Mode" (String)
     #     提出先。必須。
     #     医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09。
-    # @return [OrcaApi::CheckResult]
+    # @return [OrcaApi::ReceiptService::CheckResult]
     #   日レセからのレスポンス
     #
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptmakev3.pdf
@@ -158,7 +158,7 @@ module OrcaApi
     #   * "Submission_Mode" (String)
     #     提出先。必須。
     #     医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09。
-    # @return [OrcaApi::Result]
+    # @return [OrcaApi::ReceiptService::CheckResult]
     #   日レセからのレスポンス
     #
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3.pdf
