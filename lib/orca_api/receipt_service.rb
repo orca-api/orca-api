@@ -46,9 +46,9 @@ module OrcaApi
     #   * "Submission_Mode" (String)
     #     提出先。必須。
     #     医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09。
-    #   * "Patient_Information" (Array<Hash<String,String>>)
+    #   * "Patient_Information" (Array<Hash>)
     #     個別対象患者一覧。個別作成のとき必須。配列の最大サイズは100。
-    #     配列の内容は以下。
+    #     配列の内容は以下のHash。
     #     * "Patient_ID" (String)
     #       患者番号
     #     * "Patient_Perfrm_Month" (String)
@@ -106,6 +106,55 @@ module OrcaApi
       CheckResult.new(orca_api.call("/orca42/receiptmakev3", body: { "receipt_makev3req" => req }))
     end
 
+    # レセプト印刷:印刷指示
+    #
+    # @param [Hash] args
+    #   * "Orca_Uid" (String)
+    #     オルカUID。必須。
+    #   * "Perform_Date" (String)
+    #     実施年月日。YYYY-mm-dd形式。
+    #   * "Perform_Month" (String)
+    #     診療年月。処理区分がAll のとき必須。
+    #   * "InOut" (String)
+    #     入外区分。必須。I：入院、O：入院外。
+    #   * "Receipt_Mode" (String)
+    #     処理区分。All：一括作成　All以外：個別作成。
+    #   * "Print_Mode" (String)
+    #     印刷モード。Check：点検用　Check以外：提出用。
+    #     個別作成でCheck(点検用)のとき、点検用は平成２０年４月診療分から対応のため、
+    #     診療年月が平成２０年３月以前の場合は提出用として作成します。
+    #   * "Submission_Mode" (String)
+    #     提出先。必須。
+    #     医保 01:全件 02:社保 03:国保 04:広域 労災 05 自賠責 06:新様式 07:従来様式 08:第三者行為 公害 09。
+    #   * "Receipt_Information" (Hash)
+    #     個別作成明細一覧。印刷モードが個別印刷のとき必須。
+    #     作成確認(#created)の結果に含まれるレセプト一覧(Receipt_Information)に対して、
+    #     印刷したいレセプトに印刷指示を設定したもの。
+    #     * "Submission_Information" (Array<Hash>)
+    #       配列の内容は以下のHash。
+    #       * "Submission_Position" (String)
+    #         連番。必須。
+    #       * "Detail_Information" (Array<Hash>)
+    #         配列の内容は以下のHash。
+    #         * "Detail_Position" (String)
+    #           連番。必須。
+    #         * "Print_Instruct" (String)
+    #           印刷指示。Yes：印刷　Yes以外：印刷しない。
+    #         * "Submission_Identification" (String)
+    #           提出先
+    #         * "Submission_Code" (String)
+    #           種別等コード。必須。
+    #         * "Submission_Type" (String)
+    #           種別
+    #         * "Count" (String)
+    #           件数
+    #         * "Number_Of_Sheets" (String)
+    #           枚数
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    #
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3.pdf
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_receipt.data/receiptprintv3_err.pdf
     def print(args)
       req = args.merge(
         {
