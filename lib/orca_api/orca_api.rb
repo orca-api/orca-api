@@ -111,19 +111,33 @@ module OrcaApi
     #   nilとfalse以外が指定された場合、 `#to_json` を呼び出してJSON形式に変換してからリクエストボディに指定する。
     # @param [:get,:post] http_method (:post)
     #   HTTPメソッド
-    # @return [Object]
-    #   ブロックが指定された場合、HTTPレスポンスをブロックパラメータに指定して、ブロックを呼び出した結果を返す。
-    #   そうでない場合、HTTPレスポンスのbodyをJSON形式として扱い、Rubyのオブジェクトに解析した結果を返す。
-    def call(path, params: {}, body: nil, http_method: :post)
-      req = make_request(http_method, path, params, body)
+    # @param [String] format ("json")
+    #   リクエストボディとレスポンスボディの形式。"json"を指定するとJSON形式でやりとりする。
+    # @param [IO] output_io (nil)
+    #   レスポンスボディを格納するIO。
+    #   大容量データを取得するときのように、サイズが大きくてメモリに展開することが難しい場合に指定する。
+    # @return [IO,String]
+    #   output_ioが指定された場合、output_ioを返す。
+    #   そうでない場合、HTTPレスポンスのbodyをそのまま文字列として返す。
+    def call(path, params: {}, body: nil, http_method: :post, format: "json", output_io: nil)
+      req = make_request(http_method, path, params, body, format)
       new_http.start { |http|
-        res = http.request(req)
-        case res
-        when Net::HTTPSuccess
-          res.body
-        else
-          raise HttpError, res
-        end
+        http.request(req) { |res|
+          case res
+          when Net::HTTPSuccess
+            if output_io
+              res.read_body do |chunk|
+                output_io.write(chunk)
+              end
+              output_io.rewind
+              return output_io
+            else
+              return res.body
+            end
+          else
+            raise HttpError, res
+          end
+        }
       }
     end
 
@@ -139,6 +153,8 @@ module OrcaApi
       IncomeService
       PrintService
       ImageService
+      ReceiptService
+      BlobService
     )
     service_class_names.each do |name|
       s = underscore(name)
@@ -203,7 +219,7 @@ module OrcaApi
       http
     end
 
-    def make_request(http_method, path, params, body)
+    def make_request(http_method, path, params, body, format)
       case http_method
       when :get
         request_class = Net::HTTP::Get
@@ -211,9 +227,16 @@ module OrcaApi
         request_class = Net::HTTP::Post
       end
 
-      query = URI.encode_www_form(params.merge(format: "json"))
+      if format && !format.empty?
+        params = params.merge(format: format.to_s)
+      end
 
-      req = request_class.new("#{path}?#{query}")
+      req = if params.empty?
+              request_class.new(path)
+            else
+              query = URI.encode_www_form(params)
+              request_class.new("#{path}?#{query}")
+            end
 
       req.basic_auth(@user, @password)
 

@@ -191,11 +191,12 @@ RSpec.describe OrcaApi::OrcaApi do
   end
 
   describe "#call" do
+    let(:request_url) {
+      u = URI.parse(uri)
+      "#{u.scheme}://#{u.host}:#{u.port}"
+    }
+
     shared_examples "日レセAPIを呼び出せること" do
-      let(:request_url) {
-        u = URI.parse(uri)
-        "#{u.scheme}://#{u.host}:#{u.port}"
-      }
       let(:result) {
         load_orca_api_response(path[1..-1].gsub("/", "_") + ".json")
       }
@@ -265,9 +266,6 @@ RSpec.describe OrcaApi::OrcaApi do
     end
 
     context "bodyにハッシュ以外のオブジェクトを指定する" do
-      let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
-      let(:options) { {} }
-
       # HACK: spyにはもともとto_jsonというメソッドが定義されているため、明示的に指定する必要がある
       let(:body) { spy("body", to_json: "json") }
 
@@ -277,6 +275,18 @@ RSpec.describe OrcaApi::OrcaApi do
       end
 
       it { expect(body).to have_received(:to_json) }
+    end
+
+    context "大容量データの取得を想定してformatにnil、output_ioにStringIOを指定する" do
+      it "リクエストパラメータにformatを追加せず、output_ioにレスポンスボディを格納すること" do
+        data = load_orca_api_response("blobapi_df9c6592-6901-4d63-bf22-392776ede96f.pdf")
+        stub_request(:get, URI.join(request_url, "/path/to/api")).to_return(body: data)
+
+        output_io = StringIO.new
+        expect(orca_api.call("/path/to/api", http_method: :get, format: nil, output_io: output_io)).to eq(output_io)
+
+        expect(output_io.read).to eq(data)
+      end
     end
 
     context "異常系" do
@@ -318,6 +328,8 @@ RSpec.describe OrcaApi::OrcaApi do
     ["new_income_service", OrcaApi::IncomeService],
     ["new_print_service", OrcaApi::PrintService],
     ["new_image_service", OrcaApi::ImageService],
+    ["new_receipt_service", OrcaApi::ReceiptService],
+    ["new_blob_service", OrcaApi::BlobService],
   ].each do |method_name, service_class|
     describe "##{method_name}" do
       subject { orca_api.send(method_name) }

@@ -52,6 +52,7 @@ Metrics/LineLength:
 
 # Configuration parameters: CountKeywordArgs.
 Metrics/ParameterLists:
+  CountKeywordArgs: false
   Exclude:
     - 'spec/**/*'
 
