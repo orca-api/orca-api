@@ -94,12 +94,12 @@ end
 # 自動テストのための日レセAPIのレスポンスを格納したファイルを
 # spec/fixtures/orca_api_responses 以下に生成するためのモンキーパッチ
 module CallWithWriteResponse
-  def call(path, params: {}, body: nil, http_method: :post)
+  def call(path, params: {}, body: nil, http_method: :post, format: "json", output_io: nil)
     raw = super
     parts = []
     parts << path[1..-1].gsub("/", "_")
     begin
-      data = JSON.parse(raw)
+      data = JSON.parse(raw.dup)
       if data["Orca_Uid"]
         data["Orca_Uid"] = "c585dc3e-fa42-4f45-b02f-5a4166d0721d"
       elsif (d = data.first[1]) && d["Orca_Uid"]
@@ -125,7 +125,15 @@ module CallWithWriteResponse
     end
     fixture_path = File.expand_path("../../spec/fixtures/orca_api_responses/#{parts.join('_')}.json", __FILE__)
     File.open(fixture_path, "w") do |f|
-      f.write(s)
+      if s.is_a?(IO) || s.is_a?(Tempfile)
+        buf = ""
+        while s.read(1024, buf)
+          f.write(buf)
+        end
+        s.rewind
+      else
+        f.write(s)
+      end
     end
     raw
   end
