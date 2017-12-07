@@ -16,26 +16,29 @@ RuboCop::RakeTask.new do |t|
   end
 end
 
-task :bump_up_version do
-  path = "lib/orca_api/version.rb"
-  load(File.expand_path(path, __dir__))
-  next_version = OrcaApi::VERSION.split('.').tap { |versions|
-    versions[-1] = (versions[-1].to_i + 1).to_s
-  }.join('.')
+namespace :version do
+  desc "Bump the patch version"
+  task :bump do
+    path = "lib/orca_api/version.rb"
+    load(File.expand_path(path, __dir__))
+    next_version = OrcaApi::VERSION.split('.').tap { |versions|
+      versions[-1] = (versions[-1].to_i + 1).to_s
+    }.join('.')
 
-  File.open(path, 'r+') do |f|
-    lines = []
-    while (line = f.gets)
-      if (md = /(\s*VERSION =\s*)/.match(line))
-        line = %'#{md[1]}"#{next_version}".freeze\n'
+    File.open(path, 'r+') do |f|
+      lines = []
+      while (line = f.gets)
+        if (md = /(\s*VERSION =\s*)/.match(line))
+          line = %'#{md[1]}"#{next_version}".freeze\n'
+        end
+        lines << line
       end
-      lines << line
+      f.rewind
+      f.write(lines.join)
     end
-    f.rewind
-    f.write(lines.join)
+    sh "git add #{path}"
+    sh "git commit -m 'bump up version #{next_version}.'"
   end
-  sh "git add #{path}"
-  sh "git commit -m 'bump up version #{next_version}.'"
 end
 
 task default: [:spec, :rubocop]
