@@ -6,23 +6,14 @@ module OrcaApi
     def self.trim_response(hash)
       result = {}
       hash.each do |k, v|
-        case v
-        when Hash
-          result[k] = trim_response(v)
-        when Array
-          found = false
-          v.reverse.each do |v2|
-            if !v2.empty?
-              found = true
-            end
-            if found
-              result[k] ||= []
-              result[k].unshift(trim_response(v2))
-            end
-          end
-        else
-          result[k] = v
-        end
+        result[k] = case v
+                    when Hash
+                      trim_response(v)
+                    when Array
+                      v.reverse_each.drop_while(&:empty?).reverse.map { |e| trim_response(e) }
+                    else
+                      v
+                    end
       end
       result
     end
