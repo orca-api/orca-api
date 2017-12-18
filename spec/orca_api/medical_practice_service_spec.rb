@@ -235,7 +235,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
 
     subject { service.get_examination_fee(params) }
 
-    context "患者情報をロックする" do
+    describe "患者情報をロックする" do
       let(:response_json) { load_orca_api_response("api21_medicalmodv31_01.json") }
 
       before do
@@ -267,6 +267,13 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
       end
 
+      context "当日既に受診済みである患者に対して「Doctors_Fee=02（再診指示）」を設定した" do
+        let(:response_json) { load_orca_api_response("api21_medicalmodv31_01_medical_select_flag.json") }
+
+        its("ok?") { is_expected.to be true }
+        its(["Medical_Select_Flag"]) { is_expected.to eq(response_data.first[1]["Medical_Select_Flag"]) }
+      end
+
       context "別端末使用中以外のエラー" do
         let(:response_json) {
           data = parse_json(super(), false)
@@ -278,7 +285,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       end
     end
 
-    context "患者情報をロックしない" do
+    describe "患者情報をロックしない" do
       before do
         count = 0
         prev_response_json = nil

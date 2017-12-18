@@ -1,0 +1,294 @@
+{
+  "medicalv3res1": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-18",
+    "Information_Time": "14:31:48",
+    "Api_Result": "W00",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2017-12-18",
+    "Temp_Medical_Flag": "False",
+    "Medical_Select_Flag": "True",
+    "Last_Date": "2017-12-18",
+    "Department_Code": "02",
+    "Department_Name": "精神科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "オルカ　太郎",
+    "Patient_Information": {
+      "Patient_ID": "00004",
+      "WholeName": "テスト　次朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1970-01-25",
+      "Sex": "1",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0009",
+        "InsuranceProvider_Class": "971",
+        "InsuranceProvider_WholeName": "労災保険",
+        "HealthInsuredPerson_Symbol": "短期給付",
+        "Certificate_StartDate": "2013-10-10",
+        "Certificate_ExpiredDate": "9999-12-31"
+      }
+    },
+    "Medical_OffTime": "0",
+    "Medical_Information": [
+      {
+        "Medical_Info": [
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+              },
+              {
+                "Medication_Code": "830000021",
+                "Medication_Name": "再診料算定科：内科"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ]
+      },
+      {
+        "Medical_Info": [
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+                "Medication_Code": "101120060",
+                "Medication_Name": "同日再診料"
+              },
+              {
+                "Medication_Code": "112016070",
+                "Medication_Name": "時間外対応加算１"
+              },
+              {
+                "Medication_Code": "112015770",
+                "Medication_Name": "明細書発行体制等加算"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+                "Medication_Code": "112011010",
+                "Medication_Name": "外来管理加算"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ]
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ],
+    "Medical_Message_Information": {
+      "Medical_Warning_Info": [
+        {
+          "Medical_Warning": "W01",
+          "Medical_Warning_Message": "診療日を設定しました。"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
