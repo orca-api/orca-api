@@ -1,0 +1,16 @@
+{
+  "patientmodv3res7": {
+    "Request_Number": "99",
+    "Response_Number": "00",
+    "Karte_Uid": "ff79facb-99cc-4a5b-935f-82213098e12e",
+    "Orca_Uid": "60432db5-18db-4a90-acb2-40cb99ac72e7",
+    "Information_Date": "2017-12-18",
+    "Information_Time": "16:12:16",
+    "Api_Result": "000",
+    "Api_Result_Message": "解除処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00064"
+    }
+  }
+}

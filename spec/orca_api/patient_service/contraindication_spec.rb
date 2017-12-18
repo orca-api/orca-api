@@ -8,90 +8,131 @@ RSpec.describe OrcaApi::PatientService::Contraindication, orca_api_mock: true do
 
   describe "#get" do
     context "正常系" do
-      it "call_orca12_patientmodv37_01の戻り値を返す" do
-        result = double "Result", :ok? => true, :locked? => false, orca_uid: orca_uid
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { result }
-        expect(service).to receive(:call_orca12_patientmodv37_99).with(result)
-        expect(service.get(patient_id)).to eq result
+      it "Request_Number=01の戻り値を返す" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01.json"
+          when "99"
+            load_orca_api_response "orca12_patientmodv37_99.json"
+          else
+            raise
+          end
+        end
+        result = service.get(patient_id)
+        expect(result).to be_ok
       end
     end
 
     context "異常系" do
-      it "orca_uidが発行されていればcall_orca12_patientmodv37_99を呼び出す" do
-        result = double "Result", :ok? => false, :locked? => false, orca_uid: orca_uid
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { result }
-        expect(service).to receive(:call_orca12_patientmodv37_99).with(result)
-        expect(service.get(patient_id)).to eq result
+      it "他端末使用中であればロック解除APIを呼び出さない" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01_E90.json"
+          else
+            raise
+          end
+        end
+        result = service.get(patient_id)
+        expect(result).to be_locked
       end
 
-      it "orca_uidが発行されていなければcall_orca12_patientmodv37_99を呼び出さない" do
-        result = double "Result", :ok? => false, :locked? => false
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { result }
-        expect(service).to_not receive(:call_orca12_patientmodv37_99)
-        expect(service.get(patient_id)).to eq result
+      it "Orca_Uidが発行されていればロック解除APIを呼び出す" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01_EXX.json"
+          when "99"
+            load_orca_api_response "orca12_patientmodv37_99.json"
+          else
+            raise
+          end
+        end
+        result = service.get(patient_id)
+        expect(result).to_not be_ok
       end
-
-      it "他端末使用中であればcall_orca12_patientmodv37_99を呼び出さない" do
-        result = double "Result", :ok? => false, :locked? => true, orca_uid: orca_uid
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { result }
-        expect(service).to_not receive(:call_orca12_patientmodv37_99)
-        expect(service.get(patient_id)).to eq result
-      end
-    end
-
-    it "例外が起こってもunlock_orca12_patientmodv37を呼び出す" do
-      allow(service).to receive(:call_orca12_patientmodv37_01) { raise "Something happen" }
-      expect(service).to receive(:unlock_orca12_patientmodv37).with(nil)
-      expect { service.get(patient_id) }.to raise_error "Something happen"
     end
   end
 
   describe '#update' do
+    let(:params) do
+      {
+        "Contra_Mode" => "Modify",
+        "Patient_Contra_Info" => [
+          { "Medication_Code" => "610463147" }
+        ]
+      }
+    end
+
     context "正常系" do
-      it "call_orca12_patientmodv37_02の戻り値を返す" do
-        params = {
-          "Contra_Mode" => "Modify",
-          "Patient_Contra_Info" => [
-            { "Medication_Code" => "610463147" }
-          ]
-        }
-        first_result = double "First Result", :ok? => true
-        second_result = double "Second Result", :ok? => true
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { first_result }
-        expect(service).to receive(:call_orca12_patientmodv37_02).with(params, first_result) { second_result }
-        expect(service).to_not receive(:call_orca12_patientmodv37_99)
-        expect(service.update(patient_id, params)).to eq second_result
+      it "Request_Number=02の戻り値を返す" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01.json"
+          when "02"
+            load_orca_api_response "orca12_patientmodv37_02.json"
+          else
+            raise
+          end
+        end
+        result = service.update(patient_id, params)
+        expect(result).to be_ok
       end
     end
 
     context "異常系" do
-      it "call_orca12_patientmodv37_01が失敗したらcall_orca12_patientmodv37_02を呼び出さない" do
-        params = {
-          "Contra_Mode" => "Modify",
-          "Patient_Contra_Info" => [
-            { "Medication_Code" => "610463147" }
-          ]
-        }
-        first_result = double "First Result", :ok? => false, :locked? => true
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { first_result }
-        expect(service).to_not receive(:call_orca12_patientmodv37_02)
-        expect(service).to_not receive(:call_orca12_patientmodv37_99)
-        expect(service.update(patient_id, params)).to eq first_result
+      it "他端末使用中であればロック解除APIを呼び出さない" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01_E90.json"
+          else
+            raise
+          end
+        end
+        result = service.update(patient_id, params)
+        expect(result).to be_locked
       end
 
-      it "call_orca12_patientmodv37_02が失敗したらcall_orca12_patientmodv37_99を呼び出す" do
-        params = {
-          "Contra_Mode" => "Modify",
-          "Patient_Contra_Info" => [
-            { "Medication_Code" => "610463147" }
-          ]
-        }
-        first_result  = double "First Result", :ok? => true, :locked? => false, orca_uid: orca_uid
-        second_result = double "Second Result", :ok? => false
-        expect(service).to receive(:call_orca12_patientmodv37_01).with(patient_id) { first_result }
-        expect(service).to receive(:call_orca12_patientmodv37_02).with(params, first_result) { second_result }
-        expect(service).to receive(:call_orca12_patientmodv37_99).with(first_result)
-        expect(service.update(patient_id, params)).to eq second_result
+      it "Request_Number=01が失敗したらロック解除APIを呼び出す" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01_EXX.json"
+          when "99"
+            load_orca_api_response "orca12_patientmodv37_99.json"
+          else
+            raise
+          end
+        end
+        result = service.update(patient_id, params)
+        expect(result).to_not be_ok
+      end
+
+      it "Request_Number=02が失敗したらロック解除APIを呼び出す" do
+        allow(orca_api).to receive(:call) do |path, body:|
+          raise unless path == "/orca12/patientmodv37"
+          case body["patientmodv3req7"]["Request_Number"]
+          when "01"
+            load_orca_api_response "orca12_patientmodv37_01.json"
+          when "02"
+            load_orca_api_response "orca12_patientmodv37_02_E60.json"
+          when "99"
+            load_orca_api_response "orca12_patientmodv37_99.json"
+          else
+            raise
+          end
+        end
+        result = service.update(patient_id, params)
+        expect(result).to_not be_ok
       end
     end
   end
