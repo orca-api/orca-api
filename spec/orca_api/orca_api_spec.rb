@@ -338,4 +338,61 @@ RSpec.describe OrcaApi::OrcaApi do
       its(:orca_api) { is_expected.to eq(orca_api) }
     end
   end
+
+  describe "#reusing_session?" do
+    it "reuse_sessionブロック外ではfalseになっていること" do
+      expect(orca_api.reusing_session?).to be_falsey
+    end
+
+    it "reuse_sessionブロックではtrueになっていること" do
+      expect {
+        orca_api.reuse_session do
+          expect(orca_api.reusing_session?).to be_truthy
+        end
+      }.to_not change { orca_api.reusing_session? }
+    end
+
+    it "ネストしたreuse_sessionブロックでもtrueになっていること" do
+      orca_api.reuse_session do
+        orca_api.reuse_session do
+          expect(orca_api.reusing_session?).to be_truthy
+        end
+        expect(orca_api.reusing_session?).to be_truthy
+      end
+    end
+  end
+
+  describe "#reuse_session" do
+    let(:http) { Net::HTTP.new "example.com" }
+
+    before do
+      allow(http).to receive(:start).and_call_original
+      allow(http).to receive(:finish).and_call_original
+      allow(orca_api).to receive(:new_http) { http }
+      allow(orca_api).to receive(:do_request)
+    end
+
+    it "#startと#finishが１回しか呼ばれないこと" do
+      orca_api.reuse_session do
+        orca_api.call "/path/to/api"
+        orca_api.reuse_session do
+          orca_api.call "/path/to/api"
+        end
+        orca_api.call "/path/to/api"
+      end
+
+      expect(http).to have_received(:start).once
+      expect(http).to have_received(:finish).once
+    end
+
+    context "Otherwise" do
+      it "#startが#call回数ずつ呼ばれること" do
+        orca_api.call "/path/to/api"
+        orca_api.call "/path/to/api"
+        orca_api.call "/path/to/api"
+
+        expect(http).to have_received(:start).exactly(3).times
+      end
+    end
+  end
 end

@@ -89,6 +89,7 @@ module OrcaApi
       if @use_ssl
         extract_ssl_options(options.fetch(:ssl))
       end
+      @reuse_http = 0
     end
 
     def karte_uid
@@ -120,25 +121,7 @@ module OrcaApi
     #   output_ioが指定された場合、output_ioを返す。
     #   そうでない場合、HTTPレスポンスのbodyをそのまま文字列として返す。
     def call(path, params: {}, body: nil, http_method: :post, format: "json", output_io: nil)
-      req = make_request(http_method, path, params, body, format)
-      new_http.start { |http|
-        http.request(req) { |res|
-          case res
-          when Net::HTTPSuccess
-            if output_io
-              res.read_body do |chunk|
-                output_io.write(chunk)
-              end
-              output_io.rewind
-              return output_io
-            else
-              return res.body
-            end
-          else
-            raise HttpError, res
-          end
-        }
-      }
+      do_call make_request(http_method, path, params, body, format), output_io
     end
 
     service_class_names = %w(
@@ -165,6 +148,17 @@ module OrcaApi
       define_method("new_#{s}") do
         service_class.new(self)
       end
+    end
+
+    def reuse_session
+      start_reuse_session
+      yield
+    ensure
+      finish_reuse_session
+    end
+
+    def reusing_session?
+      @reuse_http.positive?
     end
 
     private
@@ -245,6 +239,49 @@ module OrcaApi
       end
 
       req
+    end
+
+    def start_reuse_session
+      @reuse_http += 1
+    end
+
+    def finish_reuse_session
+      @reuse_http -= 1
+      return if reusing_session?
+      @reuse_http = 0
+      @http.finish if @http&.started?
+      @http = nil
+    end
+
+    def do_call(request, output_io)
+      if reusing_session?
+        @http ||= new_http
+        @http.start unless @http.started?
+        do_request @http, request, output_io
+      else
+        new_http.start do |http|
+          do_request http, request, output_io
+        end
+      end
+    end
+
+    def do_request(http, request, output_io)
+      http.request(request) do |response|
+        case response
+        when Net::HTTPSuccess
+          if output_io
+            response.read_body do |chunk|
+              output_io.write(chunk)
+            end
+            output_io.rewind
+            return output_io
+          else
+            return response.body
+          end
+        else
+          raise HttpError, response
+        end
+      end
     end
   end
 end
