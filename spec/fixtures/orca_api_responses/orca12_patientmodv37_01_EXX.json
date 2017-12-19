@@ -1,0 +1,16 @@
+{
+  "patientmodv3res7": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "b8627a1f-eebf-4852-91ad-6dc3e4424f95",
+    "Orca_Uid": "60432db5-18db-4a90-acb2-40cb99ac72e7",
+    "Information_Date": "2017-12-18",
+    "Information_Time": "16:25:48",
+    "Api_Result": "EXX",
+    "Api_Result_Message": "エラー",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00064"
+    }
+  }
+}
