@@ -40,6 +40,7 @@ module OrcaApi
     attr_accessor :key # 暗号鍵
     attr_writer :karte_uid # カルテUID
     attr_accessor :debug_output # デバッグに使う `IO` オブジェクト
+    attr_reader :timeout
 
     def self.underscore(name)
       name.
@@ -79,6 +80,18 @@ module OrcaApi
     #     * :key (OpenSSL::PKey::PKey)
     #       暗号鍵。
     #       鍵の種類に応じて `OpenSSL::PKey::RSA` 等の適切なクラスのインスタンスを指定する。
+    #   * :timeout (Hash)
+    #     タイムアウトに関するオプション
+    #     * :ssl (Integer)
+    #       SSL/TLSのタイムアウト秒数
+    #     * :open (Integer)
+    #       接続時のタイムアウト秒数
+    #     * :read (Integer)
+    #       読み込み時のタイムアウト秒数
+    #     * :continue (Integer)
+    #       「100 Continue」レスポンスを待つタイムアウト秒数
+    #     * :keep_alive (Integer)
+    #       コネクションの再利用(keep-alive)を許可する秒数
     def initialize(uri, options = {})
       uri = URI.parse(uri)
       @host = uri.host
@@ -90,6 +103,7 @@ module OrcaApi
         extract_ssl_options(options.fetch(:ssl))
       end
       @reuse_http = 0
+      self.timeout = options[:timeout]
     end
 
     def karte_uid
@@ -161,6 +175,10 @@ module OrcaApi
       @reuse_http.positive?
     end
 
+    def timeout=(timeout)
+      @timeout = extract_timeout_options timeout
+    end
+
     private
 
     def extract_ssl_options(ssl)
@@ -182,6 +200,14 @@ module OrcaApi
         @cert = ssl[:cert]
         @key = ssl[:key]
       end
+    end
+
+    ACCEPT_TIMEOUT_OPTIONS = %i[ssl open read continue keep_alive].freeze
+    private_constant :ACCEPT_TIMEOUT_OPTIONS
+
+    def extract_timeout_options(timeout)
+      return {} unless timeout
+      timeout.select { |key, _| ACCEPT_TIMEOUT_OPTIONS.include? key }
     end
 
     def new_http
@@ -208,6 +234,10 @@ module OrcaApi
 
       if @debug_output
         http.set_debug_output(@debug_output)
+      end
+
+      @timeout.each do |key, value|
+        http.__send__ "#{key}_timeout=", value
       end
 
       http
