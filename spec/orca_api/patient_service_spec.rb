@@ -109,6 +109,31 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
     subject { service.create(*args) }
 
+    context "必須チェックでエラーが発生する" do
+      let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_E02.json") }
+      let(:patient_information) { {} }
+      let(:args) {
+        [patient_information]
+      }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, "*", patient_information, "New", response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be false }
+      its(["Orca_Uid"]) { is_expected.to be nil }
+    end
+
     context "二重登録疑いの患者が存在しない" do
       let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new.json") }
       let(:args) {
