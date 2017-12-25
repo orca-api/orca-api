@@ -15,25 +15,25 @@ module OrcaApi
 
     # 患者情報の登録
     def create(patient_information, allow_duplication: false)
-      res = CreateResult.new(call_orca12_patientmodv31_01("*", patient_information, "New"))
+      res = CreateResult.new(call_01("*", patient_information, "New"))
       if !res.ok? && !res.duplicated_patient_candidates.empty? && allow_duplication
-        res = CreateResult.new(call_orca12_patientmodv31_02(patient_information, "New", res))
+        res = CreateResult.new(call_02(patient_information, "New", res))
       end
       res
     end
 
     # 患者情報の取得
     def get(id)
-      res = Result.new(call_orca12_patientmodv31_01(id, nil, "Modify"))
+      res = Result.new(call_01(id, nil, "Modify"))
       if !res.locked?
-        unlock_orca12_patientmodv31(res)
+        unlock(res)
       end
       res
     end
 
     # 患者情報の更新
     def update(id, patient_information)
-      res = Result.new(call_orca12_patientmodv31_01(id, nil, "Modify"))
+      res = Result.new(call_01(id, nil, "Modify"))
       if !res.locked?
         locked_result = res
       end
@@ -41,29 +41,29 @@ module OrcaApi
         return res
       end
       patient_information = deep_merge_for_request_body(res.patient_information, patient_information)
-      res = Result.new(call_orca12_patientmodv31_02(patient_information, "Modify", res))
+      res = Result.new(call_02(patient_information, "Modify", res))
       if res.ok?
         locked_result = nil
       end
       res
     ensure
-      unlock_orca12_patientmodv31(locked_result)
+      unlock(locked_result)
     end
 
     # 患者情報の削除
     def destroy(id, force: false)
-      res = Result.new(call_orca12_patientmodv31_01(id, nil, "Delete"))
+      res = Result.new(call_01(id, nil, "Delete"))
       if !res.locked?
         locked_result = res
       end
       if !res.ok?
         return res
       end
-      res = Result.new(call_orca12_patientmodv31_02(res.patient_information, "Delete", res))
+      res = Result.new(call_02(res.patient_information, "Delete", res))
       if res.api_result != "S20"
         return res
       end
-      res = Result.new(call_orca12_patientmodv31_02(res.patient_information, "Delete", res))
+      res = Result.new(call_02(res.patient_information, "Delete", res))
       if res.ok?
         # 該当患者に受診履歴、病名等の入力がない場合
         locked_result = nil
@@ -73,13 +73,13 @@ module OrcaApi
         return res
       end
       # 該当患者に受診履歴、病名等の入力がある場合
-      res = Result.new(call_orca12_patientmodv31_02(res.patient_information, "Delete", res))
+      res = Result.new(call_02(res.patient_information, "Delete", res))
       if res.ok?
         locked_result = nil
       end
       res
     ensure
-      unlock_orca12_patientmodv31(locked_result)
+      unlock(locked_result)
     end
 
     %w(
@@ -107,7 +107,7 @@ module OrcaApi
 
     private
 
-    def call_orca12_patientmodv31_01(id, patient_information, patient_mode)
+    def call_01(id, patient_information, patient_mode)
       body = {
         "patientmodreq" => {
           "Request_Number" => "01",
@@ -122,7 +122,7 @@ module OrcaApi
       orca_api.call("/orca12/patientmodv31", body: body)
     end
 
-    def call_orca12_patientmodv31_02(patient, patient_mode, previous_result)
+    def call_02(patient, patient_mode, previous_result)
       res = previous_result
       body = {
         "patientmodreq" => {
@@ -138,7 +138,7 @@ module OrcaApi
       orca_api.call("/orca12/patientmodv31", body: body)
     end
 
-    def unlock_orca12_patientmodv31(locked_result)
+    def unlock(locked_result)
       if locked_result && locked_result.respond_to?(:orca_uid)
         body = {
           "patientmodreq" => {
