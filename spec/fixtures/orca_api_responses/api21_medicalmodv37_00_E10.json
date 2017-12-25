@@ -1,0 +1,12 @@
+{
+  "medicalv3res7": {
+    "Request_Number": "00",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2017-12-25",
+    "Information_Time": "14:37:42",
+    "Api_Result": "E10",
+    "Api_Result_Message": "排他中の情報はありません。",
+    "Reskey": "Acceptance_Info"
+  }
+}
