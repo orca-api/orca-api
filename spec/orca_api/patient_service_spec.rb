@@ -109,31 +109,6 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
     subject { service.create(*args) }
 
-    context "必須チェックでエラーが発生する" do
-      let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_E02.json") }
-      let(:patient_information) { {} }
-      let(:args) {
-        [patient_information]
-      }
-
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv31_01(path, body, "*", patient_information, "New", response_json)
-            end
-          prev_response_json
-        }
-      end
-
-      its("ok?") { is_expected.to be false }
-      its(["Orca_Uid"]) { is_expected.to be nil }
-    end
-
     context "二重登録疑いの患者が存在しない" do
       let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new.json") }
       let(:args) {
@@ -212,6 +187,47 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         its("ok?") { is_expected.to be true }
         its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
         its(:duplicated_patient_candidates) { is_expected.to eq(response_data.first[1]["Patient2_Information"]) }
+      end
+    end
+
+    context "異常系" do
+      let(:args) {
+        [patient_information]
+      }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv31_01(path, body, "*", patient_information, "New", response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      context "必須チェックでエラーが発生する" do
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_E02.json") }
+        let(:patient_information) { {} }
+
+
+        its("ok?") { is_expected.to be false }
+        its(["Orca_Uid"]) { is_expected.to be nil }
+      end
+
+      context "世帯主名からコメント２のチェックでエラーが発生した" do
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_E50.json") }
+
+        its("ok?") { is_expected.to be false }
+        %w(
+          Patient_Information
+          Patient_Message_Information
+        ).each do |name|
+          its([name]) { is_expected.to eq(response_data.first[1][name]) }
+        end
       end
     end
   end
