@@ -5,13 +5,6 @@ module OrcaApi
   #
   # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
   class MedicalPracticeService < Service
-    # 診療行為の登録・削除・訂正の結果を表現するクラス
-    class Result < ::OrcaApi::Result
-      def ok?
-        api_result == "W00" || super()
-      end
-    end
-
     # 選択項目が未指定であることを表現するクラス
     class UnselectedError < Result
       def ok?
@@ -148,7 +141,7 @@ module OrcaApi
           "Karte_Uid" => orca_api.karte_uid,
         }.merge(params),
       }
-      ::OrcaApi::Result.new(orca_api.call("/api01rv2/contraindicationcheckv2", body: body))
+      Result.new(orca_api.call("/api01rv2/contraindicationcheckv2", body: body))
     end
 
     private

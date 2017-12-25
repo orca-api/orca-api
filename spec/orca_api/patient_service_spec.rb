@@ -213,7 +213,6 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_E02.json") }
         let(:patient_information) { {} }
 
-
         its("ok?") { is_expected.to be false }
         its(["Orca_Uid"]) { is_expected.to be nil }
       end
@@ -225,6 +224,19 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         %w(
           Patient_Information
           Patient_Message_Information
+        ).each do |name|
+          its([name]) { is_expected.to eq(response_data.first[1][name]) }
+        end
+      end
+
+      context "不正な郵便番号を示す警告が発生したが登録処理は完了した" do
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_W00.json") }
+
+        its("ok?") { is_expected.to be true }
+        its(["Api_Result"]) { is_expected.to eq("W00") }
+        %w(
+          Patient_Information
+          Patient_Warning_Information
         ).each do |name|
           its([name]) { is_expected.to eq(response_data.first[1][name]) }
         end
