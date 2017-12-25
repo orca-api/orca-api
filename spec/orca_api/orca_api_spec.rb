@@ -314,6 +314,23 @@ RSpec.describe OrcaApi::OrcaApi do
         end
       end
     end
+
+    context "タイムアウトオプションを指定する" do
+      let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
+      let(:options) {
+        {
+          timeout: {
+            ssl: 1,
+            open: 2,
+            read: nil,
+            continue: 0,
+            keep_alive: 1
+          }
+        }
+      }
+
+      include_examples "日レセAPIを呼び出せること"
+    end
   end
 
   [
@@ -393,6 +410,13 @@ RSpec.describe OrcaApi::OrcaApi do
 
         expect(http).to have_received(:start).exactly(3).times
       end
+    end
+  end
+
+  describe '#timeout=' do
+    it "不正なオプションキーは保持しないこと" do
+      orca_api.timeout = { open: 600, read: 600, write: 600 }
+      expect(orca_api.timeout).to eq(open: 600, read: 600)
     end
   end
 end
