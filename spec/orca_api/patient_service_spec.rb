@@ -376,25 +376,59 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     end
 
     context "異常系" do
-      let(:patient_id) { 9999 }
-      let(:response_json_01) { "orca12_patientmodv31_01_E10.json" }
-      let(:patient_information) { {} }
+      context "日レセから登録情報を取得するときにエラーが発生する" do
+        let(:patient_id) { 9999 }
+        let(:response_json_01) { "orca12_patientmodv31_01_E10.json" }
+        let(:patient_information) { {} }
 
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json_01)
-            end
-          prev_response_json
-        }
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json_01)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
       end
 
-      its("ok?") { is_expected.to be false }
+      context "更新時にエラーが発生する" do
+        let(:patient_id) { 1 }
+        let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_modify_E50.json") }
+        let(:patient_information) { response_data.first[1]["Patient_Information"] }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(3) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", "orca12_patientmodv31_01_modify.json")
+              when 2
+                prev_response_data = parse_json(prev_response_json)
+                expect_patient_information = service.send(
+                  :deep_merge_for_request_body, prev_response_data.first[1]["Patient_Information"], patient_information
+                )
+                expect_orca12_patientmodv31_02(
+                  path, body, prev_response_json, expect_patient_information, "Modify", response_json
+                )
+              when 3
+                expect_orca12_patientmodv31_99(path, body, prev_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be false }
+      end
     end
   end
 
