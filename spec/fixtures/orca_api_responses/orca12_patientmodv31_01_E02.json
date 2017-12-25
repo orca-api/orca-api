@@ -1,0 +1,15 @@
+{
+  "patientmodres": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2017-12-20",
+    "Information_Time": "22:19:36",
+    "Api_Result": "E02",
+    "Api_Result_Message": "患者氏名が未設定です",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "*"
+    }
+  }
+}

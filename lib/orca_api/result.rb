@@ -39,8 +39,12 @@ module OrcaApi
       body[key]
     end
 
+    # Api_Resultが00、0000、W00といった処理完了を示す値である場合にtrueを返す
+    #
+    # @return [Boolean]
+    #   Api_Resultが処理完了を示す値である場合にtrueを返す
     def ok?
-      /\A0+\z/ =~ api_result ? true : false
+      /\AW?0+\z/ =~ api_result ? true : false
     end
 
     def locked?

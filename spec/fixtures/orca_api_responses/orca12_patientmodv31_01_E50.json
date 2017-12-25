@@ -1,0 +1,139 @@
+{
+  "patientmodres": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-20",
+    "Information_Time": "22:35:19",
+    "Api_Result": "E50",
+    "Api_Result_Message": "送信内容にエラーがあります",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "*",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1",
+      "Home_Address_Information": {
+        "PhoneNumber1": "０１ー２３４５"
+      },
+      "Reduction_Reason": "00",
+      "Reduction_Reason_Name": "該当なし",
+      "Discount": "00",
+      "Discount_Name": "該当なし",
+      "Condition1": "00",
+      "Condition1_Name": "該当なし",
+      "Condition2": "00",
+      "Condition2_Name": "該当なし",
+      "Condition3": "00",
+      "Condition3_Name": "該当なし"
+    },
+    "Patient_Message_Information": {
+      "Patient_Message_Info": [
+        {
+          "Patient_Result": "A020",
+          "Patient_Result_Message": "自宅電話番号は半角で入力して下さい"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

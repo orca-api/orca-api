@@ -1,0 +1,140 @@
+{
+  "patientmodres": {
+    "Request_Number": "01",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-25",
+    "Information_Time": "12:05:28",
+    "Api_Result": "W00",
+    "Api_Result_Message": "登録終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00222",
+      "WholeName": "田口　正次",
+      "WholeName_inKana": "タグチ　マサジ",
+      "BirthDate": "1993-11-23",
+      "Sex": "1",
+      "Home_Address_Information": {
+        "Address_ZipCode": "1234-12"
+      },
+      "TestPatient_Flag": "0",
+      "Reduction_Reason": "00",
+      "Reduction_Reason_Name": "該当なし",
+      "Discount": "00",
+      "Discount_Name": "該当なし",
+      "Condition1": "00",
+      "Condition1_Name": "該当なし",
+      "Condition2": "00",
+      "Condition2_Name": "該当なし",
+      "Condition3": "00",
+      "Condition3_Name": "該当なし"
+    },
+    "Patient_Warning_Information": {
+      "Patient_Warning_Info": [
+        {
+          "Patient_Warning": "0031",
+          "Patient_Warning_Message": "警告！郵便番号は存在しません。"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
