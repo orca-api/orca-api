@@ -196,5 +196,32 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
         expect(result.ok?).to be true
       end
     end
+
+    context "異常系: Karte_Uidが未設定" do
+      let(:orca_api) { double("OrcaApi::OrcaApi", karte_uid: "") }
+
+      it "エラーになること" do
+        expect_data = [
+          {
+            path: "/api21/medicalmodv37",
+            body: {
+              "medicalv3req7" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => "",
+                "=Delete_Information" => {
+                  "Delete_Class" => "All",
+                },
+              }
+            },
+            result: "api21_medicalmodv37_01_all_E06.json",
+          },
+        ]
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.unlock_all
+
+        expect(result.ok?).to be false
+      end
+    end
   end
 end
