@@ -46,6 +46,76 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
     end
   end
 
+  describe "#unlock" do
+    context "排他中" do
+      it "排他制御を解除する" do
+        expect_data = [
+          {
+            path: "/api21/medicalmodv37",
+            body: {
+              "medicalv3req7" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => "karte_uid",
+                "=Delete_Information" => {
+                  "Delete_Karte_Uid" => "karte_uid",
+                  "Delete_Orca_Uid" => "2204825e-c628-4747-8fc2-9e337b32125b",
+                },
+              }
+            },
+            response: "api21_medicalmodv37_01_one_S40.json",
+          },
+          {
+            path: "/api21/medicalmodv37",
+            body: {
+              "medicalv3req7" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => "karte_uid",
+                "Orca_Uid" => "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+                "=Delete_Information" => {
+                  "Delete_Karte_Uid" => "karte_uid",
+                  "Delete_Orca_Uid" => "2204825e-c628-4747-8fc2-9e337b32125b",
+                },
+                "Select_Answer" => "Ok",
+              }
+            },
+            response: "api21_medicalmodv37_01_one.json",
+          },
+        ]
+        expect_orca_api_call(expect_data)
+
+        result = service.unlock(orca_api.karte_uid, "2204825e-c628-4747-8fc2-9e337b32125b")
+
+        expect(result.ok?).to be true
+      end
+    end
+
+    context "排他中ではない" do
+      it "エラーを返す" do
+        expect_data = [
+          {
+            path: "/api21/medicalmodv37",
+            body: {
+              "medicalv3req7" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => "karte_uid",
+                "=Delete_Information" => {
+                  "Delete_Karte_Uid" => "karte_uid",
+                  "Delete_Orca_Uid" => "7b7c82a9-c703-4f5d-87a0-8312786f2dd5",
+                },
+              }
+            },
+            response: "api21_medicalmodv37_01_one_E13.json",
+          },
+        ]
+        expect_orca_api_call(expect_data)
+
+        result = service.unlock(orca_api.karte_uid, "7b7c82a9-c703-4f5d-87a0-8312786f2dd5")
+
+        expect(result.ok?).to be false
+      end
+    end
+  end
+
   describe "#unlock_all" do
     context "排他中" do
       it "すべての排他制御を解除する" do
