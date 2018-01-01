@@ -70,3 +70,58 @@ def return_response_json(response_json)
     response_json
   end
 end
+
+# OrcaApi::OrcaApi#callの呼び出し回数と引数をチェックする
+#
+# @param [Array<Hash>] expect_data
+#   以下の内容のハッシュの配列
+#   * :path (String)
+#     APIのエントリポイント
+#   * :body (Hash)
+#     リクエストボディに指定するハッシュ
+#   * :response (String)
+#     レスポンス。末尾が.jsonであればファイル名として扱い、ファイルの内容を読み込む。
+def expect_orca_api_call(expect_data)
+  count = 0
+  prev_response = nil
+  expect(orca_api).to receive(:call).exactly(expect_data.length) do |path, body:|
+    expect_datum = expect_data[count]
+    if expect_datum.key?(:path)
+      expect(path).to eq(expect_datum[:path])
+    end
+    if expect_datum.key?(:body)
+      expect_orca_api_call_body(body, expect_datum[:body])
+    end
+    if expect_datum.key?(:response)
+      prev_response = return_response_json(expect_datum[:response])
+    end
+    count += 1
+    prev_response
+  end
+end
+
+# OrcaApi::OrcaApi#callのbody引数の内容をチェックする
+#
+# @param [Hash|Array|Object] actual_body
+#   実際の値
+# @param [Hash|Array|Object] expect_body
+#   期待値
+def expect_orca_api_call_body(actual_body, expect_body)
+  case expect_body
+  when Hash
+    expect_body.each do |key, value|
+      if (md = /\A=(.*)\z/.match(key))
+        expect(actual_body[md[1]]).to eq(value)
+      else
+        expect_orca_api_call_body(actual_body[key], value)
+      end
+    end
+  when Array
+    expect_body.each.with_index do |value, index|
+      expect_orca_api_call_body(actual_body[index], value)
+    end
+    expect(actual_body.length).to eq(expect_body.length)
+  else
+    expect(actual_body).to eq(expect_body)
+  end
+end

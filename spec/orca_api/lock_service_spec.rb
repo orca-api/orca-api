@@ -47,45 +47,6 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
   end
 
   describe "#unlock_all" do
-    def expect_orca_api_call(expect_data)
-      count = 0
-      prev_response = nil
-      expect(orca_api).to receive(:call).exactly(expect_data.length) do |path, body:|
-        expect_datum = expect_data[count]
-        if expect_datum.key?(:path)
-          expect(path).to eq(expect_datum[:path])
-        end
-        if expect_datum.key?(:body)
-          expect_orca_api_call_body(body, expect_datum[:body])
-        end
-        if expect_datum.key?(:response)
-          prev_response = load_orca_api_response(expect_datum[:response])
-        end
-        count += 1
-        prev_response
-      end
-    end
-
-    def expect_orca_api_call_body(actual_body, expect_body)
-      case expect_body
-      when Hash
-        expect_body.each do |key, value|
-          if (md = /\A=(.*)\z/.match(key))
-            expect(actual_body[md[1]]).to eq(value)
-          else
-            expect_orca_api_call_body(actual_body[key], value)
-          end
-        end
-      when Array
-        expect_body.each.with_index do |value, index|
-          expect_orca_api_call_body(actual_body[index], value)
-        end
-        expect(actual_body.length).to eq(expect_body.length)
-      else
-        expect(actual_body).to eq(expect_body)
-      end
-    end
-
     context "排他中" do
       it "すべての排他制御を解除する" do
         expect_data = [
