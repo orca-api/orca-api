@@ -100,7 +100,7 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
                 },
               }
             },
-            response: "api21_medicalmodv37_01_S40.json",
+            response: "api21_medicalmodv37_01_all_S40.json",
           },
           {
             path: "/api21/medicalmodv37",
@@ -115,7 +115,7 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
                 "Select_Answer" => "Ok",
               }
             },
-            response: "api21_medicalmodv37_01.json",
+            response: "api21_medicalmodv37_01_all.json",
           },
         ]
         expect_orca_api_call(expect_data)
@@ -140,7 +140,7 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
                 },
               }
             },
-            response: "api21_medicalmodv37_01_S40_empty.json",
+            response: "api21_medicalmodv37_01_all_S40_empty.json",
           },
           {
             body: {
@@ -154,7 +154,7 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
                 "Select_Answer" => "Ok",
               }
             },
-            response: "api21_medicalmodv37_01.json",
+            response: "api21_medicalmodv37_01_all.json",
           },
         ]
         expect_orca_api_call(expect_data)
