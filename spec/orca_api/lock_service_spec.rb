@@ -42,7 +42,9 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
     context "排他中ではない" do
       let(:response_json) { load_orca_api_response("api21_medicalmodv37_00_E10.json") }
 
-      its("ok?") { is_expected.to be false }
+      its("ok?") { is_expected.to be true }
+      its(["Lock_Information"]) { is_expected.to eq([]) }
+      its(:lock_information) { is_expected.to eq([]) }
     end
   end
 

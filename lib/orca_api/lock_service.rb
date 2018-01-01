@@ -5,6 +5,19 @@ module OrcaApi
   #
   # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/20796
   class LockService < Service
+    # 排他制御情報の一覧の取得結果を表現したクラス
+    #
+    # 排他中の排他制御情報がない場合でもok?がtrueを返し、 `#lock_information` や `#["Lock_Information"]` で空の配列を返す。
+    class ListResult < Result
+      def body
+        @body ||= { "Lock_Information" => [] }.merge(self.class.parse(@raw))
+      end
+
+      def ok?
+        api_result == "E10" || super
+      end
+    end
+
     # 排他制御情報の一覧を取得する。
     #
     # @return [OrcaApi::Result]
@@ -18,7 +31,7 @@ module OrcaApi
         "Karte_Uid" => orca_api.karte_uid,
       }
 
-      Result.new(orca_api.call("/api21/medicalmodv37", body: { "medicalv3req7" => req }))
+      ListResult.new(orca_api.call("/api21/medicalmodv37", body: { "medicalv3req7" => req }))
     end
 
     # 一覧で取得したkarte_uid、orca_uidを元に、対応する排他制御情報を1つだけ解除する。
