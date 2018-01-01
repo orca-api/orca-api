@@ -144,6 +144,9 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
 
+Lint/RescueWithoutErrorClass:
+  Enabled: false
+
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: prefer_alias, prefer_alias_method
 Style/Alias:
@@ -165,3 +168,4 @@ Style/NegatedWhile:
 # SupportedStyles: leading, trailing
 Layout/DotPosition:
   Enabled: false
+
