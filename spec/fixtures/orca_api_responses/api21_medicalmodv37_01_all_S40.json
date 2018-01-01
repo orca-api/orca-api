@@ -1,0 +1,238 @@
+{
+  "medicalv3res7": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2017-12-28",
+    "Information_Time": "10:51:18",
+    "Api_Result": "S40",
+    "Api_Result_Message": "選択項目があります。選択結果を返却してください。",
+    "Reskey": "Acceptance_Info",
+    "Delete_Information": {
+      "Delete_Class": "All"
+    },
+    "Lock_Information": [
+      {
+        "Lock_Karte_Uid": "karte_uid",
+        "Lock_Orca_Uid": "74dc4ef6-2d53-4997-8d38-016935f778af",
+        "Lock_Opid": "ormaster",
+        "Lock_Ld_Name": "ORCA12",
+        "Lock_Patient_ID": "00225",
+        "Lock_WholeName": "テスト　カンジャ",
+        "Lock_Date": "2017-12-25",
+        "Lock_Time": "15:55:43"
+      },
+      {
+        "Lock_Karte_Uid": "karte_uid",
+        "Lock_Orca_Uid": "79de36df-f03a-4437-9b77-6249d9a29bd6",
+        "Lock_Opid": "ormaster",
+        "Lock_Ld_Name": "ORCA12",
+        "Lock_Patient_ID": "00226",
+        "Lock_WholeName": "テスト　カンジャ",
+        "Lock_Date": "2017-12-25",
+        "Lock_Time": "15:55:51"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ],
+    "Delete_Select_Information": {
+      "Delete_Select": "0002",
+      "Delete_Select_Message": "排他情報をすべて削除します。端末が展開中でないことを確認して下さい。"
+    }
+  }
+}

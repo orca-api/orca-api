@@ -152,6 +152,7 @@ module OrcaApi
       ImageService
       ReceiptService
       BlobService
+      LockService
     )
     service_class_names.each do |name|
       s = underscore(name)

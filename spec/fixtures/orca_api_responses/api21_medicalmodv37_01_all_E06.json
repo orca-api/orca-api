@@ -1,0 +1,11 @@
+{
+  "medicalv3res7": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Information_Date": "2018-01-02",
+    "Information_Time": "06:17:29",
+    "Api_Result": "E06",
+    "Api_Result_Message": "電子カルテＵＩＤが未設定です。",
+    "Reskey": "Acceptance_Info"
+  }
+}
