@@ -348,6 +348,7 @@ RSpec.describe OrcaApi::OrcaApi do
     ["new_receipt_service", OrcaApi::ReceiptService],
     ["new_blob_service", OrcaApi::BlobService],
     ["new_lock_service", OrcaApi::LockService],
+    ["new_rehabilitation_comment_service", OrcaApi::RehabilitationCommentService],
   ].each do |method_name, service_class|
     describe "##{method_name}" do
       subject { orca_api.send(method_name) }
