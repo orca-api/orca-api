@@ -7,6 +7,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_01(path, body, patient_id, response_json)
     expect(path).to eq("/orca12/patientmodv33")
+    expect(body).to be_key "patientmodv3req3"
 
     req = body["patientmodreq"]
     expect(req["Request_Number"]).to eq("01")
@@ -19,6 +20,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_02(path, body, prev_response_json, params, response_json)
     expect(path).to eq("/orca12/patientmodv33")
+    expect(body).to be_key "patientmodv3req3"
 
     req = body["patientmodreq"]
     res_body = parse_json(prev_response_json).first[1]
@@ -33,6 +35,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_03(path, body, prev_response_json, response_json)
     expect(path).to eq("/orca12/patientmodv33")
+    expect(body).to be_key "patientmodv3req3"
 
     req = body["patientmodreq"]
     res_body = parse_json(prev_response_json).first[1]
@@ -47,6 +50,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_99(path, body, prev_response_json)
     expect(path).to eq("/orca12/patientmodv33")
+    expect(body).to be_key "patientmodv3req3"
 
     req = body["patientmodreq"]
     res_body = parse_json(prev_response_json).first[1]

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module OrcaApi
   class PatientService < Service
     # 患者労災・自賠責保険情報を扱うサービス
@@ -39,17 +41,15 @@ module OrcaApi
       private
 
       def call_orca12_patientmodv33_01(id)
-        body = {
-          "patientmodreq" => {
-            "Request_Number" => "01",
-            "Karte_Uid" => orca_api.karte_uid,
-            "Orca_Uid" => "",
-            "Patient_Information" => {
-              "Patient_ID" => id.to_s,
-            }
+        req = {
+          "Request_Number" => "01",
+          "Karte_Uid" => orca_api.karte_uid,
+          "Orca_Uid" => "",
+          "Patient_Information" => {
+            "Patient_ID" => id.to_s,
           }
         }
-        Result.new(orca_api.call("/orca12/patientmodv33", body: body))
+        Result.new(orca_api.call("/orca12/patientmodv33", body: make_body(req)))
       end
 
       def call_orca12_patientmodv33_02(params, previous_result)
@@ -60,7 +60,7 @@ module OrcaApi
           "Orca_Uid" => res.orca_uid,
           "Patient_Information" => res.patient_information
         )
-        Result.new(orca_api.call("/orca12/patientmodv33", body: { "patientmodreq" => req }))
+        Result.new(orca_api.call("/orca12/patientmodv33", body: make_body(req)))
       end
 
       def call_orca12_patientmodv33_03(previous_result)
@@ -72,21 +72,23 @@ module OrcaApi
           "Patient_Information" => res.patient_information,
           "Accident_Insurance_Information" => res["Accident_Insurance_Information"],
         }
-        Result.new(orca_api.call("/orca12/patientmodv33", body: { "patientmodreq" => req }))
+        Result.new(orca_api.call("/orca12/patientmodv33", body: make_body(req)))
       end
 
       def unlock_orca12_patientmodv33(locked_result)
         if locked_result && locked_result.respond_to?(:orca_uid)
-          body = {
-            "patientmodreq" => {
-              "Request_Number" => "99",
-              "Karte_Uid" => orca_api.karte_uid,
-              "Orca_Uid" => locked_result.orca_uid,
-              "Patient_Information" => locked_result.patient_information,
-            }
+          req = {
+            "Request_Number" => "99",
+            "Karte_Uid" => orca_api.karte_uid,
+            "Orca_Uid" => locked_result.orca_uid,
+            "Patient_Information" => locked_result.patient_information,
           }
-          orca_api.call("/orca12/patientmodv33", body: body)
+          orca_api.call("/orca12/patientmodv33", body: make_body(req))
         end
+      end
+
+      def make_body(req)
+        { "patientmodreq" => req, "patientmodv3req3" => req }
       end
     end
   end
