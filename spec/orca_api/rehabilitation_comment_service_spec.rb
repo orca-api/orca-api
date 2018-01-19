@@ -360,6 +360,78 @@ RSpec.describe OrcaApi::RehabilitationCommentService, orca_api_mock: true do
 
         expect(result.ok?).to be false
       end
+
+      it "リハビリ等開始日のコードではない場合、ロック解除を行うこと" do
+        args = {
+          "Perform_Information": {
+            "Perform_Mode": "New",
+            "Medication_Code": "123456789",
+            "Perform_Date": "2018-01",
+            "Perform_Day_Info": [
+              {
+                "Perform_Day": "01"
+              }
+            ]
+          },
+          "Comment_Information": {
+            "Comment_Mode": "Modify",
+            "Comment_Day_Info": [
+              {
+                "Comment_Day": "01",
+                "Comment_Info": [
+                  {
+                    "Comment": "リハビリコメント"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+
+        expect_data = [
+          {
+            path: "/api21/medicalmodv35",
+            body: {
+              "=medicalv3req5" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_ID" => "5",
+              }
+            },
+            result: "api21_medicalmodv35_update__new_01.json",
+          },
+          {
+            path: "/api21/medicalmodv35",
+            body: {
+              "=medicalv3req5" => args.merge(
+                "Request_Number" => "`prev.response_number`",
+                "Karte_Uid" => "`prev.karte_uid`",
+                "Patient_ID" => "5",
+                "Orca_Uid" => "`prev.orca_uid`"
+              ),
+            },
+            result: "api21_medicalmodv35_update__new_02_E30.json",
+          },
+          {
+            path: "/api21/medicalmodv35",
+            body: {
+              "=medicalv3req5" => {
+                "Request_Number" => "99",
+                "Karte_Uid" => "`prev.karte_uid`",
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_ID" => '`prev.patient_information["Patient_ID"]`',
+              },
+            },
+            result: "api21_medicalmodv35_update__new_99.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.update("5", args)
+
+        expect(result.ok?).to be false
+      end
     end
   end
 end

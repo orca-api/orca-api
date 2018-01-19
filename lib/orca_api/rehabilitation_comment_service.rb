@@ -98,7 +98,7 @@ module OrcaApi
       if res && res["Orca_Uid"]
         req = {
           "Request_Number" => "99",
-          "Karte_Uid" => orca_api.karte_uid,
+          "Karte_Uid" => res.karte_uid,
           "Orca_Uid" => res.orca_uid,
           "Patient_ID" => res.patient_information["Patient_ID"]
         }
