@@ -337,5 +337,29 @@ RSpec.describe OrcaApi::RehabilitationCommentService, orca_api_mock: true do
 
       expect(result.ok?).to be true
     end
+
+    context "異常系" do
+      it "患者番号に該当する患者が存在しない場合、ロック解除を行わないこと" do
+        expect_data = [
+          {
+            path: "/api21/medicalmodv35",
+            body: {
+              "=medicalv3req5" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_ID" => "999999",
+              }
+            },
+            result: "api21_medicalmodv35_01_E10.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.update("999999", {})
+
+        expect(result.ok?).to be false
+      end
+    end
   end
 end
