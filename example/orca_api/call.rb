@@ -14,7 +14,7 @@ require_relative "../common"
 path = ARGV.shift
 params = ARGV.shift
 if params.empty?
-  params = nil
+  params = {}
 else
   params = params.split(",").map { |i| i.split("=") }.to_h
 end

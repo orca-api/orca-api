@@ -1,0 +1,28 @@
+{
+    "Perform_Information": {
+        "Perform_Mode": "",
+        "Medication_Code": "099800111",
+        "Perform_Date": "2018-01"
+    },
+    "Comment_Information": {
+        "Comment_Mode": "Modify",
+        "Comment_Day_Info": [
+            {
+                "Comment_Day": "05",
+                "Comment_Info": [
+                    {
+                        "Comment": "修正したりはびりこめんと５"
+                    }
+                ]
+            },
+            {
+                "Comment_Day": "07",
+                "Comment_Info": [
+                    {
+                        "Comment": "修正したりはびりこめんと７"
+                    }
+                ]
+            }
+        ]
+    }
+}

@@ -1,0 +1,15 @@
+{
+    "Perform_Information": {
+        "Perform_Mode": "Delete",
+        "Medication_Code": "099800111",
+        "Perform_Date": "2018-01",
+        "Perform_Day_Info": [
+            {
+                "Perform_Day": "05"
+            },
+            {
+                "Perform_Day": "07"
+            }
+        ]
+    }
+}
