@@ -185,8 +185,31 @@ end
 # @param [Object] context
 #   呼び出し元のbinding
 def expect_orca_api_call_body_value(actual_value, expect_value, context)
-  if expect_value.is_a?(String) && (md = /\A`(.*)`\z/.match(expect_value))
-    expect_value = context.eval(md[1])
+  expect(actual_value).to eq(expect_orca_api_call_eval_value(expect_value, context))
+end
+
+# OrcaApi::OrcaApi#callのbody引数の期待値がバッククォートで括ってあれば、それを取り除いてevalした値を期待値として返す
+#
+# @param [Object] expect_value
+#   期待値
+# @param [Object] context
+#   呼び出し元のbinding
+# @return [Object] 必要であればevalした期待値
+def expect_orca_api_call_eval_value(expect_value, context)
+  case expect_value
+  when String
+    if (md = /\A`(.*)`\z/.match(expect_value))
+      context.eval(md[1])
+    else
+      expect_value
+    end
+  when Hash
+    res = {}
+    expect_value.each do |key, val|
+      res[key] = expect_orca_api_call_eval_value(val, context)
+    end
+    res
+  else
+    expect_value
   end
-  expect(actual_value).to eq(expect_value)
 end
