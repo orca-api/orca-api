@@ -1,0 +1,25 @@
+{
+    "Perform_Information": {
+        "Perform_Mode": "New",
+        "Medication_Code": "099800111",
+        "Perform_Date": "2018-01",
+        "Perform_Day_Info": [
+            {
+                "Perform_Day": "01"
+            }
+        ]
+    },
+    "Comment_Information": {
+        "Comment_Mode": "Modify",
+        "Comment_Day_Info": [
+            {
+                "Comment_Day": "01",
+                "Comment_Info": [
+                    {
+                        "Comment": "リハビリコメント"
+                    }
+                ]
+            }
+        ]
+    }
+}
