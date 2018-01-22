@@ -20,7 +20,7 @@ module OrcaApi
 
     # 排他制御情報の一覧を取得する。
     #
-    # @return [OrcaApi::Result]
+    # @return [OrcaApi::LockService::ListResult]
     #   日レセからのレスポンス
     #
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori/lockdel.data/api02107v03.pdf
@@ -42,6 +42,10 @@ module OrcaApi
     # この場合のApi_Resultは「E14」、Api_Result_Messageは「端末展開中と思われる排他時間です。
     # 端末が展開中でないことを確認して下さい。」です。排他解除が必要であれば、１分後に再度送信して下さい。
     #
+    # @params [String] karte_uid
+    #   解除カルテUID
+    # @params [String] orca_uid
+    #   解除オルカUID
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
     #
@@ -56,19 +60,7 @@ module OrcaApi
           "Delete_Orca_Uid" => orca_uid,
         },
       }
-      res = Result.new(orca_api.call("/api21/medicalmodv37", body: { "medicalv3req7" => req }))
-      if res.api_result != "S40"
-        return res
-      end
-
-      req = {
-        "Request_Number" => res.response_number,
-        "Karte_Uid" => res.karte_uid,
-        "Orca_Uid" => res.orca_uid,
-        "Delete_Information" => res.delete_information,
-        "Select_Answer" => "Ok",
-      }
-      Result.new(orca_api.call("/api21/medicalmodv37", body: { "medicalv3req7" => req }))
+      do_unlock(req)
     end
 
     # 排他制御情報をすべて解除する。
@@ -92,6 +84,12 @@ module OrcaApi
           "Delete_Class" => "All",
         },
       }
+      do_unlock(req)
+    end
+
+    private
+
+    def do_unlock(req)
       res = Result.new(orca_api.call("/api21/medicalmodv37", body: { "medicalv3req7" => req }))
       if res.api_result != "S40"
         return res
