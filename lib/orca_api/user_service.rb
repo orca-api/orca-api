@@ -37,8 +37,8 @@ module OrcaApi
     # @see https://www.orca.med.or.jp/receipt/tec/api/userkanri.html#request
     def create(params)
       req = {
-          "Request_Number" => "02",
-          "User_Information" => params
+        "Request_Number" => "02",
+        "User_Information" => params
       }
       call req
     end
