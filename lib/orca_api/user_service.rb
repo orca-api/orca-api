@@ -15,14 +15,11 @@ module OrcaApi
     #
     # @see https://www.orca.med.or.jp/receipt/tec/api/userkanri.html#request
     def list(base_date = "")
-      api_path = "/orca101/manageusersv2"
-      body = {
-        "manageusersreq" => {
-          "Request_Number" => "01",
-          "Base_Date" => base_date,
-        }
+      req = {
+        "Request_Number" => "01",
+        "Base_Date" => base_date,
       }
-      Result.new(orca_api.call(api_path, body: body))
+      call req
     end
 
     # ユーザー作成
@@ -39,14 +36,11 @@ module OrcaApi
     #
     # @see https://www.orca.med.or.jp/receipt/tec/api/userkanri.html#request
     def create(params)
-      api_path = "/orca101/manageusersv2"
-      body = {
-        "manageusersreq" => {
+      req = {
           "Request_Number" => "02",
           "User_Information" => params
-        }
       }
-      Result.new(orca_api.call(api_path, body: body))
+      call req
     end
 
     # ユーザー更新
@@ -62,14 +56,11 @@ module OrcaApi
     #
     # @see https://www.orca.med.or.jp/receipt/tec/api/userkanri.html#request
     def update(user_id, params)
-      api_path = "/orca101/manageusersv2"
-      body = {
-        "manageusersreq" => {
-          "Request_Number" => "03",
-          "User_Information" => params.merge("User_Id" => user_id)
-        }
+      req = {
+        "Request_Number" => "03",
+        "User_Information" => params.merge("User_Id" => user_id)
       }
-      Result.new(orca_api.call(api_path, body: body))
+      call req
     end
 
     # ユーザー削除
@@ -81,16 +72,19 @@ module OrcaApi
     #
     # @see https://www.orca.med.or.jp/receipt/tec/api/userkanri.html#request
     def destroy(user_id)
-      api_path = "/orca101/manageusersv2"
-      body = {
-        "manageusersreq" => {
-          "Request_Number" => "04",
-          "User_Information" => {
-            "User_Id" => user_id
-          }
+      req = {
+        "Request_Number" => "04",
+        "User_Information" => {
+          "User_Id" => user_id
         }
       }
-      Result.new(orca_api.call(api_path, body: body))
+      call req
+    end
+
+    private
+
+    def call(req)
+      Result.new(orca_api.call("/orca101/manageusersv2", body: { "manageusersreq" => req }))
     end
   end
 end
