@@ -93,6 +93,7 @@ module OrcaApi
       SpecialNotes
       Personally
       Contraindication
+      CareInsurance
     ).each do |class_name|
       method_suffix = OrcaApi.underscore(class_name)
       require_relative "patient_service/#{method_suffix}"
