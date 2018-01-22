@@ -154,6 +154,7 @@ module OrcaApi
       BlobService
       LockService
       RehabilitationCommentService
+      UserService
     )
     service_class_names.each do |name|
       s = underscore(name)
