@@ -1,0 +1,155 @@
+{
+  "patientmodv3res6": {
+    "Request_Number": "02",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2018-01-23",
+    "Information_Time": "21:26:12",
+    "Api_Result": "E60",
+    "Api_Result_Message": "エラーがあります。",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1"
+    },
+    "Care_Insurance_Information": {
+      "Care_Insurance_Info": [
+        {
+          "InsuranceProvider_Number": "1",
+          "Certificate_StartDate": "2018-03-01",
+          "Certificate_ExpiredDate": "2018-01-01",
+          "Patient_Result": "2817",
+          "Patient_Result_Message": "有効開始日＜有効終了日で入力して下さい"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "Patient_Message_Information": {
+      "Patient_Message_Info": [
+        {
+          "Patient_Result": "AP21",
+          "Patient_Result_Message": "介護保険情報の項目にエラーがあります。"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

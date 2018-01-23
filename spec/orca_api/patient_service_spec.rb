@@ -614,6 +614,8 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     Maiden
     SpecialNotes
     Personally
+    CareInsurance
+    CareCertification
   ).each do |class_name|
     klass = OrcaApi::PatientService.const_get(class_name)
     method_suffix = OrcaApi::OrcaApi.underscore(class_name)
