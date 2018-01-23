@@ -19,7 +19,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 }
               }
             },
-            result: "orca12_patientmodv36_get_01.json",
+            result: "orca12_patientmodv36_care_insurance_get_01.json",
           },
           {
             path: "/orca12/patientmodv36",
@@ -98,7 +98,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 }
               }
             },
-            result: "orca12_patientmodv36_update__modify_01.json",
+            result: "orca12_patientmodv36_care_insurance_update__modify_01.json",
           },
           {
             path: "/orca12/patientmodv36",
@@ -110,7 +110,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 "Patient_Information" => "`prev.patient_information`"
               ),
             },
-            result: "orca12_patientmodv36_update__modify_02.json",
+            result: "orca12_patientmodv36_care_insurance_update__modify_02.json",
           },
         ]
 
@@ -140,7 +140,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 }
               }
             },
-            result: "orca12_patientmodv36_update__delete_01.json",
+            result: "orca12_patientmodv36_care_insurance_update__delete_01.json",
           },
           {
             path: "/orca12/patientmodv36",
@@ -152,7 +152,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 "Patient_Information" => "`prev.patient_information`"
               ),
             },
-            result: "orca12_patientmodv36_update__delete_02.json",
+            result: "orca12_patientmodv36_care_insurance_update__delete_02.json",
           },
         ]
 
@@ -216,7 +216,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 }
               }
             },
-            result: "orca12_patientmodv36_update__modify_01.json",
+            result: "orca12_patientmodv36_care_insurance_update__modify_01.json",
           },
           {
             path: "/orca12/patientmodv36",
@@ -228,7 +228,7 @@ RSpec.describe OrcaApi::PatientService::CareInsurance, orca_api_mock: true do
                 "Patient_Information" => "`prev.patient_information`"
               ),
             },
-            result: "orca12_patientmodv36_update__modify_02_E60.json",
+            result: "orca12_patientmodv36_care_insurance_update__modify_02_E60.json",
           },
           {
             path: "/orca12/patientmodv36",
