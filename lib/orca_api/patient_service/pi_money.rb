@@ -10,7 +10,7 @@ module OrcaApi
     class PiMoney < PiMoneyCommon
       # 公費負担額登録対象の公費一覧を取得する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
       # @return [OrcaApi::Result]
       #   日レセからのレスポンス
@@ -26,9 +26,9 @@ module OrcaApi
 
       # 公費負担額一覧を取得する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
-      # @params [String] pi_id
+      # @param [String] pi_id
       #   公費ID
       # @return [OrcaApi::Result]
       #   日レセからのレスポンス
@@ -48,11 +48,11 @@ module OrcaApi
 
       # 公費負担額を更新する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
-      # @params [String] pi_id
+      # @param [String] pi_id
       #   公費ID
-      # @params [Hash] args
+      # @param [Hash] args
       #   公費負担額情報
       #   * "Pi_Money_Mode" (String)
       #     処理区分。

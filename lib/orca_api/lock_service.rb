@@ -42,9 +42,9 @@ module OrcaApi
     # この場合のApi_Resultは「E14」、Api_Result_Messageは「端末展開中と思われる排他時間です。
     # 端末が展開中でないことを確認して下さい。」です。排他解除が必要であれば、１分後に再度送信して下さい。
     #
-    # @params [String] karte_uid
+    # @param [String] karte_uid
     #   解除カルテUID
-    # @params [String] orca_uid
+    # @param [String] orca_uid
     #   解除オルカUID
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス

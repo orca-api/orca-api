@@ -8,7 +8,7 @@ module OrcaApi
     class CareCommon < Service
       # 介護保険情報、または介護認定情報を取得する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
       # @return [OrcaApi::Result]
       #   日レセからのレスポンス
@@ -23,9 +23,9 @@ module OrcaApi
 
       # 介護保険情報、または介護認定情報を更新する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
-      # @params [Hash] args
+      # @param [Hash] args
       #   * "Care_Insurance_Information" (Hash)
       #     介護保険情報
       #     * "Insurance_Mode" (String)
