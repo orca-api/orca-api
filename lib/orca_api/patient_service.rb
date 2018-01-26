@@ -95,17 +95,18 @@ module OrcaApi
       Contraindication
       CareInsurance
       CareCertification
+      PiMoney
+      PiEtcMoney
     ).each do |class_name|
       method_suffix = OrcaApi.underscore(class_name)
       require_relative "patient_service/#{method_suffix}"
       klass = const_get(class_name)
 
-      define_method("get_#{method_suffix}") do |*args|
-        klass.new(orca_api).get(*args)
-      end
-
-      define_method("update_#{method_suffix}") do |*args|
-        klass.new(orca_api).update(*args)
+      method_names = klass.instance_methods & (klass.instance_methods(false) + %i(get update)).uniq
+      method_names.each do |method_name|
+        define_method("#{method_name}_#{method_suffix}") do |*args|
+          klass.new(orca_api).send(method_name, *args)
+        end
       end
     end
 

@@ -1,0 +1,30 @@
+{
+  "patientmodv3res5": {
+    "Request_Number": "03",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2018-01-26",
+    "Information_Time": "18:38:12",
+    "Api_Result": "000",
+    "Api_Result_Message": "削除処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00003",
+      "WholeName": "テスト　華子",
+      "WholeName_inKana": "テスト　ハナコ",
+      "BirthDate": "1928-05-06",
+      "Sex": "2"
+    },
+    "Pi_Money_Information": {
+      "Sel_PublicInsurance_Id": "0000000004",
+      "Sel_PublicInsurance_Class": "051",
+      "Sel_PublicInsurance_Name": "特定負有",
+      "Sel_Certificate_IssuedDate": "2011-10-01",
+      "Sel_Certificate_ExpiredDate": "9999-12-31",
+      "Sel_Pi_Money_Name1": "外来上限額",
+      "Sel_Pi_Money_Name2": "入院上限額",
+      "Sel_Pi_Money_Class": "0"
+    }
+  }
+}

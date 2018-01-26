@@ -1,0 +1,149 @@
+{
+  "patientmodv3res5": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2018-01-26",
+    "Information_Time": "17:48:25",
+    "Api_Result": "000",
+    "Api_Result_Message": "検索処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00005",
+      "WholeName": "テスト　春",
+      "WholeName_inKana": "テスト　ハル",
+      "BirthDate": "1975-03-03",
+      "Sex": "2"
+    },
+    "PublicInsurance_Information": {
+      "PublicInsurance_Info": [
+        {
+          "PublicInsurance_Id": "0000000001",
+          "PublicInsurance_Class": "021",
+          "PublicInsurance_Name": "精神通院",
+          "Certificate_IssuedDate": "2011-10-01",
+          "Certificate_ExpiredDate": "2012-09-30"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
