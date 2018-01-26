@@ -10,13 +10,13 @@ module OrcaApi
     class PiEtcMoney < PiMoneyCommon
       # 他一部負担額一覧を取得する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
-      # @params [String] pi_id
+      # @param [String] pi_id
       #   公費ID
-      # @params [String] number
+      # @param [String] number
       #   公費負担額の連番
-      # @params [String] start_date
+      # @param [String] start_date
       #   公費負担額の開始日
       # @return [OrcaApi::Result]
       #   日レセからのレスポンス
@@ -41,15 +41,15 @@ module OrcaApi
 
       # 他一部負担額を更新する
       #
-      # @params [String] id
+      # @param [String] id
       #   患者ID
-      # @params [String] pi_id
+      # @param [String] pi_id
       #   公費ID
-      # @params [String] number
+      # @param [String] number
       #   公費負担額の連番
-      # @params [String] start_date
+      # @param [String] start_date
       #   公費負担額の開始日
-      # @params [Hash] args
+      # @param [Hash] args
       #   他一部負担額情報
       #   * "Pi_Etc_Money_Mode" (String)
       #     処理区分。

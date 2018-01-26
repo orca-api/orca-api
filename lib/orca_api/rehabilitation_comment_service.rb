@@ -9,7 +9,7 @@ module OrcaApi
   class RehabilitationCommentService < Service
     # 該当患者のリハビリコメント一覧を取得する
     #
-    # @params [String] patient_id
+    # @param [String] patient_id
     #   患者番号
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
@@ -24,13 +24,13 @@ module OrcaApi
 
     # 該当患者のリハビリコメント詳細情報を取得する
     #
-    # @params [String] patient_id
+    # @param [String] patient_id
     #   患者番号
-    # @params [String] medication_code
+    # @param [String] medication_code
     #   診療コード
-    # @params [String] perform_date
+    # @param [String] perform_date
     #   診療年月
-    # @params [String] insurance_combination_number
+    # @param [String] insurance_combination_number
     #   保険組合せ
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
@@ -50,9 +50,9 @@ module OrcaApi
 
     # 該当患者のリハビリコメントを修正する
     #
-    # @params [String] patient_id
+    # @param [String] patient_id
     #   患者番号
-    # @params [Hash] args
+    # @param [Hash] args
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
     def update(patient_id, args)
