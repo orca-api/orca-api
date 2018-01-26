@@ -169,7 +169,7 @@ module OrcaApi
     end
 
     def make_body(req)
-      { "patientmodreq" => req, "patientmodv3req1" => req }
+      { "patientmodv3req1" => req }
     end
   end
 end

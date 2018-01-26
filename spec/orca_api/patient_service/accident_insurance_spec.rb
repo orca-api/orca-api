@@ -7,9 +7,8 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_01(path, body, patient_id, response_json)
     expect(path).to eq("/orca12/patientmodv33")
-    expect(body).to be_key "patientmodv3req3"
 
-    req = body["patientmodreq"]
+    req = body["patientmodv3req3"]
     expect(req["Request_Number"]).to eq("01")
     expect(req["Karte_Uid"]).to eq("karte_uid")
     expect(req["Orca_Uid"]).to eq("")
@@ -20,9 +19,8 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_02(path, body, prev_response_json, params, response_json)
     expect(path).to eq("/orca12/patientmodv33")
-    expect(body).to be_key "patientmodv3req3"
 
-    req = body["patientmodreq"]
+    req = body["patientmodv3req3"]
     res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
@@ -35,9 +33,8 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_03(path, body, prev_response_json, response_json)
     expect(path).to eq("/orca12/patientmodv33")
-    expect(body).to be_key "patientmodv3req3"
 
-    req = body["patientmodreq"]
+    req = body["patientmodv3req3"]
     res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
@@ -50,9 +47,8 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
 
   def expect_orca12_patientmodv33_99(path, body, prev_response_json)
     expect(path).to eq("/orca12/patientmodv33")
-    expect(body).to be_key "patientmodv3req3"
 
-    req = body["patientmodreq"]
+    req = body["patientmodv3req3"]
     res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq("99")
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
@@ -314,7 +310,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         before do
           count = 0
           expect(orca_api).to receive(:call).with("/orca12/patientmodv33", body: instance_of(Hash)).once { |_, body:|
-            req = body["patientmodreq"]
+            req = body["patientmodv3req3"]
 
             count += 1
             case count
@@ -337,7 +333,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         before do
           count = 0
           expect(orca_api).to receive(:call).with("/orca12/patientmodv33", body: instance_of(Hash)).once { |_, body:|
-            req = body["patientmodreq"]
+            req = body["patientmodv3req3"]
 
             count += 1
             case count
@@ -356,7 +352,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         before do
           count = 0
           expect(orca_api).to receive(:call).with("/orca12/patientmodv33", body: instance_of(Hash)).exactly(3) { |_, body:|
-            req = body["patientmodreq"]
+            req = body["patientmodv3req3"]
 
             count += 1
             case count
@@ -387,7 +383,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         before do
           count = 0
           expect(orca_api).to receive(:call).with("/orca12/patientmodv33", body: instance_of(Hash)).exactly(3) { |_, body:|
-            req = body["patientmodreq"]
+            req = body["patientmodv3req3"]
 
             count += 1
             case count
@@ -414,7 +410,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         before do
           count = 0
           expect(orca_api).to receive(:call).with("/orca12/patientmodv33", body: instance_of(Hash)).exactly(4) { |_, body:|
-            req = body["patientmodreq"]
+            req = body["patientmodv3req3"]
 
             count += 1
             case count
@@ -449,7 +445,7 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         before do
           count = 0
           expect(orca_api).to receive(:call).with("/orca12/patientmodv33", body: instance_of(Hash)).exactly(4) { |_, body:|
-            req = body["patientmodreq"]
+            req = body["patientmodv3req3"]
 
             count += 1
             case count
