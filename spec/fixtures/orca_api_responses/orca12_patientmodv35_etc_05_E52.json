@@ -1,0 +1,246 @@
+{
+  "patientmodv3res5": {
+    "Request_Number": "05",
+    "Response_Number": "05",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2018-01-26",
+    "Information_Time": "22:51:48",
+    "Api_Result": "E52",
+    "Api_Result_Message": "他一部負担額にエラーがあります",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00005",
+      "WholeName": "テスト　春",
+      "WholeName_inKana": "テスト　ハル",
+      "BirthDate": "1975-03-03",
+      "Sex": "2"
+    },
+    "Pi_Money_Information": {
+      "Sel_PublicInsurance_Id": "0000000001",
+      "Sel_PublicInsurance_Class": "021",
+      "Sel_PublicInsurance_Name": "精神通院",
+      "Sel_Certificate_IssuedDate": "2011-10-01",
+      "Sel_Certificate_ExpiredDate": "2012-09-30",
+      "Sel_Pi_Money_Name1": "入外上限額",
+      "Sel_Pi_Money_Name2": "他一部負担累計",
+      "Sel_Pi_Money_Class": "1"
+    },
+    "Pi_Etc_Money_Information": {
+      "Sel_Pi_Etc_Money_Number": "002",
+      "Sel_Pi_Etc_Money_StartDate": "2012-05-01",
+      "Chk_Pi_Etc_Money_StartDate": "2012-05-01",
+      "Chk_Pi_Etc_Money_EndDate": "2012-05-31",
+      "Chk_Pi_Etc_Money_Money1": "0002500",
+      "Chk_Total_Money2": "0007500",
+      "Chk_Total_My_Money": "0001150",
+      "Pi_Etc_Money_Info": [
+        {
+          "Pi_Etc_Money_Date": "2012-05-15",
+          "Pi_Etc_Money_InOut": "3",
+          "Pi_Etc_Money_Money": "0007500",
+          "Patient_Result": "AP52",
+          "Patient_Result_Message": "入外区分エラー"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
