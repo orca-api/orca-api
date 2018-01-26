@@ -609,9 +609,11 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     Personally
     CareInsurance
     CareCertification
+    PiMoney
   ).each do |class_name|
-    klass = OrcaApi::PatientService.const_get(class_name)
     method_suffix = OrcaApi::OrcaApi.underscore(class_name)
+    klass = OrcaApi::PatientService.const_get(class_name)
+    method_names = klass.instance_methods & (klass.instance_methods(false) + %i(get update)).uniq
 
     describe klass.to_s do
       let(:patient_id) { 1 }
@@ -622,23 +624,14 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         expect(klass).to receive(:new).with(orca_api).once.and_return(inner_service)
       end
 
-      describe "#get_#{method_suffix}" do
-        subject { service.send("get_#{method_suffix}", patient_id) }
+      method_names.each do |method_name|
+        describe "##{method_name}_#{method_suffix}" do
+          subject { service.send("#{method_name}_#{method_suffix}", patient_id) }
 
-        it "#{klass}.new(orca_api).get(patient_id)を呼び出すこと" do
-          expect(inner_service).to receive(:get).with(patient_id).once.and_return(result)
-          expect(subject).to be(result)
-        end
-      end
-
-      describe "#update_#{method_suffix}" do
-        let(:params) { {} }
-
-        subject { service.send("update_#{method_suffix}", patient_id, params) }
-
-        it "#{klass}.new(orca_api).update(patient_id, params)を呼び出すこと" do
-          expect(inner_service).to receive(:update).with(patient_id, params).once.and_return(result)
-          expect(subject).to be(result)
+          it "#{klass}.new(orca_api).#{method_name}(...)を呼び出すこと" do
+            expect(inner_service).to receive(method_name).with(patient_id).once.and_return(result)
+            expect(subject).to be(result)
+          end
         end
       end
     end
