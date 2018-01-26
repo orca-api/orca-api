@@ -1,7 +1,8 @@
 if ![2].include?(ARGV.length)
   $stderr.puts(<<-EOS)
 Usage:
-  get.rb <patient_id> <public_insurance_id>
+  #{File.basename(__FILE__)} <patient_id> <pi_id>
+    pi_id: public insurance id
   EOS
   exit(1)
 end

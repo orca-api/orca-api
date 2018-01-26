@@ -1,0 +1,13 @@
+{
+    "Pi_Money_Mode": "Modify",
+    "Pi_Money_Info": [
+        {
+            "Pi_Money_Line_Mode": "",
+            "Pi_Money_Number": "001",
+            "Pi_Money_StartDate": "2012-10-01",
+            "Pi_Money_ExpiredDate": "9999-12-31",
+            "Pi_Money_Money1": "0007500",
+            "Pi_Money_Money2": "0002500"
+        }
+    ]
+}
