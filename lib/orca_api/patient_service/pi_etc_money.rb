@@ -5,7 +5,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/18351#api5
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v035.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v035_err.pdf
-    class PiMoneyEtc < Service
+    class PiEtcMoney < Service
       # 他一部負担額一覧を取得する
       #
       # @params [String] id

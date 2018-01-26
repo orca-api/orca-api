@@ -610,6 +610,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     CareInsurance
     CareCertification
     PiMoney
+    PiEtcMoney
   ).each do |class_name|
     method_suffix = OrcaApi::OrcaApi.underscore(class_name)
     klass = OrcaApi::PatientService.const_get(class_name)
