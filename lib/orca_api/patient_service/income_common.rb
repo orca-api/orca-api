@@ -7,34 +7,34 @@ module OrcaApi
     class IncomeCommon < Service
       # 取得
       def get(id)
-        res = call_orca12_patientmodv34_01(id)
+        res = call_01(id)
         if !res.locked?
-          unlock_orca12_patientmodv34(res)
+          unlock(res)
         end
         res
       end
 
       # 更新・削除
       def update(id, params)
-        res = call_orca12_patientmodv34_01(id)
+        res = call_01(id)
         if !res.locked?
           locked_result = res
         end
         if !res.ok?
           return res
         end
-        res = call_orca12_patientmodv34_02(params, res)
+        res = call_02(params, res)
         if res.ok?
           locked_result = nil
         end
         res
       ensure
-        unlock_orca12_patientmodv34(locked_result)
+        unlock(locked_result)
       end
 
       private
 
-      def call_orca12_patientmodv34_01(id)
+      def call_01(id)
         body = {
           "patientmodv3req4" => {
             "Request_Number" => "01",
@@ -48,7 +48,7 @@ module OrcaApi
         Result.new(orca_api.call("/orca12/patientmodv34", body: body))
       end
 
-      def call_orca12_patientmodv34_02(params, previous_result)
+      def call_02(params, previous_result)
         res = previous_result
         req = params.merge(
           "Request_Number" => res.response_number,
@@ -59,7 +59,7 @@ module OrcaApi
         Result.new(orca_api.call("/orca12/patientmodv34", body: { "patientmodv3req4" => req }))
       end
 
-      def unlock_orca12_patientmodv34(locked_result)
+      def unlock(locked_result)
         if locked_result && locked_result.respond_to?(:orca_uid)
           body = {
             "patientmodv3req4" => {
