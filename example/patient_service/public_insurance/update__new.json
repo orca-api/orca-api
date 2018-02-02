@@ -1,0 +1,15 @@
+{
+    "PublicInsurance_Info": [
+        {
+            "PublicInsurance_Mode": "New",
+            "PublicInsurance_Id": "",
+            "PublicInsurance_Class": "968",
+            "PublicInsurance_Name": "後期該当",
+            "PublicInsurer_Number": "",
+            "PublicInsuredPerson_Number": "",
+            "Certificate_IssuedDate": "2017-01-01",
+            "Certificate_ExpiredDate": "2017-12-31",
+            "Certificate_CheckDate": "2017-07-28"
+        }
+    ]
+}

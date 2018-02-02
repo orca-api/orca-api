@@ -1,0 +1,9 @@
+{
+    "HealthInsurance_Info": [
+        {
+            "InsuranceProvider_Mode": "Delete",
+            "InsuranceProvider_Id": "7",
+            "InsuranceProvider_Class": "009"
+        }
+    ]
+}

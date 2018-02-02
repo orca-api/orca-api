@@ -1,0 +1,22 @@
+{
+    "HealthInsurance_Info": [
+        {
+            "InsuranceProvider_Mode": "Modify",
+            "InsuranceProvider_Id": "2",
+            "InsuranceProvider_Class": "009",
+            "InsuranceProvider_Number": "",
+            "InsuranceProvider_WholeName": "協会",
+            "HealthInsuredPerson_Symbol": "２",
+            "HealthInsuredPerson_Number": "３４５６７",
+            "HealthInsuredPerson_Continuation": "",
+            "HealthInsuredPerson_Assistance": "",
+            "RelationToInsuredPerson": "2",
+            "HealthInsuredPerson_WholeName": "テスト　太郎",
+            "Certificate_StartDate": "2018-01-15",
+            "Certificate_ExpiredDate": "2012-10-01",
+            "Certificate_GetDate": "2012-10-01",
+            "Certificate_CheckDate": "2018-01-01",
+            "Rate_Class": ""
+        }
+    ]
+}
