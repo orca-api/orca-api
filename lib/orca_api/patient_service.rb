@@ -86,6 +86,8 @@ module OrcaApi
 
     %w(
       HealthPublicInsurance
+      HealthInsurance
+      PublicInsurance
       AccidentInsurance
       Income
       Pension

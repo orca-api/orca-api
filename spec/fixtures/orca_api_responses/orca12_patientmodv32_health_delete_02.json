@@ -1,0 +1,583 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "02",
+    "Response_Number": "03",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2018-02-02",
+    "Information_Time": "15:35:05",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00002",
+      "WholeName": "テスト　太郎",
+      "WholeName_inKana": "テスト　タロウ",
+      "BirthDate": "1973-08-08",
+      "Sex": "2",
+      "Home_Address_Information": {
+        "WholeAddress1": "島根県松江市殿町",
+        "WholeAddress2": "２番地"
+      }
+    },
+    "HealthInsurance_Information": {
+      "HealthInsurance_Info": [
+        {
+          "InsuranceProvider_Mode": "Delete",
+          "InsuranceProvider_Id": "0000000007",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "２",
+          "HealthInsuredPerson_Number": "３４５６７",
+          "RelationToInsuredPerson": "2",
+          "HealthInsuredPerson_WholeName": "テスト",
+          "Certificate_StartDate": "2018-01-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_GetDate": "2018-01-01",
+          "Certificate_CheckDate": "2018-02-28"
+        },
+        {
+          "InsuranceProvider_Id": "0000000002",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "２",
+          "HealthInsuredPerson_Number": "３４５６７",
+          "RelationToInsuredPerson": "2",
+          "HealthInsuredPerson_WholeName": "テスト　太郎",
+          "Certificate_StartDate": "2012-10-01",
+          "Certificate_ExpiredDate": "2017-12-31",
+          "Certificate_GetDate": "2012-10-01",
+          "Certificate_CheckDate": "2017-12-15"
+        },
+        {
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "０１",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　太郎",
+          "Certificate_StartDate": "2009-01-01",
+          "Certificate_ExpiredDate": "2012-09-30",
+          "Certificate_CheckDate": "2011-02-17"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "HealthInsurance_Combination_Information": {
+      "HealthInsurance_Combination_Info": [
+        {
+          "Insurance_Combination_Mode": "Delete",
+          "Insurance_Combination_Number": "0008",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2018-01-01",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000007",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "２",
+          "HealthInsuredPerson_Number": "３４５６７",
+          "RelationToInsuredPerson": "2"
+        },
+        {
+          "Insurance_Combination_Number": "0004",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2012-10-01",
+          "Insurance_Combination_ExpiredDate": "2017-12-31",
+          "InsuranceProvider_Id": "0000000002",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "２",
+          "HealthInsuredPerson_Number": "３４５６７",
+          "RelationToInsuredPerson": "2"
+        },
+        {
+          "Insurance_Combination_Number": "0001",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2009-01-01",
+          "Insurance_Combination_ExpiredDate": "2012-09-30",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Symbol": "０１",
+          "HealthInsuredPerson_Assistance": "3",
+          "HealthInsuredPerson_Assistance_Name": "３割",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}

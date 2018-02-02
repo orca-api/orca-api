@@ -601,6 +601,8 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
   %w(
     HealthPublicInsurance
+    HealthInsurance
+    PublicInsurance
     AccidentInsurance
     Income
     Pension
