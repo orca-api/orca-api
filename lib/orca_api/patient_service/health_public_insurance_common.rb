@@ -27,8 +27,77 @@ module OrcaApi
       # @param [String] id
       #   患者ID
       # @param [Hash] args
-      #   保険情報
-      #   * WIP
+      #   * "HealthInsurance_Info" (Array[Hash])
+      #     患者保険情報
+      #     * "InsuranceProvider_Mode" (String)
+      #       処理区分。
+      #       New：新規、Modify：更新、Delete：削除。
+      #       今回変更なしは空白とします。
+      #     * "InsuranceProvider_Id" (String)
+      #       保険ＩＤ。
+      #       新規（New）はゼロ、更新（Modify）、削除（Delete）は保険IDを指定すること
+      #     * "InsuranceProvider_Class" (String)
+      #       保険の種類。
+      #       保険者番号があれば保険者番号から保険の種類を決定します。保険の種類を変更した時は、ワーニングを返却します。
+      #       保険者番号・保険の種類はどちらかが必須となります。
+      #     * "InsuranceProvider_Number" (String)
+      #       保険者番号
+      #       保険者番号があれば保険者番号から保険の種類を決定します。保険の種類を変更した時は、ワーニングを返却します。
+      #       保険者番号・保険の種類はどちらかが必須となります。
+      #     * "InsuranceProvider_WholeName" (String)
+      #       保険の制度名称
+      #     * "HealthInsuredPerson_Symbol" (String)
+      #       記号。全角２０文字。
+      #     * "HealthInsuredPerson_Number" (String)
+      #       番号。全角２０文字。
+      #     * "HealthInsuredPerson_Continuation" (String)
+      #       継続区分
+      #     * "HealthInsuredPerson_Assistance" (String)
+      #       補助区分。
+      #       未設定の時、保険の種類・開始日から設定します（オンラインの初期表示と同じ補助区分）。
+      #       使用できない補助区分を送信した場合も正しい補助区分に変更し、ワーニングを返却します。
+      #     * "RelationToInsuredPerson" (String)
+      #       本人家族区分。必須。
+      #     * "HealthInsuredPerson_WholeName" (String)
+      #       被保険者名。全角２５文字。
+      #     * "Certificate_StartDate" (String)
+      #       適用開始日。省略可（処理日付）
+      #     * "Certificate_ExpiredDate" (String)
+      #       適用終了日。省略可（９９９９９９９９）
+      #     * "Certificate_GetDate" (String)
+      #       資格取得日
+      #     * "Certificate_CheckDate" (String)
+      #       確認日付。
+      #       新規・更新の時、未設定なら処理日付（基準日の設定があれば基準日＝処理日付）。
+      #     * "Rate_Class" (String)
+      #       高齢者負担区分。未使用
+      #   * "PublicInsurance_Info" (Array[Hash])
+      #     患者公費情報
+      #     * "PublicInsurance_Mode" (String)
+      #       処理区分。
+      #       New：新規、Modify：更新、Delete：削除。
+      #       今回変更なしは空白とします。
+      #     * "PublicInsurance_Id" (String)
+      #       公費ＩＤ。
+      #       新規（New）はゼロ、更新（Modify）、削除（Delete）は公費ＩＤを指定すること
+      #     * "PublicInsurance_Class" (String)
+      #       公費の種類。
+      #       未設定の時、負担者番号から公費の種類を決定します
+      #     * "PublicInsurance_Name" (String)
+      #       公費の制度名称
+      #     * "PublicInsurer_Number" (String)
+      #       負担者番号
+      #     * "PublicInsuredPerson_Number" (String)
+      #       受給者番号
+      #     * "Certificate_IssuedDate" (String)
+      #       適用開始日。
+      #       省略可（処理日付）。
+      #     * "Certificate_ExpiredDate" (String)
+      #       適用終了日。
+      #       省略可（９９９９９９９９）
+      #     * "Certificate_CheckDate" (String)
+      #       確認日付。
+      #       新規・更新の時、未設定なら処理日付（基準日の設定があれば基準日＝処理日付）
       # @return [OrcaApi::Result]
       #   日レセからのレスポンス
       #
