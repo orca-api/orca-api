@@ -84,6 +84,26 @@ RSpec.describe OrcaApi::PatientService::Contraindication, orca_api_mock: true do
         result = service.update(patient_id, params)
         expect(result).to be_ok
       end
+
+      context "Contra_ModeがModifyではない" do
+        let(:params) { {} }
+
+        it "Contra_ModeをDeleteにすること" do
+          allow(orca_api).to receive(:call) do |_, body:|
+            case body["patientmodv3req7"]["Request_Number"]
+            when "01"
+              load_orca_api_response "orca12_patientmodv37_01.json"
+            when "02"
+              expect(body["patientmodv3req7"]["Patient_Contra_Information"]).to eq({ "Contra_Mode" => "Delete" })
+              load_orca_api_response "orca12_patientmodv37_02.json"
+            else
+              raise
+            end
+          end
+          result = service.update(patient_id, params)
+          expect(result).to be_ok
+        end
+      end
     end
 
     context "異常系" do
