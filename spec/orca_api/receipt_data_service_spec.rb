@@ -19,7 +19,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
   describe "#list_effective_information" do
     context "正常系" do
       it "医保分のレセ電データ作成時に必要な情報取得できること" do
-        perform_month = "208-02"
+        perform_month = "2018-02"
         submission_mode = "02"
 
         expect_data = [
@@ -46,7 +46,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
       end
 
       it "該当する情報がない場合は空の配列を返すこと" do
-        perform_month = "208-01"
+        perform_month = "2018-01"
         submission_mode = "02"
 
         expect_data = [
@@ -79,9 +79,8 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
 
     context "異常系" do
       it "提出先の設定に誤りがある場合はエラー" do
-        perform_month = "208-01"
+        perform_month = "2018-01"
         submission_mode = "01"
-        now = Time.now
 
         expect_data = [
           {
@@ -163,10 +162,145 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
           args["Orca_Uid"] = result.orca_uid
           result = service.created(args)
           expect(result.doing?).to be true
+          expect(result.ok?).to be false
 
           result = service.created(args)
           expect(result.doing?).to be false
           expect(result.ok?).to be true
+        end
+      end
+    end
+
+    context "異常系" do
+      it "提出先の設定に誤りがある場合はエラー" do
+        args = {
+          "Perform_Month" => "2014-05",
+          "Submission_Mode" => "01",
+        }
+
+        expect_data = [
+          {
+            path: "/orca44/receiptdatamakev3",
+            body: {
+              "=receiptdata_makev3req" => default_request.merge(args).merge(
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "orca44_receiptdatamakev3_01_E13.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        Timecop.freeze(now) do
+          result = service.create(args)
+          expect(result.ok?).to be false
+        end
+      end
+
+      it "処理確認時に、Orca_Uidを指定しなければエラー" do
+        args = {
+          "Perform_Month" => "2014-05",
+          "Submission_Mode" => "02",
+        }
+
+        expect_data = [
+          {
+            path: "/orca44/receiptdatamakev3",
+            body: {
+              "=receiptdata_makev3req" => default_request.merge(args).merge(
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "orca44_receiptdatamakev3_01.json",
+          },
+          {
+            path: "/orca44/receiptdatamakev3",
+            body: {
+              "=receiptdata_makev3req" => default_request.merge(args).merge(
+                "Request_Number" => "02",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "orca44_receiptdatamakev3_02_E05.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        Timecop.freeze(now) do
+          result = service.create(args)
+          expect(result.ok?).to be true
+
+          data = parse_json(load_orca_api_response("orca44_receiptdatamakev3_01.json"))
+          expect(result["Data_Id_Information"]).to eq data.first[1]["Data_Id_Information"]
+
+          result = service.created(args)
+          expect(result.doing?).to be false
+          expect(result.ok?).to be false
+        end
+      end
+
+      it "処理対象のデータが存在しない場合、すべての処理が完了したタイミングでエラーが発生すること" do
+        args = {
+          "Perform_Month" => "2014-05",
+          "Submission_Mode" => "02",
+        }
+
+        expect_data = [
+          {
+            path: "/orca44/receiptdatamakev3",
+            body: {
+              "=receiptdata_makev3req" => default_request.merge(args).merge(
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "orca44_receiptdatamakev3_01.json",
+          },
+          {
+            path: "/orca44/receiptdatamakev3",
+            body: {
+              "=receiptdata_makev3req" => default_request.merge(args).merge(
+                "Request_Number" => "02",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Orca_Uid" => "`prev.orca_uid`"
+              ),
+            },
+            result: "orca44_receiptdatamakev3_02_E70.json",
+          },
+          {
+            path: "/orca44/receiptdatamakev3",
+            body: {
+              "=receiptdata_makev3req" => default_request.merge(args).merge(
+                "Request_Number" => "02",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Orca_Uid" => "`prev.orca_uid`"
+              ),
+            },
+            result: "orca44_receiptdatamakev3_02_E31.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        Timecop.freeze(now) do
+          result = service.create(args)
+          expect(result.ok?).to be true
+
+          data = parse_json(load_orca_api_response("orca44_receiptdatamakev3_01.json"))
+          expect(result["Data_Id_Information"]).to eq data.first[1]["Data_Id_Information"]
+
+          args["Orca_Uid"] = result.orca_uid
+          result = service.created(args)
+          expect(result.doing?).to be true
+          expect(result.ok?).to be false
+
+          result = service.created(args)
+          expect(result.doing?).to be false
+          expect(result.ok?).to be false
         end
       end
     end

@@ -1,0 +1,14 @@
+{
+  "receiptdata_makev3res": {
+    "Request_Number": "02",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2018-02-26",
+    "Information_Time": "14:55:37",
+    "Api_Result": "E05",
+    "Api_Result_Message": "オルカＵＩＤが未設定です。",
+    "Reskey": "Acceptance_Info",
+    "Submission_Mode": "02",
+    "Perform_Month": "2014-05"
+  }
+}

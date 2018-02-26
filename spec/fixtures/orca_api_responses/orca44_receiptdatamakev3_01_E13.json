@@ -1,0 +1,14 @@
+{
+  "receiptdata_makev3res": {
+    "Request_Number": "01",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2018-02-26",
+    "Information_Time": "14:54:01",
+    "Api_Result": "E13",
+    "Api_Result_Message": "提出先の設定に誤りがあります。",
+    "Reskey": "Acceptance_Info",
+    "Submission_Mode": "01",
+    "Perform_Month": "2014-05"
+  }
+}
