@@ -57,6 +57,14 @@ module OrcaApi
     #    直接請求を行う保険者に設定してある保険者情報を返却する。
     #    また、直接請求を行う保険者以外の社保分として保険者番号「００００００００」、
     #    保険者名称「直接請求する保険者以外」を返却する。
+    #
+    # @param [String] perform_month
+    #   診療年月。YYYY-mm形式。
+    # @param [String] submission_mode
+    #   提出先。
+    #   医保の場合、02:社保 03:国保 04:広域。労災の場合05。
+    # @return [OrcaApi::ReceiptDataService::ListEffectiveInformationResult]
+    #   日レセからのレスポンス
     def list_effective_information(perform_month, submission_mode)
       req = default_request.merge(
         "Request_Number" => "00",
@@ -68,6 +76,32 @@ module OrcaApi
     end
 
     # 処理実施
+    #
+    # @param [Hash] args
+    #   * Submission_Mode (String)
+    #     提出先。
+    #     医保の場合、02:社保 03:国保 04:広域。労災の場合05。
+    #     必須。
+    #   * Perform_Date (String)
+    #     実施年月日。YYYY-mm形式。省略した場合は現在時刻。
+    #   * Perform_Month (String)
+    #     診療年月。YYYY-mm形式。省略した場合は現在時刻。
+    #   * Ac_Date (String)
+    #     請求年月日。YYYY-mm-dd形式。省略した場合は現在時刻。
+    #   * Receipt_Mode (String)
+    #     処理区分。省略した場合は"02"。
+    #   * InOut (String)
+    #     入外区分 I:入院 O:入院外 OI or IO:入院、入院外。省略した場合は「入院、入院外」。
+    #   * Check_Mode (String)
+    #     レセ電データチェック Yes:チェックする Yes以外:チェックしない。省略した場合は「チェックしない」。
+    #   * InsuranceProvider_Number (String)
+    #     直接請求する保険者番号
+    #   * Start_Month (String)
+    #     期間指定(開始年月)。YYYY-mm形式。
+    #   * End_Month (String)
+    #     期間指定(終了年月)。YYYY-mm形式。
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
     def create(args)
       req = default_request.merge(args).merge(
         "Request_Number" => "01",
@@ -77,6 +111,13 @@ module OrcaApi
     end
 
     # 処理確認
+    #
+    # @param [Hash] args
+    #   `#create` の `args` に以下を追加したもの
+    #   * Orca_Uid (String)
+    #     オルカＵＩＤ。必須。
+    # @return [OrcaApi::ReceiptDataService::CreatedResult]
+    #   日レセからのレスポンス
     def created(args)
       req = default_request.merge(args).merge(
         "Request_Number" => "02",
