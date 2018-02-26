@@ -33,10 +33,6 @@ module OrcaApi
           "Effective_InsuranceProvider_Information" => [],
         }.merge(self.class.parse(@raw))
       end
-
-      def ok?
-        api_result == "W04" || super
-      end
     end
 
     # 処理確認の結果を扱うクラス
