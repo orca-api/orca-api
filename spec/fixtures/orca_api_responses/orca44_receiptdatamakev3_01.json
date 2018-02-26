@@ -1,0 +1,39 @@
+{
+  "receiptdata_makev3res": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Information_Date": "2018-02-26",
+    "Information_Time": "14:23:19",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理実施終了",
+    "Reskey": "Acceptance_Info",
+    "Submission_Mode": "02",
+    "Perform_Month": "2014-05",
+    "Data_Id_Information": [
+      {
+        "Data_Id": "fef2624b-3bbf-4c70-8cdd-c6b1dfb3a846",
+        "Print_Id": "25ff6199-5ec3-4af3-836c-6f859f5b8e15"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}

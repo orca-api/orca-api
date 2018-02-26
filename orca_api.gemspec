@@ -45,6 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-junit-formatter"
   spec.add_development_dependency "rubyzip"
   spec.add_development_dependency "simplecov"
+  spec.add_development_dependency "timecop"
   spec.add_development_dependency "webmock"
   spec.add_development_dependency "yard"
 end

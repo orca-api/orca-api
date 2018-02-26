@@ -1,0 +1,28 @@
+{
+  "receiptdata_makev3res": {
+    "Request_Number": "00",
+    "Response_Number": "01",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2018-02-26",
+    "Information_Time": "14:11:40",
+    "Api_Result": "000",
+    "Api_Result_Message": "情報取得終了",
+    "Reskey": "Acceptance_Info",
+    "Submission_Mode": "02",
+    "Perform_Month": "2018-01",
+    "receiptdata_Warning_Info": [
+      {
+        "receiptdata_Warning": "W04",
+        "receiptdata_Warning_Message": "返却情報はありません"
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}
