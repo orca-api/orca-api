@@ -71,8 +71,8 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
           expect(result.ok?).to be true
           expect(result["Effective_Period_Information"]).to eq([])
           expect(result.effective_period_information).to eq([])
-          expect(result["Effective_InsuranceProvider_Information"]).to eq([])
-          expect(result.effective_insurance_provider_information).to eq([])
+          expect(result["InsuranceProvider_Information"]).to eq([])
+          expect(result.insurance_provider_information).to eq([])
         end
       end
     end

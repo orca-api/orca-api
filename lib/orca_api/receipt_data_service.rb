@@ -7,7 +7,7 @@ module OrcaApi
   #
   #  * (1) 医保分のレセ電データ作成時に必要な次の情報取得する: list_effective_information
   #     * Effective_Period_Information: Start_Month、End_Month
-  #     * Effective_InsuranceProvider_Information: InsuranceProvider_Number
+  #     * InsuranceProvider_Information: InsuranceProvider_Number
   #  * (2) 処理実施: create
   #     * 保険者番号、期間指定を行い、レセ電データの作成を開始する。大容量データAPIの呼び出しに必要なData_Idを得る。
   #     * 機能制限: 月途中に医療機関コードが変更されている月のレセ電データの作成については、日レセの通常業務と同様出来きません。
@@ -25,12 +25,16 @@ module OrcaApi
     # 情報がない場合でも `#ok?` がtrueを返し、以下でいずれも空の配列を返す。
     #
     #  * `#effective_period_information` と `#["Effective_Period_Information"]`
-    #  * `#effective_insuranceprovider_information` と `#["Effective_InsuranceProvider_Information"]`
+    #  * `#insurance_provider_information` と `#["InsuranceProvider_Information"]`
     class ListEffectiveInformationResult < ::OrcaApi::Result
+      # 情報がない場合に、以下でいずれも空の配列を返すように上書きする。
+      #
+      #  * `#effective_period_information` と `#["Effective_Period_Information"]`
+      #  * `#insurance_provider_information` と `#["InsuranceProvider_Information"]`
       def body
         @body ||= {
           "Effective_Period_Information" => [],
-          "Effective_InsuranceProvider_Information" => [],
+          "InsuranceProvider_Information" => [],
         }.merge(self.class.parse(@raw))
       end
     end
@@ -57,6 +61,7 @@ module OrcaApi
     #    変更前の旧医療機関コードでレセ電データを作成する際に使う。
     #    具体的な設定は、日レセの「101 システム管理」-「1001 医療機関情報-基本」から行い、
     #    有効期間と医療機関コードが異なる医療機関情報を登録する。
+    #
     #  * 社保(submission_modeが02)の場合にシステム管理「2005 レセプト・総括印刷情報」の
     #    直接請求を行う保険者に設定してある保険者情報を返却する。
     #    また、直接請求を行う保険者以外の社保分として保険者番号「００００００００」、
