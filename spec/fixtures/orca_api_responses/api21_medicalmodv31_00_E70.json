@@ -1,0 +1,22 @@
+{
+  "medicalv3res1": {
+    "Request_Number": "00",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2018-03-05",
+    "Information_Time": "14:37:14",
+    "Api_Result": "E70",
+    "Api_Result_Message": "入院中です。処理できません。",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2018-01-15",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "テスト　カンジャ",
+      "WholeName_inKana": "テスト　カンジャ",
+      "BirthDate": "1965-04-04",
+      "Sex": "1"
+    }
+  }
+}

@@ -207,6 +207,104 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     load_orca_api_response("api21_medicalmodv34_99.json")
   end
 
+  describe "#get_default" do
+    context "正常系" do
+      it "該当患者のデフォルト保険組合せおよびその保険組合せでの診察料を返却できる" do
+        params = {
+          "Patient_ID" => "5",
+          "Perform_Date" => "2018-01-15",
+          "Diagnosis_Information" => {
+            "Department_Code" => "01",
+            "Medical_Information" => {
+              "Doctors_Fee" => "02",
+            },
+          },
+        }
+
+        expect_data = [
+          {
+            path: "/api21/medicalmodv31",
+            body: {
+              "=medicalv3req1" => params.merge(
+                "Request_Number" => "00",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "api21_medicalmodv31_00.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.get_default(params)
+        expect(result.ok?).to be true
+      end
+
+      it "診療日付を省略するとシステム日付が設定され、正常終了となること" do
+        params = {
+          "Patient_ID" => "5",
+          "Diagnosis_Information" => {
+            "Department_Code" => "01",
+            "Medical_Information" => {
+              "Doctors_Fee" => "02",
+            },
+          },
+        }
+
+        expect_data = [
+          {
+            path: "/api21/medicalmodv31",
+            body: {
+              "=medicalv3req1" => params.merge(
+                "Request_Number" => "00",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "api21_medicalmodv31_W00.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.get_default(params)
+        expect(result.ok?).to be true
+      end
+    end
+
+    context "異常系" do
+      it "入院中の患者は処理できず、エラーとなること" do
+        params = {
+          "Patient_ID" => "1",
+          "Perform_Date" => "2018-01-15",
+          "Diagnosis_Information" => {
+            "Department_Code" => "01",
+            "Medical_Information" => {
+              "Doctors_Fee" => "02",
+            },
+          },
+        }
+
+        expect_data = [
+          {
+            path: "/api21/medicalmodv31",
+            body: {
+              "=medicalv3req1" => params.merge(
+                "Request_Number" => "00",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "api21_medicalmodv31_00_E70.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.get_default(params)
+        expect(result.ok?).to be false
+      end
+    end
+  end
+
   describe "#get_examination_fee" do
     let(:params) {
       {
