@@ -1,0 +1,153 @@
+{
+  "medicalv3res1": {
+    "Request_Number": "00",
+    "Response_Number": "00",
+    "Karte_Uid": "karte_uid",
+    "Information_Date": "2018-03-05",
+    "Information_Time": "14:36:58",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2018-01-15",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Patient_Information": {
+      "Patient_ID": "00005",
+      "WholeName": "テスト　春",
+      "WholeName_inKana": "テスト　ハル",
+      "BirthDate": "1975-03-03",
+      "Sex": "2",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0010",
+        "InsuranceProvider_Class": "009",
+        "InsuranceProvider_Number": "01320019",
+        "InsuranceProvider_WholeName": "協会",
+        "RelationToInsuredPerson": "1",
+        "HealthInsuredPerson_WholeName": "テスト　春",
+        "Certificate_StartDate": "2010-01-01",
+        "Certificate_ExpiredDate": "9999-12-31",
+        "PublicInsurance_Information": [
+          {
+            "PublicInsurance_Class": "970",
+            "PublicInsurance_Name": "第三者行為",
+            "PublicInsuredPerson_Number": "足",
+            "Rate_Admission": "0.00",
+            "Money_Admission": "     0",
+            "Rate_Outpatient": "0.00",
+            "Money_Outpatient": "     0",
+            "Certificate_IssuedDate": "2014-04-01",
+            "Certificate_ExpiredDate": "9999-12-31"
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ]
+      }
+    },
+    "Medical_Information": [
+      {
+        "Medical_Info": [
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+                "Medication_Code": "112007410",
+                "Medication_Name": "再診"
+              },
+              {
+                "Medication_Code": "112016070",
+                "Medication_Name": "時間外対応加算１"
+              },
+              {
+                "Medication_Code": "112015770",
+                "Medication_Name": "明細書発行体制等加算"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+            "Medical_Class": "120",
+            "Medical_Class_Name": "再診料",
+            "Medical_Class_Number": "1",
+            "Medication_Info": [
+              {
+                "Medication_Code": "112011010",
+                "Medication_Name": "外来管理加算"
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              },
+              {
+              }
+            ]
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          },
+          {
+          }
+        ]
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}

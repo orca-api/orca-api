@@ -27,6 +27,31 @@ module OrcaApi
       end
     end
 
+    # デフォルト値の返却
+    #
+    # @param [Hash] params
+    #   * Patient_ID (String)
+    #     患者番号。必須。
+    #   * Perform_Date (String)
+    #     診療日付。YYYY-mm-dd形式。未設定はシステム日付。
+    #   * Diagnosis_Information (Hash)
+    #     * Department_Code (String)
+    #       診療科。必須。
+    #   * Medical_Information (Hash)
+    #     * Doctors_Fee (String)
+    #       診察料区分。
+    #       01: 初診、02:再診、03:電話再診、09:診察料なし。
+    #       設定がなければ、病名などから診察料を返却する。
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    def get_default(params)
+      req = params.merge(
+        "Request_Number" => "00",
+        "Karte_Uid" => orca_api.karte_uid
+      )
+      Result.new(orca_api.call("/api21/medicalmodv31", body: { "medicalv3req1" => req }))
+    end
+
     # 診察料情報の取得
     def get_examination_fee(params)
       res = call_01_for_create(params)
