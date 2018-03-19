@@ -182,6 +182,45 @@ RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
     end
   end
 
+  describe "#update" do
+    it "リクエスト内容が正しいこと" do
+      acceptance_id = "00005"
+      args =
+        service.new_builder.
+        accept_at(Time.parse("2018-03-19T15:38:53")).
+        patient_id("5").
+        department_code("01").
+        physician_code("10001").
+        medical_information("01").
+        to_h
+
+      expect_data = [
+        {
+          path: "/orca11/acceptmodv2",
+          body: {
+            "=acceptreq" => {
+              "Request_Number" => "03",
+              "Acceptance_Id" => acceptance_id,
+              "Acceptance_Date" => "2018-03-19",
+              "Acceptance_Time" => "15:38:53",
+              "Patient_ID" => "5",
+              "Department_Code" => "01",
+              "Physician_Code" => "10001",
+              "Medical_Information" => "01",
+              "HealthInsurance_Information" => {},
+            },
+          },
+          result: "orca11_acceptmodv2_03.json",
+        },
+      ]
+      expect_orca_api_call(expect_data, binding)
+
+      result = service.update(acceptance_id, args)
+
+      expect(result.ok?).to be true
+    end
+  end
+
   describe "#destroy" do
     let(:acceptance_id) { SecureRandom.hex }
     let(:patient_id) { SecureRandom.hex }

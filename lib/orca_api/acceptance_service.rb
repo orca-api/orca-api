@@ -40,6 +40,45 @@ module OrcaApi
       call_acceptance(req)
     end
 
+    # 新規患者の受付更新(患者番号設定)
+    #
+    # 患者氏名のみを指定して登録した受付情報に患者番号を設定する。
+    #
+    # @param [String] acceptance_id
+    #   受付ID
+    # @param [Hash] acceptance
+    #   * "Acceptance_Date" (String)
+    #     受付日付。YYYY-mm-dd形式。
+    #   * "Acceptance_Time" (String)
+    #     受付時間。HH:MM:SS形式。
+    #   * "Patient_ID" (String)
+    #     患者番号
+    #   * "Department_Code" (String)
+    #     診療科コード。
+    #     システム管理マスタの診療科目情報の診療科コードを参照。
+    #   * "Physician_Code" (String)
+    #     ドクターコード。
+    #   * "Medical_Information" (String)
+    #     診療内容区分。
+    #     システム管理マスタの診療内容情報の診療内容コードを参照。
+    #     診療内容コード例)01:診察１、02:薬のみ、03:注射のみ、04:検査のみ、05:リハビリテーション、
+    #     06:健康診断、07:予防注射、99:該当なし
+    #   * "HealthInsurance_Information" (Hash)
+    #     保険組合せ情報
+    #     * "Insurance_Combination_Number" (String)
+    #       保険組合せ番号
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    #
+    # @see https://www.orca.med.or.jp/receipt/tec/api/acceptmod.html
+    def update(acceptance_id, acceptance)
+      req = acceptance.merge(
+        "Request_Number" => "03",
+        "Acceptance_Id" => acceptance_id
+      )
+      call_acceptance(req)
+    end
+
     # https://www.orca.med.or.jp/receipt/tec/api/acceptmod.html
     def destroy(acceptance_id, patient_id)
       req = {
@@ -54,7 +93,7 @@ module OrcaApi
       AcceptanceBuilder.new
     end
 
-    # AcceptanceService#createの引数を生成するクラス
+    # AcceptanceService#{create,update}の引数を生成するクラス
     #
     #     AcceptanceBuilder.new.accept_at(Time.now).patient_id('00001').insurance_combination_number('01').to_h
     #     # => { "Acceptance_Date" => "YYYY-MM-DD", "Acceptance_Time" => "HH:MM:SS", ... }

@@ -1,0 +1,135 @@
+{
+  "acceptres": {
+    "Information_Date": "2018-03-19",
+    "Information_Time": "15:39:28",
+    "Api_Result": "00",
+    "Api_Result_Message": "受付更新終了",
+    "Reskey": "Acceptance_Info",
+    "Acceptance_Date": "2018-03-19",
+    "Acceptance_Time": "15:38:53",
+    "Acceptance_Id": "00005",
+    "Department_Code": "01",
+    "Department_WholeName": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "オルカ　太郎",
+    "Patient_Information": {
+      "Patient_ID": "00005",
+      "WholeName": "テスト　春",
+      "WholeName_inKana": "テスト　ハル",
+      "BirthDate": "1975-03-03",
+      "Sex": "2",
+      "Home_Address_Information": {
+        "Address_ZipCode": "6900023",
+        "WholeAddress": "島根県松江市竹矢町１２３４５"
+      },
+      "HealthInsurance_Information": [
+        {
+          "Insurance_Combination_Number": "0010",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　春",
+          "Certificate_StartDate": "2010-01-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "970",
+              "PublicInsurance_Name": "第三者行為",
+              "PublicInsuredPerson_Number": "足",
+              "Rate_Admission": "0.00",
+              "Money_Admission": "     0",
+              "Rate_Outpatient": "0.00",
+              "Money_Outpatient": "     0",
+              "Certificate_IssuedDate": "2014-04-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        },
+        {
+          "Insurance_Combination_Number": "0003",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　春",
+          "Certificate_StartDate": "2010-01-01",
+          "Certificate_ExpiredDate": "9999-12-31"
+        },
+        {
+          "Insurance_Combination_Number": "0004",
+          "Insurance_Nondisplay": "N",
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_WholeName": "自費",
+          "HealthInsuredPerson_Assistance": "2",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　春",
+          "Certificate_StartDate": "2011-01-01",
+          "Certificate_ExpiredDate": "9999-12-31"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
