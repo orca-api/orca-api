@@ -157,11 +157,9 @@ RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
       expect_data = [
         {
           path: "/orca11/acceptmodv2",
-          params: {
-            class: "01",
-          },
           body: {
             "=acceptreq" => {
+              "Request_Number" => "01",
               "Acceptance_Date" => "2017-08-09",
               "Acceptance_Time" => "12:34:56",
               "Patient_ID" => "0001",
@@ -192,11 +190,9 @@ RSpec.describe OrcaApi::AcceptanceService, orca_api_mock: true do
       expect_data = [
         {
           path: "/orca11/acceptmodv2",
-          params: {
-            class: "02",
-          },
           body: {
             "=acceptreq" => {
+              "Request_Number" => "02",
               "Acceptance_Id" => acceptance_id,
               "Patient_ID" => patient_id,
             },

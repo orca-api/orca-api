@@ -34,37 +34,20 @@ module OrcaApi
 
     # https://www.orca.med.or.jp/receipt/tec/api/acceptmod.html
     def create(acceptance)
-      api_path = "/orca11/acceptmodv2"
-      req_name = "acceptreq"
-
-      params = {
-        class: "01"
-      }
-
-      body = {
-        req_name => acceptance
-      }
-
-      Result.new(orca_api.call(api_path, params: params, body: body))
+      req = acceptance.merge(
+        "Request_Number" => "01"
+      )
+      call_acceptance(req)
     end
 
     # https://www.orca.med.or.jp/receipt/tec/api/acceptmod.html
     def destroy(acceptance_id, patient_id)
-      api_path = "/orca11/acceptmodv2"
-      req_name = "acceptreq"
-
-      params = {
-        class: "02"
+      req = {
+        "Request_Number" => "02",
+        "Acceptance_Id" => acceptance_id,
+        "Patient_ID" => patient_id
       }
-
-      body = {
-        req_name => {
-          "Acceptance_Id" => acceptance_id,
-          "Patient_ID" => patient_id
-        }
-      }
-
-      Result.new(orca_api.call(api_path, params: params, body: body))
+      call_acceptance(req)
     end
 
     def new_builder
@@ -103,6 +86,12 @@ module OrcaApi
       def to_h
         @data.merge('HealthInsurance_Information' => @health_insurance)
       end
+    end
+
+    private
+
+    def call_acceptance(req)
+      Result.new(orca_api.call("/orca11/acceptmodv2", body: { "acceptreq" => req }))
     end
   end
 end
