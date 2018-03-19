@@ -124,10 +124,14 @@ end
 #   呼び出し元のBindingオブジェクト。
 def expect_orca_api_call(expect_data, context)
   count = 0
-  expect(orca_api).to receive(:call).exactly(expect_data.length) do |path, body:|
+  expect(orca_api).to receive(:call).exactly(expect_data.length) do |path, params: {}, body: nil|
     expect_datum = expect_data[count]
     if expect_datum.key?(:path)
       expect(path).to eq(expect_datum[:path])
+    end
+
+    if expect_datum.key?(:params)
+      expect(params).to eq(expect_datum[:params])
     end
 
     if expect_datum.key?(:body)
