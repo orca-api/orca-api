@@ -24,6 +24,7 @@ require "orca_api"
 require "pp"
 require "uri"
 require "pry-byebug"
+require "json"
 
 ########################################################################
 ## 基本設定
@@ -51,7 +52,7 @@ end
 
 # デバッグ
 if ENV["ORCA_API_DEBUG"]
-  @orca_api.debug_output = $stdout
+  @orca_api.debug_output = $stderr
 end
 
 # Karte_Uidの設定
@@ -69,7 +70,7 @@ def print_result(result, *keys)
     }.to_h
   end
   puts "＊＊＊＊＊正常終了＊＊＊＊＊"
-  pp(hash)
+  puts JSON.pretty_generate(hash)
 end
 
 ########################################################################
@@ -84,7 +85,7 @@ def error(result)
   else
     puts result.message
     puts "レスポンスボディ:"
-    pp result.body
+    puts JSON.pretty_generate(result.body)
   end
 end
 
