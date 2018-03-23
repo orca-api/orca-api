@@ -8,6 +8,10 @@
 /spec/reports/
 /tmp/
 /vendor/
+/docs/
+/reports/
+/.vagrant/
+/ubuntu-xenial-16.04-cloudimg-console.log
 
 # rspec failure tracking
 .rspec_status

@@ -1,0 +1,4 @@
+ca
+client.*
+server.*
+dhparam.pem

@@ -1,0 +1,29 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/workspace
+    docker:
+      - image: circleci/ruby:2.3
+        environment:
+        - CIRCLE_TEST_REPORTS=reports
+        - CIRCLE_ARTIFACTS=out
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-gem-cache-{{ checksum "orca_api.gemspec" }}
+            - v1-gem-cache-
+      - run: |
+          gem list | grep bundler || gem install bundler
+      - run: |
+          bundle check --path=vendor/bundle || bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - save_cache:
+          key: v1-gem-cache-{{ checksum "orca_api.gemspec" }}
+          paths:
+            - vendor/bundle
+      - run: |
+          bundle exec rake rubocop spec yard
+      - store_test_results:
+          path: reports
+      - store_artifacts:
+          path: out

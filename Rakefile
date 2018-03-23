@@ -4,16 +4,31 @@ require "rubocop/rake_task"
 require "yard"
 
 RSpec::Core::RakeTask.new(:spec) do |t|
-  t.rspec_opts = "--format documentation --format RspecJunitFormatter --out $CIRCLE_TEST_REPORTS/rspec.xml" if ENV.key? "CI"
+  if ENV.key? "CIRCLE_TEST_REPORTS"
+    out = File.join(ENV["CIRCLE_TEST_REPORTS"], "rspec.xml")
+    t.rspec_opts = "--format documentation --format RspecJunitFormatter --out #{out}"
+  end
 end
 
 RuboCop::RakeTask.new do |t|
-  if ENV.key?("CI")
+  if ENV.key? "CIRCLE_TEST_REPORTS"
     require "rubocop"
     require "rubocop/formatter/junit_formatter"
     t.formatters = ["progress", "RuboCop::Formatter::JUnitFormatter"]
-    t.options = ["--out", File.join(ENV["CIRCLE_TEST_REPORTS"], "rubocop", "rubocop.xml")]
+    out = File.join(ENV["CIRCLE_TEST_REPORTS"], "rubocop.xml")
+    t.options = ["--out", out]
   end
+end
+
+YARD::Rake::YardocTask.new do |t|
+  t.files = ["lib/**/*.rb"]
+  t.stats_options = ["--list-undoc", "--compact"]
+  output_dir = if ENV.key? "CIRCLE_ARTIFACTS"
+                 File.join(ENV["CIRCLE_ARTIFACTS"], "docs")
+               else
+                 "docs"
+               end
+  t.options = ["--no-progress", "--output-dir", output_dir]
 end
 
 namespace :version do
@@ -42,11 +57,3 @@ namespace :version do
 end
 
 task default: [:spec, :rubocop]
-
-YARD::Rake::YardocTask.new do |t|
-  t.files = ["lib/**/*.rb"]
-  t.stats_options = ["--list-undoc"]
-  if ENV["CIRCLE_ARTIFACTS"]
-    t.options = ["--output-dir", File.join(ENV["CIRCLE_ARTIFACTS"], "doc")]
-  end
-end
