@@ -29,7 +29,7 @@ RSpec.describe OrcaApi::Service do
     end
 
     it "メソッド名を複数指定できること" do
-      expect(service_class.reuse_session(:call_01, :call_02).instance_methods).to eq %i[call_01 call_02]
+      expect(service_class.reuse_session(:call_01, :call_02).instance_methods).to match_array %i[call_01 call_02]
     end
   end
 end
