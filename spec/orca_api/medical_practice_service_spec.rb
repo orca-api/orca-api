@@ -65,6 +65,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
     expect(path).to eq("/api21/medicalmodv32")
 
     req = body["medicalv3req2"]
+    req_diagnosis = req["Diagnosis_Information"]
     res_body = parse_json(prev_response_json).first[1]
     expect(req["Request_Number"]).to eq(res_body["Response_Number"])
     expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
@@ -79,6 +80,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       expect(req["Patient_Mode"]).to be_nil
       expect(req["Invoice_Number"]).to be_nil
     end
+    expect(req_diagnosis["Physician_Code"]).to eq(res_body["Physician_Code"])
     expect(req["Select_Mode"]).to be_nil
     if answer_index
       expect(req["Select_Answer"]).to eq(params["Medical_Select_Information"][answer_index]["Select_Answer"])
