@@ -156,6 +156,7 @@ module OrcaApi
       RehabilitationCommentService
       UserService
       ReceiptDataService
+      FindService
     )
     service_class_names.each do |name|
       s = underscore(name)

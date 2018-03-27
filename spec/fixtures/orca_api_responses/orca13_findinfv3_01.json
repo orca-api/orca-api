@@ -1,0 +1,1614 @@
+{
+  "findinfv3res": {
+    "Information_Date": "2018-03-26",
+    "Information_Time": "16:00:50",
+    "Api_Result": "00000",
+    "Api_Result_Message": "正常終了",
+    "Request_Number": "01",
+    "Patient_Information": {
+      "Condition1_Code_Information": [
+        {
+          "Condition1_Code": "00",
+          "Condition1_Code_Name": "該当なし"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ],
+      "Condition2_Code_Information": [
+        {
+          "Condition2_Code": "00",
+          "Condition2_Code_Name": "該当なし"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ],
+      "Condition3_Code_Information": [
+        {
+          "Condition3_Code": "00",
+          "Condition3_Code_Name": "該当なし"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ],
+      "Discount_Reason_Code_Information": [
+        {
+          "Discount_Reason_Code": "00",
+          "Discount_Reason_Code_Name": "該当なし"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ],
+      "Special_Report_Code_Information": [
+        {
+          "Special_Report_Code": "01",
+          "Special_Report_Code_Name": "公"
+        },
+        {
+          "Special_Report_Code": "02",
+          "Special_Report_Code_Name": "長"
+        },
+        {
+          "Special_Report_Code": "03",
+          "Special_Report_Code_Name": "長処"
+        },
+        {
+          "Special_Report_Code": "04",
+          "Special_Report_Code_Name": "後保"
+        },
+        {
+          "Special_Report_Code": "07",
+          "Special_Report_Code_Name": "老併"
+        },
+        {
+          "Special_Report_Code": "08",
+          "Special_Report_Code_Name": "老健"
+        },
+        {
+          "Special_Report_Code": "09",
+          "Special_Report_Code_Name": "施"
+        },
+        {
+          "Special_Report_Code": "10",
+          "Special_Report_Code_Name": "第三"
+        },
+        {
+          "Special_Report_Code": "11",
+          "Special_Report_Code_Name": "薬治"
+        },
+        {
+          "Special_Report_Code": "12",
+          "Special_Report_Code_Name": "器治"
+        },
+        {
+          "Special_Report_Code": "13",
+          "Special_Report_Code_Name": "先進"
+        },
+        {
+          "Special_Report_Code": "14",
+          "Special_Report_Code_Name": "制超"
+        },
+        {
+          "Special_Report_Code": "15",
+          "Special_Report_Code_Name": "経過"
+        },
+        {
+          "Special_Report_Code": "16",
+          "Special_Report_Code_Name": "長２"
+        },
+        {
+          "Special_Report_Code": "17",
+          "Special_Report_Code_Name": "上位"
+        },
+        {
+          "Special_Report_Code": "18",
+          "Special_Report_Code_Name": "一般"
+        },
+        {
+          "Special_Report_Code": "19",
+          "Special_Report_Code_Name": "低所"
+        },
+        {
+          "Special_Report_Code": "20",
+          "Special_Report_Code_Name": "二割"
+        },
+        {
+          "Special_Report_Code": "21",
+          "Special_Report_Code_Name": "高半"
+        },
+        {
+          "Special_Report_Code": "22",
+          "Special_Report_Code_Name": "多上"
+        },
+        {
+          "Special_Report_Code": "23",
+          "Special_Report_Code_Name": "多一"
+        },
+        {
+          "Special_Report_Code": "24",
+          "Special_Report_Code_Name": "多低"
+        },
+        {
+          "Special_Report_Code": "25",
+          "Special_Report_Code_Name": "出産"
+        },
+        {
+          "Special_Report_Code": "26",
+          "Special_Report_Code_Name": "区ア"
+        },
+        {
+          "Special_Report_Code": "27",
+          "Special_Report_Code_Name": "区イ"
+        },
+        {
+          "Special_Report_Code": "28",
+          "Special_Report_Code_Name": "区ウ"
+        },
+        {
+          "Special_Report_Code": "29",
+          "Special_Report_Code_Name": "区エ"
+        },
+        {
+          "Special_Report_Code": "30",
+          "Special_Report_Code_Name": "区オ"
+        },
+        {
+          "Special_Report_Code": "31",
+          "Special_Report_Code_Name": "多ア"
+        },
+        {
+          "Special_Report_Code": "32",
+          "Special_Report_Code_Name": "多イ"
+        },
+        {
+          "Special_Report_Code": "33",
+          "Special_Report_Code_Name": "多ウ"
+        },
+        {
+          "Special_Report_Code": "34",
+          "Special_Report_Code_Name": "多エ"
+        },
+        {
+          "Special_Report_Code": "35",
+          "Special_Report_Code_Name": "多オ"
+        },
+        {
+          "Special_Report_Code": "36",
+          "Special_Report_Code_Name": "加治"
+        },
+        {
+          "Special_Report_Code": "37",
+          "Special_Report_Code_Name": "申出"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "HealthInsurance_Information": {
+      "InsuranceProvider_Class_Information": [
+        {
+          "InsuranceProvider_Class": "002",
+          "InsuranceProvider_Class_Name": "船員"
+        },
+        {
+          "InsuranceProvider_Class": "003",
+          "InsuranceProvider_Class_Name": "一般"
+        },
+        {
+          "InsuranceProvider_Class": "004",
+          "InsuranceProvider_Class_Name": "特別"
+        },
+        {
+          "InsuranceProvider_Class": "006",
+          "InsuranceProvider_Class_Name": "組合"
+        },
+        {
+          "InsuranceProvider_Class": "007",
+          "InsuranceProvider_Class_Name": "自官"
+        },
+        {
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Class_Name": "協会"
+        },
+        {
+          "InsuranceProvider_Class": "031",
+          "InsuranceProvider_Class_Name": "国公"
+        },
+        {
+          "InsuranceProvider_Class": "032",
+          "InsuranceProvider_Class_Name": "地公"
+        },
+        {
+          "InsuranceProvider_Class": "033",
+          "InsuranceProvider_Class_Name": "警察"
+        },
+        {
+          "InsuranceProvider_Class": "034",
+          "InsuranceProvider_Class_Name": "学校"
+        },
+        {
+          "InsuranceProvider_Class": "039",
+          "InsuranceProvider_Class_Name": "後期高齢者"
+        },
+        {
+          "InsuranceProvider_Class": "040",
+          "InsuranceProvider_Class_Name": "後期特療費"
+        },
+        {
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Class_Name": "国保"
+        },
+        {
+          "InsuranceProvider_Class": "063",
+          "InsuranceProvider_Class_Name": "退組合"
+        },
+        {
+          "InsuranceProvider_Class": "067",
+          "InsuranceProvider_Class_Name": "退国保"
+        },
+        {
+          "InsuranceProvider_Class": "068",
+          "InsuranceProvider_Class_Name": "特療費"
+        },
+        {
+          "InsuranceProvider_Class": "069",
+          "InsuranceProvider_Class_Name": "退特療費"
+        },
+        {
+          "InsuranceProvider_Class": "072",
+          "InsuranceProvider_Class_Name": "退国公"
+        },
+        {
+          "InsuranceProvider_Class": "073",
+          "InsuranceProvider_Class_Name": "退地公"
+        },
+        {
+          "InsuranceProvider_Class": "074",
+          "InsuranceProvider_Class_Name": "退警察"
+        },
+        {
+          "InsuranceProvider_Class": "075",
+          "InsuranceProvider_Class_Name": "退学校"
+        },
+        {
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_Class_Name": "労災保険"
+        },
+        {
+          "InsuranceProvider_Class": "973",
+          "InsuranceProvider_Class_Name": "自賠責保険"
+        },
+        {
+          "InsuranceProvider_Class": "975",
+          "InsuranceProvider_Class_Name": "公害保険"
+        },
+        {
+          "InsuranceProvider_Class": "980",
+          "InsuranceProvider_Class_Name": "自費"
+        },
+        {
+          "InsuranceProvider_Class": "SYA",
+          "InsuranceProvider_Class_Name": "社保"
+        },
+        {
+          "InsuranceProvider_Class": "KOK",
+          "InsuranceProvider_Class_Name": "国保"
+        },
+        {
+          "InsuranceProvider_Class": "KOU",
+          "InsuranceProvider_Class_Name": "広域"
+        },
+        {
+          "InsuranceProvider_Class": "JB0",
+          "InsuranceProvider_Class_Name": "自賠責（システム"
+        },
+        {
+          "InsuranceProvider_Class": "JB1",
+          "InsuranceProvider_Class_Name": "自賠責（患者労災"
+        },
+        {
+          "InsuranceProvider_Class": "JB2",
+          "InsuranceProvider_Class_Name": "自賠責（患者健保"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "PublicInsurance_Information": {
+      "PublicInsurance_Class_Information": [
+        {
+          "PublicInsurance_Class": "010",
+          "PublicInsurance_Class_Name": "感３７の２"
+        },
+        {
+          "PublicInsurance_Class": "011",
+          "PublicInsurance_Class_Name": "結核入院"
+        },
+        {
+          "PublicInsurance_Class": "012",
+          "PublicInsurance_Class_Name": "生活保護"
+        },
+        {
+          "PublicInsurance_Class": "013",
+          "PublicInsurance_Class_Name": "戦傷傷病"
+        },
+        {
+          "PublicInsurance_Class": "014",
+          "PublicInsurance_Class_Name": "戦傷更正"
+        },
+        {
+          "PublicInsurance_Class": "015",
+          "PublicInsurance_Class_Name": "更生"
+        },
+        {
+          "PublicInsurance_Class": "016",
+          "PublicInsurance_Class_Name": "育成"
+        },
+        {
+          "PublicInsurance_Class": "017",
+          "PublicInsurance_Class_Name": "児童療育"
+        },
+        {
+          "PublicInsurance_Class": "018",
+          "PublicInsurance_Class_Name": "原爆認定"
+        },
+        {
+          "PublicInsurance_Class": "019",
+          "PublicInsurance_Class_Name": "原爆一般"
+        },
+        {
+          "PublicInsurance_Class": "020",
+          "PublicInsurance_Class_Name": "精神入院"
+        },
+        {
+          "PublicInsurance_Class": "021",
+          "PublicInsurance_Class_Name": "精神通院"
+        },
+        {
+          "PublicInsurance_Class": "023",
+          "PublicInsurance_Class_Name": "養育"
+        },
+        {
+          "PublicInsurance_Class": "024",
+          "PublicInsurance_Class_Name": "療養介護"
+        },
+        {
+          "PublicInsurance_Class": "025",
+          "PublicInsurance_Class_Name": "残留邦人等"
+        },
+        {
+          "PublicInsurance_Class": "028",
+          "PublicInsurance_Class_Name": "感染症入院"
+        },
+        {
+          "PublicInsurance_Class": "029",
+          "PublicInsurance_Class_Name": "新感染"
+        },
+        {
+          "PublicInsurance_Class": "030",
+          "PublicInsurance_Class_Name": "心神喪失"
+        },
+        {
+          "PublicInsurance_Class": "038",
+          "PublicInsurance_Class_Name": "肝炎治療"
+        },
+        {
+          "PublicInsurance_Class": "051",
+          "PublicInsurance_Class_Name": "特定負有"
+        },
+        {
+          "PublicInsurance_Class": "052",
+          "PublicInsurance_Class_Name": "小児特定"
+        },
+        {
+          "PublicInsurance_Class": "053",
+          "PublicInsurance_Class_Name": "児童保護"
+        },
+        {
+          "PublicInsurance_Class": "054",
+          "PublicInsurance_Class_Name": "難病"
+        },
+        {
+          "PublicInsurance_Class": "062",
+          "PublicInsurance_Class_Name": "Ｂ型肝炎"
+        },
+        {
+          "PublicInsurance_Class": "066",
+          "PublicInsurance_Class_Name": "石綿"
+        },
+        {
+          "PublicInsurance_Class": "079",
+          "PublicInsurance_Class_Name": "障害児施設"
+        },
+        {
+          "PublicInsurance_Class": "091",
+          "PublicInsurance_Class_Name": "特定負無"
+        },
+        {
+          "PublicInsurance_Class": "190",
+          "PublicInsurance_Class_Name": "マル乳"
+        },
+        {
+          "PublicInsurance_Class": "191",
+          "PublicInsurance_Class_Name": "マル福"
+        },
+        {
+          "PublicInsurance_Class": "192",
+          "PublicInsurance_Class_Name": "マル精"
+        },
+        {
+          "PublicInsurance_Class": "390",
+          "PublicInsurance_Class_Name": "３歳未満"
+        },
+        {
+          "PublicInsurance_Class": "391",
+          "PublicInsurance_Class_Name": "松江・福祉"
+        },
+        {
+          "PublicInsurance_Class": "393",
+          "PublicInsurance_Class_Name": "就学後大田"
+        },
+        {
+          "PublicInsurance_Class": "394",
+          "PublicInsurance_Class_Name": "こども福社"
+        },
+        {
+          "PublicInsurance_Class": "600",
+          "PublicInsurance_Class_Name": "乳幼児無料"
+        },
+        {
+          "PublicInsurance_Class": "620",
+          "PublicInsurance_Class_Name": "就学後・無"
+        },
+        {
+          "PublicInsurance_Class": "621",
+          "PublicInsurance_Class_Name": "福祉就後無"
+        },
+        {
+          "PublicInsurance_Class": "625",
+          "PublicInsurance_Class_Name": "就学後大田"
+        },
+        {
+          "PublicInsurance_Class": "627",
+          "PublicInsurance_Class_Name": "就学後・浜"
+        },
+        {
+          "PublicInsurance_Class": "628",
+          "PublicInsurance_Class_Name": "就学後川益"
+        },
+        {
+          "PublicInsurance_Class": "629",
+          "PublicInsurance_Class_Name": "福就後川益"
+        },
+        {
+          "PublicInsurance_Class": "705",
+          "PublicInsurance_Class_Name": "福祉・大田"
+        },
+        {
+          "PublicInsurance_Class": "950",
+          "PublicInsurance_Class_Name": "０７入所中",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "951",
+          "PublicInsurance_Class_Name": "０８入所中",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "953",
+          "PublicInsurance_Class_Name": "減額（円超",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "954",
+          "PublicInsurance_Class_Name": "特例非該当",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "955",
+          "PublicInsurance_Class_Name": "０１公該当",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "956",
+          "PublicInsurance_Class_Name": "公費アイ　",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "957",
+          "PublicInsurance_Class_Name": "公費ウエオ",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "958",
+          "PublicInsurance_Class_Name": "特疾４回目",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "959",
+          "PublicInsurance_Class_Name": "災害該当",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "960",
+          "PublicInsurance_Class_Name": "減額（割）",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "961",
+          "PublicInsurance_Class_Name": "減額（円）",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "962",
+          "PublicInsurance_Class_Name": "免除",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "963",
+          "PublicInsurance_Class_Name": "支払猶予",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "964",
+          "PublicInsurance_Class_Name": "高額委任払",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "965",
+          "PublicInsurance_Class_Name": "高額４回目",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "966",
+          "PublicInsurance_Class_Name": "高額アイ　",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "967",
+          "PublicInsurance_Class_Name": "高額ウエオ",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "968",
+          "PublicInsurance_Class_Name": "後期該当",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "969",
+          "PublicInsurance_Class_Name": "７５歳特例",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "970",
+          "PublicInsurance_Class_Name": "第三者行為"
+        },
+        {
+          "PublicInsurance_Class": "972",
+          "PublicInsurance_Class_Name": "長期"
+        },
+        {
+          "PublicInsurance_Class": "974",
+          "PublicInsurance_Class_Name": "長期（上位"
+        },
+        {
+          "PublicInsurance_Class": "976",
+          "PublicInsurance_Class_Name": "高齢非該当",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+          "PublicInsurance_Class": "977",
+          "PublicInsurance_Class_Name": "後期非該当",
+          "PublicInsurance_Class_Restraction": "1"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
