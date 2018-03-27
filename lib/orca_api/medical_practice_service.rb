@@ -257,13 +257,17 @@ module OrcaApi
     # medicalv3req2
     def call_03(previous_result, answer = nil)
       res = previous_result
+      res_body = res.body
       req = {
         "Request_Number" => res.response_number,
         "Karte_Uid" => res.karte_uid,
         "Patient_ID" => res.patient_information["Patient_ID"],
-        "Perform_Date" => res.body["Perform_Date"],
-        "Perform_Time" => res.body["Perform_Time"],
+        "Perform_Date" => res_body["Perform_Date"],
+        "Perform_Time" => res_body["Perform_Time"],
         "Orca_Uid" => res.orca_uid,
+        "Diagnosis_Information" => {
+          "Physician_Code" => res_body["Physician_Code"],
+        },
       }
       if res.body["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
