@@ -1,0 +1,646 @@
+{
+  "findv3res": {
+    "Information_Date": "2018-03-30",
+    "Information_Time": "10:32:09",
+    "Api_Result": "00000",
+    "Api_Result_Message": "正常終了",
+    "Request_Number": "02",
+    "Response_Number": "02",
+    "Karte_Uid": "karte_uid",
+    "Orca_Uid": "c585dc3e-fa42-4f45-b02f-5a4166d0721d",
+    "Count": "187",
+    "Selection": {
+      "First": "1",
+      "Last": "10"
+    },
+    "Result": [
+      {
+        "Number": "1",
+        "Patient_ID": "00001",
+        "WholeName_inKana": "テスト　カンジャ",
+        "WholeName": "テスト　カンジャ",
+        "Sex": "1",
+        "Birth_Date": "1965-04-04",
+        "Ward_Number": "01",
+        "Ward_Name": "一般病棟",
+        "Room_Number": "101",
+        "PhoneNumber": "0852-22-2222",
+        "ZipCode": "6900051",
+        "Address1": "島根県松江市横浜町",
+        "Address2": "１１５５",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "060",
+          "InsuranceProvider_Number": "320010",
+          "InsuranceProvider_WholeName": "国保",
+          "HealthInsuredPerson_Assistance": "3",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　カンジャ",
+          "Certificate_StartDate": "2011-02-16",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "051",
+              "PublicInsurance_Name": "特定負有",
+              "PublicInsurer_Number": "51326015",
+              "Certificate_IssuedDate": "2011-01-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      },
+      {
+        "Number": "2",
+        "Patient_ID": "00002",
+        "WholeName_inKana": "テスト　タロウ",
+        "WholeName": "テスト　太郎",
+        "Sex": "2",
+        "Birth_Date": "1973-08-08",
+        "LastVisit_Date": "2017-10-06",
+        "PhoneNumber": "0852",
+        "ZipCode": "6900887",
+        "Address1": "島根県松江市殿町",
+        "Address2": "２番地"
+      },
+      {
+        "Number": "3",
+        "Patient_ID": "00003",
+        "WholeName_inKana": "テスト　ハナコ",
+        "WholeName": "テスト　華子",
+        "Sex": "2",
+        "Birth_Date": "1928-05-06",
+        "LastVisit_Date": "2014-04-10",
+        "PhoneNumber": "0852851212",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "039",
+          "InsuranceProvider_Number": "39322011",
+          "InsuranceProvider_WholeName": "後期高齢者",
+          "HealthInsuredPerson_Assistance": "3",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　華子",
+          "Certificate_StartDate": "2013-05-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "051",
+              "PublicInsurance_Name": "特定負有",
+              "PublicInsurer_Number": "51326023",
+              "Certificate_IssuedDate": "2011-10-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      },
+      {
+        "Number": "4",
+        "Patient_ID": "00004",
+        "WholeName_inKana": "テスト　ジロウ",
+        "WholeName": "テスト　次朗",
+        "Sex": "1",
+        "Birth_Date": "1970-01-25",
+        "LastVisit_Date": "2018-03-22",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_WholeName": "労災保険",
+          "Certificate_StartDate": "2013-10-10",
+          "Certificate_ExpiredDate": "9999-12-31"
+        }
+      },
+      {
+        "Number": "5",
+        "Patient_ID": "00005",
+        "WholeName_inKana": "テスト　ハル",
+        "WholeName": "テスト　春",
+        "Sex": "2",
+        "Birth_Date": "1975-03-03",
+        "LastVisit_Date": "2018-03-26",
+        "ZipCode": "6900023",
+        "Address1": "島根県松江市竹矢町",
+        "Address2": "１２３４５",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01320019",
+          "InsuranceProvider_WholeName": "協会",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　春",
+          "Certificate_StartDate": "2010-01-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "970",
+              "PublicInsurance_Name": "第三者行為",
+              "PublicInsuredPerson_Number": "足",
+              "Certificate_IssuedDate": "2014-04-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      },
+      {
+        "Number": "6",
+        "Patient_ID": "00006",
+        "WholeName_inKana": "テスト　セイホ",
+        "WholeName": "テスト　生保",
+        "Sex": "1",
+        "Birth_Date": "1950-01-01",
+        "LastVisit_Date": "2018-03-22",
+        "HealthInsurance_Information": {
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "012",
+              "PublicInsurance_Name": "生活保護",
+              "PublicInsurer_Number": "12322814",
+              "Certificate_IssuedDate": "2009-01-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      },
+      {
+        "Number": "7",
+        "Patient_ID": "00007",
+        "WholeName_inKana": "テスト　ロウサイ",
+        "WholeName": "テスト　労災",
+        "Sex": "2",
+        "Birth_Date": "1974-10-10",
+        "LastVisit_Date": "2012-06-29",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "971",
+          "InsuranceProvider_WholeName": "労災保険",
+          "Certificate_StartDate": "2010-10-01",
+          "Certificate_ExpiredDate": "9999-12-31"
+        }
+      },
+      {
+        "Number": "8",
+        "Patient_ID": "00008",
+        "WholeName_inKana": "テスト　ジバイ",
+        "WholeName": "テスト　自賠",
+        "Sex": "1",
+        "Birth_Date": "1983-05-05",
+        "LastVisit_Date": "2011-09-26",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "973",
+          "InsuranceProvider_WholeName": "自賠責保険",
+          "Certificate_StartDate": "2011-01-01",
+          "Certificate_ExpiredDate": "9999-12-31"
+        }
+      },
+      {
+        "Number": "9",
+        "Patient_ID": "00009",
+        "WholeName_inKana": "テスト　コウレイシャ",
+        "WholeName": "テスト　高齢者",
+        "Sex": "2",
+        "Birth_Date": "1930-01-07",
+        "LastVisit_Date": "2013-02-06",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "039",
+          "InsuranceProvider_Number": "39322011",
+          "InsuranceProvider_WholeName": "後期高齢者",
+          "HealthInsuredPerson_Assistance": "1",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　高齢者",
+          "Certificate_StartDate": "2011-12-01",
+          "Certificate_ExpiredDate": "9999-12-31"
+        }
+      },
+      {
+        "Number": "10",
+        "Patient_ID": "00010",
+        "WholeName_inKana": "テスト　ニュウジ",
+        "WholeName": "テスト　乳児",
+        "Sex": "1",
+        "Birth_Date": "2008-02-14",
+        "LastVisit_Date": "2013-02-28",
+        "HealthInsurance_Information": {
+          "InsuranceProvider_Class": "034",
+          "InsuranceProvider_Number": "34320010",
+          "InsuranceProvider_WholeName": "学校",
+          "RelationToInsuredPerson": "2",
+          "HealthInsuredPerson_WholeName": "テスト",
+          "Certificate_StartDate": "2011-02-17",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "PublicInsurance_Information": [
+            {
+              "PublicInsurance_Class": "052",
+              "PublicInsurance_Name": "小児特定",
+              "PublicInsurer_Number": "52316015",
+              "Certificate_IssuedDate": "2012-02-01",
+              "Certificate_ExpiredDate": "9999-12-31"
+            },
+            {
+            },
+            {
+            },
+            {
+            }
+          ]
+        }
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      },
+      {
+      }
+    ]
+  }
+}
