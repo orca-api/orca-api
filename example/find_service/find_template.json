@@ -1,0 +1,213 @@
+{
+    "Result_Class": "",
+    "Perform_Date": {
+        "First": "",
+        "Last": ""
+    },
+    "Patient_Information": {
+        "BirthDate": {
+            "First": "",
+            "Last": ""
+        },
+        "Birth_Month": "",
+        "Sex": "",
+        "LastVisit_Date": {
+            "First": "",
+            "Last": ""
+        },
+        "Doctor_Code": "",
+        "InOut": "",
+        "Department_Code": "",
+        "Death_Class": "",
+        "Patient_ID": {
+            "First": "",
+            "Last": ""
+        },
+        "Regional_Partnership_Class": "",
+        "TestPatient_Class": "",
+        "WholeName": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "WholeAddress": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "PhoneNumber_Class": "",
+        "PhoneNumber": [
+            "",
+            "",
+            ""
+        ],
+        "Condition1_Code": [
+            "",
+            "",
+            ""
+        ],
+        "Condition2_Code": [
+            "",
+            "",
+            ""
+        ],
+        "Condition3_Code": [
+            "",
+            "",
+            ""
+        ],
+        "Comment_Class": "",
+        "Comment": [
+            "",
+            "",
+            ""
+        ],
+        "Discount_Reason_Code": [
+            "",
+            "",
+            ""
+        ],
+        "Low_Income_Information": {
+            "Low_Income_Class": "",
+            "Effective_Period_Class": "",
+            "Effective_Period": {
+                "Year_Month": "",
+                "First": "",
+                "Last": ""
+            }
+        },
+        "Special_Notes_Receipt_Code": "",
+        "Special_Notes_Receipt_Code_Name": "",
+        "Point": {
+            "First": "",
+            "Last": ""
+        },
+        "Disaster_Class": "",
+        "Inspection_Receipt_Class": ""
+    }
+    ,
+    "HealthInsurance_Information": {
+        "Certificate_Expired_Year_Month": "",
+        "RelationToInsuredPerson": "",
+        "Insurance_Rate_Class": "",
+        "InsuranceProvider_Number_Logic_Type": "",
+        "InsuranceProvider_Number": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "InsueranceProvider_Class_Logic_Type": "",
+        "InsuranceProvider_Class": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "HealthInsuredPerson_Symbol": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "HealthInsuredPerson_Number": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "PublicInsurance_Information": {
+        "PublicInsurance_Expired_Year_Month": "",
+        "PublicInsurance_Class_Logic_Type": "",
+        "PublicInsurance_Class": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "PublicInsurer_Number": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ]
+    },
+    "Insurance_Logic_Type": "",
+    "Desease_Information": {
+        "StartDate": {
+            "First": "",
+            "Last": ""
+        },
+        "OutCome_Class": "",
+        "EndDate": {
+            "First": "",
+            "Last": ""
+        },
+        "Suspected_Class": "",
+        "Acute_Class": "",
+        "Category_Class": "",
+        "Desease_Logic_Type": "",
+        "Desease": [
+            {
+                "Name": ""
+            }
+        ]
+    },
+    "Medical_Action_Information": {
+        "Medical_Class": "",
+        "Medical_Class2": "",
+        "Inclusion_Class": "",
+        "Medical_Number_Class": "",
+        "Medical_Action_Logic_Type": "",
+        "Medical_Action": [
+            {
+                "Medication_Code": "",
+                "Negative_Class": "",
+                "Medical_Number": "",
+                "Comparison_Class": ""
+            }
+        ],
+        "Receipt_Comment": [
+            "",
+            "",
+            ""
+        ]
+    },
+    "Care_Information": {
+        "Care_Insurance_Information": {
+            "Effective_Period_Class": "",
+            "Effective_Period": {
+                "Year_Month": "",
+                "First": "",
+                "Last": ""
+            },
+            "Provider_Number": ""
+        },
+        "Care_Certification_Information": {
+            "Effective_Period_Class": "",
+            "Effective_Period": {
+                "Year_Month": "",
+                "First": "",
+                "Last": ""
+            },
+            "Condition_Class": ""
+        }
+    },
+    "Sort_Key": [
+        {
+            "Key_Class": "",
+            "Order_Class": ""
+        }
+    ]
+}
