@@ -46,6 +46,7 @@ module OrcaApi
     # 検索条件や検索結果返却区分を設定して、検索処理を開始するための指示を行う。この時点では検索結果は返却しない。
     #
     # @param [Hash] args
+    #   詳細は http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_find.data/findv31.pdf を参照
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
     #
