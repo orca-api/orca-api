@@ -59,4 +59,82 @@ RSpec.describe OrcaApi::FindService, orca_api_mock: true do
       expect(result.ok?).to be true
     end
   end
+
+  describe "#find, #result, #finish" do
+    it "検索条件や検索結果返却区分を設定できること" do
+      find_args = {
+        "Result_Class": "1",
+        "Patient_Information": {
+          "Death_Class": "0",
+        }
+      }
+      result_args = {
+        "Selection" => {
+          "First" => 1,
+          "Last" => 200,
+        }
+      }
+
+      expect_data = [
+        {
+          path: "/orca13/findv3",
+          body: {
+            "=findv3req" => find_args.merge(
+              "Request_Number" => "01",
+              "Karte_Uid" => orca_api.karte_uid
+            )
+          },
+          result: "orca13_findv3_01.json",
+        },
+        {
+          path: "/orca13/findv3",
+          body: {
+            "=findv3req" => result_args.merge(
+              "Request_Number" => "02",
+              "Karte_Uid" => orca_api.karte_uid,
+              "Orca_Uid" => "`prev.orca_uid`"
+            )
+          },
+          result: "orca13_findv3_02_E1040.json",
+        },
+        {
+          path: "/orca13/findv3",
+          body: {
+            "=findv3req" => result_args.merge(
+              "Request_Number" => "02",
+              "Karte_Uid" => orca_api.karte_uid,
+              "Orca_Uid" => "`prev.orca_uid`"
+            )
+          },
+          result: "orca13_findv3_02.json",
+        },
+        {
+          path: "/orca13/findv3",
+          body: {
+            "=findv3req" => {
+              "Request_Number" => "99",
+              "Karte_Uid" => orca_api.karte_uid,
+              "Orca_Uid" => "`prev.orca_uid`",
+            }
+          },
+          result: "orca13_findv3_99.json",
+        },
+      ]
+      expect_orca_api_call(expect_data, binding)
+
+      result = service.find(find_args)
+      expect(result.ok?).to be true
+
+      result = service.result(result_args.merge("Orca_Uid" => result.orca_uid))
+      expect(result.ok?).to be false
+      expect(result.doing?).to be true
+
+      result = service.result(result_args.merge("Orca_Uid" => result.orca_uid))
+      expect(result.ok?).to be true
+      expect(result.doing?).to be false
+
+      result = service.finish("Orca_Uid" => result.orca_uid)
+      expect(result.ok?).to be true
+    end
+  end
 end
