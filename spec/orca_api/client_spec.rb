@@ -1,9 +1,9 @@
 require "spec_helper"
 
-RSpec.describe OrcaApi::OrcaApi do
+RSpec.describe OrcaApi::Client do
   let(:uri) { "http://ormaster:ormaster_password@example.com:18000" }
   let(:options) { {} }
-  let(:orca_api) { OrcaApi::OrcaApi.new(uri, options) }
+  let(:orca_api) { OrcaApi::Client.new(uri, options) }
 
   describe ".new" do
     subject { orca_api }
@@ -423,5 +423,9 @@ RSpec.describe OrcaApi::OrcaApi do
       orca_api.timeout = { open: 600, read: 600, write: 600 }
       expect(orca_api.timeout).to eq(open: 600, read: 600)
     end
+  end
+
+  it 'deprecation warning' do
+    expect { OrcaApi::OrcaApi }.to output(/constant OrcaApi::OrcaApi is deprecated/).to_stderr
   end
 end

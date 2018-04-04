@@ -27,7 +27,7 @@ module OrcaApi
     def initialize(raw)
       @raw = raw
       @attr_names = body.keys.map { |key|
-        [OrcaApi.underscore(key).to_sym, key]
+        [Client.underscore(key).to_sym, key]
       }.to_h
     end
 

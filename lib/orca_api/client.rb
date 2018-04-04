@@ -9,7 +9,7 @@ require_relative "binary_result"
 
 require_relative "error"
 
-module OrcaApi
+module OrcaApi #:nodoc:
   # 日医レセAPIを呼び出すため低レベルインタフェースを提供するクラス
   #
   # リクエスト毎に日レセAPIの接続先を切り替えられるように、接続・認証情報をこのクラスのオブジェクトに保持する。
@@ -19,7 +19,7 @@ module OrcaApi
   # 基本的には、低レベルインタフェースを使わなくても電子カルテのアプリケーションが組めるように、
   # 高レベルインターフェースを提供する。
   #
-  # `OrcaApi::OrcaApi#debug_output=` に IO オブジェクトを設定すると、日レセAPIとのやりとりを IO に出力できる。
+  # `OrcaApi::Client#debug_output=` に IO オブジェクトを設定すると、日レセAPIとのやりとりを IO に出力できる。
   #
   # ```ruby
   # orca_api.debug_output = $stdout
@@ -27,7 +27,7 @@ module OrcaApi
   #
   # 接続・認証に関するサンプルプログラムは `/example/common.rb` を参照。
   # また、低レベルインタフェースに関するサンプルプログラムは `/example/orca_api/call.rb` を参照。
-  class OrcaApi
+  class Client
     attr_accessor :host # ホスト名
     attr_accessor :port # ポート番号
     attr_accessor :user # ユーザー名
@@ -319,4 +319,8 @@ module OrcaApi
       end
     end
   end
+
+  # 0.2.xまでの移行措置のため
+  OrcaApi = Client
+  deprecate_constant :OrcaApi
 end

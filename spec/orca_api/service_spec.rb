@@ -3,7 +3,7 @@ require "spec_helper"
 RSpec.describe OrcaApi::Service do
   describe ".reuse_session" do
     let(:service) { service_class.new orca_api }
-    let(:orca_api) { OrcaApi::OrcaApi.new "http://example.com" }
+    let(:orca_api) { OrcaApi::Client.new "http://example.com" }
     let(:service_class) do
       Class.new(OrcaApi::Service) do
         def call_01

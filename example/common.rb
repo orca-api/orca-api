@@ -48,7 +48,7 @@ end
 ########################################################################
 ## 接続
 
-@orca_api = OrcaApi::OrcaApi.new(uri_str, options)
+@orca_api = OrcaApi::Client.new(uri_str, options)
 
 # デバッグ
 if ENV["ORCA_API_DEBUG"]
@@ -141,5 +141,5 @@ module CallWithWriteResponse
 end
 
 if ENV["ORCA_API_WRITE_RESPONSE"]
-  OrcaApi::OrcaApi.prepend(CallWithWriteResponse)
+  OrcaApi::Client.prepend(CallWithWriteResponse)
 end

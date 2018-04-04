@@ -198,7 +198,7 @@ RSpec.describe OrcaApi::LockService, orca_api_mock: true do
     end
 
     context "異常系: Karte_Uidが未設定" do
-      let(:orca_api) { double("OrcaApi::OrcaApi", karte_uid: "") }
+      let(:orca_api) { double("OrcaApi::Client", karte_uid: "") }
 
       it "エラーになること" do
         expect_data = [
