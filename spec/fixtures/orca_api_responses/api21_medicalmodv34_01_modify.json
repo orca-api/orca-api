@@ -24,11 +24,7 @@
     "Physician_Code": "10001",
     "Physician_WholeName": "オルカ　太郎",
     "HealthInsurance_Information": {
-      "Insurance_Combination_Number": "0009",
-      "Insurance_Combination_Rate": "1.0",
-      "InsuranceProvider_Class": "971",
-      "InsuranceProvider_WholeName": "労災保険",
-      "HealthInsuredPerson_Symbol": "短期給付"
+      "Insurance_Combination_Number": "0009"
     },
     "Medical_Information": {
       "Medical_Info": [

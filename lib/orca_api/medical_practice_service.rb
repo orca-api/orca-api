@@ -227,29 +227,26 @@ module OrcaApi
         "Karte_Uid" => res.karte_uid,
         "Patient_ID" => res.patient_information["Patient_ID"],
         "Perform_Date" => res_body["Perform_Date"],
+        "Perform_Time" => res_body["Perform_Time"],
         "Orca_Uid" => res.orca_uid,
         "Diagnosis_Information" => {
-          "Department_Code" => res_body["Department_Code"],
-          "Physician_Code" => res_body["Physician_Code"],
+          "Department_Code" => params["Diagnosis_Information"]["Department_Code"],
+          "Physician_Code" => params["Diagnosis_Information"]["Physician_Code"],
           "Outside_Class" => params["Diagnosis_Information"]["Outside_Class"],
           "Medical_Information" => {
             "Medical_Info" => params["Diagnosis_Information"]["Medical_Information"]["Medical_Info"],
-          }
+          },
+          "HealthInsurance_Information" => res.patient_information["HealthInsurance_Information"],
+          "Medical_OffTime" => res_body["Medical_OffTime"]
         }
       }
       if res_body["Invoice_Number"]
         req["Perform_Time"] = params["Perform_Time"]
         req["Invoice_Number"] = res_body["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
-        req["Diagnosis_Information"]["Department_Code"] = params["Diagnosis_Information"]["Department_Code"]
-        req["Diagnosis_Information"]["Physician_Code"] = params["Diagnosis_Information"]["Physician_Code"]
-        req["Diagnosis_Information"]["HealthInsurance_Information"] = params["Diagnosis_Information"]["HealthInsurance_Information"]
-        req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
-      else
-        req["Perform_Time"] = res_body["Perform_Time"]
         req["Diagnosis_Information"]["HealthInsurance_Information"] =
-          res.patient_information["HealthInsurance_Information"]
-        req["Diagnosis_Information"]["Medical_OffTime"] = res_body["Medical_OffTime"]
+          params["Diagnosis_Information"]["HealthInsurance_Information"]
+        req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
       end
       Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
     end
