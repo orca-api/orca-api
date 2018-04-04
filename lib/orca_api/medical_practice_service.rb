@@ -241,7 +241,9 @@ module OrcaApi
         req["Perform_Time"] = params["Perform_Time"]
         req["Invoice_Number"] = res_body["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
-        req["Diagnosis_Information"]["HealthInsurance_Information"] = res.health_insurance_information
+        req["Diagnosis_Information"]["Department_Code"] = params["Diagnosis_Information"]["Department_Code"]
+        req["Diagnosis_Information"]["Physician_Code"] = params["Diagnosis_Information"]["Physician_Code"]
+        req["Diagnosis_Information"]["HealthInsurance_Information"] = params["Diagnosis_Information"]["HealthInsurance_Information"]
         req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
       else
         req["Perform_Time"] = res_body["Perform_Time"]
