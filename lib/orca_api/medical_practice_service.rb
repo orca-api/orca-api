@@ -53,6 +53,79 @@ module OrcaApi
     end
 
     # 診察料情報の取得
+    #
+    # @param params [Hash]
+    #   診察料情報
+    # @option params [String] "Patient_ID" 患者番号/20/必須
+    # @option params [String] "Perform_Date" 診療日付/10/未設定はシステム日付
+    # @option params [String] "Perform_Time" 診療時間/8/未使用
+    # @option params [Hash] "Diagnosis_Information"
+    #   送信内容
+    #   * "Department_Code" (String) 診療科/2/必須
+    #   * "Physician_Code" (String) ドクターコード/5
+    #   * "HealthInsurance_Information" (Hash)
+    #     保険情報/※１
+    #     * "Insurance_Combination_Number" (String) 保険組合せ番号/4/指定があれば優先
+    #     * "InsuranceProvider_Class" (String) 保険の種類/3
+    #     * "InsuranceProvider_Number" (String) 保険者番号/8
+    #     * "InsuranceProvider_WholeName" (String) 保険の制度名称/20
+    #     * "HealthInsuredPerson_Symbol" (String) 記号/80
+    #     * "HealthInsuredPerson_Number" (String) 番号/80
+    #     * "HealthInsuredPerson_Continuation" (String) 継続区分/1
+    #     * "HealthInsuredPerson_Assistance" (String) 補助区分/1
+    #     * "RelationToInsuredPerson" (String) 本人家族区分/1
+    #     * "HealthInsuredPerson_WholeName" (String) 被保険者名/100
+    #     * "Certificate_StartDate" (String) 適用開始日/10
+    #     * "Certificate_ExpiredDate" (String) 適用終了日/10
+    #     * "PublicInsurance_Information" (Hash)
+    #       公費情報　（４）/4
+    #       * "PublicInsurance_Class" (String) 公費の種類/3
+    #       * "PublicInsurance_Name" (String) 公費の制度名称/20
+    #       * "PublicInsurer_Number" (String) 負担者番号/8
+    #       * "PublicInsuredPerson_Number" (String) 受給者番号/20
+    #       * "Certificate_IssuedDate" (String) 適用開始日/10
+    #       * "Certificate_ExpiredDate" (String) 適用終了日/10
+    #   * "Medical_Information" (Hash) 診療送信内容
+    #     * "OffTime" (String) 時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
+    #     * "Doctors_Fee" (String) 診察料区分/2/※２
+    #     * "Medical_Class" (String) 診療種別区分/3/診察料コードの診療区分
+    #     * "Medical_Class_Name" (String) 診療種別区分名称/40
+    #     * "Medication_Info" (Hash)
+    #       診療行為
+    #       * "Medication_Code" (String) 診療コード/9/診察料コード　※３
+    #       * "Medication_Name" (String) 名称/80
+    #
+    # @example
+    #   params = {
+    #     "Patient_ID" => patient_id,
+    #     "Perform_Date" => "",
+    #     "Perform_Time" => "",
+    #     "Diagnosis_Information" => {
+    #       "Department_Code" => "01",
+    #       "Physician_Code" => "10001",
+    #       "HealthInsurance_Information" => {
+    #         "Insurance_Combination_Number" => insurance_combination_number,
+    #       },
+    #       "Medical_Information" => {
+    #         "OffTime" => "0",
+    #         "Doctors_Fee" => doctors_fee,
+    #         "Medical_Class" => "",
+    #         "Medical_Class_Name" => "",
+    #         "Medication_Info" => {
+    #           "Medication_Code" => "",
+    #         }
+    #       },
+    #     },
+    #   }
+    #   result = medical_practice_service.get_examination_fee(params)
+    #   if !result.ok?
+    #     # エラー処理
+    #   end
+    #   medical_info = result.medical_information[0]["Medical_Info"] #=> 診察料情報
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api1
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf （診療処理開始）
+    # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api_err.pdf
     def get_examination_fee(params)
       res = call_01_for_create(params)
       if !res.locked?
@@ -159,6 +232,42 @@ module OrcaApi
     alias update create
 
     # 薬剤併用禁忌チェック
+    #
+    # @param params [Hash]
+    #   薬剤併用禁忌情報
+    # @option params [String] "Patient_ID" 患者ID
+    # @option params [String] "Perform_Month" 診療年月/7/未設定はシステム日付
+    # @option params [String] "Check_Term" チェック期間/2/未設定はシステム管理の相互作用チェック期間
+    # @option params [<Hash>] "Medical_Information"
+    #   チェック薬剤情報
+    #   * "Medication_Code" (String) 薬剤コード/9
+    #   * "Medication_Name" (String) 薬剤名称
+    #
+    # @example
+    #   params = {
+    #     "Patient_ID" => patient_id,
+    #     "Perform_Month" => "",
+    #     "Check_Term" => "",
+    #     "Medical_Information" => [
+    #       {
+    #         "Medication_Code" => "620002477"
+    #       },
+    #       {
+    #         "Medication_Code" => "610422262"
+    #       },
+    #     ],
+    #   }
+    #   result = medical_practice_service.check_contraindication(params)
+    #   if !result.ok?
+    #     # エラー処理
+    #   end
+    #   result.perform_month #=> 診療年月
+    #   result.patient_information #=> 患者情報
+    #   result.medical_information #=> チェック薬剤情報
+    #   result.symptom_information #=> 症状詳記内容
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api8
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api0214.pdf
     def check_contraindication(params)
       body = {
         "contraindication_checkreq" => {
