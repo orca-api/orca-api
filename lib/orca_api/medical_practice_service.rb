@@ -3,6 +3,61 @@ require_relative "service"
 module OrcaApi
   # 診療行為を扱うサービスを表現したクラス
   #
+  # @example 診療行為の訂正
+  #   # 対象の受診履歴を指定すること以外は、診療情報及び請求情報の取得と診療行為の登録と同じ流れ
+  #   medical_information = result.medical_information
+  #   #> ここで診療行為登録内容を訂正する
+  #   #> 時間外区分も設定する
+  #   medical_information["OffTime"] = "0" # 時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
+  #   params = {
+  #     #> ハッシュの値は、受信履歴を取得するためにInvoice_Numberを指定すること以外は
+  #     #> 診察料情報の取得、診療情報及び請求情報の取得と同じ
+  #     "Invoice_Number" => result.invoice_number, # 伝票番号/7/訂正時必須
+  #
+  #     "Patient_ID" => patient_id.to_s, # 患者番号/20/必須
+  #     "Perform_Date" => result.perform_date, # 診療日付/10/未設定はシステム日付
+  #     "Perform_Time" => "10:30:00", # 診療時間/8/未使用
+  #     "Diagnosis_Information" => { # 送信内容
+  #       "Department_Code" => result.department_code, # 診療科/2/必須
+  #       "Physician_Code" => result.physician_code, # ドクターコード/5
+  #       "Outside_Class" => result.body["Outside_Class"], # 院内・院外区分/5/院内＝False、院外＝True ※2
+  #       "HealthInsurance_Information" => result.health_insurance_information, # 保険情報
+  #       "Medical_Information" => medical_information, # 診療送信内容
+  #     },
+  #   }
+  #   #> ※２　投薬の院内・院外が診療種別から判断できない場合に、剤点数≠ゼロを院内、剤点数＝ZEROかつ薬剤がある場合を院外とする。
+  #   result = medical_practice_service.calc_medical_practice_fee(params)
+  #   if !result.ok?
+  #     # エラー
+  #   end
+  #   result.medical_information #=> 診療情報
+  #   result.cd_information #=> 請求情報
+  #
+  #   params["Base_Date"] = "" # 基準日/10/収納発行日を診療日付以外とする時に設定
+  #   params["Ic_Code"] = result.cd_information["Ic_Code"] # 入金方法/2/未設定は、システム管理・患者登録設定内容
+  #   params["Ic_Request_Code"] = result.cd_information["Ic_Request_Code"] # 入金取り扱い区分/1/※５
+  #   params["Ic_All_Code"] = "" # 一括入返金区分/1/※６
+  #   params["Cd_Information"] = { # 収納情報
+  #     "Ad_Money1" => "0", # 調整金１/10/※2 マイナス可　　※3
+  #     "Ad_Money2" => "0", # 調整金２/10/※2 マイナス可　　※3
+  #     "Ic_Money" => result.cd_information["Cd_Information2"]["Ic_Money"], # 入金額/10/今回合計請求額以下であること　マイナス不可
+  #     "Re_Money" => "", # 返金額/10/※７　マイナス不可
+  #   }
+  #   params["Print_Information"] = { # 印刷区分 ※８
+  #     "Print_Prescription_Class" => "0", # 処方せん印刷区分/1/０：発行なし、１：発行あり、２：院内処方発行
+  #     "Print_Invoice_Receipt_Class" => "0", # 請求書兼領収書印刷区分/1/※９
+  #     "Print_Statement_Class" => "0", # 診療費明細書印刷区分/1/０：発行なし、１：発行あり
+  #     "Print_Medicine_Information_Class" => "0", # 薬剤情報印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
+  #     "Print_Medication_Note_Class" => "0", # 薬手帳印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
+  #     "Print_Appointment_Form_Class" => "0", # 予約票印刷区分/1/０：発行なし、１：発行あり
+  #   }
+  #   result = medical_practice_service.create(params)
+  #   if !result.ok?
+  #     # エラー
+  #   end
+  #   result.medical_information #=> 診療情報
+  #   result.cd_information #=> 請求情報
+  #
   # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
   class MedicalPracticeService < Service
     # 選択項目が未指定であることを表現するクラス
@@ -53,47 +108,83 @@ module OrcaApi
     end
 
     # 診察料情報の取得
+    # > ※１　保険組合せ　又は　保険・公費から保険組合せを決定
+    # > 　　　包括分入力（保険組合せ＝９９９９、保険の種類＝９９）
+    # > 　　　診察料区分（Doctors_Fee）＝０９　は省略可
+    # > ※２　０１＝初診、０２＝再診、０３＝電話再診、０９＝診察料なし
+    # > ※３　コードが使用できるかのチェックを行う。
+    # > 　　　診察料区分の設定がない時のみチェックを行う。
     #
     # @param params [Hash]
     #   診察料情報
-    # @option params [String] "Patient_ID" 患者番号/20/必須
-    # @option params [String] "Perform_Date" 診療日付/10/未設定はシステム日付
-    # @option params [String] "Perform_Time" 診療時間/8/未使用
+    # @option params [String] "Patient_ID"
+    #   患者番号/20/必須
+    # @option params [String] "Perform_Date"
+    #   診療日付/10/未設定はシステム日付
+    # @option params [String] "Perform_Time"
+    #   診療時間/8/未使用
     # @option params [Hash] "Diagnosis_Information"
     #   送信内容
     #   * "Department_Code" (String) 診療科/2/必須
     #   * "Physician_Code" (String) ドクターコード/5
     #   * "HealthInsurance_Information" (Hash)
     #     保険情報/※１
-    #     * "Insurance_Combination_Number" (String) 保険組合せ番号/4/指定があれば優先
-    #     * "InsuranceProvider_Class" (String) 保険の種類/3
-    #     * "InsuranceProvider_Number" (String) 保険者番号/8
-    #     * "InsuranceProvider_WholeName" (String) 保険の制度名称/20
-    #     * "HealthInsuredPerson_Symbol" (String) 記号/80
-    #     * "HealthInsuredPerson_Number" (String) 番号/80
-    #     * "HealthInsuredPerson_Continuation" (String) 継続区分/1
-    #     * "HealthInsuredPerson_Assistance" (String) 補助区分/1
-    #     * "RelationToInsuredPerson" (String) 本人家族区分/1
-    #     * "HealthInsuredPerson_WholeName" (String) 被保険者名/100
-    #     * "Certificate_StartDate" (String) 適用開始日/10
-    #     * "Certificate_ExpiredDate" (String) 適用終了日/10
+    #     * "Insurance_Combination_Number" (String)
+    #       保険組合せ番号/4/指定があれば優先
+    #     * "InsuranceProvider_Class" (String)
+    #       保険の種類/3
+    #     * "InsuranceProvider_Number" (String)
+    #       保険者番号/8
+    #     * "InsuranceProvider_WholeName" (String)
+    #       保険の制度名称/20
+    #     * "HealthInsuredPerson_Symbol" (String)
+    #       記号/80
+    #     * "HealthInsuredPerson_Number" (String)
+    #       番号/80
+    #     * "HealthInsuredPerson_Continuation" (String)
+    #       継続区分/1
+    #     * "HealthInsuredPerson_Assistance" (String)
+    #       補助区分/1
+    #     * "RelationToInsuredPerson" (String)
+    #       本人家族区分/1
+    #     * "HealthInsuredPerson_WholeName" (String)
+    #       被保険者名/100
+    #     * "Certificate_StartDate" (String)
+    #       適用開始日/10
+    #     * "Certificate_ExpiredDate" (String)
+    #       適用終了日/10
     #     * "PublicInsurance_Information" (Hash)
     #       公費情報　（４）/4
-    #       * "PublicInsurance_Class" (String) 公費の種類/3
-    #       * "PublicInsurance_Name" (String) 公費の制度名称/20
-    #       * "PublicInsurer_Number" (String) 負担者番号/8
-    #       * "PublicInsuredPerson_Number" (String) 受給者番号/20
-    #       * "Certificate_IssuedDate" (String) 適用開始日/10
-    #       * "Certificate_ExpiredDate" (String) 適用終了日/10
-    #   * "Medical_Information" (Hash) 診療送信内容
-    #     * "OffTime" (String) 時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
-    #     * "Doctors_Fee" (String) 診察料区分/2/※２
-    #     * "Medical_Class" (String) 診療種別区分/3/診察料コードの診療区分
-    #     * "Medical_Class_Name" (String) 診療種別区分名称/40
+    #       * "PublicInsurance_Class" (String)
+    #         公費の種類/3
+    #       * "PublicInsurance_Name" (String)
+    #         公費の制度名称/20
+    #       * "PublicInsurer_Number" (String)
+    #         負担者番号/8
+    #       * "PublicInsuredPerson_Number" (String)
+    #         受給者番号/20
+    #       * "Certificate_IssuedDate" (String)
+    #         適用開始日/10
+    #       * "Certificate_ExpiredDate" (String)
+    #         適用終了日/10
+    #   * "Medical_Information" (Hash)
+    #     診療送信内容
+    #     * "OffTime" (String)
+    #       時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
+    #     * "Doctors_Fee" (String)
+    #       診察料区分/2/※２
+    #     * "Medical_Class" (String)
+    #       診療種別区分/3/診察料コードの診療区分
+    #     * "Medical_Class_Name" (String)
+    #       診療種別区分名称/40
     #     * "Medication_Info" (Hash)
     #       診療行為
-    #       * "Medication_Code" (String) 診療コード/9/診察料コード　※３
-    #       * "Medication_Name" (String) 名称/80
+    #       * "Medication_Code" (String)
+    #         診療コード/9/診察料コード　※３
+    #       * "Medication_Name" (String)
+    #         名称/80
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
     #
     # @example
     #   params = {
@@ -135,18 +226,137 @@ module OrcaApi
     end
 
     # 診療情報及び請求情報の取得
-    # call_01_for_create
-    # call_02
-    # call_03
-    # call_04
-    # を順に呼び出す
+    # > ※４　レスポンス内容をリクエスト内容として返却する時そのまま返却すること。変更した場合の不具合は保障できない。
+    # > ※５　名称を入力するコメントコード（81XXXXXXX,83XXXXXXXX,0083XXXXX、0085～）は全内容（点数マスタの名称＋入力内容）
+    # > ※６　在医総管・施医総菅（C002）の在宅療養実績加算、精神通院（I002）の２０未満の加算を自動算定しない場合に「Yes」を設定します。
+    # > ※７ 画像診断で使用するフィルムのみ送信内容を反映する。反映しないコードに送信しても特にチェックは行わない。
+    # > ※８ 注射薬剤等を残量廃棄する場合は、その薬剤の下に残量廃棄の予約コード（099309901）を設定してください。
     #
-    # params["Medical_Select_Information"] = [
-    #   { "Medical_Select" => "", "Select_Answer" => "" },
-    # ]
-    # params["Delete_Number_Info"] = [
-    #   { "Delete_Number" => "" },
-    # ]
+    # @param params [Hash]
+    #   診察料情報
+    # @option params [String] "Patient_ID" 患者番号/20/必須
+    # @option params [String] "Perform_Date" 診療日付/10/未設定はシステム日付
+    # @option params [String] "Perform_Time" 診療時間/8/未使用
+    # @option params [Hash] "Diagnosis_Information"
+    #   送信内容
+    #   MedicalPracticeService#get_examination_fee の "Diagnosis_Information" と同じデータを渡す。
+    #   以下は追加パラメータ
+    #   * "Outside_Class" ("False", "True")
+    #     院内・院外区分/5/院内＝False、院外＝True（未設定はシステム管理）※１
+    #   * "Medical_Information" ({ "Medical_Info" => <Hash> })
+    #     診療行為情報
+    #     * "Medical_Class" (String)
+    #       診療種別区分/3/必須
+    #     * "Medical_Class_Name" (String)
+    #       診療種別区分名称/40
+    #     * "Medical_Class_Number" (String)
+    #       回数/3/未設定は１、０はエラー
+    #     * "Medication_Info" (<Hash>)
+    #       診療剤明細（５０）/50
+    #       * "Medication_Code" (String)
+    #         診療コード/9
+    #       * "Medication_Name" (String)
+    #         名称/80/※５
+    #       * "Medication_Number" (String)
+    #         数量/11/未設定は１、０はエラー
+    #       * "Medication_Moeny" (String)
+    #         自費金額/7/金額ゼロで登録してある自費コードの金額（消費税込）
+    #       * "Medication_Input_Info" (<{ "Medication_Input_Code" => String }>)
+    #         コメント埋め込み数値（５）/5
+    #         * "Medication_Input_Code" (String)
+    #           コメント埋め込み数値/8/（１）から順に数値を編集
+    #       * "Medication_Film_Comp_Number" (String)
+    #         フィルム分画数/3
+    #       * "Medication_Continue" (String)
+    #         継続コメント指示区分/1
+    #       * "Medication_Internal_Kinds" (String)
+    #         内服種類数指示区分/1/１：内服種類数を１とする
+    #       * "Medication_No_Addition_Class" (String)
+    #         加算自動算定なし/3/※６
+    #       * "Medication_Auto_Addition" (String)
+    #         自動区分/1/※４
+    # @option params [<Hash>] "Medical_Select_Information"
+    #   確認領域
+    #   * "Medical_Select" (String)
+    #     確認メッセージコード
+    #   * "Select_Answer" ("Ok", "No")
+    #     確認メッセージ返答
+    # @option params [<Hash>] "Delete_Number_Info"
+    #   在削除連番
+    #   * "Delete_Number" (String)
+    #     在削除連番
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    # @return [OrcaApi::MedicalPracticeService::UnselectedError]
+    #   選択項目がある場合の日レセからのレスポンス
+    # @return [OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError]
+    #   削除可能な剤がある場合の日レセからのレスポンス
+    #
+    # @example
+    #   # 診療種別区分を指定せずに薬剤を追加する。
+    #   medical_info.last["Medication_Info"] << {
+    #     "Medication_Code" => "620002477", # 薬剤コード/9
+    #     "Medication_Name" => "ベザレックスＳＲ錠１００　１００ｍｇ", # 省略可能
+    #     "Medication_Number" => "1",
+    #   }
+    #   # 診療種別区分として手術を指定して薬剤を追加する。
+    #   medical_info << {
+    #     "Medical_Class" => "500",
+    #     "Medication_Info" => [
+    #       {
+    #         "Medication_Code" => "620002477", # 薬剤コード/9
+    #         "Medication_Name" => "ベザレックスＳＲ錠１００　１００ｍｇ", # 省略可能
+    #         "Medication_Number" => "1",
+    #       },
+    #     ],
+    #   }
+    #   params["Diagnosis_Information"]["Medical_Information"]["Medical_Info"] = medical_info
+    #   params["Diagnosis_Information"]["Outside_Class"] = "True" # 院内・院外区分/5/院内＝False、院外＝True（未設定はシステム管理）
+    #   result = medical_practice_service.calc_medical_practice_fee(params)
+    #   while !result.ok?
+    #     case result
+    #     when OrcaApi::MedicalPracticeService::UnselectedError
+    #       result.medical_select_information #=> 選択項目
+    #
+    #       # 選択項目が存在するため、paramsに選択項目への回答を追加する。
+    #       # 複数の選択項目がある場合は、都度このエラーが発生するため、すべての回答を追加すること。
+    #       params["Medical_Select_Information"] = [
+    #         {
+    #           "Medical_Select" => "0113", # 確認メッセージコード/4
+    #           "Medical_Select_Message" => "特定疾患処方管理加算が算定できます。ＯＫで自動算定します。", # 確認メッセージ/100/省略可能
+    #           "Select_Answer" => "No", # 確認メッセージ返答/3/Ok 、No (OK,NO)
+    #         },
+    #         {
+    #           "Medical_Select": "2003",
+    #           "Medical_Select_Message": "手帳記載加算（薬剤情報提供料）を算定します。よろしいですか？",
+    #           "Select_Answer" => "Yes",
+    #         },
+    #       ]
+    #     when OrcaApi::MedicalPracticeService::EmptyDeleteNumberInfoError
+    #       result.medical_information #=> 診療情報情報。削除可能な剤には"Medical_Delete_Number"が存在する。
+    #       # "Medical_Delete_Number"が存在する場合のHashの例: spec/fixtures/orca_api_responses/api21_medicalmodv32_03_delete.json
+    #
+    #       # 削除可能な剤が存在するため、paramsに削除するかどうかを追加する。
+    #       params["Delete_Number_Info"] = [
+    #         { "Delete_Number" => "01" },
+    #       ]
+    #     else
+    #       # その他のエラー
+    #       break
+    #     end
+    #     result = medical_practice_service.calc_medical_practice_fee(params)
+    #   end
+    #   if !result.ok?
+    #     # エラー
+    #   end
+    #   result.medical_information #=> 診療情報
+    #   result.cd_information #=> 請求情報
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api2
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api3
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api4
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf （診療内容チェック）（診療行為確認・登録）
+    # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api_err.pdf
     def calc_medical_practice_fee(params)
       res = if params["Invoice_Number"]
               call_01_for_update(params, "Modify")
@@ -166,12 +376,69 @@ module OrcaApi
     end
 
     # 診療行為の登録
+    #> ※２　請求額＋(調整金１＋調整金２）　がマイナスはエラー
+    #> ※３　入金方法から印刷区分はリクエスト番号＝０５のみ反映とする
+    #> ※５ 訂正時は１のみとする。初期設定はシステム管理による
+    #> 　　1:今回請求分のみ入力
+    #> 　　2:今回分・伝票の古い未収順に入金
+    #> 　　3:今回分・伝票の新しい未収順に入金
+    #> 　　4:伝票の古い未収順に入金
+    #> 　　5:伝票の新しい未収順に入金
+    #> ※６　入金取り扱い区分が２から５で、前回までの未収額・前回までの過入金がある時のみ「１」で一括入返金処理を行う
+    #> ※７　新規は前回過入金がある時に全額設定、訂正時（前回請求額－今回請求額）がマイナスの時のみ全額設定（返金するときのみ）
+    #> ※８　更新処理後、印刷処理を行う。各印刷区分が未設定の時は印刷処理なしとする。（システム管理による初期値設定は行わない）
+    #> ※９　新規　０：発行なし、１：発行あり、２：発行あり（１：と違いはない）
+    #> 　　　訂正　０：発行なし、１：発行あり（訂正分）、２：発行あり（合計）
     #
-    # params["Ic_Code"]
-    # params["Ic_Request_Code"]
-    # params["Ic_All_Code"]
-    # params["Cd_Information"]
-    # params["Print_Information"]
+    # @param params [Hash]
+    #   診察料情報
+    # @option params [String] "Base_Date"
+    #   基準日/10/収納発行日を診療日付以外とする時に設定
+    # @option params [String] "Ic_Code"
+    #   入金方法/2/未設定は、システム管理・患者登録設定内容
+    # @option params [String] "Ic_Request_Code"
+    #   入金取り扱い区分/1/※５
+    # @option params [String] "Ic_All_Code"
+    #   一括入返金区分/1/※６
+    # @option params [Hash] "Cd_Information"
+    #   収納情報
+    #   * "Ad_Money1" (String)
+    #     調整金１/10/※2 マイナス可　　※3
+    #   * "Ad_Money2" (String)
+    #     調整金２/10/※2 マイナス可　　※3
+    #   * "Ic_Money" (String)
+    #     入金額/10/今回合計請求額以下であること　マイナス不可
+    #   * "Re_Money" (String)
+    #     返金額/10/※７　マイナス不可
+    # @option params [Hash] "Print_Information"
+    #   印刷区分
+    #   * "Print_Prescription_Class" (String)
+    #     処方せん印刷区分/1/０：発行なし、１：発行あり、２：院内処方発行
+    #   * "Print_Invoice_Receipt_Class" (String)
+    #     請求書兼領収書印刷区分/1/※９
+    #   * "Print_Statement_Class" (String)
+    #     診療費明細書印刷区分/1/０：発行なし、１：発行あり
+    #   * "Print_Medicine_Information_Class" (String)
+    #     薬剤情報印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
+    #   * "Print_Medication_Note_Class" (String)
+    #     薬手帳印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
+    #   * "Print_Appointment_Form_Class" (String)
+    #     予約票印刷区分/1/０：発行なし、１：発行あり
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    #
+    # @example
+    #   result = medical_practice_service.create(params)
+    #   if !result.ok?
+    #     # エラー処理
+    #   end
+    #   result.invoice_number #=> 伝票番号
+    #   result.medical_information #=> 診療行為情報
+    #   result.cd_information #=> 請求情報
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api5
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf （診療行為確認・登録）
+    # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api_err.pdf
     def create(params)
       res = if params["Invoice_Number"]
               call_01_for_update(params, "Modify")
@@ -200,6 +467,37 @@ module OrcaApi
     end
 
     # 診療行為の取得
+    # > ※２　伝票番号を優先とする。
+    # > 　　　伝票番号がない時のみ、診療科・保険組合せ・連番から受診履歴を決定する。
+    # > 　　　連番の未設定は１とする。
+    #
+    # @param params
+    #   診療行為情報
+    # @option params [String] "Patient_ID"
+    #   患者番号/20/必須
+    # @option params [String] "Perform_Date"
+    #   診療日付/10/未設定はシステム日付
+    # @option params [String] "Invoice_Number"
+    #   伝票番号/7/※２
+    # @option params [String] "Department_Code"
+    #   診療科/1/※２
+    # @option params [String] "Insurance_Combination_Number"
+    #   保険組合せ番号/4/※２
+    # @option params [String] "Sequential_Number"
+    #   連番/1/※２
+    # @return [OrcaApi::Result]
+    #   日レセからのレスポンス
+    #
+    # @example
+    #   result = medical_practice_service.get(params)
+    #   if !result.ok?
+    #     # エラー処理
+    #   end
+    #   result.medical_information #=> 診療行為登録内容
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api7
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf 一体化API診療行為削除
+    # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api_err.pdf
     def get(params)
       res = call_01_for_update(params, "Modify")
       if !res.locked?
@@ -211,6 +509,12 @@ module OrcaApi
     end
 
     # 診療行為の削除
+    #
+    # @param (see #get)
+    # @return (see #get)
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api6
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf 一体化API診療行為削除
+    # @see http://ftp.orca.med.or.jp/pub/data/receipt/tec/api/haori/HAORI_Layout/api_err.pdf
     def destroy(params)
       res = call_01_for_update(params, "Delete")
       if !res.locked?
