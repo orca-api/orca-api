@@ -72,7 +72,7 @@ def return_response_json(response_json)
   end
 end
 
-# OrcaApi::OrcaApi#callの呼び出し回数と引数をチェックする
+# OrcaApi::Client#callの呼び出し回数と引数をチェックする
 #
 # 使用例を以下に示す。
 # :bodyに指定するハッシュのキーに=を指定すると、値が完全に一致することをチェックできる。
@@ -151,7 +151,7 @@ def expect_orca_api_call(expect_data, context)
   end
 end
 
-# OrcaApi::OrcaApi#callのbody引数の内容をチェックする
+# OrcaApi::Client#callのbody引数の内容をチェックする
 #
 # @param [Hash|Array|Object] actual_body
 #   実際の値
@@ -179,7 +179,7 @@ def expect_orca_api_call_body(actual_body, expect_body, context)
   end
 end
 
-# OrcaApi::OrcaApi#callのbody引数の値をチェックする
+# OrcaApi::Client#callのbody引数の値をチェックする
 #
 # 期待値がバッククォートで括ってあれば、それを取り除いてevalした値を期待値として扱う。
 #
@@ -193,7 +193,7 @@ def expect_orca_api_call_body_value(actual_value, expect_value, context)
   expect(actual_value).to eq(expect_orca_api_call_eval_value(expect_value, context))
 end
 
-# OrcaApi::OrcaApi#callのbody引数の期待値がバッククォートで括ってあれば、それを取り除いてevalした値を期待値として返す
+# OrcaApi::Client#callのbody引数の期待値がバッククォートで括ってあれば、それを取り除いてevalした値を期待値として返す
 #
 # @param [Object] expect_value
 #   期待値

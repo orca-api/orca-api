@@ -1295,7 +1295,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         Department_Code Department_Name Sequential_Number Physician_Code Physician_WholeName HealthInsurance_Information
         Medical_Information
       ).each do |name|
-        its(OrcaApi::OrcaApi.underscore(name).to_sym) { is_expected.to eq(response_data.first[1][name]) }
+        its(OrcaApi::Client.underscore(name).to_sym) { is_expected.to eq(response_data.first[1][name]) }
       end
     end
 
@@ -1409,7 +1409,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
       %w(
         Department_Code Sequential_Number HealthInsurance_Information
       ).each do |name|
-        its(OrcaApi::OrcaApi.underscore(name).to_sym) { is_expected.to eq(response_data.first[1][name]) }
+        its(OrcaApi::Client.underscore(name).to_sym) { is_expected.to eq(response_data.first[1][name]) }
       end
     end
 
