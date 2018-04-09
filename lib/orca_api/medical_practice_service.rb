@@ -2,6 +2,19 @@ require_relative "service"
 
 module OrcaApi
   # 診療行為を扱うサービスを表現したクラス
+  # 診療行為の登録の流れを以下に示す。
+  #
+  #  * (1) 患者の保険情報と診察料のデフォルト値の返却: get_default
+  #    * 取得したデフォルト値を元に、次のメソッドの引数を組み立てる。
+  #    * 詳しくは `example/medical_practice_service/get_default.rb` を参照。
+  #  * (2) 診察料情報の取得: get_examination_fee
+  #    * 取得した診察料情報を元に、次のメソッドの引数を組み立てる。
+  #    * 詳しくは `example/medical_practice_service/get_examination_fee.rb` を参照。
+  #  * (3) 診療情報及び請求情報の取得: calc_medical_practice_fee
+  #    * 取得した診療情報及び請求情報を元に、次のメソッドの引数を組み立てる。
+  #    * 詳しくは `example/medical_practice_service/cal_medical_practice_fee.rb` を参照。
+  #  * (4) 診療行為の登録: create
+  #    * 詳しくは `example/medical_practice_service/crud.rb` を参照。
   #
   # @example 診療行為の訂正
   #   # 対象の受診履歴を指定すること以外は、診療情報及び請求情報の取得と診療行為の登録と同じ流れ
@@ -108,12 +121,6 @@ module OrcaApi
     end
 
     # 診察料情報の取得
-    # > ※１　保険組合せ　又は　保険・公費から保険組合せを決定
-    # > 　　　包括分入力（保険組合せ＝９９９９、保険の種類＝９９）
-    # > 　　　診察料区分（Doctors_Fee）＝０９　は省略可
-    # > ※２　０１＝初診、０２＝再診、０３＝電話再診、０９＝診察料なし
-    # > ※３　コードが使用できるかのチェックを行う。
-    # > 　　　診察料区分の設定がない時のみチェックを行う。
     #
     # @param params [Hash]
     #   診察料情報
@@ -128,7 +135,10 @@ module OrcaApi
     #   * "Department_Code" (String) 診療科/2/必須
     #   * "Physician_Code" (String) ドクターコード/5
     #   * "HealthInsurance_Information" (Hash)
-    #     保険情報/※１
+    #     保険情報。
+    #     保険組合せ又は保険・公費から保険組合せを決定。
+    #     包括分入力（保険組合せ＝９９９９、保険の種類＝９９）。
+    #     診察料区分（Doctors_Fee）＝０９　は省略可。
     #     * "Insurance_Combination_Number" (String)
     #       保険組合せ番号/4/指定があれば優先
     #     * "InsuranceProvider_Class" (String)
@@ -172,7 +182,8 @@ module OrcaApi
     #     * "OffTime" (String)
     #       時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
     #     * "Doctors_Fee" (String)
-    #       診察料区分/2/※２
+    #       診察料区分/2。
+    #       ０１＝初診、０２＝再診、０３＝電話再診、０９＝診察料なし。
     #     * "Medical_Class" (String)
     #       診療種別区分/3/診察料コードの診療区分
     #     * "Medical_Class_Name" (String)
@@ -180,7 +191,9 @@ module OrcaApi
     #     * "Medication_Info" (Hash)
     #       診療行為
     #       * "Medication_Code" (String)
-    #         診療コード/9/診察料コード　※３
+    #         診療コード/9/診察料コード。
+    #         コードが使用できるかのチェックを行う。
+    #         診察料区分の設定がない時のみチェックを行う。
     #       * "Medication_Name" (String)
     #         名称/80
     # @return [OrcaApi::Result]
@@ -226,11 +239,6 @@ module OrcaApi
     end
 
     # 診療情報及び請求情報の取得
-    # > ※４　レスポンス内容をリクエスト内容として返却する時そのまま返却すること。変更した場合の不具合は保障できない。
-    # > ※５　名称を入力するコメントコード（81XXXXXXX,83XXXXXXXX,0083XXXXX、0085～）は全内容（点数マスタの名称＋入力内容）
-    # > ※６　在医総管・施医総菅（C002）の在宅療養実績加算、精神通院（I002）の２０未満の加算を自動算定しない場合に「Yes」を設定します。
-    # > ※７ 画像診断で使用するフィルムのみ送信内容を反映する。反映しないコードに送信しても特にチェックは行わない。
-    # > ※８ 注射薬剤等を残量廃棄する場合は、その薬剤の下に残量廃棄の予約コード（099309901）を設定してください。
     #
     # @param params [Hash]
     #   診察料情報
@@ -242,7 +250,7 @@ module OrcaApi
     #   MedicalPracticeService#get_examination_fee の "Diagnosis_Information" と同じデータを渡す。
     #   以下は追加パラメータ
     #   * "Outside_Class" ("False", "True")
-    #     院内・院外区分/5/院内＝False、院外＝True（未設定はシステム管理）※１
+    #     院内・院外区分/5/院内＝False、院外＝True（未設定はシステム管理）
     #   * "Medical_Information" ({ "Medical_Info" => <Hash> })
     #     診療行為情報
     #     * "Medical_Class" (String)
@@ -256,7 +264,8 @@ module OrcaApi
     #       * "Medication_Code" (String)
     #         診療コード/9
     #       * "Medication_Name" (String)
-    #         名称/80/※５
+    #         名称/80。
+    #         名称を入力するコメントコード（81XXXXXXX,83XXXXXXXX,0083XXXXX、0085～）は全内容（点数マスタの名称＋入力内容）。
     #       * "Medication_Number" (String)
     #         数量/11/未設定は１、０はエラー
     #       * "Medication_Moeny" (String)
@@ -272,9 +281,11 @@ module OrcaApi
     #       * "Medication_Internal_Kinds" (String)
     #         内服種類数指示区分/1/１：内服種類数を１とする
     #       * "Medication_No_Addition_Class" (String)
-    #         加算自動算定なし/3/※６
+    #         加算自動算定なし/3。
+    #         在医総管・施医総菅（C002）の在宅療養実績加算、精神通院（I002）の２０未満の加算を自動算定しない場合に「Yes」を設定します。
     #       * "Medication_Auto_Addition" (String)
-    #         自動区分/1/※４
+    #         自動区分/1。
+    #         レスポンス内容をリクエスト内容として返却する時そのまま返却すること。変更した場合の不具合は保障できない。
     # @option params [<Hash>] "Medical_Select_Information"
     #   確認領域
     #   * "Medical_Select" (String)
@@ -376,19 +387,6 @@ module OrcaApi
     end
 
     # 診療行為の登録
-    #> ※２　請求額＋(調整金１＋調整金２）　がマイナスはエラー
-    #> ※３　入金方法から印刷区分はリクエスト番号＝０５のみ反映とする
-    #> ※５ 訂正時は１のみとする。初期設定はシステム管理による
-    #> 　　1:今回請求分のみ入力
-    #> 　　2:今回分・伝票の古い未収順に入金
-    #> 　　3:今回分・伝票の新しい未収順に入金
-    #> 　　4:伝票の古い未収順に入金
-    #> 　　5:伝票の新しい未収順に入金
-    #> ※６　入金取り扱い区分が２から５で、前回までの未収額・前回までの過入金がある時のみ「１」で一括入返金処理を行う
-    #> ※７　新規は前回過入金がある時に全額設定、訂正時（前回請求額－今回請求額）がマイナスの時のみ全額設定（返金するときのみ）
-    #> ※８　更新処理後、印刷処理を行う。各印刷区分が未設定の時は印刷処理なしとする。（システム管理による初期値設定は行わない）
-    #> ※９　新規　０：発行なし、１：発行あり、２：発行あり（１：と違いはない）
-    #> 　　　訂正　０：発行なし、１：発行あり（訂正分）、２：発行あり（合計）
     #
     # @param params [Hash]
     #   診察料情報
@@ -397,25 +395,44 @@ module OrcaApi
     # @option params [String] "Ic_Code"
     #   入金方法/2/未設定は、システム管理・患者登録設定内容
     # @option params [String] "Ic_Request_Code"
-    #   入金取り扱い区分/1/※５
+    #   入金取り扱い区分/1。
+    #   訂正時は１のみとする。初期設定はシステム管理による。
+    #
+    #    * 1:今回請求分のみ入力
+    #    * 2:今回分・伝票の古い未収順に入金
+    #    * 3:今回分・伝票の新しい未収順に入金
+    #    * 4:伝票の古い未収順に入金
+    #    * 5:伝票の新しい未収順に入金
     # @option params [String] "Ic_All_Code"
-    #   一括入返金区分/1/※６
+    #   一括入返金区分/1。
+    #   入金取り扱い区分が２から５で、前回までの未収額・前回までの過入金がある時のみ「１」で一括入返金処理を行う。
     # @option params [Hash] "Cd_Information"
     #   収納情報
     #   * "Ad_Money1" (String)
-    #     調整金１/10/※2 マイナス可　　※3
+    #     調整金１/10/マイナス可。
+    #     請求額＋(調整金１＋調整金２）がマイナスはエラー。
     #   * "Ad_Money2" (String)
-    #     調整金２/10/※2 マイナス可　　※3
+    #     調整金２/10/マイナス可。
+    #     請求額＋(調整金１＋調整金２）がマイナスはエラー。
     #   * "Ic_Money" (String)
-    #     入金額/10/今回合計請求額以下であること　マイナス不可
+    #     入金額/10/今回合計請求額以下であること。マイナス不可
     #   * "Re_Money" (String)
-    #     返金額/10/※７　マイナス不可
+    #     返金額/10/マイナス不可。
+    #     新規は前回過入金がある時に全額設定、訂正時（前回請求額－今回請求額）がマイナスの時のみ全額設定（返金するときのみ）。
     # @option params [Hash] "Print_Information"
     #   印刷区分
     #   * "Print_Prescription_Class" (String)
     #     処方せん印刷区分/1/０：発行なし、１：発行あり、２：院内処方発行
     #   * "Print_Invoice_Receipt_Class" (String)
-    #     請求書兼領収書印刷区分/1/※９
+    #     請求書兼領収書印刷区分/1。
+    #     * 新規
+    #       * 0：発行なし
+    #       * 1：発行あり
+    #       * 2：発行あり（1：と違いはない）
+    #     * 訂正
+    #       * 0：発行なし
+    #       * 1：発行あり（訂正分）
+    #       * 2：発行あり（合計）
     #   * "Print_Statement_Class" (String)
     #     診療費明細書印刷区分/1/０：発行なし、１：発行あり
     #   * "Print_Medicine_Information_Class" (String)
@@ -467,9 +484,6 @@ module OrcaApi
     end
 
     # 診療行為の取得
-    # > ※２　伝票番号を優先とする。
-    # > 　　　伝票番号がない時のみ、診療科・保険組合せ・連番から受診履歴を決定する。
-    # > 　　　連番の未設定は１とする。
     #
     # @param params
     #   診療行為情報
@@ -478,13 +492,18 @@ module OrcaApi
     # @option params [String] "Perform_Date"
     #   診療日付/10/未設定はシステム日付
     # @option params [String] "Invoice_Number"
-    #   伝票番号/7/※２
+    #   伝票番号/7。
+    #   伝票番号がない時のみ、診療科・保険組合せ・連番から受診履歴を決定する。
     # @option params [String] "Department_Code"
-    #   診療科/1/※２
+    #   診療科/1。
+    #   伝票番号を優先とする。
     # @option params [String] "Insurance_Combination_Number"
-    #   保険組合せ番号/4/※２
+    #   保険組合せ番号/4。
+    #   伝票番号を優先とする。
     # @option params [String] "Sequential_Number"
-    #   連番/1/※２
+    #   連番/1。
+    #   伝票番号を優先とする。
+    #   連番の未設定は１とする。
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
     #
