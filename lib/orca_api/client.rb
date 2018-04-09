@@ -17,7 +17,7 @@ module OrcaApi #:nodoc:
   # 同じオブジェクトに複数のスレッドからアクセスすることはできない。
   #
   # 基本的には、低レベルインタフェースを使わなくても電子カルテのアプリケーションが組めるように、
-  # 高レベルインターフェースを提供する。
+  # OrcaApi::Service クラスを継承した高レベルインターフェースを提供する。
   #
   # `OrcaApi::Client#debug_output=` に IO オブジェクトを設定すると、日レセAPIとのやりとりを IO に出力できる。
   #
@@ -106,6 +106,10 @@ module OrcaApi #:nodoc:
       self.timeout = options[:timeout]
     end
 
+    # カルテUIDの取得
+    # OrcaApi::Client#karte_uid= で明示的に設定しない場合は、OrcaApi::Client のインスタンス毎にユニークな値を自動生成する
+    #
+    # @return [String] カルテUID
     def karte_uid
       @karte_uid ||= SecureRandom.uuid
     end
