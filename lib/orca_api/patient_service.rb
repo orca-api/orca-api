@@ -17,64 +17,119 @@ module OrcaApi
 
     # 患者情報の登録
     #
-    # @param patient_information [Hash] 登録する患者情報
-    # @option patient_information [String] "WholeName" 漢字氏名/50/必須/全角２５文字
-    # @option patient_information [String] "WholeName_inKana" カナ氏名/50/必須/全角２５文字（半角全角変換）
-    # @option patient_information [String] "BirthDate" 生年月日/10/必須
-    # @option patient_information [String] "Sex" 性別/1/1：男、2：女
-    # @option patient_information [String] "HouseHolder_WholeName" 世帯主名称/50/全角２５文字
-    # @option patient_information [String] "Relationship" 続柄/30/全角１５文字（半角全角変換）
-    # @option patient_information [String] "Occupation" 職業/20/全角１５文字（半角全角変換）
-    # @option patient_information [String] "NickName" 通称名称/50/全角２５文字
-    # @option patient_information [String] "CellularNumber" 携帯電話番号/15/半角
-    # @option patient_information [String] "FaxNumber" 15/半角
-    # @option patient_information [String] "EmailAddress" メールアドレス/50
-    # @option patient_information [Hash] "Home_Address_Information"
-    #   自宅情報
-    #   * "Address_ZipCode" (String) 郵便番号/7/半角/※２
-    #   * "WholeAddress1" (String) 住所１/100/全角５０文字（半角全角変換）※２
-    #   * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
-    #   * "PhoneNumber1" (String) 自宅電話番号/15/半角
-    #   * "PhoneNumber2" (String) 連絡先電話番号/15/半角
-    # @option patient_information [Hash] "WorkPlace_Information"
-    #   勤務先情報
-    #   * "WholeName" (String) 勤務先名称/50
-    #   * "Address_ZipCode" (String) 郵便番号/7/半角　　※２
-    #   * "WholeAddress1" (String) 住所１/100/全角５０文字（半角全角変換）　※２
-    #   * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
-    #   * "PhoneNumber" (String) 勤務先電話番号/15/半角
-    # @option patient_information [Hash] "Contact_Information"
-    #   連絡先情報
-    #   * "WholeName" (String) 連絡先名/50/全角２５文字（半角全角変換）
-    #   * "Relationship" (String) 連絡先続柄/30/全角１５文字（半角全角変換）
-    #   * "Address_ZipCode" (String) 郵便番号/7/半角　　※２
-    #   * "WholeAddress1" (String) 住所１/100/全角５０文字（半角全角変換）　※２
-    #   * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
-    #   * "PhoneNumber1" (String) 電話番号昼/15/半角
-    #   * "PhoneNumber2" (String) 電話番号夜/15/半角
-    # @option patient_information [Hash] "Home2_Information"
-    #   帰省先情報
-    #   * "WholeName" (String) 帰省先名/50/全角２５文字（半角全角変換）
-    #   * "Address_ZipCode" (String) 郵便番号/7/半角　　※２
-    #   * "WholeAddress1" (String) 住所１/100/全角５０文字（半角全角変換）　※２
-    #   * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
-    #   * "PhoneNumber" (String) 電話番号/15/半角
-    # @option patient_information [String] "Contraindication1" 禁忌１/100/全角５０文字（半角全角変換）
-    # @option patient_information [String] "Contraindication2" 禁忌２/100/全角５０文字（半角全角変換）
-    # @option patient_information [String] "Allergy1" アレルギー１/100/全角５０文字（半角全角変換）
-    # @option patient_information [String] "Allergy2" アレルギー２/100/全角５０文字（半角全角変換）
-    # @option patient_information [String] "Infection1" 感染症１/100/全角５０文字（半角全角変換）
-    # @option patient_information [String] "Infection2" 感染症２/100/全角５０文字（半角全角変換）
-    # @option patient_information [String] "Comment1" コメント１/100
-    # @option patient_information [String] "Comment2" コメント２/100
-    # @option patient_information [String] "TestPatient_Flag" テスト患者区分/1
-    # @option patient_information [String] "Death_Flag" 死亡区分/1
-    # @option patient_information [String] "Reduction_Reason" 減免事由/2/数値２桁（システム管理の減免事由情報）　※４
-    # @option patient_information [String] "Discount" 割引率/2/数値２桁（システム管理の割引率情報）　　※４
-    # @option patient_information [String] "Condition1" 状態１/2/数値２桁（システム管理の状態コメント情報１）※４
-    # @option patient_information [String] "Condition2" 状態２/2/数値２桁（システム管理の状態コメント情報２）※４
-    # @option patient_information [String] "Condition3" 状態３/2/数値２桁（システム管理の状態コメント情報３）※４
+    # @param [Hash] patient_information
+    #   登録する患者情報。
+    #   全角項目で（半角全角変換）を記載している項目は半角文字を全角文字へ変換します。拡張文字は■に変換します。
+    #   * "WholeName" (String)
+    #     漢字氏名/50/必須/全角２５文字
+    #   * "WholeName_inKana" (String)
+    #     カナ氏名/50/必須/全角２５文字（半角全角変換）
+    #   * "BirthDate" (String)
+    #     生年月日/10/必須
+    #   * "Sex" (String)
+    #     性別/1/1：男、2：女
+    #   * "HouseHolder_WholeName" (String)
+    #     世帯主名称/50/全角２５文字
+    #   * "Relationship" (String)
+    #     続柄/30/全角１５文字（半角全角変換）
+    #   * "Occupation" (String)
+    #     職業/20/全角１５文字（半角全角変換）
+    #   * "NickName" (String)
+    #     通称名称/50/全角２５文字
+    #   * "CellularNumber" (String)
+    #     携帯電話番号/15/半角
+    #   * "FaxNumber" (String)
+    #     15/半角
+    #   * "EmailAddress" (String)
+    #     メールアドレス/50
+    #   * "Home_Address_Information" (Hash)
+    #     自宅情報
+    #     * "Address_ZipCode" (String)
+    #       郵便番号/7/半角。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress1" (String)
+    #       住所１/100/全角５０文字（半角全角変換）。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
+    #     * "PhoneNumber1" (String) 自宅電話番号/15/半角
+    #     * "PhoneNumber2" (String) 連絡先電話番号/15/半角
+    #   * "WorkPlace_Information" (Hash)
+    #     勤務先情報
+    #     * "WholeName" (String) 勤務先名称/50
+    #     * "Address_ZipCode" (String)
+    #       郵便番号/7/半角。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress1" (String)
+    #       住所１/100/全角５０文字（半角全角変換）。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
+    #     * "PhoneNumber" (String) 勤務先電話番号/15/半角
+    #   * "Contact_Information" (Hash)
+    #     連絡先情報
+    #     * "WholeName" (String) 連絡先名/50/全角２５文字（半角全角変換）
+    #     * "Relationship" (String) 連絡先続柄/30/全角１５文字（半角全角変換）
+    #     * "Address_ZipCode" (String)
+    #       郵便番号/7/半角。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress1" (String)
+    #       住所１/100/全角５０文字（半角全角変換）。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
+    #     * "PhoneNumber1" (String) 電話番号昼/15/半角
+    #     * "PhoneNumber2" (String) 電話番号夜/15/半角
+    #   * "Home2_Information" (Hash)
+    #     帰省先情報
+    #     * "WholeName" (String) 帰省先名/50/全角２５文字（半角全角変換）
+    #     * "Address_ZipCode" (String)
+    #       郵便番号/7/半角。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress1" (String)
+    #       住所１/100/全角５０文字（半角全角変換）。
+    #       郵便番号があり住所１に設定がなければ郵便番号から住所を編集します。　
+    #       郵便番号に設定がない場合は住所１から郵便番号を編集します。（システム管理の設定による）　　
+    #     * "WholeAddress2" (String) 住所２（番地番号）/100/全角５０文字（半角全角変換）
+    #     * "PhoneNumber" (String) 電話番号/15/半角
+    #     * "Contraindication1" (String)
+    #       禁忌１/100/全角５０文字（半角全角変換）
+    #     * "Contraindication2" (String)
+    #       禁忌２/100/全角５０文字（半角全角変換）
+    #     * "Allergy1" (String)
+    #       アレルギー１/100/全角５０文字（半角全角変換）
+    #     * "Allergy2" (String)
+    #       アレルギー２/100/全角５０文字（半角全角変換）
+    #     * "Infection1" (String)
+    #       感染症１/100/全角５０文字（半角全角変換）
+    #     * "Infection2" (String)
+    #       感染症２/100/全角５０文字（半角全角変換）
+    #     * "Comment1" (String)
+    #       コメント１/100
+    #     * "Comment2" (String)
+    #       コメント２/100
+    #     * "TestPatient_Flag" (String)
+    #       テスト患者区分/1
+    #     * "Death_Flag" (String)
+    #       死亡区分/1
+    #     * "Reduction_Reason" (String)
+    #       減免事由/2/数値２桁（システム管理の減免事由情報）/未設定は「00 該当なし」とします
+    #     * "Discount" (String)
+    #       割引率/2/数値２桁（システム管理の割引率情報）/未設定は「00 該当なし」とします
+    #     * "Condition1" (String)
+    #       状態１/2/数値２桁（システム管理の状態コメント情報１）/未設定は「00 該当なし」とします
+    #     * "Condition2" (String)
+    #       状態２/2/数値２桁（システム管理の状態コメント情報２）/未設定は「00 該当なし」とします
+    #     * "Condition3" (String)
+    #       状態３/2/数値２桁（システム管理の状態コメント情報３）/未設定は「00 該当なし」とします
     # @param allow_duplication [Boolean] trueの場合は重複登録警告を無視して登録を行う
+    # @return [OrcaApi::PatientService::CreateResult]
+    #   日レセからのレスポンス
+    #
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v031.pdf
     def create(patient_information, allow_duplication: false)
       res = CreateResult.new(call_01("*", patient_information, "New"))
