@@ -27,3 +27,15 @@ jobs:
           path: reports
       - store_artifacts:
           path: out
+      - add_ssh_keys:
+          fingerprints:
+            - "bd:0f:2b:16:35:52:d9:12:4e:25:36:84:e6:81:ec:de"
+      - run: |
+          git clone git@github.com:orca-api/orca-api.github.io.git pages
+          cp -r out/docs/* pages
+          cd pages
+          git config user.name "k2tanaka"
+          git config user.email "k2tanaka@gmail.com"
+          git add --all
+          git commit -m "Update blog via Circle CI"
+          git push origin master
