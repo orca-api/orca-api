@@ -28,7 +28,10 @@ YARD::Rake::YardocTask.new do |t|
                else
                  "docs"
                end
-  t.options = ["--no-progress", "--output-dir", output_dir]
+  t.options = ["--no-progress",
+               "--output-dir", output_dir,
+               "--template", "default",
+               "--template-path", File.expand_path("templates", File.dirname(__FILE__))]
 end
 
 namespace :version do

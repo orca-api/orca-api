@@ -4,6 +4,7 @@ AllCops:
     - 'tmp/**/*'
     - 'vendor/**/*'
     - 'example/**/*'
+    - 'templates/**/*'
 
 Metrics/AbcSize:
   Max: 35
@@ -168,4 +169,3 @@ Style/NegatedWhile:
 # SupportedStyles: leading, trailing
 Layout/DotPosition:
   Enabled: false
-
