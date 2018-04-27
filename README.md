@@ -1,6 +1,6 @@
 # ORCA API
 
-ORCA APIは、[日医標準レセプトソフト](https://www.orca.med.or.jp/receipt/)が提供している[API](https://www.orca.med.or.jp/receipt/tec/api/)をRubyから利用するためのライブラリです。
+[ORCA API](https://orca-api.github.io/)は、[日医標準レセプトソフト](https://www.orca.med.or.jp/receipt/)が提供している[API](https://www.orca.med.or.jp/receipt/tec/api/)をRubyから利用するためのライブラリです。
 
 ## 開発者向け情報
 
