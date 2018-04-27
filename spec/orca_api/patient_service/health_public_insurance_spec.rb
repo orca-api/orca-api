@@ -536,5 +536,224 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
         it { expect { subject }.to raise_error(RuntimeError, "exception") }
       end
     end
+
+    context "選択項目がある" do
+      let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_select_answer.json") }
+      let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_select_answer.json") }
+      let(:deleted_response_json) { load_orca_api_response("orca12_patientmodv32_03_select_answer.json") }
+      let(:deleted_response_json2) { load_orca_api_response("orca12_patientmodv32_03_select_answer2.json") }
+      let(:deleted_response_json3) { load_orca_api_response("orca12_patientmodv32_03_answer.json") }
+      let(:abort_response_json) { load_orca_api_response("orca12_patientmodv32_99.json") }
+      let(:patient_id) { "00002" }
+
+      context "選択項目を指定していない" do
+        let(:health_public_insurance) {
+          {
+            "HealthInsurance_Information" => {
+              "HealthInsurance_Info" => [
+                {
+                  "InsuranceProvider_Mode" => "Delete",
+                  "InsuranceProvider_Id" => "0000000001",
+                  "InsuranceProvider_Class" => "002",
+                  "InsuranceProvider_WholeName" => "船員",
+                  "RelationToInsuredPerson" => "1",
+                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
+                  "Certificate_StartDate" => "2018-04-01",
+                  "Certificate_ExpiredDate" => "2018-04-01",
+                  "Certificate_CheckDate" => "2018-04-26"
+                }
+              ]
+            }
+          }
+        }
+        before do
+          count = 0
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) do
+            count += 1
+            case count
+            when 1
+              get_response_json # call_01
+            when 2
+              checked_response_json # call_02
+            when 3
+              deleted_response_json # call_03_with_answer
+            when 4
+              abort_response_json # unlock
+            end
+          end
+        end
+
+        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::UnselectedError) }
+        its("ok?") { is_expected.to be false }
+        its("message") { is_expected.to eq("選択項目が未指定です。") }
+        its("patient_select_information") {
+          is_expected.to eq(parse_json(deleted_response_json).first[1]["Patient_Select_Information"])
+        }
+      end
+
+      context "選択項目を指定している" do
+        let(:health_public_insurance) {
+          {
+            "HealthInsurance_Information" => {
+              "HealthInsurance_Info" => [
+                {
+                  "InsuranceProvider_Mode" => "Delete",
+                  "InsuranceProvider_Id" => "0000000001",
+                  "InsuranceProvider_Class" => "002",
+                  "InsuranceProvider_WholeName" => "船員",
+                  "RelationToInsuredPerson" => "1",
+                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
+                  "Certificate_StartDate" => "2018-04-01",
+                  "Certificate_ExpiredDate" => "2018-04-01",
+                  "Certificate_CheckDate" => "2018-04-26"
+                }
+              ]
+            },
+            "Patient_Select_Information" => [
+              {
+                "Patient_Select" => "K910",
+                "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+                "Select_Answer" => "Ok"
+              }
+            ]
+          }
+        }
+        before do
+          count = 0
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) do |_, body:|
+            req = body["patientmodv3req2"]
+
+            count += 1
+            case count
+            when 1
+              get_response_json # call_01
+            when 2
+              checked_response_json # call_02
+            when 3
+              deleted_response_json # call_03_with_answer
+            when 4
+              expect(req["Select_Answer"]).to eq "Ok"
+              deleted_response_json3 # call_03_with_answer
+            end
+          end
+        end
+
+        its("ok?") { is_expected.to be true }
+        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::Result) }
+      end
+
+      context "選択項目が2つあるが、1つしか指定していない" do
+        let(:health_public_insurance) {
+          {
+            "HealthInsurance_Information" => {
+              "HealthInsurance_Info" => [
+                {
+                  "InsuranceProvider_Mode" => "Delete",
+                  "InsuranceProvider_Id" => "0000000001",
+                  "InsuranceProvider_Class" => "002",
+                  "InsuranceProvider_WholeName" => "船員",
+                  "RelationToInsuredPerson" =>  "1",
+                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
+                  "Certificate_StartDate" => "2018-04-01",
+                  "Certificate_ExpiredDate" => "2018-04-01",
+                  "Certificate_CheckDate" => "2018-04-26"
+                }
+              ]
+            },
+            "Patient_Select_Information" => [
+              {
+                "Patient_Select" => "K910",
+                "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+                "Select_Answer" => "Ok"
+              }
+            ]
+          }
+        }
+        before do
+          count = 0
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(5) do
+            count += 1
+            case count
+            when 1
+              get_response_json # call_01
+            when 2
+              checked_response_json # call_02
+            when 3
+              deleted_response_json # call_03_with_answer
+            when 4
+              deleted_response_json2 # call_03_with_answer
+            when 5
+              abort_response_json # unlock
+            end
+          end
+        end
+
+        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::UnselectedError) }
+        its("ok?") { is_expected.to be false }
+        its("message") { is_expected.to eq("選択項目が未指定です。") }
+        its("patient_select_information") {
+          is_expected.to eq(parse_json(deleted_response_json2).first[1]["Patient_Select_Information"])
+        }
+      end
+
+      context "2つの選択項目を指定する" do
+        let(:health_public_insurance) {
+          {
+            "HealthInsurance_Information" => {
+              "HealthInsurance_Info" => [
+                {
+                  "InsuranceProvider_Mode" => "Delete",
+                  "InsuranceProvider_Id" => "0000000001",
+                  "InsuranceProvider_Class" => "002",
+                  "InsuranceProvider_WholeName" => "船員",
+                  "RelationToInsuredPerson" => "1",
+                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
+                  "Certificate_StartDate" => "2018-04-01",
+                  "Certificate_ExpiredDate" => "2018-04-01",
+                  "Certificate_CheckDate" => "2018-04-26"
+                }
+              ]
+            },
+            "Patient_Select_Information" => [
+              {
+                "Patient_Select" => "K910",
+                "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+                "Select_Answer" => "Ok"
+              },
+              {
+                "Patient_Select" => "K910",
+                "Patient_Select_Message" => "テスト用の質問です。",
+                "Select_Answer" => "Ng"
+              }
+            ]
+          }
+        }
+        before do
+          count = 0
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(5) do |_, body:|
+            req = body["patientmodv3req2"]
+
+            count += 1
+            case count
+            when 1
+              get_response_json # call_01
+            when 2
+              checked_response_json # call_02
+            when 3
+              deleted_response_json # call_03_with_answer
+            when 4
+              expect(req["Select_Answer"]).to eq "Ok"
+              deleted_response_json2 # call_03_with_answer
+            when 5
+              expect(req["Select_Answer"]).to eq "Ng"
+              deleted_response_json3 # call_03_with_answer
+            end
+          end
+        end
+
+        its("ok?") { is_expected.to be true }
+        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::Result) }
+      end
+    end
   end
 end

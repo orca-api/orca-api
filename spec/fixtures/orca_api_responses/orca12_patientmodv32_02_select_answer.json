@@ -1,0 +1,544 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "02",
+    "Response_Number": "03",
+    "Karte_Uid": "3f2d880d-304f-4c92-ad5d-df0908acd9ff",
+    "Orca_Uid": "6aa141fe-1230-435f-9097-3ecc877844b7",
+    "Information_Date": "2018-04-26",
+    "Information_Time": "22:15:25",
+    "Api_Result": "000",
+    "Api_Result_Message": "処理終了",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "00002",
+      "WholeName": "テスト　二朗",
+      "WholeName_inKana": "テスト　ジロウ",
+      "BirthDate": "1980-06-06",
+      "Sex": "1"
+    },
+    "HealthInsurance_Information": {
+      "HealthInsurance_Info": [
+        {
+          "InsuranceProvider_Id": "0000000002",
+          "InsuranceProvider_Class": "003",
+          "InsuranceProvider_WholeName": "一般",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　二朗",
+          "Certificate_StartDate": "2018-04-02",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_CheckDate": "2018-04-26"
+        },
+        {
+          "InsuranceProvider_Mode": "Delete",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "002",
+          "InsuranceProvider_WholeName": "船員",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "テスト　二朗",
+          "Certificate_StartDate": "2018-04-01",
+          "Certificate_ExpiredDate": "2018-04-01",
+          "Certificate_CheckDate": "2018-04-26"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    },
+    "HealthInsurance_Combination_Information": {
+      "HealthInsurance_Combination_Info": [
+        {
+          "Insurance_Combination_Number": "0002",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2018-04-02",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000002",
+          "InsuranceProvider_Class": "003",
+          "InsuranceProvider_WholeName": "一般",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+          "Insurance_Combination_Mode": "Delete",
+          "Insurance_Combination_Number": "0001",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2018-04-01",
+          "Insurance_Combination_ExpiredDate": "2018-04-01",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "002",
+          "InsuranceProvider_WholeName": "船員",
+          "RelationToInsuredPerson": "1"
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        },
+        {
+        }
+      ]
+    }
+  }
+}
