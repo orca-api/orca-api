@@ -25,6 +25,17 @@ module OrcaApi
         end
       end
 
+      # 選択項目が未指定であることを表現するクラス
+      class UnselectedError < ::OrcaApi::Result
+        def ok?
+          false
+        end
+
+        def message
+          '選択項目が未指定です。'
+        end
+      end
+
       # 取得
       #
       # @param id [String] 患者ID
@@ -51,11 +62,11 @@ module OrcaApi
       # > ※８ 今回変更なしは空白とします。
       #
       # @param id [String] 患者ID
-      # @param params [{"HealthInsurance_Information" => Array, "PublicInsurance_Information" => Array}] 保険公費情報
-      # @option params [Array] "HealthInsurance_Information"
+      # @param params [Hash] 保険公費情報
+      # @option params [Hash] "HealthInsurance_Information"
       #   保険情報
       #   * "HealthInsurance_Info"
-      #     保険情報 (Hash)
+      #     保険情報 (Array)
       #     * "InsuranceProvider_Mode" ("New", "Modify", "Delete") 処理区分
       #     * "InsuranceProvider_Id" (String) 保険ＩＤ
       #     * "InsuranceProvider_Class" (String) 保険の種類
@@ -72,10 +83,10 @@ module OrcaApi
       #     * "Certificate_GetDate" (String) 資格取得日/10
       #     * "Certificate_CheckDate" (String) 確認日付/10/※４
       #     * "Rate_Class" (String) 高齢者負担区分/1/未使用
-      # @option params [Array] "PublicInsurance_Information"
+      # @option params [Hash] "PublicInsurance_Information"
       #   公費情報
       #   * "PublicInsurance_Info"
-      #     公費情報 (Hash)
+      #     公費情報 (Array)
       #     * "PublicInsurance_Mode" ("New", "Modify", "Delete") 処理区分
       #     * "PublicInsurance_Id" (String) 公費ＩＤ/10/※３
       #     * "PublicInsurance_Class" (String) 公費の種類/3/※７
@@ -85,6 +96,11 @@ module OrcaApi
       #     * "Certificate_IssuedDate" (String) 適用開始日/10/省略可（処理日付）
       #     * "Certificate_ExpiredDate" (String) 適用終了日/10/省略可（９９９９９９９９）
       #     * "Certificate_CheckDate" (String) 確認日付/10/※４
+      # @option params [<Hash>] "Patient_Select_Information"
+      #   確認メッセージ
+      #   * "Patient_Select" (String) 確認コード
+      #   * "Patient_Select_Message" (String) メッセージ
+      #   * "Select_Answer" ("Ok", "Ng") 確認回答
       #
       # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/18351#api2
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
@@ -101,7 +117,7 @@ module OrcaApi
         if !res.ok?
           return res
         end
-        res = call_03(res)
+        res = call_03_with_answer(params, res)
         if res.ok?
           locked_result = nil
         end
@@ -135,21 +151,46 @@ module OrcaApi
         Result.new(orca_api.call("/orca12/patientmodv32", body: make_body(req)))
       end
 
-      def call_03(previous_result)
-        res = previous_result
+      def call_03(previous_result, answer = nil)
         req = {
-          "Request_Number" => res.response_number,
+          "Request_Number" => previous_result.response_number,
           "Karte_Uid" => orca_api.karte_uid,
-          "Orca_Uid" => res.orca_uid,
-          "Patient_Information" => res.patient_information,
+          "Orca_Uid" => previous_result.orca_uid,
+          "Patient_Information" => previous_result.patient_information,
         }
-        if res["HealthInsurance_Information"]
-          req["HealthInsurance_Information"] = res["HealthInsurance_Information"]
+        if previous_result["HealthInsurance_Information"]
+          req["HealthInsurance_Information"] = previous_result["HealthInsurance_Information"]
         end
-        if res["PublicInsurance_Information"]
-          req["PublicInsurance_Information"] = res["PublicInsurance_Information"]
+        if previous_result["PublicInsurance_Information"]
+          req["PublicInsurance_Information"] = previous_result["PublicInsurance_Information"]
+        end
+        if answer
+          req["Select_Answer"] = answer["Select_Answer"]
         end
         Result.new(orca_api.call("/orca12/patientmodv32", body: make_body(req)))
+      end
+
+      def call_03_with_answer(params, previous_result)
+        res = call_03(previous_result)
+        return res if res.ok?
+
+        while !res.ok?
+          if res.api_result == "S20"
+            ps = res.patient_select_information["Patient_Select"]
+            psm = res.patient_select_information["Patient_Select_Message"]
+            psi = Array(params["Patient_Select_Information"]).find do |e|
+              ps == e["Patient_Select"] && psm == e["Patient_Select_Message"]
+            end
+            if psi
+              res = call_03(res, psi)
+            else
+              return UnselectedError.new(res.raw)
+            end
+          else
+            break
+          end
+        end
+        res
       end
 
       def unlock(locked_result)
