@@ -142,6 +142,64 @@ module OrcaApi #:nodoc:
       do_call make_request(http_method, path, params, body, format), output_io
     end
 
+    # @!group 高レベルインターフェース
+
+    # @!method new_patient_service
+    # @return [PatientService] PatientServiceインスタンス
+
+    # @!method new_insurance_service
+    # @return [InsuranceService] InsuranceServiceインスタンス
+
+    # @!method new_department_service
+    # @return [DepartmentService] DepartmentServiceインスタンス
+
+    # @!method new_physician_service
+    # @return [PhysicianService] PhysicianServiceインスタンス
+
+    # @!method new_medical_practice_service
+    # @return [MedicalPracticeService] MedicalPracticeServiceインスタンス
+
+    # @!method new_acceptance_service
+    # @return [AcceptanceService] AcceptanceServiceインスタンス
+
+    # @!method new_disease_service
+    # @return [DiseaseService] DiseaseServiceインスタンス
+
+    # @!method new_form_data_service
+    # @return [FormDataService] FormDataServiceインスタンス
+
+    # @!method new_income_service
+    # @return [IncomeService] IncomeServiceインスタンス
+
+    # @!method new_print_service
+    # @return [PrintService] PrintServiceインスタンス
+
+    # @!method new_image_service
+    # @return [ImageService] ImageServiceインスタンス
+
+    # @!method new_receipt_service
+    # @return [ReceiptService] ReceiptServiceインスタンス
+
+    # @!method new_blob_service
+    # @return [BlobService] BlobServiceインスタンス
+
+    # @!method new_lock_service
+    # @return [LockService] LockServiceインスタンス
+
+    # @!method new_rehabilitation_comment_service
+    # @return [RehabilitationCommentService] RehabilitationCommentServiceインスタンス
+
+    # @!method new_user_service
+    # @return [UserService] UserServiceインスタンス
+
+    # @!method new_receipt_data_service
+    # @return [ReceiptDataService] ReceiptDataServiceインスタンス
+
+    # @!method new_find_service
+    # @return [FindService] FindServiceインスタンス
+
+    # @!endgroup
+
     service_class_names = %w(
       PatientService
       InsuranceService
