@@ -28,3 +28,7 @@ bundle exec rake spec
 ```shell
 bundle exec rake install
 ```
+
+### ライセンス
+
+[Apache License 2.0](LICENSE)
