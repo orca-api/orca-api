@@ -127,12 +127,13 @@ module OrcaApi
     #     * "Condition3" (String)
     #       状態３/2/数値２桁（システム管理の状態コメント情報３）/未設定は「00 該当なし」とします
     # @param allow_duplication [Boolean] trueの場合は重複登録警告を無視して登録を行う
+    # @param patient_id [String] 作成する患者の患者番号を明示的に指定
     # @return [OrcaApi::PatientService::CreateResult]
     #   日レセからのレスポンス
     #
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v031.pdf
-    def create(patient_information, allow_duplication: false)
-      res = CreateResult.new(call_01("*", patient_information, "New"))
+    def create(patient_information, allow_duplication: false, patient_id: "*")
+      res = CreateResult.new(call_01(patient_id, patient_information, "New"))
       if !res.ok? && !res.duplicated_patient_candidates.empty? && allow_duplication
         res = CreateResult.new(call_02(patient_information, "New", res))
       end
