@@ -22,6 +22,12 @@ module OrcaApi
       trim_response(JSON.parse(raw)).first[1]
     end
 
+    def self.def_info(name, *path)
+      define_method name do
+        Array(body.dig(*path))
+      end
+    end
+
     attr_reader :raw
 
     def initialize(raw)

@@ -10,6 +10,11 @@ module OrcaApi
     class HealthPublicInsuranceCommon < Service
       # 患者保険・公費情報の取得・更新の結果を表現するクラス
       class Result < ::OrcaApi::Result
+        def_info :health_insurance_info, "HealthInsurance_Information", "HealthInsurance_Info"
+        def_info :public_insurance_info, "PublicInsurance_Information", "PublicInsurance_Info"
+        def_info :health_insurance_combination_info, "HealthInsurance_Combination_Information", "HealthInsurance_Combination_Info"
+        def_info :patient_message_info, "Patient_Message_Information", "Patient_Message_Info"
+        def_info :patient_warning_info, "Patient_Warning_Information", "Patient_Warning_Info"
         KEYS = Set.new(
           %w(
             Patient_Information
