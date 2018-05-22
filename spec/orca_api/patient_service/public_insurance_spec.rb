@@ -74,17 +74,17 @@ RSpec.describe OrcaApi::PatientService::PublicInsurance, orca_api_mock: true do
     context "正常系" do
       it "患者公費情報を更新できること" do
         args = {
-          "PublicInsurance_Info": [
+          "PublicInsurance_Info" => [
             {
-              "PublicInsurance_Mode": "Modify",
-              "PublicInsurance_Id": "4",
-              "PublicInsurance_Class": "968",
-              "PublicInsurance_Name": "後期該当",
-              "PublicInsurer_Number": "",
-              "PublicInsuredPerson_Number": "",
-              "Certificate_IssuedDate": "2017-01-01",
-              "Certificate_ExpiredDate": "2018-01-31",
-              "Certificate_CheckDate": "2018-01-15"
+              "PublicInsurance_Mode" => "Modify",
+              "PublicInsurance_Id" => "4",
+              "PublicInsurance_Class" => "968",
+              "PublicInsurance_Name" => "後期該当",
+              "PublicInsurer_Number" => "",
+              "PublicInsuredPerson_Number" => "",
+              "Certificate_IssuedDate" => "2017-01-01",
+              "Certificate_ExpiredDate" => "2018-01-31",
+              "Certificate_CheckDate" => "2018-01-15"
             }
           ]
         }
@@ -140,11 +140,11 @@ RSpec.describe OrcaApi::PatientService::PublicInsurance, orca_api_mock: true do
 
       it "患者公費情報を削除できること" do
         args = {
-          "PublicInsurance_Info": [
+          "PublicInsurance_Info" => [
             {
-              "PublicInsurance_Mode": "Delete",
-              "PublicInsurance_Id": "4",
-              "PublicInsurance_Class": "968"
+              "PublicInsurance_Mode" => "Delete",
+              "PublicInsurance_Id" => "4",
+              "PublicInsurance_Class" => "968"
             }
           ]
         }
@@ -226,17 +226,17 @@ RSpec.describe OrcaApi::PatientService::PublicInsurance, orca_api_mock: true do
 
       it "保険有効開始日＜有効終了日の場合、エラーが発生してロックを解除すること" do
         args = {
-          "PublicInsurance_Info": [
+          "PublicInsurance_Info" => [
             {
-              "PublicInsurance_Mode": "Modify",
-              "PublicInsurance_Id": "4",
-              "PublicInsurance_Class": "968",
-              "PublicInsurance_Name": "後期該当",
-              "PublicInsurer_Number": "",
-              "PublicInsuredPerson_Number": "",
-              "Certificate_IssuedDate": "2018-01-31",
-              "Certificate_ExpiredDate": "2017-01-01",
-              "Certificate_CheckDate": "2018-01-15"
+              "PublicInsurance_Mode" => "Modify",
+              "PublicInsurance_Id" => "4",
+              "PublicInsurance_Class" => "968",
+              "PublicInsurance_Name" => "後期該当",
+              "PublicInsurer_Number" => "",
+              "PublicInsuredPerson_Number" => "",
+              "Certificate_IssuedDate" => "2018-01-31",
+              "Certificate_ExpiredDate" => "2017-01-01",
+              "Certificate_CheckDate" => "2018-01-15"
             }
           ]
         }

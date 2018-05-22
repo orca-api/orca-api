@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "health_public_insurance_common"
 
 module OrcaApi
@@ -8,10 +10,22 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032_err.pdf
     class HealthInsurance < HealthPublicInsuranceCommon
+      def update(id, args)
+        super(
+          id,
+          {
+            "HealthInsurance_Information" => {
+              "HealthInsurance_Info" => Array(args["HealthInsurance_Info"])
+            },
+            "Patient_Select_Information" => Array(args["Patient_Select_Information"])
+          }
+        )
+      end
+
       private
 
-      def insurance_information_name
-        "HealthInsurance_Information"
+      def copy_attribute_names
+        ["HealthInsurance_Information"]
       end
     end
   end

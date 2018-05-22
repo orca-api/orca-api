@@ -2,7 +2,7 @@
   "patientmodv3res2": {
     "Request_Number": "03",
     "Response_Number": "00",
-    "Karte_Uid": "2dbd5c8a-5d03-47d2-ad93-01b1234942ca",
+    "Karte_Uid": "karte_uid",
     "Orca_Uid": "0c35513f-3a43-4312-ba7b-31674ff81fbc",
     "Information_Date": "2018-04-26",
     "Information_Time": "22:55:53",
