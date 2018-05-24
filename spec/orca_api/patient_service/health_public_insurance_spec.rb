@@ -3,756 +3,812 @@ require_relative "../shared_examples"
 
 RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
-  let(:response_data) { parse_json(response_json) }
-
-  def expect_orca12_patientmodv32_01(path, body, patient_id, response_json)
-    expect(path).to eq("/orca12/patientmodv32")
-
-    req = body["patientmodv3req2"]
-    expect(req["Request_Number"]).to eq("01")
-    expect(req["Karte_Uid"]).to eq("karte_uid")
-    expect(req["Orca_Uid"]).to eq("")
-    expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
-
-    return_response_json(response_json)
-  end
-
-  def expect_orca12_patientmodv32_02(path, body, prev_response_json, health_public_insurance, response_json)
-    expect(path).to eq("/orca12/patientmodv32")
-
-    req = body["patientmodv3req2"]
-    res_body = parse_json(prev_response_json).first[1]
-    expect(req["Request_Number"]).to eq(res_body["Response_Number"])
-    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
-    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
-    expect(req["Patient_Information"]).to eq(res_body["Patient_Information"])
-    expect(req["HealthInsurance_Information"]).to eq(health_public_insurance["HealthInsurance_Information"])
-    expect(req["PublicInsurance_Information"]).to eq(health_public_insurance["PublicInsurance_Information"])
-
-    return_response_json(response_json)
-  end
-
-  def expect_orca12_patientmodv32_03(path, body, prev_response_json, response_json)
-    expect(path).to eq("/orca12/patientmodv32")
-
-    req = body["patientmodv3req2"]
-    res_body = parse_json(prev_response_json).first[1]
-    expect(req["Request_Number"]).to eq(res_body["Response_Number"])
-    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
-    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
-    expect(req["Patient_Information"]).to eq(res_body["Patient_Information"])
-    expect(req["HealthInsurance_Information"]).to eq(res_body["HealthInsurance_Information"])
-    expect(req["PublicInsurance_Information"]).to eq(res_body["PublicInsurance_Information"])
-
-    return_response_json(response_json)
-  end
-
-  def expect_orca12_patientmodv32_99(path, body, prev_response_json)
-    expect(path).to eq("/orca12/patientmodv32")
-
-    req = body["patientmodv3req2"]
-    res_body = parse_json(prev_response_json).first[1]
-    expect(req["Request_Number"]).to eq("99")
-    expect(req["Karte_Uid"]).to eq(res_body["Karte_Uid"])
-    expect(req["Patient_Information"]["Patient_ID"]).to eq(res_body["Patient_Information"]["Patient_ID"])
-    expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
-
-    load_orca_api_response("orca12_patientmodv32_99.json")
-  end
 
   describe "#get" do
     subject { service.get(patient_id) }
 
     context "正常系" do
-      let(:patient_id) { 1 }
-      let(:response_json) { load_orca_api_response("orca12_patientmodv32_01.json") }
+      it "works" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "99",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+              }
+            },
+            result: "orca12_patientmodv32_99.json",
+          },
+        ]
 
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv32_01(path, body, patient_id, response_json)
-            when 2
-              expect_orca12_patientmodv32_99(path, body, response_json)
-            end
-          prev_response_json
-        }
-      end
+        expect_orca_api_call(expect_data, binding)
 
-      its("ok?") { is_expected.to be true }
+        result = service.get(1)
 
-      describe "health_public_insurance" do
-        subject { super().health_public_insurance }
-
-        %w(
-          Patient_Information
-          HealthInsurance_Information
-          PublicInsurance_Information
-          HealthInsurance_Combination_Information
-        ).each do |name|
-          describe "[\"#{name}\"]" do
-            subject { super()[name] }
-
-            it { is_expected.to eq(response_data.first[1][name]) }
-          end
-        end
+        expect(result.ok?).to be true
       end
     end
 
     context "異常系" do
-      let(:patient_id) { 2000 }
-      let(:response_json) { load_orca_api_response("orca12_patientmodv32_01_E10.json") }
+      it "works" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_E10.json",
+          },
+        ]
 
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv32_01(path, body, patient_id, response_json)
-            end
-          prev_response_json
-        }
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.get(1)
+
+        expect(result.ok?).to be false
       end
-
-      its("ok?") { is_expected.to be false }
     end
   end
 
   describe "#update" do
-    let(:patient_id) { 209 }
-    let(:args) {
-      [patient_id, health_public_insurance]
-    }
-
-    subject { service.update(*args) }
-
     context "正常系" do
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(3) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv32_01(path, body, patient_id, get_response_json)
-            when 2
-              expect_orca12_patientmodv32_02(path, body, prev_response_json, health_public_insurance, checked_response_json)
-            when 3
-              expect_orca12_patientmodv32_03(path, body, prev_response_json, updated_response_json)
-            end
-          prev_response_json
+      it "患者保険・公費を登録する(New)" do
+        health_insurance_info = {
+          "InsuranceProvider_Mode" => "New",
+          "InsuranceProvider_Id" => "0",
+          "InsuranceProvider_Class" => "039",
+          "InsuranceProvider_Number" => "39322011",
+          "InsuranceProvider_WholeName" => "後期高齢者",
+          "HealthInsuredPerson_Number" => "１２３４５６",
+          "HealthInsuredPerson_Assistance" => "1",
+          "HealthInsuredPerson_Assistance_Name" => "１割",
+          "RelationToInsuredPerson" => "1",
+          "HealthInsuredPerson_WholeName" => "東京　太郎",
+          "Certificate_StartDate" => "2017-01-01",
+          "Certificate_ExpiredDate" => "2017-12-31",
+          "Certificate_GetDate" => "2017-01-03",
+          "Certificate_CheckDate" => "2017-07-26",
         }
-      end
+        public_insurance_info = {
+          "PublicInsurance_Mode" => "New",
+          "PublicInsurance_Id" => "0",
+          "PublicInsurance_Class" => "968",
+          "PublicInsurance_Name" => "後期該当",
+          "PublicInsurer_Number" => "",
+          "PublicInsuredPerson_Number" => "",
+          "Certificate_IssuedDate" => "2017-01-01",
+          "Certificate_ExpiredDate" => "2017-12-31",
+          "Certificate_CheckDate" => "2017-07-28",
+        }
 
-      shared_examples "結果が正しいこと" do
-        its("ok?") { is_expected.to be true }
-
-        describe "health_public_insurance" do
-          subject { super().health_public_insurance }
-
-          %w(
-            Patient_Information
-            HealthInsurance_Information
-            PublicInsurance_Information
-            HealthInsurance_Combination_Information
-          ).each do |name|
-            describe "[\"#{name}\"]" do
-              subject { super()[name] }
-
-              it { is_expected.to eq(parse_json(updated_response_json).first[1][name]) }
-            end
-          end
-        end
-      end
-
-      context "患者保険・公費を登録する(New)" do
-        let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_new.json") }
-        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_new.json") }
-        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv32_03_new.json") }
-
-        let(:health_public_insurance) {
+        expect_data = [
           {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "New",
-                  "InsuranceProvider_Id" => "0",
-                  "InsuranceProvider_Class" => "039",
-                  "InsuranceProvider_Number" => "39322011",
-                  "InsuranceProvider_WholeName" => "後期高齢者",
-                  "HealthInsuredPerson_Number" => "１２３４５６",
-                  "HealthInsuredPerson_Assistance" => "1",
-                  "HealthInsuredPerson_Assistance_Name" => "１割",
-                  "RelationToInsuredPerson" => "1",
-                  "HealthInsuredPerson_WholeName" => "東京　太郎",
-                  "Certificate_StartDate" => "2017-01-01",
-                  "Certificate_ExpiredDate" => "2017-12-31",
-                  "Certificate_GetDate" => "2017-01-03",
-                  "Certificate_CheckDate" => "2017-07-26",
-                },
-              ],
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
             },
-            "PublicInsurance_Information" => {
-              "PublicInsurance_Info" => [
-                {
-                  "PublicInsurance_Mode" => "New",
-                  "PublicInsurance_Id" => "0",
-                  "PublicInsurance_Class" => "968",
-                  "PublicInsurance_Name" => "後期該当",
-                  "PublicInsurer_Number" => "",
-                  "PublicInsuredPerson_Number" => "",
-                  "Certificate_IssuedDate" => "2017-01-01",
-                  "Certificate_ExpiredDate" => "2017-12-31",
-                  "Certificate_CheckDate" => "2017-07-28",
+            result: "orca12_patientmodv32_01_new.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => {
+                  "HealthInsurance_Info" => [health_insurance_info],
                 },
-              ],
+                "PublicInsurance_Information" => {
+                  "PublicInsurance_Info" => [public_insurance_info],
+                },
+              }
             },
-          }
-        }
+            result: "orca12_patientmodv32_02_new.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`",
+                "PublicInsurance_Information" => "`prev.public_insurance_information`",
+              }
+            },
+            result: "orca12_patientmodv32_03_new.json",
+          },
+        ]
 
-        include_examples "結果が正しいこと"
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "HealthInsurance_Information" => {
+            "HealthInsurance_Info" => [health_insurance_info],
+          },
+          "PublicInsurance_Information" => {
+            "PublicInsurance_Info" => [public_insurance_info],
+          },
+        }
+        result = service.update(209, args)
+
+        expect(result.ok?).to be true
       end
 
-      context "患者保険だけを登録する(New)" do
-        let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_new.json") }
-        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_new_only_health_insurance.json") }
-        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv32_03_new_only_health_insurance.json") }
-
-        let(:health_public_insurance) {
-          {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "New",
-                  "InsuranceProvider_Id" => "0",
-                  "InsuranceProvider_Class" => "039",
-                  "InsuranceProvider_Number" => "39322011",
-                  "InsuranceProvider_WholeName" => "後期高齢者",
-                  "HealthInsuredPerson_Number" => "１２３４５６",
-                  "HealthInsuredPerson_Assistance" => "1",
-                  "HealthInsuredPerson_Assistance_Name" => "１割",
-                  "RelationToInsuredPerson" => "1",
-                  "HealthInsuredPerson_WholeName" => "東京　太郎",
-                  "Certificate_StartDate" => "2017-01-01",
-                  "Certificate_ExpiredDate" => "2017-12-31",
-                  "Certificate_GetDate" => "2017-01-03",
-                  "Certificate_CheckDate" => "2017-07-26",
-                },
-              ],
-            },
-          }
+      it "患者保険だけを登録する(New)" do
+        health_insurance_info = {
+          "InsuranceProvider_Mode" => "New",
+          "InsuranceProvider_Id" => "0",
+          "InsuranceProvider_Class" => "039",
+          "InsuranceProvider_Number" => "39322011",
+          "InsuranceProvider_WholeName" => "後期高齢者",
+          "HealthInsuredPerson_Number" => "１２３４５６",
+          "HealthInsuredPerson_Assistance" => "1",
+          "HealthInsuredPerson_Assistance_Name" => "１割",
+          "RelationToInsuredPerson" => "1",
+          "HealthInsuredPerson_WholeName" => "東京　太郎",
+          "Certificate_StartDate" => "2017-01-01",
+          "Certificate_ExpiredDate" => "2017-12-31",
+          "Certificate_GetDate" => "2017-01-03",
+          "Certificate_CheckDate" => "2017-07-26",
         }
 
-        include_examples "結果が正しいこと"
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_new.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => {
+                  "HealthInsurance_Info" => [health_insurance_info],
+                },
+              }
+            },
+            result: "orca12_patientmodv32_02_new_only_health_insurance.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`",
+              }
+            },
+            result: "orca12_patientmodv32_03_new_only_health_insurance.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "HealthInsurance_Information" => {
+            "HealthInsurance_Info" => [health_insurance_info],
+          },
+        }
+        result = service.update(209, args)
+
+        expect(result.ok?).to be true
       end
 
-      context "患者公費だけを登録する(New)" do
-        let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_new.json") }
-        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_new_only_public_insurance.json") }
-        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv32_03_new_only_public_insurance.json") }
-
-        let(:health_public_insurance) {
-          {
-            "PublicInsurance_Information" => {
-              "PublicInsurance_Info" => [
-                {
-                  "PublicInsurance_Mode" => "Modify",
-                  "PublicInsurance_Id" =>  "0000000001",
-                  "PublicInsurance_Class" => "969",
-                  "PublicInsurance_Name" => "７５歳特例",
-                  "PublicInsurer_Number" => "",
-                  "PublicInsuredPerson_Number" => "",
-                  "Certificate_IssuedDate" => "2017-01-02",
-                  "Certificate_ExpiredDate" => "2017-12-31",
-                  "Certificate_CheckDate" => "2017-05-30",
-                },
-              ],
-            },
-          }
+      it "患者公費だけを登録する(New)" do
+        public_insurance_info = {
+          "PublicInsurance_Mode" => "Modify",
+          "PublicInsurance_Id" =>  "0000000001",
+          "PublicInsurance_Class" => "969",
+          "PublicInsurance_Name" => "７５歳特例",
+          "PublicInsurer_Number" => "",
+          "PublicInsuredPerson_Number" => "",
+          "Certificate_IssuedDate" => "2017-01-02",
+          "Certificate_ExpiredDate" => "2017-12-31",
+          "Certificate_CheckDate" => "2017-05-30",
         }
 
-        include_examples "結果が正しいこと"
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_new.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "PublicInsurance_Information" => {
+                  "PublicInsurance_Info" => [public_insurance_info],
+                },
+              }
+            },
+            result: "orca12_patientmodv32_02_new_only_public_insurance.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "PublicInsurance_Information" => "`prev.public_insurance_information`",
+              }
+            },
+            result: "orca12_patientmodv32_03_new_only_public_insurance.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "PublicInsurance_Information" => {
+            "PublicInsurance_Info" => [public_insurance_info],
+          },
+        }
+        result = service.update(209, args)
+
+        expect(result.ok?).to be true
       end
 
-      context "患者保険・公費を更新する(Modify)" do
-        let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_modify.json") }
-        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_modify.json") }
-        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv32_03_modify.json") }
-
-        let(:health_public_insurance) {
-          {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "Modify",
-                  "InsuranceProvider_Id" => "0000000001",
-                  "InsuranceProvider_Class" => "039",
-                  "InsuranceProvider_Number" => "39322011",
-                  "InsuranceProvider_WholeName" => "後期高齢者",
-                  "HealthInsuredPerson_Number" => "６５４３２１",
-                  "HealthInsuredPerson_Assistance" => "1",
-                  "HealthInsuredPerson_Assistance_Name" => "１割",
-                  "RelationToInsuredPerson" => "1",
-                  "HealthInsuredPerson_WholeName" => "東京　太郎",
-                  "Certificate_StartDate" => "2017-01-01",
-                  "Certificate_ExpiredDate" => "2017-12-31",
-                  "Certificate_GetDate" => "2017-01-03",
-                  "Certificate_CheckDate" => "2017-07-26",
-                },
-              ],
-            },
-            "PublicInsurance_Information" => {
-              "PublicInsurance_Info" => [
-                {
-                  "PublicInsurance_Mode" => "Modify",
-                  "PublicInsurance_Id" =>  "0000000001",
-                  "PublicInsurance_Class" => "969",
-                  "PublicInsurance_Name" => "７５歳特例",
-                  "PublicInsurer_Number" => "",
-                  "PublicInsuredPerson_Number" => "",
-                  "Certificate_IssuedDate" => "2017-01-02",
-                  "Certificate_ExpiredDate" => "2017-12-31",
-                  "Certificate_CheckDate" => "2017-05-30",
-                },
-              ],
-            },
-          }
+      it "患者保険・公費を更新する(Modify)" do
+        health_insurance_info = {
+          "InsuranceProvider_Mode" => "Modify",
+          "InsuranceProvider_Id" => "0000000001",
+          "InsuranceProvider_Class" => "039",
+          "InsuranceProvider_Number" => "39322011",
+          "InsuranceProvider_WholeName" => "後期高齢者",
+          "HealthInsuredPerson_Number" => "６５４３２１",
+          "HealthInsuredPerson_Assistance" => "1",
+          "HealthInsuredPerson_Assistance_Name" => "１割",
+          "RelationToInsuredPerson" => "1",
+          "HealthInsuredPerson_WholeName" => "東京　太郎",
+          "Certificate_StartDate" => "2017-01-01",
+          "Certificate_ExpiredDate" => "2017-12-31",
+          "Certificate_GetDate" => "2017-01-03",
+          "Certificate_CheckDate" => "2017-07-26",
+        }
+        public_insurance_info = {
+          "PublicInsurance_Mode" => "Modify",
+          "PublicInsurance_Id" =>  "0000000001",
+          "PublicInsurance_Class" => "969",
+          "PublicInsurance_Name" => "７５歳特例",
+          "PublicInsurer_Number" => "",
+          "PublicInsuredPerson_Number" => "",
+          "Certificate_IssuedDate" => "2017-01-02",
+          "Certificate_ExpiredDate" => "2017-12-31",
+          "Certificate_CheckDate" => "2017-05-30",
         }
 
-        include_examples "結果が正しいこと"
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_modify.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => {
+                  "HealthInsurance_Info" => [health_insurance_info]
+                },
+                "PublicInsurance_Information" => {
+                  "PublicInsurance_Info" => [public_insurance_info]
+                },
+              }
+            },
+            result: "orca12_patientmodv32_02_modify.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`",
+                "PublicInsurance_Information" => "`prev.public_insurance_information`",
+              }
+            },
+            result: "orca12_patientmodv32_03_modify.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "HealthInsurance_Information" => {
+            "HealthInsurance_Info" => [
+              health_insurance_info
+            ],
+          },
+          "PublicInsurance_Information" => {
+            "PublicInsurance_Info" => [
+              public_insurance_info
+            ],
+          },
+        }
+        result = service.update(209, args)
+
+        expect(result.ok?).to be true
       end
 
-      context "患者保険・公費を削除する(Delete)" do
-        let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_delete.json") }
-        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_delete.json") }
-        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv32_03_delete.json") }
-
-        let(:health_public_insurance) {
-          {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "Delete",
-                  "InsuranceProvider_Id" => "0000000001",
-                  "InsuranceProvider_Class" => "039",
-                },
-              ],
-            },
-            "PublicInsurance_Information" => {
-              "PublicInsurance_Info" => [
-                {
-                  "PublicInsurance_Mode" => "Delete",
-                  "PublicInsurance_Id" => "0000000001",
-                  "PublicInsurance_Class" => "969",
-                },
-              ],
-            },
-          }
+      it "患者保険・公費を削除する(Delete)" do
+        health_insurance_info = {
+          "InsuranceProvider_Mode" => "Delete",
+          "InsuranceProvider_Id" => "0000000001",
+          "InsuranceProvider_Class" => "039",
+        }
+        public_insurance_info = {
+          "PublicInsurance_Mode" => "Delete",
+          "PublicInsurance_Id" => "0000000001",
+          "PublicInsurance_Class" => "969",
         }
 
-        include_examples "結果が正しいこと"
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_delete.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => {
+                  "HealthInsurance_Info" => [health_insurance_info],
+                },
+                "PublicInsurance_Information" => {
+                  "PublicInsurance_Info" => [public_insurance_info],
+                },
+              }
+            },
+            result: "orca12_patientmodv32_02_delete.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`",
+                "PublicInsurance_Information" => "`prev.public_insurance_information`",
+              }
+            },
+            result: "orca12_patientmodv32_03_delete.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "HealthInsurance_Information" => {
+            "HealthInsurance_Info" => [health_insurance_info],
+          },
+          "PublicInsurance_Information" => {
+            "PublicInsurance_Info" => [public_insurance_info],
+          },
+        }
+        result = service.update(209, args)
+
+        expect(result.ok?).to be true
       end
     end
 
     context "異常系" do
-      let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_new.json") }
-      let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_new.json") }
-      let(:updated_response_json) { load_orca_api_response("orca12_patientmodv32_03_new.json") }
-      let(:abort_response_json) { load_orca_api_response("orca12_patientmodv32_99.json") }
-
-      let(:health_public_insurance) { {} }
-
-      context "Request_Number=01でエラー: 例)他端末使用中(E90)" do
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).once { |_, body:|
-            req = body["patientmodv3req2"]
-
-            count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
-
-              data = parse_json(get_response_json, false)
-              data.first[1]["Api_Result"] = "E90"
-              data.first[1]["Api_Result_Message"] = "他端末使用中"
-              data.to_json
-            end
+      it "Request_Number=01でエラーが返却されたらロック解除を行わないこと" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_E10.json",
           }
-        end
+        ]
 
-        its("ok?") { is_expected.to be false }
-        its("message") { is_expected.to eq("他端末使用中(E90)") }
+        expect_orca_api_call(expect_data, binding)
+
+        args = {}
+        result = service.update(209, args)
+
+        expect(result.ok?).to be false
       end
 
-      context "Request_Number=01で例外発生" do
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).once { |_, body:|
-            req = body["patientmodv3req2"]
+      it "Request_Number=02でエラーが返却されたらロック解除を行うこと" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_new.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+              }
+            },
+            result: "orca12_patientmodv32_02_new.json",
+            enhancer: lambda { |json|
+              json["patientmodv3res2"]["Api_Result"] = "E50"
+              json["patientmodv3res2"]["Api_Result_Message"] = "保険・公費にエラーがあります。"
+              json
+            }
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "99",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`"
+              }
+            },
+            result: "orca12_patientmodv32_99.json",
+          },
+        ]
 
-            count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
+        expect_orca_api_call(expect_data, binding)
 
-              raise "exception"
-            end
-          }
-        end
+        args = {}
+        result = service.update(209, args)
 
-        it { expect { subject }.to raise_error(RuntimeError, "exception") }
+        expect(result.ok?).to be false
+        expect(result.message).to eq "保険・公費にエラーがあります。(E50)"
       end
 
-      context "Request_Number=02でエラー: 例)保険・公費にエラーがあります。(E50)" do
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).exactly(3) { |_, body:|
-            req = body["patientmodv3req2"]
+      it "Request_Number=03でエラーが返却されたらロック解除を行うこと" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "209",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_new.json",
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+              }
+            },
+            result: "orca12_patientmodv32_02_new.json"
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`",
+                "PublicInsurance_Information" => "`prev.public_insurance_information`",
+              }
+            },
+            result: "orca12_patientmodv32_03_new.json",
+            enhancer: lambda { |json|
+              json["patientmodv3res2"]["Api_Result"] = "E80"
+              json["patientmodv3res2"]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
+              json
+            }
+          },
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "99",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`"
+              }
+            },
+            result: "orca12_patientmodv32_99.json",
+          },
+        ]
 
-            count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
+        expect_orca_api_call(expect_data, binding)
 
-              get_response_json
-            when 2
-              expect(req["Request_Number"]).to eq("02")
+        args = {}
+        result = service.update(209, args)
 
-              data = parse_json(checked_response_json, false)
-              data.first[1]["Api_Result"] = "E50"
-              data.first[1]["Api_Result_Message"] = "保険・公費にエラーがあります。"
-              data.to_json
-            when 3
-              expect(req["Request_Number"]).to eq("99")
-
-              abort_response_json
-            end
-          }
-        end
-
-        its("ok?") { is_expected.to be false }
-        its("message") { is_expected.to eq("保険・公費にエラーがあります。(E50)") }
-      end
-
-      context "Request_Number=02で例外発生" do
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).exactly(3) { |_, body:|
-            req = body["patientmodv3req2"]
-
-            count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
-
-              get_response_json
-            when 2
-              expect(req["Request_Number"]).to eq("02")
-
-              raise "exception"
-            when 3
-              expect(req["Request_Number"]).to eq("99")
-
-              abort_response_json
-            end
-          }
-        end
-
-        it { expect { subject }.to raise_error(RuntimeError, "exception") }
-      end
-
-      context "Request_Number=03でエラー: 例)一時データ出力エラーです。強制終了して下さい。(E80)" do
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).exactly(4) { |_, body:|
-            req = body["patientmodv3req2"]
-
-            count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
-
-              get_response_json
-            when 2
-              expect(req["Request_Number"]).to eq("02")
-
-              checked_response_json
-            when 3
-              expect(req["Request_Number"]).to eq("03")
-
-              data = parse_json(updated_response_json, false)
-              data.first[1]["Api_Result"] = "E80"
-              data.first[1]["Api_Result_Message"] = "一時データ出力エラーです。強制終了して下さい。"
-              data.to_json
-            when 4
-              expect(req["Request_Number"]).to eq("99")
-
-              abort_response_json
-            end
-          }
-        end
-
-        its("ok?") { is_expected.to be false }
-        its("message") { is_expected.to eq("一時データ出力エラーです。強制終了して下さい。(E80)") }
-      end
-
-      context "Request_Number=03で例外発生" do
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with("/orca12/patientmodv32", body: instance_of(Hash)).exactly(4) { |_, body:|
-            req = body["patientmodv3req2"]
-
-            count += 1
-            case count
-            when 1
-              expect(req["Request_Number"]).to eq("01")
-
-              get_response_json
-            when 2
-              expect(req["Request_Number"]).to eq("02")
-
-              checked_response_json
-            when 3
-              expect(req["Request_Number"]).to eq("03")
-
-              raise "exception"
-            when 4
-              expect(req["Request_Number"]).to eq("99")
-
-              abort_response_json
-            end
-          }
-        end
-
-        it { expect { subject }.to raise_error(RuntimeError, "exception") }
+        expect(result.ok?).to be false
+        expect(result.message).to eq "一時データ出力エラーです。強制終了して下さい。(E80)"
       end
     end
 
-    context "選択項目がある" do
-      let(:get_response_json) { load_orca_api_response("orca12_patientmodv32_01_select_answer.json") }
-      let(:checked_response_json) { load_orca_api_response("orca12_patientmodv32_02_select_answer.json") }
-      let(:deleted_response_json) { load_orca_api_response("orca12_patientmodv32_03_select_answer.json") }
-      let(:deleted_response_json2) { load_orca_api_response("orca12_patientmodv32_03_select_answer2.json") }
-      let(:deleted_response_json3) { load_orca_api_response("orca12_patientmodv32_03_answer.json") }
-      let(:abort_response_json) { load_orca_api_response("orca12_patientmodv32_99.json") }
-      let(:patient_id) { "00002" }
-
-      context "選択項目を指定していない" do
-        let(:health_public_insurance) {
-          {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "Delete",
-                  "InsuranceProvider_Id" => "0000000001",
-                  "InsuranceProvider_Class" => "002",
-                  "InsuranceProvider_WholeName" => "船員",
-                  "RelationToInsuredPerson" => "1",
-                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
-                  "Certificate_StartDate" => "2018-04-01",
-                  "Certificate_ExpiredDate" => "2018-04-01",
-                  "Certificate_CheckDate" => "2018-04-26"
-                }
-              ]
-            }
-          }
+    context "選択項目" do
+      it "選択項目を選択済み" do
+        health_insurance_info = {
+          "InsuranceProvider_Mode" => "Delete",
+          "InsuranceProvider_Id" => "0000000001",
+          "InsuranceProvider_Class" => "002",
+          "InsuranceProvider_WholeName" => "船員",
+          "RelationToInsuredPerson" => "1",
+          "HealthInsuredPerson_WholeName" => "テスト　二朗",
+          "Certificate_StartDate" => "2018-04-01",
+          "Certificate_ExpiredDate" => "2018-04-01",
+          "Certificate_CheckDate" => "2018-04-26"
         }
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) do
-            count += 1
-            case count
-            when 1
-              get_response_json # call_01
-            when 2
-              checked_response_json # call_02
-            when 3
-              deleted_response_json # call_03_with_answer
-            when 4
-              abort_response_json # unlock
-            end
-          end
-        end
-
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::UnselectedError) }
-        its("ok?") { is_expected.to be false }
-        its("message") { is_expected.to eq("選択項目が未指定です。") }
-        its("patient_select_information") {
-          is_expected.to eq(parse_json(deleted_response_json).first[1]["Patient_Select_Information"])
+        patient_select_information = {
+          "Patient_Select" => "K910",
+          "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+          "Select_Answer" => "Ok"
         }
-      end
 
-      context "選択項目を指定している" do
-        let(:health_public_insurance) {
+        expect_data = [
           {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "Delete",
-                  "InsuranceProvider_Id" => "0000000001",
-                  "InsuranceProvider_Class" => "002",
-                  "InsuranceProvider_WholeName" => "船員",
-                  "RelationToInsuredPerson" => "1",
-                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
-                  "Certificate_StartDate" => "2018-04-01",
-                  "Certificate_ExpiredDate" => "2018-04-01",
-                  "Certificate_CheckDate" => "2018-04-26"
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "00002",
                 }
-              ]
+              }
             },
-            "Patient_Select_Information" => [
-              {
-                "Patient_Select" => "K910",
-                "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+            result: "orca12_patientmodv32_01_select_answer.json",
+          },
+
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => {
+                  "HealthInsurance_Info" => [health_insurance_info],
+                }
+              }
+            },
+            result: "orca12_patientmodv32_02_select_answer.json",
+          },
+
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`"
+              }
+            },
+            result: "orca12_patientmodv32_03_select_answer.json"
+          },
+
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`",
                 "Select_Answer" => "Ok"
               }
-            ]
+            },
+            result: "orca12_patientmodv32_03_answer.json"
           }
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "HealthInsurance_Information" => {
+            "HealthInsurance_Info" => [health_insurance_info],
+          },
+          "Patient_Select_Information" => [patient_select_information]
         }
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) do |_, body:|
-            req = body["patientmodv3req2"]
+        result = service.update("00002", args)
 
-            count += 1
-            case count
-            when 1
-              get_response_json # call_01
-            when 2
-              checked_response_json # call_02
-            when 3
-              deleted_response_json # call_03_with_answer
-            when 4
-              expect(req["Select_Answer"]).to eq "Ok"
-              deleted_response_json3 # call_03_with_answer
-            end
-          end
-        end
-
-        its("ok?") { is_expected.to be true }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::Result) }
+        expect(result.ok?).to be true
+        expect(result.message).to eq "登録処理終了。警告メッセージがあります。確認して下さい。(W00)"
       end
 
-      context "選択項目が2つあるが、1つしか指定していない" do
-        let(:health_public_insurance) {
+      it "選択項目が未選択" do
+        health_insurance_info = {
+          "InsuranceProvider_Mode" => "Delete",
+          "InsuranceProvider_Id" => "0000000001",
+          "InsuranceProvider_Class" => "002",
+          "InsuranceProvider_WholeName" => "船員",
+          "RelationToInsuredPerson" => "1",
+          "HealthInsuredPerson_WholeName" => "テスト　二朗",
+          "Certificate_StartDate" => "2018-04-01",
+          "Certificate_ExpiredDate" => "2018-04-01",
+          "Certificate_CheckDate" => "2018-04-26"
+        }
+
+        expect_data = [
           {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "Delete",
-                  "InsuranceProvider_Id" => "0000000001",
-                  "InsuranceProvider_Class" => "002",
-                  "InsuranceProvider_WholeName" => "船員",
-                  "RelationToInsuredPerson" =>  "1",
-                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
-                  "Certificate_StartDate" => "2018-04-01",
-                  "Certificate_ExpiredDate" => "2018-04-01",
-                  "Certificate_CheckDate" => "2018-04-26"
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "01",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "00002",
                 }
-              ]
-            },
-            "Patient_Select_Information" => [
-              {
-                "Patient_Select" => "K910",
-                "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
-                "Select_Answer" => "Ok"
               }
-            ]
+            },
+            result: "orca12_patientmodv32_01_select_answer.json",
+          },
+
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "02",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => {
+                  "HealthInsurance_Info" => [health_insurance_info],
+                }
+              }
+            },
+            result: "orca12_patientmodv32_02_select_answer.json",
+          },
+
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "03",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "`prev.orca_uid`",
+                "Patient_Information" => "`prev.patient_information`",
+                "HealthInsurance_Information" => "`prev.health_insurance_information`"
+              }
+            },
+            result: "orca12_patientmodv32_03_select_answer.json"
+          },
+
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "99",
+                "Karte_Uid" => '`prev.karte_uid`',
+                "Orca_Uid" => "53a2caa3-627f-434b-8d8e-c24bcff6b96e",
+                "Patient_Information" => "`prev.patient_information`",
+              }
+            },
+            result: "orca12_patientmodv32_99.json"
+          }
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        args = {
+          "HealthInsurance_Information" => {
+            "HealthInsurance_Info" => [health_insurance_info],
           }
         }
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(5) do
-            count += 1
-            case count
-            when 1
-              get_response_json # call_01
-            when 2
-              checked_response_json # call_02
-            when 3
-              deleted_response_json # call_03_with_answer
-            when 4
-              deleted_response_json2 # call_03_with_answer
-            when 5
-              abort_response_json # unlock
-            end
-          end
-        end
+        result = service.update("00002", args)
 
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::UnselectedError) }
-        its("ok?") { is_expected.to be false }
-        its("message") { is_expected.to eq("選択項目が未指定です。") }
-        its("patient_select_information") {
-          is_expected.to eq(parse_json(deleted_response_json2).first[1]["Patient_Select_Information"])
-        }
-      end
-
-      context "2つの選択項目を指定する" do
-        let(:health_public_insurance) {
-          {
-            "HealthInsurance_Information" => {
-              "HealthInsurance_Info" => [
-                {
-                  "InsuranceProvider_Mode" => "Delete",
-                  "InsuranceProvider_Id" => "0000000001",
-                  "InsuranceProvider_Class" => "002",
-                  "InsuranceProvider_WholeName" => "船員",
-                  "RelationToInsuredPerson" => "1",
-                  "HealthInsuredPerson_WholeName" => "テスト　二朗",
-                  "Certificate_StartDate" => "2018-04-01",
-                  "Certificate_ExpiredDate" => "2018-04-01",
-                  "Certificate_CheckDate" => "2018-04-26"
-                }
-              ]
-            },
-            "Patient_Select_Information" => [
-              {
-                "Patient_Select" => "K910",
-                "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
-                "Select_Answer" => "Ok"
-              },
-              {
-                "Patient_Select" => "K910",
-                "Patient_Select_Message" => "テスト用の質問です。",
-                "Select_Answer" => "Ng"
-              }
-            ]
-          }
-        }
-        before do
-          count = 0
-          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(5) do |_, body:|
-            req = body["patientmodv3req2"]
-
-            count += 1
-            case count
-            when 1
-              get_response_json # call_01
-            when 2
-              checked_response_json # call_02
-            when 3
-              deleted_response_json # call_03_with_answer
-            when 4
-              expect(req["Select_Answer"]).to eq "Ok"
-              deleted_response_json2 # call_03_with_answer
-            when 5
-              expect(req["Select_Answer"]).to eq "Ng"
-              deleted_response_json3 # call_03_with_answer
-            end
-          end
-        end
-
-        its("ok?") { is_expected.to be true }
-        it { is_expected.to be_kind_of(OrcaApi::PatientService::HealthPublicInsurance::Result) }
+        expect(result.ok?).to be false
+        expect(result.message).to eq "選択項目が未指定です。"
       end
     end
   end

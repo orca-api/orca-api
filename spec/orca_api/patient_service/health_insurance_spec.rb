@@ -74,7 +74,7 @@ RSpec.describe OrcaApi::PatientService::HealthInsurance, orca_api_mock: true do
     context "正常系" do
       it "患者保険情報を更新できること" do
         args = {
-          "HealthInsurance_Info": [
+          "HealthInsurance_Info" => [
             {
               "InsuranceProvider_Mode": "Modify",
               "InsuranceProvider_Id": "2",
@@ -147,11 +147,11 @@ RSpec.describe OrcaApi::PatientService::HealthInsurance, orca_api_mock: true do
 
       it "患者保険情報を削除できること" do
         args = {
-          "HealthInsurance_Info": [
+          "HealthInsurance_Info" => [
             {
-              "InsuranceProvider_Mode": "Delete",
-              "InsuranceProvider_Id": "7",
-              "InsuranceProvider_Class": "009"
+              "InsuranceProvider_Mode" => "Delete",
+              "InsuranceProvider_Id" => "7",
+              "InsuranceProvider_Class" => "009"
             }
           ]
         }
@@ -233,7 +233,7 @@ RSpec.describe OrcaApi::PatientService::HealthInsurance, orca_api_mock: true do
 
       it "保険有効開始日＜有効終了日の場合、エラーが発生してロックを解除すること" do
         args = {
-          "HealthInsurance_Info": [
+          "HealthInsurance_Info" => [
             {
               "InsuranceProvider_Mode": "Modify",
               "InsuranceProvider_Id": "2",

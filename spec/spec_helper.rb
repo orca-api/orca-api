@@ -144,7 +144,11 @@ def expect_orca_api_call(expect_data, context)
     if expect_datum.key?(:response)
       return_response_json(expect_datum[:response])
     elsif expect_datum.key?(:result)
-      res = OrcaApi::Result.new(return_response_json(expect_datum[:result]))
+      response_json = return_response_json(expect_datum[:result])
+      if expect_datum.key?(:enhancer)
+        response_json = expect_datum[:enhancer][parse_json(response_json)].to_json
+      end
+      res = OrcaApi::Result.new(response_json)
       context.local_variable_set(:prev, res)
       res.raw
     end
