@@ -73,8 +73,79 @@ module OrcaApi
   #
   # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
   class MedicalPracticeService < Service
+    # 診療処理開始または、デフォルト保険組合せ取得のレスポンスを表現したクラス
+    class Response1Result < ::OrcaApi::Result
+      # @example
+      #   res = Response1Result.new({
+      #                               "response" => {
+      #                                 "Medical_Information" => [
+      #                                   { "Medical_Info" => [1] },
+      #                                   # :
+      #                                   { "Medical_Info" => [2] },
+      #                                 ]
+      #                               }
+      #                             }.to_json)
+      #   res.medical_information
+      #   # => [ { "Medical_Info" => [1] }, { "Medical_Info" => [2] } ]
+      #
+      # @return [Array<Hash>]
+      def medical_information
+        Array(body["Medical_Information"])
+      end
+
+      # @example
+      #   res = Response1Result.new({
+      #                               "response" => {
+      #                                 "Medical_Information" => [
+      #                                   { "Medical_Info" => [1] },
+      #                                   # :
+      #                                   { "Medical_Info" => [2] },
+      #                                 ]
+      #                               }
+      #                             }.to_json)
+      #   res.medical_info
+      #   # => [1, 2]
+      #
+      # @return [Array<Hash>]
+      def medical_info
+        medical_information.flat_map do |mi|
+          Array(mi["Medical_Info"])
+        end
+      end
+    end
+
+    # 診療内容チェックのレスポンスを表現したクラス
+    class Response2Result < ::OrcaApi::Result
+      def_info :medical_info, "Medical_Information", "Medical_Info"
+
+      # @return [Hash]
+      def medical_information
+        Hash(body["Medical_Information"])
+      end
+    end
+
+    # 診療行為確認・登録のレスポンスを表現したクラス
+    class Response3Result < ::OrcaApi::Result
+      def_info :medical_info, "Medical_Information", "Medical_Info"
+
+      # @return [Hash]
+      def medical_information
+        Hash(body["Medical_Information"])
+      end
+
+      # @return [Hash]
+      def cd_information
+        Hash(body["Cd_Information"])
+      end
+
+      # @return [Hash]
+      def print_information
+        Hash(body["Print_Information"])
+      end
+    end
+
     # 選択項目が未指定であることを表現するクラス
-    class UnselectedError < Result
+    class UnselectedError < ::OrcaApi::Result
       def ok?
         false
       end
@@ -85,7 +156,7 @@ module OrcaApi
     end
 
     # 削除可能な剤の削除指示が未指定であることを表現するクラス
-    class EmptyDeleteNumberInfoError < Result
+    class EmptyDeleteNumberInfoError < ::OrcaApi::Result
       def ok?
         false
       end
@@ -110,14 +181,17 @@ module OrcaApi
     #       診察料区分。
     #       01: 初診、02:再診、03:電話再診、09:診察料なし。
     #       設定がなければ、病名などから診察料を返却する。
-    # @return [OrcaApi::Result]
+    # @return [Response1Result]
     #   日レセからのレスポンス
+    #
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api021s1v3.pdf
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api021s1v3_err.pdf
     def get_default(params)
       req = params.merge(
         "Request_Number" => "00",
         "Karte_Uid" => orca_api.karte_uid
       )
-      Result.new(orca_api.call("/api21/medicalmodv31", body: { "medicalv3req1" => req }))
+      Response1Result.new(orca_api.call("/api21/medicalmodv31", body: { "medicalv3req1" => req }))
     end
 
     # 診察料情報の取得
@@ -196,7 +270,7 @@ module OrcaApi
     #         診察料区分の設定がない時のみチェックを行う。
     #       * "Medication_Name" (String)
     #         名称/80
-    # @return [OrcaApi::Result]
+    # @return [Response1Result]
     #   日レセからのレスポンス
     #
     # @example
@@ -296,7 +370,7 @@ module OrcaApi
     #   在削除連番
     #   * "Delete_Number" (String)
     #     在削除連番
-    # @return [OrcaApi::Result]
+    # @return [OrcaApi::MedicalPracticeService::Response3Result]
     #   日レセからのレスポンス
     # @return [OrcaApi::MedicalPracticeService::UnselectedError]
     #   選択項目がある場合の日レセからのレスポンス
@@ -441,7 +515,7 @@ module OrcaApi
     #     薬手帳印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
     #   * "Print_Appointment_Form_Class" (String)
     #     予約票印刷区分/1/０：発行なし、１：発行あり
-    # @return [OrcaApi::Result]
+    # @return [Response3Result]
     #   日レセからのレスポンス
     #
     # @example
@@ -645,7 +719,7 @@ module OrcaApi
           "Diagnosis_Information" => params["Diagnosis_Information"],
         },
       }
-      Result.new(orca_api.call("/api21/medicalmodv31", body: body))
+      Response1Result.new(orca_api.call("/api21/medicalmodv31", body: body))
     end
 
     # 診療内容基本チェックAPI
@@ -680,7 +754,7 @@ module OrcaApi
           params["Diagnosis_Information"]["HealthInsurance_Information"]
         req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
       end
-      Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
+      Response2Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
     end
 
     # 診療確認API
@@ -707,7 +781,7 @@ module OrcaApi
       if answer
         req["Select_Answer"] = answer["Select_Answer"]
       end
-      Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
+      Response2Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }))
     end
 
     # 診療確認・請求確認API
@@ -739,7 +813,7 @@ module OrcaApi
       if params["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
       end
-      Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }))
+      Response3Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }))
     end
 
     # 診療登録API
@@ -763,7 +837,7 @@ module OrcaApi
       if params["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
       end
-      Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }))
+      Response3Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }))
     end
 
     # 診療行為訂正処理
