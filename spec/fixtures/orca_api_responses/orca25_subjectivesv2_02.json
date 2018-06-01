@@ -1,0 +1,33 @@
+{
+  "subjectivesmodres": {
+    "Information_Date": "2018-06-06",
+    "Information_Time": "10:20:56",
+    "Api_Result": "00",
+    "Api_Result_Message": "レセコメント削除終了",
+    "Reskey": "Acceptance_Info",
+    "InOut": "O",
+    "Patient_Information": {
+      "Patient_ID": "00001",
+      "WholeName": "北嶋　亘兵",
+      "WholeName_inKana": "キタジマ　コウヘイ",
+      "BirthDate": "1980-06-05",
+      "Sex": "1"
+    },
+    "Perform_Date": "2018-06",
+    "Department_Code": "00",
+    "Department_WholeName": "全科指定",
+    "Insurance_Combination_Number": "0001",
+    "HealthInsurance_Information": {
+      "InsuranceProvider_Class": "009",
+      "InsuranceProvider_WholeName": "協会",
+      "RelationToInsuredPerson": "1",
+      "HealthInsuredPerson_WholeName": "北嶋　亘兵",
+      "Certificate_StartDate": "2018-06-05",
+      "Certificate_ExpiredDate": "9999-12-31"
+    },
+    "Subjectives_Number": "03",
+    "Subjectives_Detail_Record": "07",
+    "Subjectives_Detail_Record_WholeName": "その他（１）",
+    "Subjectives_Code": "ｆｏｏｂａｒｂａｚ"
+  }
+}
