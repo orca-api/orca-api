@@ -18,6 +18,16 @@ module OrcaApi
       end
     end
 
+    # Shim module for Hash#slice
+    module HashSlice
+      refine Hash do
+        def slice(*keys)
+          select { |key, _| keys.include? key }
+        end
+      end
+    end
+    using HashSlice unless Hash.instance_methods.include? :slice
+
     CREATE_PARAMS = [
       "InOut",
       "Patient_ID",
