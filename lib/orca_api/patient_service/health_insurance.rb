@@ -10,6 +10,18 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032_err.pdf
     class HealthInsurance < HealthPublicInsuranceCommon
+      # 患者保険情報を更新する
+      #
+      # @param [String] id
+      #   患者ID
+      # @param [Hash] args
+      #   患者保険情報パラメータ
+      #   * "HealthInsurance_Info" (Array[Hash])
+      #     患者保険情報
+      #   * "Patient_Select_Information" (Array[Hash])
+      #     確認メッセージ
+      #
+      # @see HealthPublicInsuranceCommon#update
       def update(id, args)
         super(
           id,

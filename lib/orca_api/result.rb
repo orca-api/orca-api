@@ -22,6 +22,42 @@ module OrcaApi
       trim_response(JSON.parse(raw)).first[1]
     end
 
+    # 深いパスのレスポンスボディに対するアクセサーを定義するメソッド
+    #
+    # @param [String, Symbol] name
+    #   定義するメソッド名
+    # @param [Array<String>] path
+    #   レスポンスボディのパス
+    # @return [Array<Array, Hash>]
+    #   レスポンスボディ
+    # @example
+    #   class SomeResult < Result
+    #     def_info :some_info, "Some_Information", "Some_Info"
+    #   end
+    #   res = SomeResult.new({
+    #                          "someres" => {
+    #                            "Some_Information" => {
+    #                              "Some_Info" => [
+    #                                { "Some_ID" => "foo" }, { "Some_ID" => "bar" }
+    #                              ]
+    #                            }
+    #                          }
+    #                        }.to_json)
+    #   res.some_info
+    #   # => [ { "Some_ID" => "foo" }, { "Some_ID" => "bar" } ]
+    #   res = SomeResult.new({
+    #                          "someres" => {
+    #                          }
+    #                        }.to_json)
+    #   res.some_info
+    #   # => []
+    #
+    def self.def_info(name, *path)
+      define_method name do
+        Array(body.dig(*path))
+      end
+    end
+
     attr_reader :raw
 
     def initialize(raw)

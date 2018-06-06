@@ -16,6 +16,19 @@ module OrcaApi
       ].freeze
       private_constant :OPTION_KEYS
 
+      # 患者保険・公費情報を更新する
+      #
+      # @param [String] id
+      #   患者ID
+      # @param [Hash] args
+      #   患者保険情報パラメータ
+      #   * "HealthInsurance_Information" (Hash)
+      #     患者保険情報
+      #   * "PublicInsurance_Information" (Hash)
+      #     患者公費情報
+      #   * "Patient_Select_Information" (Array[Hash])
+      #     確認メッセージ
+      #
       # @see HealthPublicInsuranceCommon#update
       def update(id, args)
         super(
