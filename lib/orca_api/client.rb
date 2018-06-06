@@ -201,24 +201,25 @@ module OrcaApi #:nodoc:
     # @!endgroup
 
     service_class_names = %w(
-      PatientService
-      InsuranceService
-      DepartmentService
-      PhysicianService
-      MedicalPracticeService
       AcceptanceService
-      DiseaseService
-      FormDataService
-      IncomeService
-      PrintService
-      ImageService
-      ReceiptService
       BlobService
-      LockService
-      RehabilitationCommentService
-      UserService
-      ReceiptDataService
+      DepartmentService
+      DiseaseService
       FindService
+      FormDataService
+      ImageService
+      IncomeService
+      InsuranceService
+      LockService
+      MedicalPracticeService
+      PatientService
+      PhysicianService
+      PrintService
+      ReceiptDataService
+      ReceiptService
+      RehabilitationCommentService
+      SubjectiveService
+      UserService
     )
     service_class_names.each do |name|
       s = underscore(name)
