@@ -87,4 +87,125 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
       expect(result.ok?).to be true
     end
   end
+
+  describe "#list" do
+    it "API呼び出しが正しいこと" do
+      expect_orca_api_call(
+        [
+          {
+            path: "/api01rv2/subjectiveslstv2",
+            body: {
+              "subjectiveslstreq" => {
+                "Request_Number" => "01",
+                "Patient_ID" => "00001"
+              }
+            },
+            response: {
+              "subjectiveslstres" => {
+                "Api_Result" => "WK1",
+                "Patient_Information" => { "Patient_ID" => "00001" },
+                "Perform_Date" => "2018-06",
+                "Subjectives_Information" => [
+                  {
+                    "InOut" => "O",
+                    "Department_Code" => "00",
+                    "HealthInsurance_Information" => {
+                      "Insurance_Combination_Number" => "0001"
+                    },
+                    "Subjectives_Detail_Record" => "07",
+                    "Subjectives_Number" => "01"
+                  },
+                  {
+                    "InOut" => "O",
+                    "Department_Code" => "00",
+                    "HealthInsurance_Information" => {
+                      "Insurance_Combination_Number" => "0001"
+                    },
+                    "Subjectives_Detail_Record" => "08",
+                    "Subjectives_Number" => "01"
+                  }
+                ]
+              }
+            }.to_json
+          },
+          {
+            path: "/api01rv2/subjectiveslstv2",
+            body: {
+              "subjectiveslstreq" => {
+                "Request_Number" => "02",
+                "InOut" => "O",
+                "Patient_ID" => "00001",
+                "Perform_Date" => "2018-06",
+                "Department_Code" => "00",
+                "Insurance_Combination_Number" => "0001",
+                "Subjectives_Detail_Record" => "07",
+                "Subjectives_Number" => "01"
+              }
+            },
+            response: {
+              "subjectiveslstres" => {
+                "Api_Result" => "000",
+                "Subjectives_Code_Information" => {
+                  "Subjectives_Code" => "いろはにほへとちりぬるを"
+                }
+              }
+            }.to_json
+          },
+          {
+            path: "/api01rv2/subjectiveslstv2",
+            body: {
+              "subjectiveslstreq" => {
+                "Request_Number" => "02",
+                "InOut" => "O",
+                "Patient_ID" => "00001",
+                "Perform_Date" => "2018-06",
+                "Department_Code" => "00",
+                "Insurance_Combination_Number" => "0001",
+                "Subjectives_Detail_Record" => "08",
+                "Subjectives_Number" => "01"
+              }
+            },
+            response: {
+              "subjectiveslstres" => {
+                "Api_Result" => "000",
+                "Subjectives_Code_Information" => {
+                  "Subjectives_Code" => "わかよたれそつねならむ"
+                }
+              }
+            }.to_json
+          }
+        ],
+        binding
+      )
+
+      params = {
+        "Patient_ID" => "00001"
+      }
+      result = service.list params
+      expect(result.ok?).to be true
+
+      expect(result.subjectives_information).to eq([
+                                                     {
+                                                       "InOut" => "O",
+                                                       "Department_Code" => "00",
+                                                       "HealthInsurance_Information" => {
+                                                         "Insurance_Combination_Number" => "0001"
+                                                       },
+                                                       "Subjectives_Detail_Record" => "07",
+                                                       "Subjectives_Number" => "01",
+                                                       "Subjectives_Code" => "いろはにほへとちりぬるを",
+                                                     },
+                                                     {
+                                                       "InOut" => "O",
+                                                       "Department_Code" => "00",
+                                                       "HealthInsurance_Information" => {
+                                                         "Insurance_Combination_Number" => "0001"
+                                                       },
+                                                       "Subjectives_Detail_Record" => "08",
+                                                       "Subjectives_Number" => "01",
+                                                       "Subjectives_Code" => "わかよたれそつねならむ",
+                                                     }
+                                                   ])
+    end
+  end
 end
