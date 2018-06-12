@@ -6,6 +6,7 @@ module OrcaApi
   # 症状詳記を扱うサービスを表現したクラス
   #
   # @see https://www.orca.med.or.jp/receipt/tec/api/subjectives.html
+  # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19548#api2
   class SubjectiveService < Service
     # 症状詳記APIの処理結果を表現したクラス
     class Result < ::OrcaApi::Result
