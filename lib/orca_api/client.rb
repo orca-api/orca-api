@@ -198,6 +198,9 @@ module OrcaApi #:nodoc:
     # @!method new_find_service
     # @return [FindService] FindServiceインスタンス
 
+    # @!method new_statistics_form_service
+    # @return [StatisticsFormServie] StatisticsFormServiceインスタンス
+
     # @!endgroup
 
     service_class_names = %w(
@@ -218,6 +221,7 @@ module OrcaApi #:nodoc:
       ReceiptDataService
       ReceiptService
       RehabilitationCommentService
+      StatisticsFormService
       SubjectiveService
       UserService
     )
