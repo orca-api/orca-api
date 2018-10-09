@@ -73,6 +73,7 @@ module OrcaApi
   #
   # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
   class MedicalPracticeService < Service
+    # 診療行為APIのレスポンスクラスの基底クラス
     class ResponseResult < ::OrcaApi::Result
       def initialize(raw, ignore_medical_warnings = nil)
         super(raw)
@@ -84,10 +85,10 @@ module OrcaApi
       end
 
       def ok?
-        if medical_warnings.length > 0
-          medical_warnings.any? { |i| !@ignore_medical_warnings.include?(i["Medical_Warning"]) } ? false : true
-        else
+        if medical_warnings.empty?
           super
+        else
+          medical_warnings.any? { |i| !@ignore_medical_warnings.include?(i["Medical_Warning"]) } ? false : true
         end
       end
     end
@@ -210,7 +211,9 @@ module OrcaApi
         "Request_Number" => "00",
         "Karte_Uid" => orca_api.karte_uid
       )
-      Response1Result.new(orca_api.call("/api21/medicalmodv31", body: { "medicalv3req1" => req }), ignore_medical_warnings(params))
+      Response1Result.new(
+        orca_api.call("/api21/medicalmodv31", body: { "medicalv3req1" => req }), ignore_medical_warnings(params)
+      )
     end
 
     # 診察料情報の取得
@@ -742,7 +745,9 @@ module OrcaApi
           "Diagnosis_Information" => params["Diagnosis_Information"],
         },
       }
-      Response1Result.new(orca_api.call("/api21/medicalmodv31", body: body), ignore_medical_warnings(params))
+      Response1Result.new(
+        orca_api.call("/api21/medicalmodv31", body: body), ignore_medical_warnings(params)
+      )
     end
 
     # 診療内容基本チェックAPI
@@ -769,6 +774,13 @@ module OrcaApi
           "Medical_OffTime" => res_body["Medical_OffTime"]
         }
       }
+      req = call_02_for_modify req, res_body, params
+      Response2Result.new(
+        orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }), ignore_medical_warnings(params)
+      )
+    end
+
+    def call_02_for_modify(req, res_body, params)
       if res_body["Invoice_Number"]
         req["Perform_Time"] = params["Perform_Time"]
         req["Invoice_Number"] = res_body["Invoice_Number"]
@@ -777,7 +789,7 @@ module OrcaApi
           params["Diagnosis_Information"]["HealthInsurance_Information"]
         req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
       end
-      Response2Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }), ignore_medical_warnings(params))
+      req
     end
 
     # 診療確認API
@@ -804,7 +816,9 @@ module OrcaApi
       if answer
         req["Select_Answer"] = answer["Select_Answer"]
       end
-      Response2Result.new(orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }), ignore_medical_warnings(params))
+      Response2Result.new(
+        orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }), ignore_medical_warnings(params)
+      )
     end
 
     # 診療確認・請求確認API
@@ -836,7 +850,9 @@ module OrcaApi
       if params["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
       end
-      Response3Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }), ignore_medical_warnings(params))
+      Response3Result.new(
+        orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }), ignore_medical_warnings(params)
+      )
     end
 
     # 診療登録API
@@ -860,7 +876,9 @@ module OrcaApi
       if params["Invoice_Number"]
         req["Patient_Mode"] = "Modify"
       end
-      Response3Result.new(orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }), ignore_medical_warnings(params))
+      Response3Result.new(
+        orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }), ignore_medical_warnings(params)
+      )
     end
 
     # 診療行為訂正処理
@@ -881,7 +899,9 @@ module OrcaApi
           "Sequential_Number" => params["Sequential_Number"],
         },
       }
-      ResponseResult.new(orca_api.call("/api21/medicalmodv34", body: body), ignore_medical_warnings(params))
+      ResponseResult.new(
+        orca_api.call("/api21/medicalmodv34", body: body), ignore_medical_warnings(params)
+      )
     end
 
     # 診療行為削除処理
