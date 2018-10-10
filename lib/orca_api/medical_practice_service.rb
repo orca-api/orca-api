@@ -75,21 +75,28 @@ module OrcaApi
   class MedicalPracticeService < Service
     # 診療行為APIのレスポンスクラスの基底クラス
     class ResponseResult < ::OrcaApi::Result
+      def_info :medical_warnings, "Medical_Message_Information", "Medical_Warning_Info"
+
+      # @param [String] raw
+      #   JSON文字列
+      # @param [Array<String>, nil] ignore_medical_warnings
+      #   無視する警告コード
       def initialize(raw, ignore_medical_warnings = nil)
         super(raw)
-        @ignore_medical_warnings = Set.new(Array[ignore_medical_warnings].flatten.compact)
+        @ignore_medical_warnings = Array[ignore_medical_warnings].flatten.compact
       end
 
-      def medical_warnings
-        @medical_warnings ||= (body.dig("Medical_Message_Information", "Medical_Warning_Info") || [])
-      end
-
+      # APIレスポンスに警告コードが含まれていればfalseを返す。それ以外の場合は、 OrcaApi::Result#ok? を呼び出す
+      # @see OrcaApi::Result#ok?
       def ok?
-        if medical_warnings.empty?
-          super
-        else
-          medical_warnings.any? { |i| !@ignore_medical_warnings.include?(i["Medical_Warning"]) } ? false : true
-        end
+        warning_codes.empty? ? super : false
+      end
+
+      private
+
+      def warning_codes
+        warning_codes = medical_warnings.map { |i| i["Medical_Warning"] }
+        (warning_codes - @ignore_medical_warnings)
       end
     end
 
@@ -189,109 +196,112 @@ module OrcaApi
     # デフォルト値の返却
     #
     # @param [Hash] params
-    #   * Patient_ID (String)
+    #   * "Patient_ID" (String)
     #     患者番号。必須。
-    #   * Perform_Date (String)
+    #   * "Perform_Date" (String)
     #     診療日付。YYYY-mm-dd形式。未設定はシステム日付。
-    #   * Diagnosis_Information (Hash)
-    #     * Department_Code (String)
+    #   * "Diagnosis_Information" (Hash)
+    #     * "Department_Code" (String)
     #       診療科。必須。
-    #   * Medical_Information (Hash)
-    #     * Doctors_Fee (String)
-    #       診察料区分。
-    #       01: 初診、02:再診、03:電話再診、09:診察料なし。
-    #       設定がなければ、病名などから診察料を返却する。
+    #     * "Medical_Information" (Hash)
+    #       * "Doctors_Fee" (String)
+    #         診察料区分。
+    #         01: 初診、02:再診、03:電話再診、09:診察料なし。
+    #         設定がなければ、病名などから診察料を返却する。
     # @return [Response1Result]
     #   日レセからのレスポンス
     #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api10
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api021s1v3.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api021s1v3_err.pdf
     def get_default(params)
-      req = params.merge(
-        "Request_Number" => "00",
-        "Karte_Uid" => orca_api.karte_uid
-      )
+      body = {
+        "medicalv3req1" => params.merge(
+          "Request_Number" => "00",
+          "Karte_Uid" => orca_api.karte_uid
+        )
+      }
       Response1Result.new(
-        orca_api.call("/api21/medicalmodv31", body: { "medicalv3req1" => req }), ignore_medical_warnings(params)
+        orca_api.call("/api21/medicalmodv31", body: body), ignore_medical_warnings(params)
       )
     end
 
     # 診察料情報の取得
     #
     # @param params [Hash]
-    #   診察料情報
-    # @option params [String] "Patient_ID"
-    #   患者番号/20/必須
-    # @option params [String] "Perform_Date"
-    #   診療日付/10/未設定はシステム日付
-    # @option params [String] "Perform_Time"
-    #   診療時間/8/未使用
-    # @option params [Hash] "Diagnosis_Information"
-    #   送信内容
-    #   * "Department_Code" (String) 診療科/2/必須
-    #   * "Physician_Code" (String) ドクターコード/5
-    #   * "HealthInsurance_Information" (Hash)
-    #     保険情報。
-    #     保険組合せ又は保険・公費から保険組合せを決定。
-    #     包括分入力（保険組合せ＝９９９９、保険の種類＝９９）。
-    #     診察料区分（Doctors_Fee）＝０９　は省略可。
-    #     * "Insurance_Combination_Number" (String)
-    #       保険組合せ番号/4/指定があれば優先
-    #     * "InsuranceProvider_Class" (String)
-    #       保険の種類/3
-    #     * "InsuranceProvider_Number" (String)
-    #       保険者番号/8
-    #     * "InsuranceProvider_WholeName" (String)
-    #       保険の制度名称/20
-    #     * "HealthInsuredPerson_Symbol" (String)
-    #       記号/80
-    #     * "HealthInsuredPerson_Number" (String)
-    #       番号/80
-    #     * "HealthInsuredPerson_Continuation" (String)
-    #       継続区分/1
-    #     * "HealthInsuredPerson_Assistance" (String)
-    #       補助区分/1
-    #     * "RelationToInsuredPerson" (String)
-    #       本人家族区分/1
-    #     * "HealthInsuredPerson_WholeName" (String)
-    #       被保険者名/100
-    #     * "Certificate_StartDate" (String)
-    #       適用開始日/10
-    #     * "Certificate_ExpiredDate" (String)
-    #       適用終了日/10
-    #     * "PublicInsurance_Information" (Hash)
-    #       公費情報　（４）/4
-    #       * "PublicInsurance_Class" (String)
-    #         公費の種類/3
-    #       * "PublicInsurance_Name" (String)
-    #         公費の制度名称/20
-    #       * "PublicInsurer_Number" (String)
-    #         負担者番号/8
-    #       * "PublicInsuredPerson_Number" (String)
-    #         受給者番号/20
-    #       * "Certificate_IssuedDate" (String)
+    #   * "Patient_ID" (String)
+    #     患者番号/20/必須
+    #   * "Perform_Date" (String)
+    #     診療日付/10/未設定はシステム日付
+    #   * "Perform_Time" (String)
+    #     診療時間/8/未使用
+    #   * "Diagnosis_Information" (Hash)
+    #     * "Department_Code" (String)
+    #       診療科/2/必須
+    #     * "Physician_Code" (String)
+    #       ドクターコード/5
+    #     * "HealthInsurance_Information" (Hash)
+    #       保険情報。
+    #       保険組合せ又は保険・公費から保険組合せを決定。
+    #       包括分入力（保険組合せ＝９９９９、保険の種類＝９９）。
+    #       診察料区分（Doctors_Fee）＝０９　は省略可。
+    #       * "Insurance_Combination_Number" (String)
+    #         保険組合せ番号/4/指定があれば優先
+    #       * "InsuranceProvider_Class" (String)
+    #         保険の種類/3
+    #       * "InsuranceProvider_Number" (String)
+    #         保険者番号/8
+    #       * "InsuranceProvider_WholeName" (String)
+    #         保険の制度名称/20
+    #       * "HealthInsuredPerson_Symbol" (String)
+    #         記号/80
+    #       * "HealthInsuredPerson_Number" (String)
+    #         番号/80
+    #       * "HealthInsuredPerson_Continuation" (String)
+    #         継続区分/1
+    #       * "HealthInsuredPerson_Assistance" (String)
+    #         補助区分/1
+    #       * "RelationToInsuredPerson" (String)
+    #         本人家族区分/1
+    #       * "HealthInsuredPerson_WholeName" (String)
+    #         被保険者名/100
+    #       * "Certificate_StartDate" (String)
     #         適用開始日/10
     #       * "Certificate_ExpiredDate" (String)
     #         適用終了日/10
-    #   * "Medical_Information" (Hash)
-    #     診療送信内容
-    #     * "OffTime" (String)
-    #       時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
-    #     * "Doctors_Fee" (String)
-    #       診察料区分/2。
-    #       ０１＝初診、０２＝再診、０３＝電話再診、０９＝診察料なし。
-    #     * "Medical_Class" (String)
-    #       診療種別区分/3/診察料コードの診療区分
-    #     * "Medical_Class_Name" (String)
-    #       診療種別区分名称/40
-    #     * "Medication_Info" (Hash)
-    #       診療行為
-    #       * "Medication_Code" (String)
-    #         診療コード/9/診察料コード。
-    #         コードが使用できるかのチェックを行う。
-    #         診察料区分の設定がない時のみチェックを行う。
-    #       * "Medication_Name" (String)
-    #         名称/80
+    #       * "PublicInsurance_Information" (Hash)
+    #         公費情報　（４）/4
+    #         * "PublicInsurance_Class" (String)
+    #           公費の種類/3
+    #         * "PublicInsurance_Name" (String)
+    #           公費の制度名称/20
+    #         * "PublicInsurer_Number" (String)
+    #           負担者番号/8
+    #         * "PublicInsuredPerson_Number" (String)
+    #           受給者番号/20
+    #         * "Certificate_IssuedDate" (String)
+    #           適用開始日/10
+    #         * "Certificate_ExpiredDate" (String)
+    #           適用終了日/10
+    #     * "Medical_Information" (Hash)
+    #       診療送信内容
+    #       * "OffTime" (String)
+    #         時間外区分/1/外来時間外区分（０から８）とする（環境設定の外来時間外区分）
+    #       * "Doctors_Fee" (String)
+    #         診察料区分/2。
+    #         ０１＝初診、０２＝再診、０３＝電話再診、０９＝診察料なし。
+    #       * "Medical_Class" (String)
+    #         診療種別区分/3/診察料コードの診療区分
+    #       * "Medical_Class_Name" (String)
+    #         診療種別区分名称/40
+    #       * "Medication_Info" (Hash)
+    #         診療行為
+    #         * "Medication_Code" (String)
+    #           診療コード/9/診察料コード。
+    #           コードが使用できるかのチェックを行う。
+    #           診察料区分の設定がない時のみチェックを行う。
+    #         * "Medication_Name" (String)
+    #           名称/80
     # @return [Response1Result]
     #   日レセからのレスポンス
     #
@@ -337,61 +347,62 @@ module OrcaApi
     # 診療情報及び請求情報の取得
     #
     # @param params [Hash]
-    #   診察料情報
-    # @option params [String] "Patient_ID" 患者番号/20/必須
-    # @option params [String] "Perform_Date" 診療日付/10/未設定はシステム日付
-    # @option params [String] "Perform_Time" 診療時間/8/未使用
-    # @option params [Hash] "Diagnosis_Information"
-    #   送信内容
-    #   MedicalPracticeService#get_examination_fee の "Diagnosis_Information" と同じデータを渡す。
-    #   以下は追加パラメータ
-    #   * "Outside_Class" ("False", "True")
-    #     院内・院外区分/5/院内＝False、院外＝True（未設定はシステム管理）
-    #   * "Medical_Information" ({ "Medical_Info" => <Hash> })
-    #     診療行為情報
-    #     * "Medical_Class" (String)
-    #       診療種別区分/3/必須
-    #     * "Medical_Class_Name" (String)
-    #       診療種別区分名称/40
-    #     * "Medical_Class_Number" (String)
-    #       回数/3/未設定は１、０はエラー
-    #     * "Medication_Info" (<Hash>)
-    #       診療剤明細（５０）/50
-    #       * "Medication_Code" (String)
-    #         診療コード/9
-    #       * "Medication_Name" (String)
-    #         名称/80。
-    #         名称を入力するコメントコード（81XXXXXXX,83XXXXXXXX,0083XXXXX、0085～）は全内容（点数マスタの名称＋入力内容）。
-    #       * "Medication_Number" (String)
-    #         数量/11/未設定は１、０はエラー
-    #       * "Medication_Moeny" (String)
-    #         自費金額/7/金額ゼロで登録してある自費コードの金額（消費税込）
-    #       * "Medication_Input_Info" (<{ "Medication_Input_Code" => String }>)
-    #         コメント埋め込み数値（５）/5
-    #         * "Medication_Input_Code" (String)
-    #           コメント埋め込み数値/8/（１）から順に数値を編集
-    #       * "Medication_Film_Comp_Number" (String)
-    #         フィルム分画数/3
-    #       * "Medication_Continue" (String)
-    #         継続コメント指示区分/1
-    #       * "Medication_Internal_Kinds" (String)
-    #         内服種類数指示区分/1/１：内服種類数を１とする
-    #       * "Medication_No_Addition_Class" (String)
-    #         加算自動算定なし/3。
-    #         在医総管・施医総菅（C002）の在宅療養実績加算、精神通院（I002）の２０未満の加算を自動算定しない場合に「Yes」を設定します。
-    #       * "Medication_Auto_Addition" (String)
-    #         自動区分/1。
-    #         レスポンス内容をリクエスト内容として返却する時そのまま返却すること。変更した場合の不具合は保障できない。
-    # @option params [<Hash>] "Medical_Select_Information"
-    #   確認領域
-    #   * "Medical_Select" (String)
-    #     確認メッセージコード
-    #   * "Select_Answer" ("Ok", "No")
-    #     確認メッセージ返答
-    # @option params [<Hash>] "Delete_Number_Info"
-    #   在削除連番
-    #   * "Delete_Number" (String)
+    #   * "Patient_ID" (String)
+    #     患者番号/20/必須
+    #   * "Perform_Date" (String)
+    #     診療日付/10/未設定はシステム日付
+    #   * "Perform_Time" (String)
+    #     診療時間/8/未使用
+    #   * "Diagnosis_Information" (Hash)
+    #     MedicalPracticeService#get_examination_fee の "Diagnosis_Information" と同じデータを渡す。
+    #     以下は追加パラメータ
+    #     * "Outside_Class" ("False", "True")
+    #       院内・院外区分/5/院内＝False、院外＝True（未設定はシステム管理）
+    #     * "Medical_Information" ({ "Medical_Info" => Array<Hash> })
+    #       診療行為情報
+    #       * "Medical_Class" (String)
+    #         診療種別区分/3/必須
+    #       * "Medical_Class_Name" (String)
+    #         診療種別区分名称/40
+    #       * "Medical_Class_Number" (String)
+    #         回数/3/未設定は１、０はエラー
+    #       * "Medication_Info" (Array<Hash>)
+    #         診療剤明細（５０）/50
+    #         * "Medication_Code" (String)
+    #           診療コード/9
+    #         * "Medication_Name" (String)
+    #           名称/80。
+    #           名称を入力するコメントコード（81XXXXXXX,83XXXXXXXX,0083XXXXX、0085～）は全内容（点数マスタの名称＋入力内容）。
+    #         * "Medication_Number" (String)
+    #           数量/11/未設定は１、０はエラー
+    #         * "Medication_Moeny" (String)
+    #           自費金額/7/金額ゼロで登録してある自費コードの金額（消費税込）
+    #         * "Medication_Input_Info" (<{ "Medication_Input_Code" => String }>)
+    #           コメント埋め込み数値（５）/5
+    #           * "Medication_Input_Code" (String)
+    #             コメント埋め込み数値/8/（１）から順に数値を編集
+    #         * "Medication_Film_Comp_Number" (String)
+    #           フィルム分画数/3
+    #         * "Medication_Continue" (String)
+    #           継続コメント指示区分/1
+    #         * "Medication_Internal_Kinds" (String)
+    #           内服種類数指示区分/1/１：内服種類数を１とする
+    #         * "Medication_No_Addition_Class" (String)
+    #           加算自動算定なし/3。
+    #           在医総管・施医総菅（C002）の在宅療養実績加算、精神通院（I002）の２０未満の加算を自動算定しない場合に「Yes」を設定します。
+    #         * "Medication_Auto_Addition" (String)
+    #           自動区分/1。
+    #           レスポンス内容をリクエスト内容として返却する時そのまま返却すること。変更した場合の不具合は保障できない。
+    #   * "Medical_Select_Information" (Array<Hash>)
+    #     確認領域
+    #     * "Medical_Select" (String)
+    #       確認メッセージコード
+    #     * "Select_Answer" ("Ok", "No")
+    #       確認メッセージ返答
+    #   * "Delete_Number_Info" (Array<Hash>)
     #     在削除連番
+    #     * "Delete_Number" (String)
+    #       在削除連番
     # @return [OrcaApi::MedicalPracticeService::Response3Result]
     #   日レセからのレスポンス
     # @return [OrcaApi::MedicalPracticeService::UnselectedError]
@@ -485,58 +496,56 @@ module OrcaApi
     # 診療行為の登録
     #
     # @param params [Hash]
-    #   診察料情報
-    # @option params [String] "Base_Date"
-    #   基準日/10/収納発行日を診療日付以外とする時に設定
-    # @option params [String] "Ic_Code"
-    #   入金方法/2/未設定は、システム管理・患者登録設定内容
-    # @option params [String] "Ic_Request_Code"
-    #   入金取り扱い区分/1。
-    #   訂正時は１のみとする。初期設定はシステム管理による。
-    #
-    #    * 1:今回請求分のみ入力
-    #    * 2:今回分・伝票の古い未収順に入金
-    #    * 3:今回分・伝票の新しい未収順に入金
-    #    * 4:伝票の古い未収順に入金
-    #    * 5:伝票の新しい未収順に入金
-    # @option params [String] "Ic_All_Code"
-    #   一括入返金区分/1。
-    #   入金取り扱い区分が２から５で、前回までの未収額・前回までの過入金がある時のみ「１」で一括入返金処理を行う。
-    # @option params [Hash] "Cd_Information"
-    #   収納情報
-    #   * "Ad_Money1" (String)
-    #     調整金１/10/マイナス可。
-    #     請求額＋(調整金１＋調整金２）がマイナスはエラー。
-    #   * "Ad_Money2" (String)
-    #     調整金２/10/マイナス可。
-    #     請求額＋(調整金１＋調整金２）がマイナスはエラー。
-    #   * "Ic_Money" (String)
-    #     入金額/10/今回合計請求額以下であること。マイナス不可
-    #   * "Re_Money" (String)
-    #     返金額/10/マイナス不可。
-    #     新規は前回過入金がある時に全額設定、訂正時（前回請求額－今回請求額）がマイナスの時のみ全額設定（返金するときのみ）。
-    # @option params [Hash] "Print_Information"
-    #   印刷区分
-    #   * "Print_Prescription_Class" (String)
-    #     処方せん印刷区分/1/０：発行なし、１：発行あり、２：院内処方発行
-    #   * "Print_Invoice_Receipt_Class" (String)
-    #     請求書兼領収書印刷区分/1。
-    #     * 新規
-    #       * 0：発行なし
-    #       * 1：発行あり
-    #       * 2：発行あり（1：と違いはない）
-    #     * 訂正
-    #       * 0：発行なし
-    #       * 1：発行あり（訂正分）
-    #       * 2：発行あり（合計）
-    #   * "Print_Statement_Class" (String)
-    #     診療費明細書印刷区分/1/０：発行なし、１：発行あり
-    #   * "Print_Medicine_Information_Class" (String)
-    #     薬剤情報印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
-    #   * "Print_Medication_Note_Class" (String)
-    #     薬手帳印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
-    #   * "Print_Appointment_Form_Class" (String)
-    #     予約票印刷区分/1/０：発行なし、１：発行あり
+    #   * "Base_Date" (String)
+    #     基準日/10/収納発行日を診療日付以外とする時に設定
+    #   * "Ic_Code" (String)
+    #     入金方法/2/未設定は、システム管理・患者登録設定内容
+    #   * "Ic_Request_Code" (String)
+    #     入金取り扱い区分/1。
+    #     訂正時は１のみとする。初期設定はシステム管理による。
+    #     * 1: 今回請求分のみ入力
+    #     * 2: 今回分・伝票の古い未収順に入金
+    #     * 3: 今回分・伝票の新しい未収順に入金
+    #     * 4: 伝票の古い未収順に入金
+    #     * 5: 伝票の新しい未収順に入金
+    #   * "Ic_All_Code" (String)
+    #     一括入返金区分/1。
+    #     入金取り扱い区分が２から５で、前回までの未収額・前回までの過入金がある時のみ「１」で一括入返金処理を行う。
+    #   * "Cd_Information" (Hash)
+    #     収納情報
+    #     * "Ad_Money1" (String)
+    #       調整金１/10/マイナス可。
+    #       請求額＋(調整金１＋調整金２）がマイナスはエラー。
+    #     * "Ad_Money2" (String)
+    #       調整金２/10/マイナス可。
+    #       請求額＋(調整金１＋調整金２）がマイナスはエラー。
+    #     * "Ic_Money" (String)
+    #       入金額/10/今回合計請求額以下であること。マイナス不可
+    #     * "Re_Money" (String)
+    #       返金額/10/マイナス不可。
+    #       新規は前回過入金がある時に全額設定、訂正時（前回請求額－今回請求額）がマイナスの時のみ全額設定（返金するときのみ）。
+    #   * "Print_Information" (Hash)
+    #     印刷区分
+    #     * "Print_Prescription_Class" (String)
+    #       処方せん印刷区分/1/０：発行なし、１：発行あり、２：院内処方発行
+    #     * "Print_Invoice_Receipt_Class" (String)
+    #       請求書兼領収書印刷区分/1。
+    #       * 新規
+    #         * 0：発行なし
+    #         * 1：発行あり
+    #         * 2：発行あり（1：と違いはない）
+    #       * 訂正
+    #         * 0：発行なし
+    #         * 1：発行あり（訂正分）
+    #         * 2：発行あり（合計）
+    #     * "Print_Statement_Class" (String)
+    #       診療費明細書印刷区分/1/０：発行なし、１：発行あり
+    #     * "Print_Medicine_Information_Class" (String)
+    #       薬剤情報印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
+    #     * "Print_Medication_Note_Class" (String)
+    #       薬手帳印刷区分/1/０：発行なし、１：発行あり、２：院外分発行
+    #     * "Print_Appointment_Form_Class" (String)
+    #       予約票印刷区分/1/０：発行なし、１：発行あり
     # @return [Response3Result]
     #   日レセからのレスポンス
     #
@@ -582,24 +591,23 @@ module OrcaApi
     # 診療行為の取得
     #
     # @param params
-    #   診療行為情報
-    # @option params [String] "Patient_ID"
-    #   患者番号/20/必須
-    # @option params [String] "Perform_Date"
-    #   診療日付/10/未設定はシステム日付
-    # @option params [String] "Invoice_Number"
-    #   伝票番号/7。
-    #   伝票番号がない時のみ、診療科・保険組合せ・連番から受診履歴を決定する。
-    # @option params [String] "Department_Code"
-    #   診療科/1。
-    #   伝票番号を優先とする。
-    # @option params [String] "Insurance_Combination_Number"
-    #   保険組合せ番号/4。
-    #   伝票番号を優先とする。
-    # @option params [String] "Sequential_Number"
-    #   連番/1。
-    #   伝票番号を優先とする。
-    #   連番の未設定は１とする。
+    #   * "Patient_ID" (String)
+    #     患者番号/20/必須
+    #   * "Perform_Date" (String)
+    #     診療日付/10/未設定はシステム日付
+    #   * "Invoice_Number" (String)
+    #     伝票番号/7。
+    #     伝票番号がない時のみ、診療科・保険組合せ・連番から受診履歴を決定する。
+    #   * "Department_Code" (String)
+    #     診療科/1。
+    #     伝票番号を優先とする。
+    #   * "Insurance_Combination_Number" (String)
+    #     保険組合せ番号/4。
+    #     伝票番号を優先とする。
+    #   * "Sequential_Number" (String)
+    #     連番/1。
+    #     伝票番号を優先とする。
+    #     連番の未設定は１とする。
     # @return [OrcaApi::Result]
     #   日レセからのレスポンス
     #
@@ -654,13 +662,18 @@ module OrcaApi
     #
     # @param params [Hash]
     #   薬剤併用禁忌情報
-    # @option params [String] "Patient_ID" 患者ID
-    # @option params [String] "Perform_Month" 診療年月/7/未設定はシステム日付
-    # @option params [String] "Check_Term" チェック期間/2/未設定はシステム管理の相互作用チェック期間
-    # @option params [<Hash>] "Medical_Information"
-    #   チェック薬剤情報
-    #   * "Medication_Code" (String) 薬剤コード/9
-    #   * "Medication_Name" (String) 薬剤名称
+    #   * "Patient_ID" (String)
+    #     患者ID
+    #   * "Perform_Month" (String)
+    #     診療年月/7/未設定はシステム日付
+    #   * "Check_Term" (String)
+    #     チェック期間/2/未設定はシステム管理の相互作用チェック期間
+    #   * "Medical_Information" (Array<Hash>)
+    #     チェック薬剤情報
+    #     * "Medication_Code" (String)
+    #       薬剤コード/9
+    #     * "Medication_Name" (String)
+    #       薬剤名称
     #
     # @example
     #   params = {
@@ -751,79 +764,81 @@ module OrcaApi
     end
 
     # 診療内容基本チェックAPI
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api2
-    # medicalv3req2
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api2
     def call_02(params, previous_result)
       res = previous_result
       res_body = res.body
-      req = {
-        "Request_Number" => res.response_number,
-        "Karte_Uid" => res.karte_uid,
-        "Patient_ID" => res.patient_information["Patient_ID"],
-        "Perform_Date" => res_body["Perform_Date"],
-        "Perform_Time" => res_body["Perform_Time"],
-        "Orca_Uid" => res.orca_uid,
-        "Diagnosis_Information" => {
-          "Department_Code" => params["Diagnosis_Information"]["Department_Code"],
-          "Physician_Code" => params["Diagnosis_Information"]["Physician_Code"],
-          "Outside_Class" => params["Diagnosis_Information"]["Outside_Class"],
-          "Medical_Information" => {
-            "Medical_Info" => params["Diagnosis_Information"]["Medical_Information"]["Medical_Info"],
-          },
-          "HealthInsurance_Information" => res.patient_information["HealthInsurance_Information"],
-          "Medical_OffTime" => res_body["Medical_OffTime"]
+      body = {
+        "medicalv3req2" => {
+          "Request_Number" => res.response_number,
+          "Karte_Uid" => res.karte_uid,
+          "Patient_ID" => res.patient_information["Patient_ID"],
+          "Perform_Date" => res_body["Perform_Date"],
+          "Perform_Time" => res_body["Perform_Time"],
+          "Orca_Uid" => res.orca_uid,
+          "Diagnosis_Information" => {
+            "Department_Code" => params["Diagnosis_Information"]["Department_Code"],
+            "Physician_Code" => params["Diagnosis_Information"]["Physician_Code"],
+            "Outside_Class" => params["Diagnosis_Information"]["Outside_Class"],
+            "Medical_Information" => {
+              "Medical_Info" => params["Diagnosis_Information"]["Medical_Information"]["Medical_Info"],
+            },
+            "HealthInsurance_Information" => res.patient_information["HealthInsurance_Information"],
+            "Medical_OffTime" => res_body["Medical_OffTime"]
+          }
         }
       }
-      req = call_02_for_modify req, res_body, params
+      body = call_02_for_modify body, res_body, params
       Response2Result.new(
-        orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }), ignore_medical_warnings(params)
+        orca_api.call("/api21/medicalmodv32", body: body), ignore_medical_warnings(params)
       )
     end
 
-    def call_02_for_modify(req, res_body, params)
+    def call_02_for_modify(body, res_body, params)
       if res_body["Invoice_Number"]
-        req["Perform_Time"] = params["Perform_Time"]
-        req["Invoice_Number"] = res_body["Invoice_Number"]
-        req["Patient_Mode"] = "Modify"
-        req["Diagnosis_Information"]["HealthInsurance_Information"] =
+        body["medicalv3req2"]["Perform_Time"] = params["Perform_Time"]
+        body["medicalv3req2"]["Invoice_Number"] = res_body["Invoice_Number"]
+        body["medicalv3req2"]["Patient_Mode"] = "Modify"
+        body["medicalv3req2"]["Diagnosis_Information"]["HealthInsurance_Information"] =
           params["Diagnosis_Information"]["HealthInsurance_Information"]
-        req["Diagnosis_Information"]["Medical_OffTime"] = params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
+        body["medicalv3req2"]["Diagnosis_Information"]["Medical_OffTime"] =
+          params["Diagnosis_Information"]["Medical_Information"]["OffTime"]
       end
-      req
+      body
     end
 
     # 診療確認API
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api3
-    # medicalv3req2
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api3
     def call_03(params, previous_result, answer = nil)
       res = previous_result
       res_body = res.body
-      req = {
-        "Request_Number" => res.response_number,
-        "Karte_Uid" => res.karte_uid,
-        "Patient_ID" => res.patient_information["Patient_ID"],
-        "Perform_Date" => res_body["Perform_Date"],
-        "Perform_Time" => res_body["Perform_Time"],
-        "Orca_Uid" => res.orca_uid,
-        "Diagnosis_Information" => {
-          "Physician_Code" => res_body["Physician_Code"],
-        },
+      body = {
+        "medicalv3req2" => {
+          "Request_Number" => res.response_number,
+          "Karte_Uid" => res.karte_uid,
+          "Patient_ID" => res.patient_information["Patient_ID"],
+          "Perform_Date" => res_body["Perform_Date"],
+          "Perform_Time" => res_body["Perform_Time"],
+          "Orca_Uid" => res.orca_uid,
+          "Diagnosis_Information" => {
+            "Physician_Code" => res_body["Physician_Code"],
+          },
+        }
       }
       if res.body["Invoice_Number"]
-        req["Patient_Mode"] = "Modify"
-        req["Invoice_Number"] = res.invoice_number
+        body["medicalv3req2"]["Patient_Mode"] = "Modify"
+        body["medicalv3req2"]["Invoice_Number"] = res.invoice_number
       end
       if answer
-        req["Select_Answer"] = answer["Select_Answer"]
+        body["medicalv3req2"]["Select_Answer"] = answer["Select_Answer"]
       end
       Response2Result.new(
-        orca_api.call("/api21/medicalmodv32", body: { "medicalv3req2" => req }), ignore_medical_warnings(params)
+        orca_api.call("/api21/medicalmodv32", body: body), ignore_medical_warnings(params)
       )
     end
 
     # 診療確認・請求確認API
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api4
-    # medicalv3req3
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api4
     def call_04(params, previous_result)
       res = previous_result
 
@@ -832,58 +847,60 @@ module OrcaApi
         return EmptyDeleteNumberInfoError.new(res.raw)
       end
 
-      req = {
-        "Request_Number" => res.response_number,
-        "Karte_Uid" => res.karte_uid,
-        "Base_Date" => params["Base_Date"],
-        "Patient_ID" => res.patient_information["Patient_ID"],
-        "Perform_Date" => res.body["Perform_Date"],
-        "Orca_Uid" => res.orca_uid,
-        "Medical_Mode" => (can_delete && params["Delete_Number_Info"] ? "1" : nil),
-        "Delete_Number_Info" => params["Delete_Number_Info"],
-        "Ic_Code" => params["Ic_Code"],
-        "Ic_Request_Code" => params["Ic_Request_Code"],
-        "Ic_All_Code" => params["Ic_All_Code"],
-        "Cd_Information" => params["Cd_Information"],
-        "Print_Information" => params["Print_Information"],
+      body = {
+        "medicalv3req3" => {
+          "Request_Number" => res.response_number,
+          "Karte_Uid" => res.karte_uid,
+          "Base_Date" => params["Base_Date"],
+          "Patient_ID" => res.patient_information["Patient_ID"],
+          "Perform_Date" => res.body["Perform_Date"],
+          "Orca_Uid" => res.orca_uid,
+          "Medical_Mode" => (can_delete && params["Delete_Number_Info"] ? "1" : nil),
+          "Delete_Number_Info" => params["Delete_Number_Info"],
+          "Ic_Code" => params["Ic_Code"],
+          "Ic_Request_Code" => params["Ic_Request_Code"],
+          "Ic_All_Code" => params["Ic_All_Code"],
+          "Cd_Information" => params["Cd_Information"],
+          "Print_Information" => params["Print_Information"],
+        }
       }
       if params["Invoice_Number"]
-        req["Patient_Mode"] = "Modify"
+        body["medicalv3req3"]["Patient_Mode"] = "Modify"
       end
       Response3Result.new(
-        orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }), ignore_medical_warnings(params)
+        orca_api.call("/api21/medicalmodv33", body: body), ignore_medical_warnings(params)
       )
     end
 
     # 診療登録API
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api5
-    # medicalv3req3
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api5
     def call_05(params, previous_result)
       res = previous_result
-      req = {
-        "Request_Number" => res.response_number,
-        "Karte_Uid" => res.karte_uid,
-        "Base_Date" => params["Base_Date"],
-        "Patient_ID" => res.patient_information["Patient_ID"],
-        "Perform_Date" => res.body["Perform_Date"],
-        "Orca_Uid" => res.orca_uid,
-        "Ic_Code" => params["Ic_Code"],
-        "Ic_Request_Code" => params["Ic_Request_Code"],
-        "Ic_All_Code" => params["Ic_All_Code"],
-        "Cd_Information" => params["Cd_Information"],
-        "Print_Information" => params["Print_Information"],
+      body = {
+        "medicalv3req3" => {
+          "Request_Number" => res.response_number,
+          "Karte_Uid" => res.karte_uid,
+          "Base_Date" => params["Base_Date"],
+          "Patient_ID" => res.patient_information["Patient_ID"],
+          "Perform_Date" => res.body["Perform_Date"],
+          "Orca_Uid" => res.orca_uid,
+          "Ic_Code" => params["Ic_Code"],
+          "Ic_Request_Code" => params["Ic_Request_Code"],
+          "Ic_All_Code" => params["Ic_All_Code"],
+          "Cd_Information" => params["Cd_Information"],
+          "Print_Information" => params["Print_Information"],
+        }
       }
       if params["Invoice_Number"]
-        req["Patient_Mode"] = "Modify"
+        body["medicalv3req3"]["Patient_Mode"] = "Modify"
       end
       Response3Result.new(
-        orca_api.call("/api21/medicalmodv33", body: { "medicalv3req3" => req }), ignore_medical_warnings(params)
+        orca_api.call("/api21/medicalmodv33", body: body), ignore_medical_warnings(params)
       )
     end
 
     # 診療行為訂正処理
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api7
-    # medicalv3req4
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api7
     def call_01_for_update(params, patient_mode)
       body = {
         "medicalv3req4" => {
@@ -905,8 +922,7 @@ module OrcaApi
     end
 
     # 診療行為削除処理
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api6
-    # medicalv3req4
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api6
     def call_02_for_delete(previous_result)
       res = previous_result
       body = {
@@ -927,9 +943,8 @@ module OrcaApi
       Result.new(orca_api.call("/api21/medicalmodv34", body: body))
     end
 
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api1
-    # http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
-    # medicalv3req1
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api1
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
     def unlock_for_create(locked_result)
       if locked_result && locked_result.respond_to?(:orca_uid)
         body = {
@@ -938,16 +953,15 @@ module OrcaApi
             "Karte_Uid" => orca_api.karte_uid,
             "Perform_Date" => locked_result.body["Perform_Date"],
             "Orca_Uid" => locked_result.orca_uid,
-          },
+          }
         }
         orca_api.call("/api21/medicalmodv31", body: body)
         # TODO: エラー処理
       end
     end
 
-    # http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api6
-    # http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
-    # medicalv3req4
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api6
+    # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
     def unlock_for_update(locked_result)
       if locked_result && locked_result.respond_to?(:orca_uid)
         body = {
@@ -957,7 +971,7 @@ module OrcaApi
             "Patient_ID" => locked_result.patient_information["Patient_ID"],
             "Perform_Date" => locked_result.perform_date,
             "Orca_Uid" => locked_result.orca_uid,
-          },
+          }
         }
         orca_api.call("/api21/medicalmodv34", body: body)
         # TODO: エラー処理
