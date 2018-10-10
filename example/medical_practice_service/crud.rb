@@ -1,7 +1,7 @@
 require "abbrev"
 require "optparse"
 require "time"
-require_relative "../common"
+require_relative "./common"
 
 actions = %w[create get update destroy]
 
@@ -29,15 +29,15 @@ unless ops
 end
 action = ops.last
 parser.parse(ARGV)
+case action
+when "create", "update"
+  args = JSON.parse(File.read(json_path)).merge(args)
+end
 
 service = @orca_api.new_medical_practice_service
 
-result = case action
-         when "get", "destroy"
-           service.send(action, args)
-         when "create", "update"
-           service.send(action, JSON.parse(File.read(json_path)).merge(args))
-         end
+result = process_medical_warnings(service, action, args)
+
 if result.ok?
   print_result(result)
 else

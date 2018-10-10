@@ -83,6 +83,10 @@ module OrcaApi
       /\AW?0+\z/ =~ api_result ? true : false
     end
 
+    def warning?
+      /\AW/ =~ api_result ? true : false
+    end
+
     def locked?
       LOCKED_API_RESULT.include?(api_result)
     end

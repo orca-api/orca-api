@@ -7,16 +7,16 @@ Usage:
   exit(1)
 end
 
-require_relative "../common"
+require_relative "./common"
 
 service = @orca_api.new_medical_practice_service
 
 args = JSON.parse(File.read(ARGV.shift))
 
-result = service.calc_medical_practice_fee(args)
+result = process_medical_warnings(service, :calc_medical_practice_fee, args)
 if result.ok?
   $stderr.puts "＊＊＊＊＊正常終了＊＊＊＊＊"
-  $stderr.puts "標準出力に出力したJSONを適宜修正してファイルに保存してcreate.rbの引数に指定してください"
+  $stderr.puts "標準出力に出力したJSONを適宜修正してファイルに保存してcrud.rb createの引数に指定してください"
 
   args["Diagnosis_Information"]["Medical_Information"]["Medical_Info"] = result["Medical_Information"]["Medical_Info"]
 

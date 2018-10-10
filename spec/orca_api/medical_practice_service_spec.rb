@@ -242,7 +242,7 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         expect(result.ok?).to be true
       end
 
-      it "診療日付を省略するとシステム日付が設定され、正常終了となること" do
+      it "診療日付を省略するとシステム日付が設定され、警告により異常終了となること" do
         params = {
           "Patient_ID" => "5",
           "Diagnosis_Information" => {
@@ -251,6 +251,41 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
               "Doctors_Fee" => "02",
             },
           },
+        }
+
+        expect_data = [
+          {
+            path: "/api21/medicalmodv31",
+            body: {
+              "=medicalv3req1" => params.merge(
+                "Request_Number" => "00",
+                "Karte_Uid" => orca_api.karte_uid
+              ),
+            },
+            result: "api21_medicalmodv31_W00.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.get_default(params)
+        expect(result.ok?).to be false
+      end
+
+      it "診療日付を省略するとシステム日付が設定され、警告を無視して正常終了できること" do
+        params = {
+          "Patient_ID" => "5",
+          "Diagnosis_Information" => {
+            "Department_Code" => "01",
+            "Medical_Information" => {
+              "Doctors_Fee" => "02",
+            },
+          },
+          "Ignore_Medical_Warnings" => [
+            {
+              "Medical_Warning" => "W01"
+            }
+          ]
         }
 
         expect_data = [
@@ -363,14 +398,14 @@ RSpec.describe OrcaApi::MedicalPracticeService, orca_api_mock: true do
         }
         let(:response_json) { load_orca_api_response("api21_medicalmodv31_01_W00.json") }
 
-        its("ok?") { is_expected.to be true }
+        its("ok?") { is_expected.to be false }
         its(:medical_information) { is_expected.to eq(response_data.first[1]["Medical_Information"]) }
       end
 
       context "当日既に受診済みである患者に対して「Doctors_Fee=02（再診指示）」を設定した" do
         let(:response_json) { load_orca_api_response("api21_medicalmodv31_01_medical_select_flag.json") }
 
-        its("ok?") { is_expected.to be true }
+        its("ok?") { is_expected.to be false }
         its(["Medical_Select_Flag"]) { is_expected.to eq(response_data.first[1]["Medical_Select_Flag"]) }
       end
 

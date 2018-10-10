@@ -7,7 +7,7 @@ Usage:
   exit(1)
 end
 
-require_relative "../common"
+require_relative "./common"
 
 service = @orca_api.new_medical_practice_service
 
@@ -21,7 +21,7 @@ if (medical_info = medical_information["Medical_Info"])
   medical_information["Medication_Info"] = medical_info_0["Medication_Info"].first
 end
 
-result = service.get_examination_fee(args)
+result = process_medical_warnings(service, :get_examination_fee, args)
 if result.ok?
   $stderr.puts "＊＊＊＊＊正常終了＊＊＊＊＊"
   $stderr.puts "標準出力に出力したJSONを適宜修正してファイルに保存してcalc_medical_practice_fee.rbの引数に指定してください"
