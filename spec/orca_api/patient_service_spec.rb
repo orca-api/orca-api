@@ -269,56 +269,6 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     end
   end
 
-  describe "#get" do
-    let(:patient_id) { 1 }
-    let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_modify.json") }
-
-    subject { service.get(patient_id) }
-
-    context "正常系" do
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(2) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
-            when 2
-              expect_orca12_patientmodv31_99(path, body, prev_response_json)
-            end
-          prev_response_json
-        }
-      end
-
-      its("ok?") { is_expected.to be true }
-      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
-    end
-
-    context "異常系" do
-      let(:patient_id) { 2000 }
-      let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_modify_E10.json") }
-
-      before do
-        count = 0
-        prev_response_json = nil
-        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
-          count += 1
-          prev_response_json =
-            case count
-            when 1
-              expect_orca12_patientmodv31_01(path, body, patient_id, nil, "Modify", response_json)
-            end
-          prev_response_json
-        }
-      end
-
-      its("ok?") { is_expected.to be false }
-      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
-    end
-  end
-
   describe "#update" do
     subject { service.update(*args) }
 
