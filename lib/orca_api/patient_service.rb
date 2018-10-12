@@ -142,13 +142,21 @@ module OrcaApi
 
     # 患者情報の取得
     #
-    # @param id [String] 患者ID
+    # @param id [String]
+    #   患者ID
+    # @return [Result]
+    #   日レセからのレスポンス
+    # @see https://www.orca.med.or.jp/receipt/tec/api/patientget.html#response
     def get(id)
-      res = Result.new(call_01(id, nil, "Modify"))
-      if !res.locked?
-        unlock(res)
-      end
-      res
+      Result.new(
+        orca_api.call(
+          "/api01rv2/patientgetv2",
+          http_method: :get,
+          params: {
+            id: id
+          }
+        )
+      )
     end
 
     # 患者情報の更新
