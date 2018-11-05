@@ -157,7 +157,7 @@ module OrcaApi
         if !res.locked?
           locked_result = res
         end
-        if !res.ok?
+        if !res.ok? && res.api_result != "E50"
           return res
         end
         res = call_02(args, res)
