@@ -7,7 +7,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
 
   def default_request
     {
-      "Perform_Date" => now.strftime("%Y-%m"),
+      "Perform_Date" => now.strftime("%Y-%m-%d"),
       "Perform_Month" => now.strftime("%Y-%m"),
       "Ac_Date" => now.strftime("%Y-%m-%d"),
       "Receipt_Mode" => "02",
@@ -30,7 +30,8 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
                 "Request_Number" => "00",
                 "Karte_Uid" => orca_api.karte_uid,
                 "Perform_Month" => perform_month,
-                "Submission_Mode" => submission_mode
+                "Submission_Mode" => submission_mode,
+                "InOut" => "IO",
               )
             },
             result: "orca44_receiptdatamakev3_00.json",
@@ -40,7 +41,10 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
         expect_orca_api_call(expect_data, binding)
 
         Timecop.freeze(now) do
-          result = service.list_effective_information(perform_month, submission_mode)
+          result = service.list_effective_information({
+                                                          "Perform_Month" => perform_month,
+                                                          "Submission_Mode" => submission_mode
+                                                      })
           expect(result.ok?).to be true
         end
       end
@@ -48,6 +52,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
       it "該当する情報がない場合は空の配列を返すこと" do
         perform_month = "2018-01"
         submission_mode = "02"
+        in_out = "O"
 
         expect_data = [
           {
@@ -57,7 +62,8 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
                 "Request_Number" => "00",
                 "Karte_Uid" => orca_api.karte_uid,
                 "Perform_Month" => perform_month,
-                "Submission_Mode" => submission_mode
+                "Submission_Mode" => submission_mode,
+                "InOut" => in_out,
               )
             },
             result: "orca44_receiptdatamakev3_00_empty.json",
@@ -67,7 +73,11 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
         expect_orca_api_call(expect_data, binding)
 
         Timecop.freeze(now) do
-          result = service.list_effective_information(perform_month, submission_mode)
+          result = service.list_effective_information({
+                                                          "Perform_Month" => perform_month,
+                                                          "Submission_Mode" => submission_mode,
+                                                          "InOut" => in_out,
+                                                      })
           expect(result.ok?).to be true
           expect(result["Effective_Period_Information"]).to eq([])
           expect(result.effective_period_information).to eq([])
@@ -81,6 +91,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
       it "提出先の設定に誤りがある場合はエラー" do
         perform_month = "2018-01"
         submission_mode = "01"
+        in_out = "O"
 
         expect_data = [
           {
@@ -90,7 +101,8 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
                 "Request_Number" => "00",
                 "Karte_Uid" => orca_api.karte_uid,
                 "Perform_Month" => perform_month,
-                "Submission_Mode" => submission_mode
+                "Submission_Mode" => submission_mode,
+                "InOut" => in_out,
               )
             },
             result: "orca44_receiptdatamakev3_00_E13.json",
@@ -100,7 +112,11 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
         expect_orca_api_call(expect_data, binding)
 
         Timecop.freeze(now) do
-          result = service.list_effective_information(perform_month, submission_mode)
+          result = service.list_effective_information({
+                                                          "Perform_Month" => perform_month,
+                                                          "Submission_Mode" => submission_mode,
+                                                          "InOut" => in_out,
+                                                      })
           expect(result.ok?).to be false
         end
       end

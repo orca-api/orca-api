@@ -69,19 +69,35 @@ module OrcaApi
     #    * 具体的な設定は、「日医標準レセプトソフト Ver 5.0.0 外来版操作マニュアル 平成29年度版」の
     #      「3.11 健康保険組合・共済組合への直接請求」を参照。
     #
-    # @param [String] perform_month
-    #   診療年月。YYYY-mm形式。
-    # @param [String] submission_mode
-    #   提出先。
-    #   医保の場合、02:社保 03:国保 04:広域。労災の場合05。
+    # @param [Hash] args
+    #   * Submission_Mode (String)
+    #     提出先。
+    #     医保の場合、02:社保 03:国保 04:広域。労災の場合05。
+    #     必須。
+    #   * Perform_Date (String)
+    #     実施年月日。YYYY-mm-dd形式。省略した場合は現在年月日。
+    #   * Perform_Month (String)
+    #     診療年月。YYYY-mm形式。省略した場合は現在年月。
+    #   * Ac_Date (String)
+    #     請求年月日。YYYY-mm-dd形式。省略した場合は現在年月日。
+    #   * Receipt_Mode (String)
+    #     処理区分。省略した場合は"02"。
+    #   * InOut (String)
+    #     入外区分 I:入院 O:入院外 OI or IO:入院、入院外。省略した場合は「入院、入院外」。
+    #   * Check_Mode (String)
+    #     レセ電データチェック Yes:チェックする Yes以外:チェックしない。省略した場合は「チェックしない」。
+    #   * InsuranceProvider_Number (String)
+    #     直接請求する保険者番号
+    #   * Start_Month (String)
+    #     期間指定(開始年月)。YYYY-mm形式。
+    #   * End_Month (String)
+    #     期間指定(終了年月)。YYYY-mm形式。
     # @return [OrcaApi::ReceiptDataService::ListEffectiveInformationResult]
     #   日レセからのレスポンス
-    def list_effective_information(perform_month, submission_mode)
-      req = default_request.merge(
+    def list_effective_information(args)
+      req = default_request.merge(args).merge(
         "Request_Number" => "00",
-        "Karte_Uid" => orca_api.karte_uid,
-        "Perform_Month" => perform_month,
-        "Submission_Mode" => submission_mode
+        "Karte_Uid" => orca_api.karte_uid
       )
       call(req, ListEffectiveInformationResult)
     end
@@ -94,11 +110,11 @@ module OrcaApi
     #     医保の場合、02:社保 03:国保 04:広域。労災の場合05。
     #     必須。
     #   * Perform_Date (String)
-    #     実施年月日。YYYY-mm形式。省略した場合は現在時刻。
+    #     実施年月日。YYYY-mm-dd形式。省略した場合は現在年月日。
     #   * Perform_Month (String)
-    #     診療年月。YYYY-mm形式。省略した場合は現在時刻。
+    #     診療年月。YYYY-mm形式。省略した場合は現在年月。
     #   * Ac_Date (String)
-    #     請求年月日。YYYY-mm-dd形式。省略した場合は現在時刻。
+    #     請求年月日。YYYY-mm-dd形式。省略した場合は現在年月日。
     #   * Receipt_Mode (String)
     #     処理区分。省略した場合は"02"。
     #   * InOut (String)
@@ -142,7 +158,7 @@ module OrcaApi
     def default_request
       now = Time.now
       {
-        "Perform_Date" => now.strftime("%Y-%m"),
+        "Perform_Date" => now.strftime("%Y-%m-%d"),
         "Perform_Month" => now.strftime("%Y-%m"),
         "Ac_Date" => now.strftime("%Y-%m-%d"),
         "Receipt_Mode" => "02",
