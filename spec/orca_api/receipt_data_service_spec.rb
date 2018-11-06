@@ -31,7 +31,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
                 "Karte_Uid" => orca_api.karte_uid,
                 "Perform_Month" => perform_month,
                 "Submission_Mode" => submission_mode,
-                "InOut" => "IO",
+                "InOut" => "IO"
               )
             },
             result: "orca44_receiptdatamakev3_00.json",
@@ -42,8 +42,8 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
 
         Timecop.freeze(now) do
           result = service.list_effective_information({
-                                                          "Perform_Month" => perform_month,
-                                                          "Submission_Mode" => submission_mode
+                                                        "Perform_Month" => perform_month,
+                                                        "Submission_Mode" => submission_mode
                                                       })
           expect(result.ok?).to be true
         end
@@ -63,7 +63,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
                 "Karte_Uid" => orca_api.karte_uid,
                 "Perform_Month" => perform_month,
                 "Submission_Mode" => submission_mode,
-                "InOut" => in_out,
+                "InOut" => in_out
               )
             },
             result: "orca44_receiptdatamakev3_00_empty.json",
@@ -74,9 +74,9 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
 
         Timecop.freeze(now) do
           result = service.list_effective_information({
-                                                          "Perform_Month" => perform_month,
-                                                          "Submission_Mode" => submission_mode,
-                                                          "InOut" => in_out,
+                                                        "Perform_Month" => perform_month,
+                                                        "Submission_Mode" => submission_mode,
+                                                        "InOut" => in_out,
                                                       })
           expect(result.ok?).to be true
           expect(result["Effective_Period_Information"]).to eq([])
@@ -102,7 +102,7 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
                 "Karte_Uid" => orca_api.karte_uid,
                 "Perform_Month" => perform_month,
                 "Submission_Mode" => submission_mode,
-                "InOut" => in_out,
+                "InOut" => in_out
               )
             },
             result: "orca44_receiptdatamakev3_00_E13.json",
@@ -113,9 +113,9 @@ RSpec.describe OrcaApi::ReceiptDataService, orca_api_mock: true do
 
         Timecop.freeze(now) do
           result = service.list_effective_information({
-                                                          "Perform_Month" => perform_month,
-                                                          "Submission_Mode" => submission_mode,
-                                                          "InOut" => in_out,
+                                                        "Perform_Month" => perform_month,
+                                                        "Submission_Mode" => submission_mode,
+                                                        "InOut" => in_out,
                                                       })
           expect(result.ok?).to be false
         end
