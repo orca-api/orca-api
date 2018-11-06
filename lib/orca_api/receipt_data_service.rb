@@ -84,14 +84,6 @@ module OrcaApi
     #     処理区分。省略した場合は"02"。
     #   * InOut (String)
     #     入外区分 I:入院 O:入院外 OI or IO:入院、入院外。省略した場合は「入院、入院外」。
-    #   * Check_Mode (String)
-    #     レセ電データチェック Yes:チェックする Yes以外:チェックしない。省略した場合は「チェックしない」。
-    #   * InsuranceProvider_Number (String)
-    #     直接請求する保険者番号
-    #   * Start_Month (String)
-    #     期間指定(開始年月)。YYYY-mm形式。
-    #   * End_Month (String)
-    #     期間指定(終了年月)。YYYY-mm形式。
     # @return [OrcaApi::ReceiptDataService::ListEffectiveInformationResult]
     #   日レセからのレスポンス
     def list_effective_information(args)
