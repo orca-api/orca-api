@@ -34,7 +34,7 @@ def trim_response(hash)
       result[k] = trim_response(v)
     when Array
       found = false
-      v.reverse.each do |v2|
+      v.reverse_each do |v2|
         if !v2.empty?
           found = true
         end

@@ -72,6 +72,7 @@ module OrcaApi
         if !res.ok?
           return res
         end
+
         res = call_02(args, res)
         if res.ok?
           locked_result = nil
@@ -109,7 +110,7 @@ module OrcaApi
       end
 
       def unlock(locked_result)
-        if locked_result && locked_result.respond_to?(:orca_uid)
+        if locked_result&.respond_to?(:orca_uid)
           req = {
             "Request_Number" => "99",
             "Karte_Uid" => locked_result.karte_uid,

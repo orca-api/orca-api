@@ -41,6 +41,7 @@ module OrcaApi
         if !res.ok?
           return res
         end
+
         call_02(pi_id, res)
       ensure
         unlock(res)
@@ -88,10 +89,12 @@ module OrcaApi
         if !res.ok?
           return res
         end
+
         res = call_02(pi_id, res)
         if !res.ok?
           return res
         end
+
         res = call_03(args, res)
         if res.ok?
           locked_result = nil

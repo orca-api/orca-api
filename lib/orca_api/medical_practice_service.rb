@@ -946,7 +946,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api1
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
     def unlock_for_create(locked_result)
-      if locked_result && locked_result.respond_to?(:orca_uid)
+      if locked_result&.respond_to?(:orca_uid)
         body = {
           "medicalv3req1" => {
             "Request_Number" => "99",
@@ -963,7 +963,7 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/16921#api6
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori-overview.data/api21v03.pdf
     def unlock_for_update(locked_result)
-      if locked_result && locked_result.respond_to?(:orca_uid)
+      if locked_result&.respond_to?(:orca_uid)
         body = {
           "medicalv3req4" => {
             "Request_Number" => "99",

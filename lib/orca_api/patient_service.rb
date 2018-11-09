@@ -173,6 +173,7 @@ module OrcaApi
       if !res.ok?
         return res
       end
+
       patient_information = deep_merge_for_request_body(res.patient_information, patient_information)
       res = Result.new(call_02(patient_information, "Modify", res))
       if res.ok?
@@ -195,10 +196,12 @@ module OrcaApi
       if !res.ok?
         return res
       end
+
       res = Result.new(call_02(res.patient_information, "Delete", res))
       if res.api_result != "S20"
         return res
       end
+
       res = Result.new(call_02(res.patient_information, "Delete", res))
       if res.ok?
         # 該当患者に受診履歴、病名等の入力がない場合
@@ -208,6 +211,7 @@ module OrcaApi
       if res.api_result != "S20" || !force
         return res
       end
+
       # 該当患者に受診履歴、病名等の入力がある場合
       res = Result.new(call_02(res.patient_information, "Delete", res))
       if res.ok?
@@ -361,7 +365,7 @@ module OrcaApi
     end
 
     def unlock(locked_result)
-      if locked_result && locked_result.respond_to?(:orca_uid)
+      if locked_result&.respond_to?(:orca_uid)
         req = {
           "Request_Number" => "99",
           "Karte_Uid" => orca_api.karte_uid,

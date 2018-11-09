@@ -95,7 +95,7 @@ module OrcaApi
       "#{api_result_message}(#{api_result})"
     end
 
-    def method_missing(symbol, *_)
+    def method_missing(symbol, *args)
       if (key = @attr_names[symbol])
         body[key]
       else
@@ -103,7 +103,7 @@ module OrcaApi
       end
     end
 
-    def respond_to_missing?(symbol, _)
+    def respond_to_missing?(symbol, arg)
       if @attr_names.key?(symbol)
         true
       else

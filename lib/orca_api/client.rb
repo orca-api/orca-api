@@ -279,6 +279,7 @@ module OrcaApi #:nodoc:
 
     def extract_timeout_options(timeout)
       return {} unless timeout
+
       timeout.select { |key, _| ACCEPT_TIMEOUT_OPTIONS.include? key }
     end
 
@@ -350,6 +351,7 @@ module OrcaApi #:nodoc:
     def finish_reuse_session
       @reuse_http -= 1
       return if reusing_session?
+
       @reuse_http = 0
       @http.finish if @http&.started?
       @http = nil

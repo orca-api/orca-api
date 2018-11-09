@@ -243,7 +243,7 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
       it "患者公費だけを登録する(New)" do
         public_insurance_info = {
           "PublicInsurance_Mode" => "Modify",
-          "PublicInsurance_Id" =>  "0000000001",
+          "PublicInsurance_Id" => "0000000001",
           "PublicInsurance_Class" => "969",
           "PublicInsurance_Name" => "７５歳特例",
           "PublicInsurer_Number" => "",
@@ -328,7 +328,7 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
         }
         public_insurance_info = {
           "PublicInsurance_Mode" => "Modify",
-          "PublicInsurance_Id" =>  "0000000001",
+          "PublicInsurance_Id" => "0000000001",
           "PublicInsurance_Class" => "969",
           "PublicInsurance_Name" => "７５歳特例",
           "PublicInsurer_Number" => "",
