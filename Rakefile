@@ -1,6 +1,8 @@
 require "bundler/gem_tasks"
 require "rspec/core/rake_task"
+require "rubocop"
 require "rubocop/rake_task"
+require "rubocop/formatter/junit_formatter"
 require "yard"
 
 RSpec::Core::RakeTask.new(:spec) do |t|
@@ -11,12 +13,11 @@ RSpec::Core::RakeTask.new(:spec) do |t|
 end
 
 RuboCop::RakeTask.new do |t|
+  t.options = ["--parallel", "--config", File.expand_path(".rubocop.yml", __dir__)]
   if ENV.key? "CIRCLE_TEST_REPORTS"
-    require "rubocop"
-    require "rubocop/formatter/junit_formatter"
     t.formatters = ["progress", "RuboCop::Formatter::JUnitFormatter"]
     out = File.join(ENV["CIRCLE_TEST_REPORTS"], "rubocop.xml")
-    t.options = ["--out", out]
+    t.options.push "--out", out
   end
 end
 
