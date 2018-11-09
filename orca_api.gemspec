@@ -1,4 +1,4 @@
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path("lib", __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "orca_api/version"
 
@@ -36,12 +36,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "guard-rspec"
   spec.add_development_dependency "guard-rubocop"
   spec.add_development_dependency "pry-byebug"
-  spec.add_development_dependency "rake", "~> 10.0"
+  spec.add_development_dependency "rake", "~> 12.0"
   spec.add_development_dependency "redcarpet"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rspec_junit_formatter"
-  spec.add_development_dependency "rubocop", "~> 0.51.0"
+  spec.add_development_dependency "rubocop", "~> 0.60.0"
   spec.add_development_dependency "rubocop-junit-formatter"
   spec.add_development_dependency "rubyzip"
   spec.add_development_dependency "simplecov"
