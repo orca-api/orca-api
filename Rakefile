@@ -60,4 +60,4 @@ namespace :version do
   end
 end
 
-task default: [:spec, :rubocop]
+task default: [:rubocop, :spec]
