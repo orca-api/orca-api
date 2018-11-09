@@ -42,13 +42,6 @@ module OrcaApi #:nodoc:
     attr_accessor :debug_output # デバッグに使う `IO` オブジェクト
     attr_reader :timeout
 
-    def self.underscore(name)
-      name.
-        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
-        gsub(/([a-z\d])([A-Z])/, '\1_\2').
-        downcase
-    end
-
     # @param uri [String]
     #   接続先のURI。
     #   スキーマはhttpとhttpsに対応。ただし、https以外を指定された場合は強制的にhttpでの通信とみなす。
@@ -226,7 +219,7 @@ module OrcaApi #:nodoc:
       UserService
     )
     service_class_names.each do |name|
-      s = underscore(name)
+      s = OrcaApi.underscore(name)
 
       require_relative s
 

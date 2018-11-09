@@ -3,23 +3,8 @@ module OrcaApi
   class Result
     LOCKED_API_RESULT = Set.new(%w(E90 E9999))
 
-    def self.trim_response(hash)
-      result = {}
-      hash.each do |k, v|
-        result[k] = case v
-                    when Hash
-                      trim_response(v)
-                    when Array
-                      v.reverse_each.drop_while(&:empty?).reverse.map { |e| trim_response(e) }
-                    else
-                      v
-                    end
-      end
-      result
-    end
-
     def self.parse(raw)
-      trim_response(JSON.parse(raw)).first[1]
+      ::OrcaApi.trim_response(JSON.parse(raw)).first[1]
     end
 
     # 深いパスのレスポンスボディに対するアクセサーを定義するメソッド
@@ -63,7 +48,7 @@ module OrcaApi
     def initialize(raw)
       @raw = raw
       @attr_names = body.keys.map { |key|
-        [Client.underscore(key).to_sym, key]
+        [::OrcaApi.underscore(key).to_sym, key]
       }.to_h
     end
 
