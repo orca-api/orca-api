@@ -102,6 +102,9 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
                  when "08"
                    %w(
                    )
+                 when "09"
+                   %w(
+                   )
                  else
                    raise "invalid mode: #{mode}"
                  end
@@ -665,6 +668,32 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
         State
         State_Name
         Income_History
+      )
+      include_examples "更新処理が期待通りに動作すること", json_names
+    end
+
+    describe "#reprint" do
+      let(:method_name) { "reprint" }
+      let(:lock_request_mode) { "02" }
+      let(:request_mode) { "09" }
+
+      let(:args) {
+        {
+          "Patient_ID" => "1",
+          "InOut" => "O",
+          "Invoice_Number" => "13",
+          "Print_Information" =>  {
+            "Print_Invoice_Receipt_Class" => "1",
+            "Print_Statement_Class" => "1"
+          }
+        }
+      }
+
+      json_names = %w(
+        Patient_ID
+        InOut
+        Invoice_Number
+        Print_Information
       )
       include_examples "更新処理が期待通りに動作すること", json_names
     end
