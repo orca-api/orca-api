@@ -84,6 +84,13 @@ module OrcaApi
       common_update_process(args, "08")
     end
 
+    # 再発行
+    #
+    # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19667#api11
+    def reprint(args)
+      common_update_process(args, "09")
+    end
+
     private
 
     def common_update_process(args, mode)
