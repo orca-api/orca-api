@@ -101,9 +101,10 @@ Style/RegexpLiteral:
 Style/BlockDelimiters:
   Enabled: false
 
-# Configuration parameters: EnforcedStyleForMultiline, SupportedStylesForMultiline.
-# SupportedStylesForMultiline: comma, consistent_comma, no_comma
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
   Enabled: false
 
 # Configuration parameters: MaxLineLength.
@@ -145,7 +146,7 @@ Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*'
 
-Lint/RescueWithoutErrorClass:
+Style/RescueStandardError:
   Enabled: false
 
 # Configuration parameters: EnforcedStyle, SupportedStyles.

@@ -93,6 +93,7 @@ module OrcaApi
     # @return [ListResult] 情報取得のレスポンスクラス
     def list(mode:)
       raise ArgumentError unless MODES.key? mode
+
       ListResult.new(
         orca_api.call(
           "/orca51/statisticsformv3",

@@ -78,6 +78,7 @@ module OrcaApi
         return unless result
         return if result.locked?
         return unless result.respond_to?(:orca_uid)
+
         call_99(result)
       end
 

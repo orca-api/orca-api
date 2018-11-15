@@ -29,10 +29,12 @@ module OrcaApi
         if !res.ok?
           return res
         end
+
         res = call_02(pi_id, res)
         if !res.ok?
           return res
         end
+
         res = call_04(number, start_date, res)
         res
       ensure
@@ -76,14 +78,17 @@ module OrcaApi
         if !res.ok?
           return res
         end
+
         res = call_02(pi_id, res)
         if !res.ok?
           return res
         end
+
         res = call_04(number, start_date, res)
         if !res.ok?
           return res
         end
+
         res = call_05(args, res)
         if res.ok?
           locked_result = nil
