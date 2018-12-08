@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative "../ext/hash_slice"
+
 module OrcaApi
   class PatientService < Service
     # 患者保険・公費情報を扱うサービスの共通処理
@@ -10,24 +12,39 @@ module OrcaApi
     class HealthPublicInsuranceCommon < Service
       # 患者保険・公費情報の取得・更新の結果を表現するクラス
       class Result < ::OrcaApi::Result
-        def_info :health_insurance_info, "HealthInsurance_Information", "HealthInsurance_Info"
-        def_info :public_insurance_info, "PublicInsurance_Information", "PublicInsurance_Info"
-        def_info :health_insurance_combination_info, "HealthInsurance_Combination_Information", "HealthInsurance_Combination_Info"
-        def_info :patient_message_info, "Patient_Message_Information", "Patient_Message_Info"
-        def_info :patient_warning_info, "Patient_Warning_Information", "Patient_Warning_Info"
-        KEYS = Set.new(
-          %w(
-            Patient_Information
-            HealthInsurance_Information
-            PublicInsurance_Information
-            HealthInsurance_Combination_Information
-          )
-        )
+        KEYS = %w[
+          Patient_Information
+          HealthInsurance_Information
+          PublicInsurance_Information
+          HealthInsurance_Combination_Information
+        ].freeze
+        private_constant :KEYS
 
+        # @!method health_insurance_info
+        # @return [Array<Hash>]
+        def_info :health_insurance_info, "HealthInsurance_Information", "HealthInsurance_Info"
+
+        # @!method public_insurance_info
+        # @return [Array<Hash>]
+        def_info :public_insurance_info, "PublicInsurance_Information", "PublicInsurance_Info"
+
+        # @!method health_insurance_combination_info
+        # @return [Array<Hash>]
+        def_info :health_insurance_combination_info, "HealthInsurance_Combination_Information", "HealthInsurance_Combination_Info"
+
+        # @!method patient_message_info
+        # @return [Array<Hash>]
+        def_info :patient_message_info, "Patient_Message_Information", "Patient_Message_Info"
+
+        # @!method patient_warning_info
+        # @return [Array<Hash>]
+        def_info :patient_warning_info, "Patient_Warning_Information", "Patient_Warning_Info"
+
+        using Ext::HashSlice if Ext::HashSlice.need_using?
+
+        # @return [Hash]
         def health_public_insurance
-          body.select { |k, _|
-            KEYS.include?(k)
-          } || {}
+          body.slice(*KEYS)
         end
       end
 

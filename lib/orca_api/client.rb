@@ -6,7 +6,7 @@ require "securerandom"
 require_relative "result"
 require_relative "form_result"
 require_relative "binary_result"
-
+require_relative "ext/hash_slice"
 require_relative "error"
 
 module OrcaApi #:nodoc:
@@ -270,10 +270,12 @@ module OrcaApi #:nodoc:
     ACCEPT_TIMEOUT_OPTIONS = %i[ssl open read continue keep_alive].freeze
     private_constant :ACCEPT_TIMEOUT_OPTIONS
 
+    using Ext::HashSlice if Ext::HashSlice.need_using?
+
     def extract_timeout_options(timeout)
       return {} unless timeout
 
-      timeout.select { |key, _| ACCEPT_TIMEOUT_OPTIONS.include? key }
+      timeout.slice(*ACCEPT_TIMEOUT_OPTIONS)
     end
 
     def new_http
