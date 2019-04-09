@@ -1,0 +1,24 @@
+{
+  "receiptdata_check_makev3res": {
+    "Request_Number": "00",
+    "Response_Number": "01",
+    "Karte_Uid": "94e16fd4-4664-49cf-9be0-0af44ac25d4a",
+    "Information_Date": "2019-04-08",
+    "Information_Time": "18:30:35",
+    "Api_Result": "000",
+    "Api_Result_Message": "情報取得終了",
+    "Reskey": "Acceptance_Info",
+    "Submission_Mode": "02",
+    "Perform_Month": "2019-03",
+    "Receiptdata_Warning_Info": [
+      {
+        "Receiptdata_Warning": "W04",
+        "Receiptdata_Warning_Message": "返却情報はありません"
+      },
+      {},
+      {},
+      {},
+      {}
+    ]
+  }
+}

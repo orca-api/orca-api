@@ -1,0 +1,50 @@
+{
+  "receiptdata_check_makev3res": {
+    "Request_Number": "00",
+    "Response_Number": "01",
+    "Karte_Uid": "94e16fd4-4664-49cf-9be0-0af44ac25d4a",
+    "Information_Date": "2019-04-08",
+    "Information_Time": "16:14:16",
+    "Api_Result": "000",
+    "Api_Result_Message": "情報取得終了",
+    "Reskey": "Acceptance_Info",
+    "Submission_Mode": "02",
+    "Perform_Month": "2019-03",
+    "Effective_Period_Information": [
+      {
+        "Info_Period_Start_Month": "2018-10",
+        "Info_Period_End_Month": "9999-99"
+      },
+      {
+        "Info_Period_Start_Month": "0000-00",
+        "Info_Period_End_Month": "2018-09"
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ],
+    "InsuranceProvider_Information": [
+      {
+        "Info_InsuranceProvider_Number": "00000000",
+        "Info_InsuranceProvider_Name": "直接請求する保険者以外"
+      },
+      {
+        "Info_InsuranceProvider_Number": "06130702",
+        "Info_InsuranceProvider_Name": "みずほ健保組合"
+      },
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {},
+      {}
+    ]
+  }
+}
