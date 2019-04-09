@@ -12,7 +12,6 @@ module OrcaApi
   #
   # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_receiptdata_check
   class ReceiptDataCheckService < Service
-
     # 医保分のレセ電データ作成時に必要な情報取得する処理の結果を表現するクラス
     class ListEffectiveInformationResult < ::OrcaApi::Result
       def body
