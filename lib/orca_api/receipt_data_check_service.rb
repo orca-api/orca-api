@@ -105,7 +105,7 @@ module OrcaApi
     #   `#create` の `args` に以下を追加したもの
     #   * Orca_Uid (String)
     #     オルカＵＩＤ。必須。
-    # @return [OrcaApi::ReceiptDataService::CreatedResult]
+    # @return [OrcaApi::ReceiptDataCheckService::CreatedResult]
     #   日レセからのレスポンス
     def created(args)
       req = default_request.merge(args).merge(
