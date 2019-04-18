@@ -177,6 +177,12 @@ module OrcaApi #:nodoc:
     # @!method new_image_service
     # @return [ImageService] ImageServiceインスタンス
 
+    # @!method new_receipt_data_check_service
+    # @return [ReceiptDataCheckService] ReceiptDataCheckServiceインスタンス
+
+    # @!method new_receipt_data_service
+    # @return [ReceiptDataService] ReceiptDataServiceインスタンス
+
     # @!method new_receipt_service
     # @return [ReceiptService] ReceiptServiceインスタンス
 
@@ -218,6 +224,7 @@ module OrcaApi #:nodoc:
       PatientService
       PhysicianService
       PrintService
+      ReceiptDataCheckService
       ReceiptDataService
       ReceiptService
       RehabilitationCommentService

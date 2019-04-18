@@ -682,7 +682,7 @@ RSpec.describe OrcaApi::IncomeService, orca_api_mock: true do
           "Patient_ID" => "1",
           "InOut" => "O",
           "Invoice_Number" => "13",
-          "Print_Information" =>  {
+          "Print_Information" => {
             "Print_Invoice_Receipt_Class" => "1",
             "Print_Statement_Class" => "1"
           }
