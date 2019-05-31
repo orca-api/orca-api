@@ -1,0 +1,32 @@
+{
+  "medicalres": {
+    "Information_Date": "2019-05-31",
+    "Information_Time": "14:56:06",
+    "Api_Result": "00",
+    "Api_Result_Message": "置換処理終了",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2019-05-01",
+    "Medical_Uid": "f961e574-d987-4b4a-8abb-af3063b24608",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "医師一郎",
+    "Patient_Information": {
+      "Patient_ID": "00501",
+      "WholeName": "患者テスト",
+      "WholeName_inKana": "カンジャテスト",
+      "BirthDate": "1990-08-17",
+      "Sex": "2",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0001",
+        "InsuranceProvider_Class": "034",
+        "InsuranceProvider_Number": "34130013",
+        "InsuranceProvider_WholeName": "学校",
+        "RelationToInsuredPerson": "1",
+        "HealthInsuredPerson_WholeName": "患者テスト",
+        "Certificate_StartDate": "2017-07-24",
+        "Certificate_ExpiredDate": "9999-12-31"
+      }
+    }
+  }
+}

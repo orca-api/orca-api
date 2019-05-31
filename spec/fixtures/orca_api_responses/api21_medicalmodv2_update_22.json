@@ -1,0 +1,24 @@
+{
+  "medicalres": {
+    "Information_Date": "2019-05-31",
+    "Information_Time": "14:50:49",
+    "Api_Result": "22",
+    "Api_Result_Message": "登録対象のデータがありません",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2019-05-01",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Physician_Code": "10001",
+    "Physician_WholeName": "医師一郎",
+    "Patient_Information": {
+      "Patient_ID": "00501",
+      "WholeName": "患者テスト",
+      "WholeName_inKana": "カンジャテスト",
+      "BirthDate": "1990-08-17",
+      "Sex": "2",
+      "HealthInsurance_Information": {
+        "Insurance_Combination_Number": "0000"
+      }
+    }
+  }
+}
