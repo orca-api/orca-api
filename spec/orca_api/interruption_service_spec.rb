@@ -73,6 +73,7 @@ RSpec.describe OrcaApi::InterruptionService, orca_api_mock: true do
       expect(orca_api).to receive(:call).exactly(1) do |path, params:, body:|
         expect(path).to eq("/api21/medicalmodv2")
         expect(params[:class]).to eq("01")
+        expect(body.key?("medicalreq")).to be(true)
         response_json
       end
     end
@@ -159,6 +160,7 @@ RSpec.describe OrcaApi::InterruptionService, orca_api_mock: true do
       expect(orca_api).to receive(:call).exactly(1) do |path, params:, body:|
         expect(path).to eq("/api21/medicalmodv2")
         expect(params[:class]).to eq("02")
+        expect(body.key?("medicalreq")).to be(true)
         response_json
       end
     end
@@ -193,6 +195,7 @@ RSpec.describe OrcaApi::InterruptionService, orca_api_mock: true do
       expect(orca_api).to receive(:call).exactly(1) do |path, params:, body:|
         expect(path).to eq("/api21/medicalmodv2")
         expect(params[:class]).to eq("03")
+        expect(body.key?("medicalreq")).to be(true)
         response_json
       end
     end
@@ -250,6 +253,7 @@ RSpec.describe OrcaApi::InterruptionService, orca_api_mock: true do
       expect(orca_api).to receive(:call).exactly(1) do |path, params:, body:|
         expect(path).to eq("/api21/medicalmodv2")
         expect(params[:class]).to eq("04")
+        expect(body.key?("medicalreq")).to be(true)
         response_json
       end
     end

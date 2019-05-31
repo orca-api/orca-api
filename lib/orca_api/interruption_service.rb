@@ -38,62 +38,62 @@ module OrcaApi
     #
     # > データ登録(class=01)で診療データ、病名データ、あるいは両方のデータを登録します。
     #
-    # InOut	入外区分(I:入院、 それ以外:入院外)
-    # Patient_ID	患者番号	必須
-    # Perform_Date	診療日
-    # Perform_Time	診療時間
-    # Medical_Uid	 	 	変更、削除のみ必須
-    # Diagnosis_Information	診療情報
+    # InOut  入外区分(I:入院、 それ以外:入院外)
+    # Patient_ID  患者番号  必須
+    # Perform_Date  診療日
+    # Perform_Time  診療時間
+    # Medical_Uid        変更、削除のみ必須
+    # Diagnosis_Information  診療情報
     #   Department_Code 診療科コード 必須
-    #   Physician_Code	ドクタコード	10001	必須
-    #   HealthInsurance_Information	保険組合せ情報
+    #   Physician_Code  ドクタコード  10001  必須
+    #   HealthInsurance_Information  保険組合せ情報
     #     Insurance_Combination_Number 保険組合せ番号
-    #     InsuranceProvider_Class	保険の種類
-    #     InsuranceProvider_Number	保険者番号
-    #     InsuranceProvider_WholeName	保険の制度名称
-    #     HealthInsuredPerson_Symbol	記号
-    #     HealthInsuredPerson_Number	番号
-    #     HealthInsuredPerson_Continuation	継続区分(1:継続療養、 2:任意継続)
-    #     HealthInsuredPerson_Assistance	補助区分(詳細については、「日医標準レセプトソフトデータベーステーブル定義書」を参照して下さい。)
-    #     RelationToInsuredPerson	本人家族区分(1:本人、 2:家族)
-    #     HealthInsuredPerson_WholeName	被保険者名	日医　太郎
-    #     Certificate_StartDate	適用開始日
-    #     Certificate_ExpiredDate	適用終了日
-    #     PublicInsurance_Information	公費情報(繰り返し4)
-    #       PublicInsurance_Class	公費の種類
-    #       PublicInsurance_Name	公費の制度名称
-    #       PublicInsurer_Number	負担者番号
-    #       PublicInsuredPerson_Number	受給者番号
-    #       Certificate_IssuedDate	適用開始日
-    #       Certificate_ExpiredDate	適用終了日
-    #   Medical_Information	診療行為情報(繰り返し40)
-    #     Medical_Class	診療種別区分(詳細については、「日医標準レセプトソフトデータベーステーブル定義書」を参照して下さい。)
-    #     Medical_Class_Name	診療種別区分名称
-    #     Medical_Class_Number	回数、日数
-    #     Medication_info	診療内容(繰り返し40)
-    #       Medication_Code	診療行為コード
-    #       Medication_Name	名称
-    #       Medication_Number	数量
+    #     InsuranceProvider_Class  保険の種類
+    #     InsuranceProvider_Number  保険者番号
+    #     InsuranceProvider_WholeName  保険の制度名称
+    #     HealthInsuredPerson_Symbol  記号
+    #     HealthInsuredPerson_Number  番号
+    #     HealthInsuredPerson_Continuation  継続区分(1:継続療養、 2:任意継続)
+    #     HealthInsuredPerson_Assistance  補助区分(詳細については、「日医標準レセプトソフトデータベーステーブル定義書」を参照して下さい。)
+    #     RelationToInsuredPerson  本人家族区分(1:本人、 2:家族)
+    #     HealthInsuredPerson_WholeName  被保険者名  日医　太郎
+    #     Certificate_StartDate  適用開始日
+    #     Certificate_ExpiredDate  適用終了日
+    #     PublicInsurance_Information  公費情報(繰り返し4)
+    #       PublicInsurance_Class  公費の種類
+    #       PublicInsurance_Name  公費の制度名称
+    #       PublicInsurer_Number  負担者番号
+    #       PublicInsuredPerson_Number  受給者番号
+    #       Certificate_IssuedDate  適用開始日
+    #       Certificate_ExpiredDate  適用終了日
+    #   Medical_Information  診療行為情報(繰り返し40)
+    #     Medical_Class  診療種別区分(詳細については、「日医標準レセプトソフトデータベーステーブル定義書」を参照して下さい。)
+    #     Medical_Class_Name  診療種別区分名称
+    #     Medical_Class_Number  回数、日数
+    #     Medication_info  診療内容(繰り返し40)
+    #       Medication_Code  診療行為コード
+    #       Medication_Name  名称
+    #       Medication_Number  数量
     #       Medication_Generic_Flg 一般処方指示(yes：一般名を使用する、no：銘柄指示、以外：日レセの設定指示に従う)
     #       Medication_Continue 継続コメント区分(1：継続コメント)
     #       Medication_Internal_Kinds 内服１種類区分(1：内服１種類)
-    #   Disease_Information	病名情報(繰り返し50)
-    #     Disease_Code	一連病名コード
-    #     Disease_InOut	入外区分(O:外来、I:入院)(半角大文字)
-    #     Disease_Name	一連病名名称(全角40文字まで)
-    #     Disease_Single	単独病名情報(繰り返し6)
-    #       Disease_Single_Code	単独病名コード
-    #       Disease_Single_Name	単独病名
+    #   Disease_Information  病名情報(繰り返し50)
+    #     Disease_Code  一連病名コード
+    #     Disease_InOut  入外区分(O:外来、I:入院)(半角大文字)
+    #     Disease_Name  一連病名名称(全角40文字まで)
+    #     Disease_Single  単独病名情報(繰り返し6)
+    #       Disease_Single_Code  単独病名コード
+    #       Disease_Single_Name  単独病名
     #       Disease_Supplement 病名補足コメント情報
     #       Disease_Scode1 補足コメントコード１
     #       Disease_Scode2 補足コメントコード２
     #       Disease_Scode3 補足コメントコード３
     #       Disease_Sname 補足コメント
-    #       Disease_Category	主病フラグ（PD:主病名）
-    #       Disease_SuspectedFlag	疑いフラグ
-    #       Disease_StartDate	病名開始日
-    #       Disease_EndDate	転帰日
-    #       Disease_OutCome	転帰区分
+    #       Disease_Category  主病フラグ（PD:主病名）
+    #       Disease_SuspectedFlag  疑いフラグ
+    #       Disease_StartDate  病名開始日
+    #       Disease_EndDate  転帰日
+    #       Disease_OutCome  転帰区分
     #
     # ##一般名処方について
     # 電子カルテ等から、医薬品に対し一般名指示等をおこないたい場合には、以下の設定により送信して下さい。
