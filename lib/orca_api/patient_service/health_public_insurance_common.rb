@@ -187,7 +187,6 @@ module OrcaApi
       def call_00(id)
         req = {
           "Request_Number" => "00",
-          "Karte_Uid" => orca_api.karte_uid,
           "Patient_Information" => {
             "Patient_ID" => id.to_s,
           }

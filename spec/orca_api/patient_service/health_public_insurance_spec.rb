@@ -83,7 +83,6 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
             body: {
               "=patientmodv3req2" => {
                 "Request_Number" => "00",
-                "Karte_Uid" => orca_api.karte_uid,
                 "Patient_Information" => {
                   "Patient_ID" => "1",
                 }
@@ -105,7 +104,6 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
             body: {
               "=patientmodv3req2" => {
                 "Request_Number" => "00",
-                "Karte_Uid" => orca_api.karte_uid,
                 "Patient_Information" => {
                   "Patient_ID" => "1",
                 }
