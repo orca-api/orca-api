@@ -52,10 +52,14 @@ module OrcaApi
       # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/18351#api2
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032_err.pdf
-      def get(id)
-        res = call_01(id)
-        unlock(res)
-        res
+      def get(id, with_lock = true)
+        if with_lock
+          res = call_01(id)
+          unlock(res)
+          res
+        else
+          call_00(id)
+        end
       end
 
       # 患者保険・公費情報を更新する
@@ -176,6 +180,17 @@ module OrcaApi
       end
 
       private
+
+      def call_00(id)
+        req = {
+          "Request_Number" => "00",
+          "Karte_Uid" => orca_api.karte_uid,
+          "Patient_Information" => {
+            "Patient_ID" => id.to_s,
+          }
+        }
+        call(req)
+      end
 
       def call_01(id)
         req = {

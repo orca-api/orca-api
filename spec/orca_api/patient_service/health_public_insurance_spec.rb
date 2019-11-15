@@ -5,10 +5,8 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
   let(:service) { described_class.new(orca_api) }
 
   describe "#get" do
-    subject { service.get(patient_id) }
-
-    context "正常系" do
-      it "works" do
+    shared_examples "lockあり" do
+      it "正常系" do
         expect_data = [
           {
             path: "/orca12/patientmodv32",
@@ -39,14 +37,10 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
 
         expect_orca_api_call(expect_data, binding)
 
-        result = service.get(1)
-
-        expect(result.ok?).to be true
+        expect(subject.ok?).to be true
       end
-    end
 
-    context "異常系" do
-      it "works" do
+      it "異常系" do
         expect_data = [
           {
             path: "/orca12/patientmodv32",
@@ -65,9 +59,65 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
 
         expect_orca_api_call(expect_data, binding)
 
-        result = service.get(1)
+        expect(subject.ok?).to be false
+      end
+    end
 
-        expect(result.ok?).to be false
+    context "with_lockフラグなし" do
+      subject { service.get(1) }
+      it_should_behave_like "lockあり"
+    end
+
+    context "with_lock = true" do
+      subject { service.get(1, true) }
+      it_should_behave_like "lockあり"
+    end
+
+    context "with_lock = false" do
+      subject { service.get(1, false) }
+
+      it "正常系" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "00",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01.json",
+          }
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        expect(subject.ok?).to be true
+      end
+
+      it "異常系" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "00",
+                "Karte_Uid" => orca_api.karte_uid,
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_E10.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        expect(subject.ok?).to be false
       end
     end
   end
