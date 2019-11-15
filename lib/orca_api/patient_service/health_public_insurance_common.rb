@@ -46,12 +46,15 @@ module OrcaApi
       #
       # @param [String] id
       #   患者ID
+      # @param [Boolean] with_lock (optional)
+      #   ロック利用、未設定時はtrue
       # @return [Result]
       #   日レセからのレスポンス
       #
-      # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/18351#api2
+      # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod#api2
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032_err.pdf
+      # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod_search
       def get(id, with_lock = true)
         if with_lock
           res = call_01(id)
