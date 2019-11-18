@@ -47,6 +47,10 @@ module OrcaApi
         unlock(res)
       end
 
+      def fetch(id, pi_id)
+        call_00(id, pi_id)
+      end
+
       # 公費負担額を更新する
       #
       # @param [String] id

@@ -8,6 +8,23 @@ module OrcaApi
     class PiMoneyCommon < Service
       private
 
+      def call_00(id, pi_id)
+        req = {
+          "Request_Number" => "00",
+          "Patient_Information" => {
+            "Patient_ID" => id.to_s,
+          }
+        }
+
+        unless pi_id.nil?
+          req["PublicInsurance_Information"] = {
+            "PublicInsurance_Id" => pi_id.to_s,
+          }
+        end
+
+        call(req)
+      end
+
       def call_01(id)
         req = {
           "Request_Number" => "01",
