@@ -1,0 +1,32 @@
+{
+  "patientmodv3res5": {
+    "Request_Number": "00",
+    "Response_Number": "00",
+    "Information_Date": "2018-01-26",
+    "Information_Time": "13:06:27",
+    "Api_Result": "E32",
+    "Api_Result_Message": "公費選択対象がありません。",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "999999",
+      "WholeName": "テスト　華子",
+      "WholeName_inKana": "テスト　ハナコ",
+      "BirthDate": "1928-05-06",
+      "Sex": "2"
+    },
+    "PublicInsurance_Information": {
+      "PublicInsurance_Info": [
+        {
+          "PublicInsurance_Id": "0000000004",
+          "PublicInsurance_Class": "051",
+          "PublicInsurance_Name": "特定負有",
+          "Certificate_IssuedDate": "2011-10-01",
+          "Certificate_ExpiredDate": "9999-12-31"
+        }
+      ]
+    },
+    "Pi_Money_Information": {
+      "Sel_PublicInsurance_Id": "0000000005"
+    }
+  }
+}
