@@ -296,6 +296,9 @@ module OrcaApi
     # @!method get_pi_money
     #   @see PatientService::PiMoney#get
 
+    # @!method fetch_pi_money
+    #   @see PatientService::PiMoney#fetch
+
     # @!method update_pi_money
     #   @see PatientService::PiMoney#update
 

@@ -48,6 +48,19 @@ module OrcaApi
       end
 
       def fetch(id, pi_id)
+      # 公費負担額一覧を取得する（排他ロックなし）
+      #
+      # @param [String] id
+      #   患者ID
+      # @param [String] pi_id
+      #   公費ID
+      # @return [OrcaApi::Result]
+      #   日レセからのレスポンス
+      #
+      # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/18351#api5
+      # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v035.pdf
+      # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v035_err.pdf
+      # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod_search
         call_00(id, pi_id)
       end
 
