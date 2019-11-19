@@ -47,7 +47,6 @@ module OrcaApi
         unlock(res)
       end
 
-      def fetch(id, pi_id)
       # 公費負担額一覧を取得する（排他ロックなし）
       #
       # @param [String] id
@@ -61,6 +60,7 @@ module OrcaApi
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v035.pdf
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v035_err.pdf
       # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod_search
+      def fetch(id, pi_id = nil)
         call_00(id, pi_id)
       end
 

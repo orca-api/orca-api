@@ -245,7 +245,7 @@ RSpec.describe OrcaApi::PatientService::PiMoney, orca_api_mock: true do
 
         expect_orca_api_call(expect_data, binding)
 
-        result = service.fetch(3, nil)
+        result = service.fetch(3)
 
         expect(result.ok?).to be true
       end
