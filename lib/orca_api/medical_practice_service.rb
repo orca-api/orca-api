@@ -12,7 +12,7 @@ module OrcaApi
   #    * 詳しくは `example/medical_practice_service/get_examination_fee.rb` を参照。
   #  * (3) 診療情報及び請求情報の取得: calc_medical_practice_fee
   #    * 取得した診療情報及び請求情報を元に、次のメソッドの引数を組み立てる。
-  #    * 詳しくは `example/medical_practice_service/cal_medical_practice_fee.rb` を参照。
+  #    * 詳しくは `example/medical_practice_service/calc_medical_practice_fee.rb` を参照。
   #  * (4) 診療行為の登録: create
   #    * 詳しくは `example/medical_practice_service/crud.rb` を参照。
   #
