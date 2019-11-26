@@ -199,6 +199,87 @@ RSpec.describe OrcaApi::PatientService::PiMoney, orca_api_mock: true do
     end
   end
 
+  describe "#fetch" do
+    context "正常系" do
+      it "公費IDを指定した場合はその公費の公費負担額情報をを取得できること" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv35",
+            body: {
+              "=patientmodv3req5" => {
+                "Request_Number" => "00",
+                "Patient_Information" => {
+                  "Patient_ID" => "3",
+                },
+                "PublicInsurance_Information" => {
+                  "PublicInsurance_Id" => "4",
+                }
+              }
+            },
+            result: "orca12_patientmodv35_00_pi.json",
+          }
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.fetch(3, 4)
+
+        expect(result.ok?).to be true
+      end
+
+      it "公費IDを指定しない場合でも対象公費内の1件目の公費の公費負担額情報を取得できること" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv35",
+            body: {
+              "=patientmodv3req5" => {
+                "Request_Number" => "00",
+                "Patient_Information" => {
+                  "Patient_ID" => "3",
+                }
+              }
+            },
+            result: "orca12_patientmodv35_00.json",
+          }
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.fetch(3)
+
+        expect(result.ok?).to be true
+      end
+    end
+
+    context "異常系" do
+      it "公費IDに該当する公費が存在しない場合、エラーを返すこと" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv35",
+            body: {
+              "=patientmodv3req5" => {
+                "Request_Number" => "00",
+                "Patient_Information" => {
+                  "Patient_ID" => "999999",
+                },
+                "PublicInsurance_Information" => {
+                  "PublicInsurance_Id" => "5",
+                }
+              }
+            },
+            result: "orca12_patientmodv35_00_E32.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.fetch(999999, 5)
+
+        expect(result.ok?).to be false
+      end
+    end
+  end
+
   describe "#update" do
     context "正常系" do
       it "公費負担額を更新できること" do
