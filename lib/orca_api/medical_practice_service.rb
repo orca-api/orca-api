@@ -400,9 +400,9 @@ module OrcaApi
     #     * "Select_Answer" ("Ok", "No")
     #       確認メッセージ返答
     #   * "Delete_Number_Info" (Array<Hash>)
-    #     在削除連番
+    #     剤削除連番
     #     * "Delete_Number" (String)
-    #       在削除連番
+    #       剤削除連番
     # @return [OrcaApi::MedicalPracticeService::Response3Result]
     #   日レセからのレスポンス
     # @return [OrcaApi::MedicalPracticeService::UnselectedError]
