@@ -49,13 +49,25 @@ module OrcaApi
       # @return [Result]
       #   日レセからのレスポンス
       #
-      # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/18351#api2
+      # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod#api2
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
       # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032_err.pdf
       def get(id)
         res = call_01(id)
         unlock(res)
         res
+      end
+
+      # 患者保険・公費情報を取得する(ロックなし)
+      #
+      # @param [String] id
+      #   患者ID
+      # @return [Result]
+      #   日レセからのレスポンス
+      #
+      # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod_search
+      def fetch(id)
+        call_00(id)
       end
 
       # 患者保険・公費情報を更新する
@@ -176,6 +188,16 @@ module OrcaApi
       end
 
       private
+
+      def call_00(id)
+        req = {
+          "Request_Number" => "00",
+          "Patient_Information" => {
+            "Patient_ID" => id.to_s,
+          }
+        }
+        call(req)
+      end
 
       def call_01(id)
         req = {
