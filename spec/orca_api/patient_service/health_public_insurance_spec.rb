@@ -72,6 +72,60 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
     end
   end
 
+  describe "#fetch" do
+    subject { service.fetch(patient_id) }
+
+    context "正常系" do
+      it "works" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "00",
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01.json",
+          }
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.fetch(1)
+
+        expect(result.ok?).to be true
+      end
+    end
+
+    context "異常系" do
+      it "works" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "00",
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_01_E10.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.fetch(1)
+
+        expect(result.ok?).to be false
+      end
+    end
+  end
+
   describe "#update" do
     context "正常系" do
       it "患者保険・公費を登録する(New)" do

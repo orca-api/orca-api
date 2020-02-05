@@ -233,6 +233,9 @@ module OrcaApi
     # @!method get_health_insurance
     #   @see PatientService::HealthInsurance#get
 
+    # @!method fetch_health_insurance
+    #   @see PatientService::HealthInsurance#fetch
+
     # @!method update_health_insurance
     #   @see PatientService::HealthInsurance#update
 
@@ -330,7 +333,7 @@ module OrcaApi
       require_relative "patient_service/#{method_suffix}"
       klass = const_get(class_name)
 
-      method_names = klass.instance_methods & (klass.instance_methods(false) + %i(get update)).uniq
+      method_names = klass.instance_methods & (klass.instance_methods(false) + %i(get update fetch)).uniq
       method_names.each do |method_name|
         define_method("#{method_name}_#{method_suffix}") do |*args|
           klass.new(orca_api).send(method_name, *args)
