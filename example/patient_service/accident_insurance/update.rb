@@ -60,20 +60,20 @@ params = {
             "C_WholeName" => "松江", # 郡市区名称/80
             "C_Class" => "2", # 郡市区区分/1/１：郡、２：市、３：区
             "C_Class_Name" => "市" # 郡市区区分名称/2/全角１文字
-          },
-          "Accident_Base_Month" => today.strftime("%Y-%m"), # 労災レセ回数記載 基準年月/7/省略時　療養開始年月
-          "Accident_Receipt_Count" => "001", # 労災レセ回数記載 回数/3/省略時　１
-          "Liability_Insurance" => "", # 自賠責請求区分/1
-          "Liability_Insurance_Office_Name" => "", # 自賠責保険会社名/80
-          "Liability_Physician_Code" => "", # 自賠責担当医コード/5
-          "Liability_Class" => "", # 自賠責点数算定区分/1
-          "PersonalHealthRecord_Number" => "", # アフターケア 健康管理手帳番号/13
-          "Damage_Class" => { # アフターケア 損傷区分
-            "D_Code" => "" # 損傷区分/3
-          },
-          "Third_Party_Supply" => "", # 第三者行為 現物支給区分/1/１：対象外、２：対象
-          "Third_Party_Report" => "", # 第三者行為 特記事項区分/1/１：「１０第三」記載有、２：「１０第三」記載無
-        }
+          }
+        },
+        "Accident_Base_Month" => today.strftime("%Y-%m"), # 労災レセ回数記載 基準年月/7/省略時　療養開始年月
+        "Accident_Receipt_Count" => "001", # 労災レセ回数記載 回数/3/省略時　１
+        "Liability_Insurance" => "", # 自賠責請求区分/1
+        "Liability_Insurance_Office_Name" => "", # 自賠責保険会社名/80
+        "Liability_Physician_Code" => "", # 自賠責担当医コード/5
+        "Liability_Class" => "", # 自賠責点数算定区分/1
+        "PersonalHealthRecord_Number" => "", # アフターケア 健康管理手帳番号/13
+        "Damage_Class" => { # アフターケア 損傷区分
+          "D_Code" => "" # 損傷区分/3
+        },
+        "Third_Party_Supply" => "", # 第三者行為 現物支給区分/1/１：対象外、２：対象
+        "Third_Party_Report" => "", # 第三者行為 特記事項区分/1/１：「１０第三」記載有、２：「１０第三」記載無
       }
     ],
   }
