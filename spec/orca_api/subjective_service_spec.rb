@@ -45,6 +45,58 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
       result = service.create params
       expect(result.ok?).to be true
     end
+
+    it "保険組合せ情報を指定したときでもAPI呼び出しが正しいこと" do
+      expect_orca_api_call(
+        [
+          {
+            path: "/orca25/subjectivesv2",
+            params: { "class" => "01" },
+            body: {
+              "subjectivesmodreq" => {
+                "Patient_ID" => "00001",
+                "InOut" => "O",
+                "Perform_Date" => "2018-06",
+                "Department_Code" => "00",
+                "Insurance_Combination_Number" => "0001",
+                "Subjectives_Detail_Record" => "07",
+                "Subjectives_Code" => "foobarbaz",
+                "HealthInsurance_Information" => {
+                  "InsuranceProvider_Class" => "009",
+                  "PublicInsurance_Information" => [
+                    {
+                      "PublicInsurance_Class" => "051"
+                    }
+                  ]
+                }
+              }
+            },
+            result: "orca25_subjectivesv2_01.json"
+          }
+        ],
+        binding
+      )
+
+      params = {
+        "Patient_ID" => "00001",
+        "InOut" => "O",
+        "Perform_Date" => "2018-06",
+        "Department_Code" => "00",
+        "Insurance_Combination_Number" => "0001",
+        "Subjectives_Detail_Record" => "07",
+        "Subjectives_Code" => "foobarbaz",
+        "HealthInsurance_Information" => {
+          "InsuranceProvider_Class" => "009",
+          "PublicInsurance_Information" => [
+            {
+              "PublicInsurance_Class" => "051"
+            }
+          ]
+        }
+      }
+      result = service.create params
+      expect(result.ok?).to be true
+    end
   end
 
   describe "#destroy" do
@@ -81,6 +133,56 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
         "HealthInsurance_Information" => {
           "PublicInsurance_Information" => {
           }
+        }
+      }
+      result = service.destroy params
+      expect(result.ok?).to be true
+    end
+
+    it "保険組合せ情報を指定したときでもAPI呼び出しが正しいこと" do
+      expect_orca_api_call(
+        [
+          {
+            path: "/orca25/subjectivesv2",
+            params: { "class" => "02" },
+            body: {
+              "subjectivesmodreq" => {
+                "Patient_ID" => "00001",
+                "InOut" => "O",
+                "Perform_Date" => "2018-06",
+                "Department_Code" => "00",
+                "Insurance_Combination_Number" => "0001",
+                "Subjectives_Detail_Record" => "07",
+                "HealthInsurance_Information" => {
+                  "InsuranceProvider_Class" => "009",
+                  "PublicInsurance_Information" => [
+                    {
+                      "PublicInsurance_Class" => "051"
+                    }
+                  ]
+                }
+              }
+            },
+            result: "orca25_subjectivesv2_02.json"
+          }
+        ],
+        binding
+      )
+
+      params = {
+        "Patient_ID" => "00001",
+        "InOut" => "O",
+        "Perform_Date" => "2018-06",
+        "Department_Code" => "00",
+        "Insurance_Combination_Number" => "0001",
+        "Subjectives_Detail_Record" => "07",
+        "HealthInsurance_Information" => {
+          "InsuranceProvider_Class" => "009",
+          "PublicInsurance_Information" => [
+            {
+              "PublicInsurance_Class" => "051"
+            }
+          ]
         }
       }
       result = service.destroy params
