@@ -121,13 +121,13 @@ module OrcaApi
       u, c = schema.partition { |e| e.is_a? Hash }
       target.slice(*c).merge(
         u.reduce({}) { |r, e| r.merge e }.map { |key, val|
-          if val.is_a?(Hash) && val["type"] == "array"
-            shaped = target[key].map { |i|
-              shaper(Hash(i), val["params"])
-            }
-          else
-            shaped = shaper(Hash(target[key]), val)
-          end
+          shaped = if val.is_a?(Hash) && val["type"] == "array"
+                     target[key].map { |i|
+                       shaper(Hash(i), val["params"])
+                     }
+                   else
+                     shaper(Hash(target[key]), val)
+                   end
           shaped.empty? ? nil : [key, shaped]
         }.compact.to_h
       )
