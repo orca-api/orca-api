@@ -11,7 +11,7 @@ module OrcaApi
     # 症状詳記APIの処理結果を表現したクラス
     class Result < ::OrcaApi::Result
       def ok?
-        api_result =~ /\A(?:0+|K[1234]|WK[123])\z/ ? true : false
+        api_result.match?(/\A(?:0+|K[1234]|WK[123])\z/)
       end
 
       def locked?

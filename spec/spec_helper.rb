@@ -65,7 +65,7 @@ def parse_json(raw, trim = true)
 end
 
 def return_response_json(response_json)
-  if /.json$/ =~ response_json
+  if /.json$/.match? response_json
     load_orca_api_response(response_json)
   else
     response_json
