@@ -49,14 +49,17 @@ module OrcaApi
         "HealthInsuredPerson_WholeName",
         "Certificate_StartDate",
         "Certificate_ExpiredDate",
-        "PublicInsurance_Information" => [
-          "PublicInsurance_Class",
-          "PublicInsurance_Name",
-          "PublicInsurer_Number",
-          "PublicInsuredPerson_Number",
-          "Certificate_IssuedDate",
-          "Certificate_ExpiredDate"
-        ].freeze
+        "PublicInsurance_Information" => {
+          "type" => "array",
+          "params" => [
+            "PublicInsurance_Class",
+            "PublicInsurance_Name",
+            "PublicInsurer_Number",
+            "PublicInsuredPerson_Number",
+            "Certificate_IssuedDate",
+            "Certificate_ExpiredDate"
+          ].freeze
+        }.freeze
       ].freeze
     ].freeze
     private_constant :CREATE_PARAMS
@@ -118,7 +121,13 @@ module OrcaApi
       u, c = schema.partition { |e| e.is_a? Hash }
       target.slice(*c).merge(
         u.reduce({}) { |r, e| r.merge e }.map { |key, val|
-          shaped = shaper(Hash(target[key]), val)
+          if val.is_a?(Hash) && val["type"] == "array"
+            shaped = target[key].map { |i|
+              shaper(Hash(i), val["params"])
+            }
+          else
+            shaped = shaper(Hash(target[key]), val)
+          end
           shaped.empty? ? nil : [key, shaped]
         }.compact.to_h
       )
