@@ -11,7 +11,7 @@ module OrcaApi
     # 症状詳記APIの処理結果を表現したクラス
     class Result < ::OrcaApi::Result
       def ok?
-        api_result =~ /\A(?:0+|K[1234]|WK[123])\z/ ? true : false
+        api_result.match?(/\A(?:0+|K[1234]|WK[123])\z/)
       end
 
       def locked?
@@ -49,14 +49,17 @@ module OrcaApi
         "HealthInsuredPerson_WholeName",
         "Certificate_StartDate",
         "Certificate_ExpiredDate",
-        "PublicInsurance_Information" => [
-          "PublicInsurance_Class",
-          "PublicInsurance_Name",
-          "PublicInsurer_Number",
-          "PublicInsuredPerson_Number",
-          "Certificate_IssuedDate",
-          "Certificate_ExpiredDate"
-        ].freeze
+        "PublicInsurance_Information" => {
+          "type" => "array",
+          "params" => [
+            "PublicInsurance_Class",
+            "PublicInsurance_Name",
+            "PublicInsurer_Number",
+            "PublicInsuredPerson_Number",
+            "Certificate_IssuedDate",
+            "Certificate_ExpiredDate"
+          ].freeze
+        }.freeze
       ].freeze
     ].freeze
     private_constant :CREATE_PARAMS
@@ -118,7 +121,13 @@ module OrcaApi
       u, c = schema.partition { |e| e.is_a? Hash }
       target.slice(*c).merge(
         u.reduce({}) { |r, e| r.merge e }.map { |key, val|
-          shaped = shaper(Hash(target[key]), val)
+          shaped = if val.is_a?(Hash) && val["type"] == "array"
+                     target[key].map { |i|
+                       shaper(Hash(i), val["params"])
+                     }
+                   else
+                     shaper(Hash(target[key]), val)
+                   end
           shaped.empty? ? nil : [key, shaped]
         }.compact.to_h
       )

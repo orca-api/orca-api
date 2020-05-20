@@ -80,11 +80,11 @@ module OrcaApi
     # @return [Boolean]
     #   Api_Resultが処理完了を示す値である場合にtrueを返す
     def ok?
-      /\AW?0+\z/ =~ api_result ? true : false
+      /\AW?0+\z/.match? api_result
     end
 
     def warning?
-      /\AW/ =~ api_result ? true : false
+      /\AW/.match? api_result
     end
 
     def locked?
