@@ -122,7 +122,7 @@ module OrcaApi
       target.slice(*c).merge(
         u.reduce({}) { |r, e| r.merge e }.map { |key, val|
           shaped = if val.is_a?(Hash) && val["type"] == "array"
-                     target[key].map { |i|
+                     (target[key] || []).map { |i|
                        shaper(Hash(i), val["params"])
                      }
                    else

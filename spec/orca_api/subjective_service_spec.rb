@@ -97,6 +97,48 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
       result = service.create params
       expect(result.ok?).to be true
     end
+
+    it "保険組合せ情報がまったくない場合でもAPI呼び出しが正しいこと" do
+      expect_orca_api_call(
+        [
+          {
+            path: "/orca25/subjectivesv2",
+            params: { "class" => "01" },
+            body: {
+              "subjectivesmodreq" => {
+                "Patient_ID" => "00001",
+                "InOut" => "O",
+                "Perform_Date" => "2018-06",
+                "Department_Code" => "00",
+                "Insurance_Combination_Number" => "0001",
+                "Subjectives_Detail_Record" => "07",
+                "Subjectives_Code" => "foobarbaz",
+                "HealthInsurance_Information" => {
+                  "InsuranceProvider_Class" => "009"
+                }
+              }
+            },
+            result: "orca25_subjectivesv2_01.json"
+          }
+        ],
+        binding
+      )
+
+      params = {
+        "Patient_ID" => "00001",
+        "InOut" => "O",
+        "Perform_Date" => "2018-06",
+        "Department_Code" => "00",
+        "Insurance_Combination_Number" => "0001",
+        "Subjectives_Detail_Record" => "07",
+        "Subjectives_Code" => "foobarbaz",
+        "HealthInsurance_Information" => {
+          "InsuranceProvider_Class" => "009"
+        }
+      }
+      result = service.create params
+      expect(result.ok?).to be true
+    end
   end
 
   describe "#destroy" do
