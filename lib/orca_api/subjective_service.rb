@@ -79,6 +79,11 @@ module OrcaApi
     ].freeze
     private_constant :LIST_PARAMS
 
+    COMMENT_PARAMS = [
+      "Perform_Day"
+    ].freeze
+    private_constant :COMMENT_PARAMS
+
     # 症状詳記登録
     def create(params)
       Result.new(
@@ -160,7 +165,7 @@ module OrcaApi
               "Insurance_Combination_Number" => info["HealthInsurance_Information"]["Insurance_Combination_Number"],
               "Subjectives_Detail_Record" => info["Subjectives_Detail_Record"],
               "Subjectives_Number" => info["Subjectives_Number"]
-            }
+            }.merge(shaper(info, COMMENT_PARAMS))
           }
         )
       )
