@@ -267,6 +267,16 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
                     },
                     "Subjectives_Detail_Record" => "08",
                     "Subjectives_Number" => "01"
+                  },
+                  {
+                    "InOut" => "O",
+                    "Department_Code" => "00",
+                    "HealthInsurance_Information" => {
+                      "Insurance_Combination_Number" => "0002"
+                    },
+                    "Perform_Day" => "20",
+                    "Subjectives_Detail_Record" => "03",
+                    "Subjectives_Number" => "01"
                   }
                 ]
               }
@@ -317,6 +327,30 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
                 }
               }
             }.to_json
+          },
+          {
+            path: "/api01rv2/subjectiveslstv2",
+            body: {
+              "subjectiveslstreq" => {
+                "Request_Number" => "02",
+                "InOut" => "O",
+                "Patient_ID" => "00001",
+                "Perform_Date" => "2018-06",
+                "Department_Code" => "00",
+                "Insurance_Combination_Number" => "0002",
+                "Subjectives_Detail_Record" => "03",
+                "Subjectives_Number" => "01",
+                "Perform_Day" => "20"
+              }
+            },
+            response: {
+              "subjectiveslstres" => {
+                "Api_Result" => "000",
+                "Subjectives_Code_Information" => {
+                  "Subjectives_Code" => "うゐのおくやまけふこえて"
+                }
+              }
+            }.to_json
           }
         ],
         binding
@@ -348,6 +382,17 @@ RSpec.describe OrcaApi::SubjectiveService, orca_api_mock: true do
                                                        "Subjectives_Detail_Record" => "08",
                                                        "Subjectives_Number" => "01",
                                                        "Subjectives_Code" => "わかよたれそつねならむ",
+                                                     },
+                                                     {
+                                                       "InOut" => "O",
+                                                       "Department_Code" => "00",
+                                                       "HealthInsurance_Information" => {
+                                                         "Insurance_Combination_Number" => "0002"
+                                                       },
+                                                       "Perform_Day" => "20",
+                                                       "Subjectives_Detail_Record" => "03",
+                                                       "Subjectives_Number" => "01",
+                                                       "Subjectives_Code" => "うゐのおくやまけふこえて",
                                                      }
                                                    ])
     end
