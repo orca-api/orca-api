@@ -472,5 +472,124 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         it { expect { subject }.to raise_error(RuntimeError, "exception") }
       end
     end
+
+    context "選択項目" do
+      let(:base_params) {
+        {
+          "Accident_Insurance_Information" => {
+            "Accident_Insurance_Info" => [
+              {
+                "Accident_Mode" => "Delete",
+                "InsuranceProvider_Id" => "9",
+                "PublicInsurance_Id" => "0",
+                "InsuranceProvider_Class" => "971",
+                "InsuranceProvider_WholeName" => "労災保険",
+                "Accident_Insurance" => "1",
+                "Accident_Insurance_WholeName" => "短期給付", # 労災保険名称/50
+                "Disease_Location" => "肩腰",
+                "Disease_Date" => "2017-09-29",
+                "Accident_StartDate" => "2017-09-29",
+                "Accident_Insurance_Number" => "12345678901", # 労働保険番号/14/※５
+                "Accident_Class" => "1",
+                "Labor_Station_Code" => "12349",
+                "Accident_Continuous" => "1",
+                "Outcome_Reason" => "3",
+                "Limbs_Exception" => "0",
+                "Liability_Office_Information" => {
+                  "L_WholeName" => "松江共同",
+                  "Prefecture_Information" => {
+                    "P_WholeName" => "島根",
+                    "P_Class" => "4",
+                    "P_Class_Name" => "県"
+                  },
+                  "City_Information" => {
+                    "C_WholeName" => "松江",
+                    "C_Class" => "2",
+                    "C_Class_Name" => "市"
+                  },
+                  "Accident_Base_Month" => "2017-09",
+                  "Accident_Receipt_Count" => "001",
+                }
+              }
+            ],
+          }
+        }
+      }
+
+      context "選択項目を選択済み" do
+        let(:get_response_json) { load_orca_api_response("orca12_patientmodv33_01_select_answer.json") }
+        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv33_02_select_answer.json") }
+        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_select_answer.json") }
+        let(:answer_response_json) { load_orca_api_response("orca12_patientmodv33_03_answer.json") }
+        let(:params) {
+          base_params.merge({
+            "Patient_Select_Information" => [{
+              "Patient_Select" => "K910",
+              "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+              "Select_Answer" => "Ok"
+            }]
+          })
+        }
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv33_01(path, body, patient_id, get_response_json)
+              when 2
+                expect_orca12_patientmodv33_02(path, body, prev_response_json, params, checked_response_json)
+              when 3
+                expect_orca12_patientmodv33_03(path, body, prev_response_json, updated_response_json)
+              when 4
+                expect_orca12_patientmodv33_03(path, body, prev_response_json, answer_response_json)
+              end
+            prev_response_json
+          }
+        end
+
+        its("ok?") { is_expected.to be true }
+        its(:patient_information) { is_expected.to eq(parse_json(updated_response_json).first[1]["Patient_Information"]) }
+
+        describe '["Accident_Insurance_Information"]' do
+          subject { super()["Accident_Insurance_Information"] }
+
+          it { is_expected.to eq(parse_json(updated_response_json).first[1]["Accident_Insurance_Information"]) }
+        end
+      end
+
+      context "選択項目が未選択" do
+        let(:get_response_json) { load_orca_api_response("orca12_patientmodv33_01_select_answer.json") }
+        let(:checked_response_json) { load_orca_api_response("orca12_patientmodv33_02_select_answer.json") }
+        let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_select_answer.json") }
+        let(:unlock_response_json) { load_orca_api_response("orca12_patientmodv33_99.json") }
+        let(:params) { base_params }
+
+        before do
+          count = 0
+          prev_response_json = nil
+          expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(4) { |path, body:|
+            count += 1
+            prev_response_json =
+              case count
+              when 1
+                expect_orca12_patientmodv33_01(path, body, patient_id, get_response_json)
+              when 2
+                expect_orca12_patientmodv33_02(path, body, prev_response_json, params, checked_response_json)
+              when 3
+                expect_orca12_patientmodv33_03(path, body, prev_response_json, updated_response_json)
+              when 4
+                expect_orca12_patientmodv33_99(path, body, unlock_response_json)
+              end
+            prev_response_json
+          }
+        end
+        its("ok?") { is_expected.to be false }
+        its("message") { is_expected.to eq("選択項目が未指定です。") }
+      end
+    end
+
   end
 end
