@@ -18,8 +18,6 @@ module OrcaApi
         end
       end
 
-
-
       # 取得
       def get(id)
         res = call_01(id)

@@ -522,13 +522,17 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         let(:updated_response_json) { load_orca_api_response("orca12_patientmodv33_03_select_answer.json") }
         let(:answer_response_json) { load_orca_api_response("orca12_patientmodv33_03_answer.json") }
         let(:params) {
-          base_params.merge({
-            "Patient_Select_Information" => [{
-              "Patient_Select" => "K910",
-              "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
-              "Select_Answer" => "Ok"
-            }]
-          })
+          base_params.merge(
+            {
+              "Patient_Select_Information" => [
+                {
+                  "Patient_Select" => "K910",
+                  "Patient_Select_Message" => "保険組合せ更新で期間外の診療が発生します。更新内容を確認して下さい。",
+                  "Select_Answer" => "Ok"
+                }
+              ]
+            }
+          )
         }
         before do
           count = 0
@@ -590,6 +594,5 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
         its("message") { is_expected.to eq("選択項目が未指定です。") }
       end
     end
-
   end
 end
