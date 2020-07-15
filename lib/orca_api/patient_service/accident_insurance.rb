@@ -7,6 +7,17 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v033.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v033_err.pdf
     class AccidentInsurance < Service
+      # 選択項目が未指定であることを表現するクラス
+      class UnselectedError < Result
+        def ok?
+          false
+        end
+
+        def message
+          '選択項目が未指定です。'
+        end
+      end
+
       # 取得
       def get(id)
         res = call_01(id)
@@ -31,7 +42,7 @@ module OrcaApi
           return res
         end
 
-        res = call_03(res)
+        res = call_03_with_answer(params, res)
         if res.ok?
           locked_result = nil
         end
@@ -65,7 +76,7 @@ module OrcaApi
         Result.new(orca_api.call("/orca12/patientmodv33", body: make_body(req)))
       end
 
-      def call_03(previous_result)
+      def call_03(previous_result, answer = nil)
         res = previous_result
         req = {
           "Request_Number" => res.response_number,
@@ -74,7 +85,34 @@ module OrcaApi
           "Patient_Information" => res.patient_information,
           "Accident_Insurance_Information" => res["Accident_Insurance_Information"],
         }
+        if answer
+          req["Select_Answer"] = answer["Select_Answer"]
+        end
         Result.new(orca_api.call("/orca12/patientmodv33", body: make_body(req)))
+      end
+
+      # see. lib/orca_api/patient_service/health_public_insurance_common.rb
+      def call_03_with_answer(params, previous_result)
+        res = call_03(previous_result)
+        return res if res.ok?
+
+        while !res.ok?
+          if res.api_result == "S20"
+            ps = res.patient_select_information["Patient_Select"]
+            psm = res.patient_select_information["Patient_Select_Message"]
+            psi = Array(params["Patient_Select_Information"]).find do |e|
+              ps == e["Patient_Select"] && psm == e["Patient_Select_Message"]
+            end
+            if psi
+              res = call_03(res, psi)
+            else
+              return UnselectedError.new(res.raw)
+            end
+          else
+            break
+          end
+        end
+        res
       end
 
       def unlock(locked_result)
