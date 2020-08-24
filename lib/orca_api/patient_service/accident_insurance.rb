@@ -27,6 +27,13 @@ module OrcaApi
         res
       end
 
+      # 取得(ロックなし)
+      #
+      # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod_search
+      def fetch(id)
+        call_00(id)
+      end
+
       # 登録・更新・削除
       def update(id, params)
         res = call_01(id)
@@ -52,6 +59,16 @@ module OrcaApi
       end
 
       private
+
+      def call_00(id)
+        req = {
+          "Request_Number" => "00",
+          "Patient_Information" => {
+            "Patient_ID" => id.to_s,
+          }
+        }
+        Result.new(orca_api.call("/orca12/patientmodv33", body: make_body(req)))
+      end
 
       def call_01(id)
         req = {
