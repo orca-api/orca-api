@@ -5,6 +5,16 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
   let(:service) { described_class.new(orca_api) }
   let(:response_data) { parse_json(response_json) }
 
+  def expect_orca12_patientmodv33_00(path, body, patient_id, response_json)
+    expect(path).to eq("/orca12/patientmodv33")
+
+    req = body["patientmodv3req3"]
+    expect(req["Request_Number"]).to eq("00")
+    expect(req["Patient_Information"]["Patient_ID"]).to eq(patient_id.to_s)
+
+    return_response_json(response_json)
+  end
+
   def expect_orca12_patientmodv33_01(path, body, patient_id, response_json)
     expect(path).to eq("/orca12/patientmodv33")
 
@@ -56,6 +66,55 @@ RSpec.describe OrcaApi::PatientService::AccidentInsurance, orca_api_mock: true d
     expect(req["Orca_Uid"]).to eq(res_body["Orca_Uid"])
 
     load_orca_api_response("orca12_patientmodv33_99.json")
+  end
+
+  describe "#fetch" do
+    subject { service.fetch(patient_id) }
+
+    context "正常系" do
+      let(:patient_id) { 4 }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv33_00.json") }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv33_00(path, body, patient_id, response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be true }
+
+      its(:patient_information) { is_expected.to eq(response_data.first[1]["Patient_Information"]) }
+      its(:accident_insurance_information) { is_expected.to eq(response_data.first[1]["Accident_Insurance_Information"]) }
+    end
+
+    context "異常系" do
+      let(:patient_id) { 2000 }
+      let(:response_json) { load_orca_api_response("orca12_patientmodv33_00_E10.json") }
+
+      before do
+        count = 0
+        prev_response_json = nil
+        expect(orca_api).to receive(:call).with(instance_of(String), body: instance_of(Hash)).exactly(1) { |path, body:|
+          count += 1
+          prev_response_json =
+            case count
+            when 1
+              expect_orca12_patientmodv33_00(path, body, patient_id, response_json)
+            end
+          prev_response_json
+        }
+      end
+
+      its("ok?") { is_expected.to be false }
+    end
   end
 
   describe "#get" do

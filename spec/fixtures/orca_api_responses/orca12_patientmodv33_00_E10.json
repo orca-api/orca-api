@@ -1,0 +1,14 @@
+{
+  "patientmodv3res3": {
+    "Request_Number": "00",
+    "Response_Number": "00",
+    "Information_Date": "2020-08-21",
+    "Information_Time": "19:49:19",
+    "Api_Result": "E10",
+    "Api_Result_Message": "患者番号に該当する患者が存在しません",
+    "Reskey": "Acceptance_Info",
+    "Patient_Information": {
+      "Patient_ID": "2000"
+    }
+  }
+}
