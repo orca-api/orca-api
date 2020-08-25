@@ -249,7 +249,7 @@ module OrcaApi
     #   @see PatientService::AccidentInsurance#get
 
     # @!method fetch_accident_insurance
-    #   @see PatientService::AccidentInsurance#get
+    #   @see PatientService::AccidentInsurance#fetch
 
     # @!method update_accident_insurance
     #   @see PatientService::AccidentInsurance#update
