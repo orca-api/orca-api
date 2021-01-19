@@ -98,6 +98,30 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
 
         expect(result.ok?).to be true
       end
+
+      it  "保険・公費情報のチェックをする" do
+        expect_data = [
+          {
+            path: "/orca12/patientmodv32",
+            body: {
+              "=patientmodv3req2" => {
+                "Request_Number" => "00",
+                "Base_Date" => "2021-01-01",
+                "Patient_Information" => {
+                  "Patient_ID" => "1",
+                }
+              }
+            },
+            result: "orca12_patientmodv32_00_E00.json",
+          },
+        ]
+
+        expect_orca_api_call(expect_data, binding)
+
+        result = service.fetch(1, "2021-01-01")
+
+        expect(result.ok?).to be false
+      end
     end
 
     context "異常系" do
