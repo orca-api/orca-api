@@ -99,7 +99,7 @@ RSpec.describe OrcaApi::PatientService::HealthPublicInsurance, orca_api_mock: tr
         expect(result.ok?).to be true
       end
 
-      it  "保険・公費情報のチェックをする" do
+      it "保険・公費情報のチェックをする" do
         expect_data = [
           {
             path: "/orca12/patientmodv32",
