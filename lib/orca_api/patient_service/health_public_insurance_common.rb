@@ -62,12 +62,15 @@ module OrcaApi
       #
       # @param [String] id
       #   患者ID
+      # @param [string] base_date
+      #   基準日
       # @return [Result]
       #   日レセからのレスポンス
+      #   基準日の設定がある場合は基準日で保険・公費情報のチェックを行う
       #
       # @see https://www.orcamo.co.jp/api-council/members/standards/?haori_patientmod_search
-      def fetch(id)
-        call_00(id)
+      def fetch(id, base_date = nil)
+        call_00(id, base_date)
       end
 
       # 患者保険・公費情報を更新する
@@ -189,13 +192,16 @@ module OrcaApi
 
       private
 
-      def call_00(id)
+      def call_00(id, base_date)
         req = {
           "Request_Number" => "00",
           "Patient_Information" => {
             "Patient_ID" => id.to_s,
           }
         }
+        if base_date
+          req["Base_Date"] = base_date
+        end
         call(req)
       end
 

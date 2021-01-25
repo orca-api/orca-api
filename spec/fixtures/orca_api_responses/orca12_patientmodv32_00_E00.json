@@ -1,0 +1,63 @@
+{
+  "patientmodv3res2": {
+    "Request_Number": "00",
+    "Response_Number": "00",
+    "Information_Date": "2021-01-01",
+    "Information_Time": "21:00:00",
+    "Api_Result": "E00",
+    "Api_Result_Message": "検索処理終了。エラーメッセージがあります。確認して下さい。",
+    "Reskey": "Acceptance_Info",
+    "Base_Date": "2021-01-01",
+    "Patient_Information": {
+      "Patient_ID": "00003",
+      "WholeName": "テスト　太郎",
+      "WholeName_inKana": "テスト　タロウ",
+      "BirthDate": "1949-12-07",
+      "Sex": "1"
+    },
+    "HealthInsurance_Information": {
+      "HealthInsurance_Info": [
+        {
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01010016",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "１２３４５６７８",
+          "HealthInsuredPerson_Number": "１０",
+          "RelationToInsuredPerson": "1",
+          "HealthInsuredPerson_WholeName": "前期高齢者",
+          "Certificate_StartDate": "2008-04-01",
+          "Certificate_ExpiredDate": "9999-12-31",
+          "Certificate_GetDate": "1995-02-01",
+          "Certificate_CheckDate": "2020-12-28"
+        }
+      ]
+    },
+    "HealthInsurance_Combination_Information": {
+      "HealthInsurance_Combination_Info": [
+        {
+          "Insurance_Combination_Number": "0001",
+          "Insurance_Combination_Rate_Admission": "0.30",
+          "Insurance_Combination_Rate_Outpatient": "0.30",
+          "Insurance_Combination_StartDate": "2008-04-01",
+          "Insurance_Combination_ExpiredDate": "9999-12-31",
+          "InsuranceProvider_Id": "0000000001",
+          "InsuranceProvider_Class": "009",
+          "InsuranceProvider_Number": "01010016",
+          "InsuranceProvider_WholeName": "協会",
+          "HealthInsuredPerson_Symbol": "１２３４５６７８",
+          "HealthInsuredPerson_Number": "１０",
+          "RelationToInsuredPerson": "1"
+        }
+      ]
+    },
+    "Patient_Message_Information": {
+      "Patient_Message_Info": [
+        {
+          "Patient_Result": "APP2",
+          "Patient_Result_Message": "009 協会 協会　開始日が前期高齢者の適応開始日以前です。"
+        }
+      ]
+    }
+  }
+}
