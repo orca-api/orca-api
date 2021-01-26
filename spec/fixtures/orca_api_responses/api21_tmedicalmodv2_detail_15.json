@@ -1,0 +1,21 @@
+{
+  "tmedicalmodres": {
+    "Information_Date": "2019-05-31",
+    "Information_Time": "13:49:48",
+    "Api_Result": "E15",
+    "Api_Result_Message": "処理対象がありません",
+    "Reskey": "Medical Info",
+    "Perform_Date": "2019-05-31",
+    "Patient_Information": {
+      "Patient_ID": "00501",
+      "WholeName": "患者テスト",
+      "WholeName_inKana": "カンジャテスト",
+      "BirthDate": "1990-08-17",
+      "Sex": "2"
+    },
+    "InOut": "O",
+    "Department_Code": "01",
+    "Department_Name": "内科",
+    "Medical_Uid": "cc6e3a36-b670-4c50-b530-9fd210fe40f2"
+  }
+}
