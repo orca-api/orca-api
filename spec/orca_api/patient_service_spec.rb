@@ -1,3 +1,4 @@
+# coding: utf-8
 require "spec_helper"
 require_relative "shared_examples"
 
@@ -107,14 +108,15 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
   describe "#create" do
     let(:patient_information) { response_data.first[1]["Patient_Information"] }
 
-    subject { service.create(*args) }
+    subject { service.create(patient_information, **args) }
 
     context "二重登録疑いの患者が存在しない" do
       describe "登録に成功する" do
         let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new.json") }
         let(:args) {
-          [patient_information]
+          #patient_information
         }
+        subject { service.create(patient_information) }
 
         before do
           count = 0
@@ -135,9 +137,11 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       describe "引数のpatient_idで患者番号を明示的に指定して登録する" do
+        subject { service.create(patient_information, **args) }
+
         let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new.json") }
         let(:args) {
-          [patient_information, { patient_id: "00001" }]
+          { patient_id: "00001" }
         }
 
         before do
@@ -163,8 +167,10 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       let(:response_json) { load_orca_api_response("orca12_patientmodv31_01_new_abnormal_patient_duplicated.json") }
 
       describe "登録に失敗する" do
+        subject { service.create(patient_information) }
+
         let(:args) {
-          [patient_information]
+          #[patient_information]
         }
 
         before do
@@ -189,7 +195,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       describe "引数にallow_duplication: trueを指定すると強制的に登録する" do
         let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_new_abnormal_patient_duplicated.json") }
         let(:args) {
-          [patient_information, { allow_duplication: true }]
+           { allow_duplication: true }
         }
 
         before do
@@ -216,8 +222,10 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     end
 
     context "異常系" do
+      subject { service.create(patient_information) }
+
       let(:args) {
-        [patient_information]
+#        [patient_information]
       }
 
       before do
@@ -409,9 +417,9 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
 
   describe "#destroy" do
     let(:patient_id) { 1 }
-    let(:args) { [patient_id] }
+    let(:args) { } # [patient_id] }
 
-    subject { service.destroy(*args) }
+    subject { service.destroy(patient_id) }
 
     context "正常系" do
       let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_delete_000.json") }
@@ -450,8 +458,10 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
       end
 
       context "受診のある患者" do
+        subject { service.destroy(patient_id, **args) }
+
         context "強制削除しない" do
-          let(:args) { [patient_id, { force: false }] }
+          let(:args) { { force: false } }
           let(:response_json) { load_orca_api_response("orca12_patientmodv31_02_delete_S20_2.json") }
 
           before do
@@ -486,7 +496,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
         end
 
         context "強制削除する" do
-          let(:args) { [patient_id, { force: true }] }
+          let(:args) { { force: true } }
 
           before do
             count = 0
