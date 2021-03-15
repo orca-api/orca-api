@@ -1,5 +1,8 @@
+require:
+  rubocop-performance
+
 AllCops:
-  TargetRubyVersion: "2.4"
+  TargetRubyVersion: "3.0"
   Exclude:
     - 'tmp/**/*'
     - 'vendor/**/*'
@@ -135,8 +138,8 @@ Security/Eval:
   Exclude:
     - 'spec/**/*'
 
-Performance/StringReplacement:
-  Enabled: false
+# Performance/StringReplacement:
+#   Enabled: false
 
 # Configuration parameters: Strict.
 Style/NumericLiterals:
@@ -154,10 +157,11 @@ Style/RescueStandardError:
 Style/Alias:
   Enabled: false
 
+# commeneted out because 2.7.x distinguish hash and keyword paramters
 # Configuration parameters: EnforcedStyle, SupportedStyles.
 # SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Enabled: false
+# Style/BracesAroundHashParameters:
+#   Enabled: false
 
 # Configuration parameters: MinBodyLength.
 Style/GuardClause:
