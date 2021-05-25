@@ -1,3 +1,4 @@
+# coding: utf-8
 require "uri"
 require "net/http"
 require "json"
@@ -396,7 +397,8 @@ module OrcaApi #:nodoc:
     end
   end
 
-  # 0.2.xまでの移行措置のため
+  # 0.2.xまでの移行措置のた
   OrcaApi = Client
+  Warning[:deprecated] = true
   deprecate_constant :OrcaApi
 end
