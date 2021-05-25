@@ -1,3 +1,5 @@
+require "set"
+
 module OrcaApi
   # 日レセAPIの呼び出し結果を扱うクラス
   class Result
