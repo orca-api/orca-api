@@ -6,7 +6,7 @@ require "securerandom"
 require_relative "result"
 require_relative "form_result"
 require_relative "binary_result"
-
+require_relative "ext/hash_slice"
 require_relative "error"
 
 module OrcaApi #:nodoc:
@@ -41,13 +41,6 @@ module OrcaApi #:nodoc:
     attr_writer :karte_uid # カルテUID
     attr_accessor :debug_output # デバッグに使う `IO` オブジェクト
     attr_reader :timeout
-
-    def self.underscore(name)
-      name.
-        gsub(/([A-Z]+)([A-Z][a-z])/, '\1_\2').
-        gsub(/([a-z\d])([A-Z])/, '\1_\2').
-        downcase
-    end
 
     # @param uri [String]
     #   接続先のURI。
@@ -233,7 +226,7 @@ module OrcaApi #:nodoc:
       UserService
     )
     service_class_names.each do |name|
-      s = underscore(name)
+      s = OrcaApi.underscore(name)
 
       require_relative s
 
@@ -284,10 +277,12 @@ module OrcaApi #:nodoc:
     ACCEPT_TIMEOUT_OPTIONS = %i[ssl open read continue keep_alive].freeze
     private_constant :ACCEPT_TIMEOUT_OPTIONS
 
+    using Ext::HashSlice if Ext::HashSlice.need_using?
+
     def extract_timeout_options(timeout)
       return {} unless timeout
 
-      timeout.select { |key, _| ACCEPT_TIMEOUT_OPTIONS.include? key }
+      timeout.slice(*ACCEPT_TIMEOUT_OPTIONS)
     end
 
     def new_http

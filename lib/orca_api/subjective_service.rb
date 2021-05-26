@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "service"
+require_relative "ext/hash_slice"
 
 module OrcaApi
   # 症状詳記を扱うサービスを表現したクラス
@@ -8,6 +9,8 @@ module OrcaApi
   # @see https://www.orca.med.or.jp/receipt/tec/api/subjectives.html
   # @see http://cms-edit.orca.med.or.jp/_admin/preview_revision/19548#api2
   class SubjectiveService < Service
+    using Ext::HashSlice if Ext::HashSlice.need_using?
+
     # 症状詳記APIの処理結果を表現したクラス
     class Result < ::OrcaApi::Result
       def ok?
@@ -18,16 +21,6 @@ module OrcaApi
         super || api_result == "90"
       end
     end
-
-    # Shim module for Hash#slice
-    module HashSlice
-      refine Hash do
-        def slice(*keys)
-          select { |key, _| keys.include? key }
-        end
-      end
-    end
-    using HashSlice unless Hash.instance_methods.include? :slice
 
     CREATE_PARAMS = [
       "InOut",

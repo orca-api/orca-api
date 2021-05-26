@@ -1,5 +1,5 @@
-require "orca_api/version"
-require "orca_api/client"
-
 module OrcaApi #:nodoc:
+  require_relative "orca_api/version"
+  require_relative "orca_api/utils"
+  require_relative "orca_api/client"
 end

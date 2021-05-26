@@ -332,7 +332,7 @@ module OrcaApi
       PiMoney
       PiEtcMoney
     ).each do |class_name|
-      method_suffix = Client.underscore(class_name)
+      method_suffix = OrcaApi.underscore(class_name)
       require_relative "patient_service/#{method_suffix}"
       klass = const_get(class_name)
 

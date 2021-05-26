@@ -41,7 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "rspec-its"
   spec.add_development_dependency "rspec_junit_formatter"
-  spec.add_development_dependency "rubocop", "~> 0.60.0"
+  spec.add_development_dependency "rubocop", "~> 0.61.0"
   spec.add_development_dependency "rubocop-junit-formatter"
   spec.add_development_dependency "rubyzip"
   spec.add_development_dependency "simplecov"

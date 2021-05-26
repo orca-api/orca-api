@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "health_public_insurance_common"
+require_relative "../ext/hash_slice"
 
 module OrcaApi
   class PatientService < Service
@@ -9,12 +10,14 @@ module OrcaApi
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032.pdf
     # @see http://cms-edit.orca.med.or.jp/receipt/tec/api/haori_patientmod.data/api12v032_err.pdf
     class HealthPublicInsurance < HealthPublicInsuranceCommon
-      OPTION_KEYS = %w[
+      KEYS = %w[
         HealthInsurance_Information
         PublicInsurance_Information
         Patient_Select_Information
       ].freeze
-      private_constant :OPTION_KEYS
+      private_constant :KEYS
+
+      using Ext::HashSlice if Ext::HashSlice.need_using?
 
       # 患者保険・公費情報を更新する
       #
@@ -33,7 +36,7 @@ module OrcaApi
       def update(id, args)
         super(
           id,
-          args.select { |key, _| OPTION_KEYS.include? key }
+          args.slice(*KEYS)
         )
       end
 

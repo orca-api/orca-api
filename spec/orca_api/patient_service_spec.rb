@@ -589,7 +589,7 @@ RSpec.describe OrcaApi::PatientService, orca_api_mock: true do
     PiMoney
     PiEtcMoney
   ).each do |class_name|
-    method_suffix = OrcaApi::Client.underscore(class_name)
+    method_suffix = OrcaApi.underscore(class_name)
     klass = OrcaApi::PatientService.const_get(class_name)
     method_names = klass.instance_methods & (klass.instance_methods(false) + %i(get update)).uniq
 
