@@ -104,6 +104,9 @@ module OrcaApi
       #         記号。全角２０文字。
       #       * "HealthInsuredPerson_Number" (String)
       #         番号。全角２０文字。
+      #       * "HealthInsuredPerson_Branch_Number" (String)
+      #         枝番。半角2文字。
+      #         数値以外は入力不可、後期高齢者は入力不可。
       #       * "HealthInsuredPerson_Continuation" (String)
       #         継続区分
       #       * "HealthInsuredPerson_Assistance" (String)
