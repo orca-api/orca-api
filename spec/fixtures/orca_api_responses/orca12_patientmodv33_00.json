@@ -103,6 +103,7 @@
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Symbol": "１２３４５６７８",
           "HealthInsuredPerson_Number": "１０",
+          "HealthInsuredPerson_Branch_Number": "00",
           "RelationToInsuredPerson": "1"
         },
         {},

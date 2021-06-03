@@ -24,6 +24,7 @@
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Symbol": "１２３４５６７８",
           "HealthInsuredPerson_Number": "１０",
+          "HealthInsuredPerson_Branch_Number": "00",
           "RelationToInsuredPerson": "1",
           "HealthInsuredPerson_WholeName": "前期高齢者",
           "Certificate_StartDate": "2008-04-01",
@@ -47,6 +48,7 @@
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Symbol": "１２３４５６７８",
           "HealthInsuredPerson_Number": "１０",
+          "HealthInsuredPerson_Branch_Number": "00",
           "RelationToInsuredPerson": "1"
         }
       ]

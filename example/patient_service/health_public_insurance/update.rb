@@ -38,6 +38,7 @@ template = {
         "InsuranceProvider_WholeName" => "後期高齢者", # 保険の制度名称/20
         "HealthInsuredPerson_Symbol" => "", # 記号/80/全角２０文字
         "HealthInsuredPerson_Number" => "１２３４５６", # 番号/80/全角２０文字
+        "HealthInsuredPerson_Branch_Number" => "00",  # 枝番/2
         "HealthInsuredPerson_Continuation" => "", # 継続区分/1
         "HealthInsuredPerson_Assistance" => "1", # 補助区分/1/※6
         "RelationToInsuredPerson" => "1", # 本人家族区分/1/必須

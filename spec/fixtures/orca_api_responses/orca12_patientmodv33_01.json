@@ -174,6 +174,7 @@
           "InsuranceProvider_Number": "01320019",
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Number": "３４２２３３４４４",
+          "HealthInsuredPerson_Branch_Number": "00",
           "RelationToInsuredPerson": "1"
         },
         {
@@ -211,6 +212,7 @@
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Symbol": "１２",
           "HealthInsuredPerson_Number": "３４５６７",
+          "HealthInsuredPerson_Branch_Number": "00",
           "RelationToInsuredPerson": "1",
           "PublicInsurance_Info": [
             {
@@ -243,6 +245,7 @@
           "InsuranceProvider_WholeName": "協会（任）",
           "HealthInsuredPerson_Symbol": "３４",
           "HealthInsuredPerson_Number": "５６７８９",
+          "HealthInsuredPerson_Branch_Number": "00",
           "HealthInsuredPerson_Continuation": "2",
           "RelationToInsuredPerson": "1"
         },
@@ -271,6 +274,7 @@
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Symbol": "１２",
           "HealthInsuredPerson_Number": "３４５６７",
+          "HealthInsuredPerson_Branch_Number": "00",
           "RelationToInsuredPerson": "1"
         },
         {
