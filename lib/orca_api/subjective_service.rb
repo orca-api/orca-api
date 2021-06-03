@@ -43,6 +43,7 @@ module OrcaApi
         "InsuranceProvider_Number",
         "HealthInsuredPerson_Symbol",
         "HealthInsuredPerson_Number",
+        "HealthInsuredPerson_Branch_Number",
         "HealthInsuredPerson_Continuation",
         "HealthInsuredPerson_Assistance",
         "RelationToInsuredPerson",
