@@ -257,6 +257,8 @@ module OrcaApi
     #         記号/80
     #       * "HealthInsuredPerson_Number" (String)
     #         番号/80
+    #       * "HealthInsuredPerson_Branch_Number" (String)
+    #         枝番/2
     #       * "HealthInsuredPerson_Continuation" (String)
     #         継続区分/1
     #       * "HealthInsuredPerson_Assistance" (String)

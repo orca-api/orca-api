@@ -8,6 +8,7 @@
             "InsuranceProvider_WholeName": "協会",
             "HealthInsuredPerson_Symbol": "２",
             "HealthInsuredPerson_Number": "３４５６７",
+            "HealthInsuredPerson_Branch_Number": "01",
             "HealthInsuredPerson_Continuation": "",
             "HealthInsuredPerson_Assistance": "",
             "RelationToInsuredPerson": "2",

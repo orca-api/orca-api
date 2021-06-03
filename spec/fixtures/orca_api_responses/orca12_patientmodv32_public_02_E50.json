@@ -28,6 +28,7 @@
           "InsuranceProvider_WholeName": "協会",
           "HealthInsuredPerson_Symbol": "２",
           "HealthInsuredPerson_Number": "３４５６７",
+          "HealthInsuredPerson_Branch_Number": "01",
           "RelationToInsuredPerson": "2",
           "HealthInsuredPerson_WholeName": "テスト　太郎",
           "Certificate_StartDate": "2012-10-01",
