@@ -96,6 +96,7 @@ module OrcaApi #:nodoc:
       uri = URI.parse(uri)
       @host = uri.host
       @port = uri.port
+      @base_path = uri.path
       @user = uri.user || options[:user]
       @password = uri.password || options[:password]
       @use_ssl = uri.scheme == 'https' || options[:use_ssl]
@@ -139,7 +140,7 @@ module OrcaApi #:nodoc:
     #   output_ioが指定された場合、output_ioを返す。
     #   そうでない場合、HTTPレスポンスのbodyをそのまま文字列として返す。
     def call(path, params: {}, body: nil, http_method: :post, format: "json", output_io: nil)
-      do_call make_request(http_method, path, params, body, format), output_io
+      do_call make_request(http_method, File.join(@base_path, path), params, body, format), output_io
     end
 
     # @!group 高レベルインターフェース
