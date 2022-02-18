@@ -30,6 +30,7 @@ module OrcaApi #:nodoc:
   class Client
     attr_accessor :host # ホスト名
     attr_accessor :port # ポート番号
+    attr_accessor :base_path #ベースとなるPATH
     attr_accessor :user # ユーザー名
     attr_accessor :password # パスワード
     attr_accessor :use_ssl # SSL通信をするかどうか

@@ -156,6 +156,11 @@ RSpec.describe OrcaApi::Client do
           end
         end
       end
+
+      describe "base_path" do
+        let(:uri) { "http://example.com/api" }
+        its(:base_path) { is_expected.to eq("/api") }
+      end
     end
   end
 
