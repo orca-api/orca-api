@@ -140,7 +140,7 @@ module OrcaApi #:nodoc:
     #   output_ioが指定された場合、output_ioを返す。
     #   そうでない場合、HTTPレスポンスのbodyをそのまま文字列として返す。
     def call(path, params: {}, body: nil, http_method: :post, format: "json", output_io: nil)
-      do_call make_request(http_method, File.join(@base_path, path), params, body, format), output_io
+      do_call make_request(http_method, build_path(path), params, body, format), output_io
     end
 
     # @!group 高レベルインターフェース
@@ -394,6 +394,10 @@ module OrcaApi #:nodoc:
           raise HttpError, response
         end
       end
+    end
+
+    def build_path(path)
+      File.join(@base_path, path)
     end
   end
 
