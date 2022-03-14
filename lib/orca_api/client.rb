@@ -30,6 +30,7 @@ module OrcaApi #:nodoc:
   class Client
     attr_accessor :host # ホスト名
     attr_accessor :port # ポート番号
+    attr_accessor :base_path #ベースとなるPATH
     attr_accessor :user # ユーザー名
     attr_accessor :password # パスワード
     attr_accessor :use_ssl # SSL通信をするかどうか
@@ -96,6 +97,7 @@ module OrcaApi #:nodoc:
       uri = URI.parse(uri)
       @host = uri.host
       @port = uri.port
+      @base_path = uri.path
       @user = uri.user || options[:user]
       @password = uri.password || options[:password]
       @use_ssl = uri.scheme == 'https' || options[:use_ssl]
@@ -139,7 +141,7 @@ module OrcaApi #:nodoc:
     #   output_ioが指定された場合、output_ioを返す。
     #   そうでない場合、HTTPレスポンスのbodyをそのまま文字列として返す。
     def call(path, params: {}, body: nil, http_method: :post, format: "json", output_io: nil)
-      do_call make_request(http_method, path, params, body, format), output_io
+      do_call make_request(http_method, build_path(path), params, body, format), output_io
     end
 
     # @!group 高レベルインターフェース
@@ -393,6 +395,10 @@ module OrcaApi #:nodoc:
           raise HttpError, response
         end
       end
+    end
+
+    def build_path(path)
+      File.join(@base_path, path)
     end
   end
 
