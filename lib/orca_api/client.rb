@@ -207,6 +207,9 @@ module OrcaApi #:nodoc:
     # @!method new_statistics_form_service
     # @return [StatisticsFormServie] StatisticsFormServiceインスタンス
 
+    # @!method new_medication_master_list_service
+    # @return [MedicationMasterListService] MedicationMasterListServiceインスタンス
+
     # @!endgroup
 
     service_class_names = %w(
@@ -221,6 +224,7 @@ module OrcaApi #:nodoc:
       InsuranceService
       LockService
       MedicalPracticeService
+      MedicationMasterListService
       PatientService
       PhysicianService
       PrintService

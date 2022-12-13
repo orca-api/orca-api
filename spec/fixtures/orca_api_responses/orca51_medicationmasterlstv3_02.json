@@ -1,0 +1,16 @@
+{
+  "medication_masterlstv3res": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "94e16fd4-4664-49cf-9be0-0af44ac25d4a",
+    "Orca_Uid": "060e7c98-2dab-438d-bd6f-18a58c55a1fe",
+    "Information_Date": "2018-09-26",
+    "Information_Time": "14:20:29",
+    "Api_Result": "000",
+    "API_Result_Message": "処理実施終了",
+    "Reskey": "medication master",
+    "Base_Date": "2018-04-11",
+    "Data_Format": "csv",
+    "Output_Count": "0000002219"
+  }
+}
