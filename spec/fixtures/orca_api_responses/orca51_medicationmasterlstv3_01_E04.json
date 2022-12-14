@@ -1,0 +1,20 @@
+{
+  "medication_masterlstv3res": {
+    "Request_Number": "01",
+    "Response_Number": "02",
+    "Karte_Uid": "94e16fd4-4664-49cf-9be0-0af44ac25d4a",
+    "Orca_Uid": "060e7c98-2dab-438d-bd6f-18a58c55a1fe",
+    "Information_Date": "2018-09-26",
+    "Information_Time": "14:20:29",
+    "Api_Result": "E04",
+    "API_Result_Message": "電子カルテＵＩＤが未設定です。",
+    "Reskey": "medication master",
+    "Base_Date": "2018-04-11",
+    "Data_Format": "csv",
+    "Data_Id_Information": [
+      {
+        "Data_Id": "8044b1ea-70a8-4923-9226-d1f3975b3a76"
+      }
+    ]
+  }
+}
