@@ -205,7 +205,10 @@ module OrcaApi #:nodoc:
     # @return [FindService] FindServiceインスタンス
 
     # @!method new_statistics_form_service
-    # @return [StatisticsFormServie] StatisticsFormServiceインスタンス
+    # @return [StatisticsFormService] StatisticsFormServiceインスタンス
+
+    # @!method new_interruption_form_service
+    # @return [InterruptionService] InterruptionServiceインスタンス
 
     # @!method new_medication_master_list_service
     # @return [MedicationMasterListService] MedicationMasterListServiceインスタンス
@@ -222,6 +225,7 @@ module OrcaApi #:nodoc:
       ImageService
       IncomeService
       InsuranceService
+      InterruptionService
       LockService
       MedicalPracticeService
       MedicationMasterListService
