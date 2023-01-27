@@ -23,7 +23,7 @@ module OrcaApi
 
       body = {
         "patientlst6req" => {
-          "Request_Number" => "01",
+          "Reqest_Number" => "01",
           "Patient_ID" => patient_id.to_s
         }
       }
