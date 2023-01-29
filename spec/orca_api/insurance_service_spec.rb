@@ -39,4 +39,32 @@ RSpec.describe OrcaApi::InsuranceService, orca_api_mock: true do
       include_examples "結果が正しいこと"
     end
   end
+
+  describe "#insurance_list" do
+    before do
+      body = {
+        "insuranceinfreq" => {
+          "Reqest_Number" => "01",
+          "Patient_ID" => patient_id,
+        }
+      }
+      expect(orca_api).to receive(:call).with("/api01rv2/patientlst6v2", body: body).once.and_return(response_json)
+    end
+
+    subject { service.list }
+
+    context "正常系" do
+      let(:response_json) { load_orca_api_response("api01rv2_patientlst6v2.json") }
+      let(:patient_id) { "00002" }
+
+      its("ok?") { is_expected.to be(true) }
+    end
+
+    context "異常系" do
+      let(:response_json) { load_orca_api_response("api01rv2_patientlst6v2_E91.json") }
+      let(:patient_id) { "" }
+
+      its("ok?") { is_expected.to be(false) }
+    end
+  end
 end
