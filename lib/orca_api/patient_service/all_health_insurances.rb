@@ -1,6 +1,6 @@
 module OrcaApi
   class PatientService < Service
-    class AllHealthInsurances
+    class AllHealthInsurances < Service
       def get(id)
         api_path = "/api01rv2/patientlst6v2"
 
