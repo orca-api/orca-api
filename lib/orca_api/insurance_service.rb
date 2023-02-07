@@ -16,19 +16,5 @@ module OrcaApi
       }
       Result.new(orca_api.call(api_path, body: body))
     end
-
-    # 全保険組合せ一覧取得
-    def insurance_list(patient_id)
-      api_path = "/api01rv2/patientlst6v2"
-
-      body = {
-        "patientlst6req" => {
-          "Reqest_Number" => "01",
-          "Patient_ID" => patient_id.to_s
-        }
-      }
-
-      Result.new(orca_api.call(api_path, body: body))
-    end
   end
 end
