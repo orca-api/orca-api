@@ -14,3 +14,5 @@ module OrcaApi
         Result.new(orca_api.call(api_path, body: body))
       end
     end
+  end
+end
