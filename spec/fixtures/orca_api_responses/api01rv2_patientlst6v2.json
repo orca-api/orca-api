@@ -1,0 +1,55 @@
+{
+  "Information_Date": "2023-01-27",
+  "Information_Time": "09:36:42",
+  "Api_Result": "000",
+  "Api_Result_Message": "処理終了",
+  "Reskey": "Patient Info",
+  "Patient_Information": {
+    "Patient_ID": "00002",
+    "WholeName": "テスト　国保",
+    "WholeName_inKana": "テスト　コクホ",
+    "BirthDate": "1990-10-10",
+    "Sex": "2"
+  },
+  "HealthInsurance_Information": [
+    {
+      "Insurance_Combination_Number": "0001",
+      "InsuranceCombination_Rate_Admission": "0.30",
+      "InsuranceCombination_Rate_Outpatient": "0.30",
+      "InsuranceCombination_StartDate": "2020-04-01",
+      "InsuranceCombination_ExpiredDate": "9999-12-31",
+      "Insurance_Nondisplay": "N",
+      "InsuranceProvider_Class": "060",
+      "InsuranceProvider_Number": "138016",
+      "InsuranceProvider_WholeName": "国保",
+      "HealthInsuredPerson_Number": "１１１１１１１",
+      "HealthInsuredPerson_Branch_Number": "01",
+      "HealthInsuredPerson_Assistance": "3",
+      "HealthInsuredPerson_Assistance_Name": "３割",
+      "RelationToInsuredPerson": "1",
+      "HealthInsuredPerson_WholeName": "テスト　国保",
+      "Certificate_StartDate": "2020-04-01",
+      "Certificate_ExpiredDate": "9999-12-31",
+      "Certificate_GetDate": "2020-04-01",
+      "Insurance_CheckDate": "2022-12-02"
+    },
+    {
+      "Insurance_Combination_Number": "0002",
+      "InsuranceCombination_Rate_Admission": "1.00",
+      "InsuranceCombination_Rate_Outpatient": "1.00",
+      "InsuranceCombination_StartDate": "2022-04-01",
+      "InsuranceCombination_ExpiredDate": "9999-12-31",
+      "Insurance_Nondisplay": "N",
+      "InsuranceProvider_Class": "980",
+      "InsuranceProvider_WholeName": "自費",
+      "HealthInsuredPerson_Assistance": "1",
+      "HealthInsuredPerson_Assistance_Name": "課税",
+      "RelationToInsuredPerson": "1",
+      "HealthInsuredPerson_WholeName": "テスト　国保",
+      "Certificate_StartDate": "2022-04-01",
+      "Certificate_ExpiredDate": "9999-12-31",
+      "Certificate_GetDate": "2022-04-01",
+      "Insurance_CheckDate": "2022-12-21"
+    }
+  ]
+}
