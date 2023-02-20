@@ -1,12 +1,12 @@
 {
   "Information_Date": "2023-02-21",
-  "Information_Time": "08:26:37",
+  "Information_Time": "08:31:34",
   "Api_Result": "00",
-  "Api_Result_Message": "登録終了",
+  "Api_Result_Message": "更新終了",
   "Reskey": "Acceptance_Info",
   "Patient_Information": {
     "Patient_ID": "00019",
-    "WholeName": "千葉　志葉再",
+    "WholeName": "千葉　志葉",
     "WholeName_inKana": "カナ　カナ",
     "BirthDate": "2000-10-10",
     "Sex": "2",
