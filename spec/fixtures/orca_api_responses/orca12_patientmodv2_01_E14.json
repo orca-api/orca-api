@@ -1,0 +1,14 @@
+{
+  "Information_Date": "2023-02-21",
+  "Information_Time": "08:21:10",
+  "Api_Result": "14",
+  "Api_Result_Message": "漢字氏名は全角で入力して下さい",
+  "Reskey": "Acceptance_Info",
+  "Patient_Information": {
+    "Patient_ID": "*",
+    "WholeName": "千葉　志葉a",
+    "WholeName_inKana": "カナ　カナ",
+    "BirthDate": "2000-10-10",
+    "Sex": "2"
+  }
+}

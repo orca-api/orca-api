@@ -1,0 +1,30 @@
+{
+  "Information_Date": "2023-02-21",
+  "Information_Time": "08:31:34",
+  "Api_Result": "00",
+  "Api_Result_Message": "更新終了",
+  "Reskey": "Acceptance_Info",
+  "Patient_Information": {
+    "Patient_ID": "00019",
+    "WholeName": "千葉　志葉",
+    "WholeName_inKana": "カナ　カナ",
+    "BirthDate": "2000-10-10",
+    "Sex": "2",
+    "Payment_Information": {
+      "Reduction_Reason": "00",
+      "Reduction_Reason_Name": "該当なし",
+      "Discount": "00",
+      "Discount_Name": "該当なし",
+      "Ic_Code": "01",
+      "Ic_Code_Name": "現金"
+    },
+    "Condition_Information": {
+      "Condition1": "00",
+      "Condition1_Name": "該当なし",
+      "Condition2": "00",
+      "Condition2_Name": "該当なし",
+      "Condition3": "00",
+      "Condition3_Name": "該当なし"
+    }
+  }
+}
