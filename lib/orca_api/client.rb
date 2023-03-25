@@ -176,6 +176,9 @@ module OrcaApi #:nodoc:
     # @!method new_patient_mod_service
     # @return [PatientModService] PatientModServiceインスタンス
 
+    # @!method new_patient_search_service
+    # @return [PatientSearchService] PatientSearchServiceインスタンス
+
     # @!method new_print_service
     # @return [PrintService] PrintServiceインスタンス
 
@@ -236,6 +239,7 @@ module OrcaApi #:nodoc:
       MedicationMasterListService
       PatientModService
       PatientService
+      PatientSearchService
       PhysicianService
       PrintService
       ReceiptDataCheckService
