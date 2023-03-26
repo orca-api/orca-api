@@ -3,7 +3,7 @@
 require_relative "service"
 
 module OrcaApi
-  module PatientSearchService < Service
+  class PatientSearchService < Service
     # https://www.orca.med.or.jp/receipt/tec/api/patientshimei.html
 
     # 患者情報の検索
