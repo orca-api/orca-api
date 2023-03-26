@@ -16,7 +16,7 @@ module OrcaApi
     def call(params)
       req = { "patientlst3req" => params }
 
-      orca_api.call("/orca12/patientsearchv2", body: req)
+      orca_api.call("/api01rv2/patientlst3v2?class=01 ", body: req)
     end
   end
 end
