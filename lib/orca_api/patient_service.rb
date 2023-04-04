@@ -332,6 +332,8 @@ module OrcaApi
       PiMoney
       PiEtcMoney
       AllHealthInsurances
+      PatientModService
+      PatientSearchService
     ).each do |class_name|
       method_suffix = Client.underscore(class_name)
       require_relative "patient_service/#{method_suffix}"

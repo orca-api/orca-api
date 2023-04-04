@@ -1,7 +1,7 @@
 require "spec_helper"
-require_relative "shared_examples"
+require_relative "../shared_examples"
 
-RSpes.describe OrcaApi::PatientModService, orca_api_mock: true do
+RSpes.describe OrcaApi::PatientService::PatientModService, orca_api_mock: true do
   let(:service) { described_class.new(orca_api) }
   let(:response_data) { parse_json(response_json) }
 
@@ -25,6 +25,7 @@ RSpes.describe OrcaApi::PatientModService, orca_api_mock: true do
           Sex: "2",
           BirthDate: "2000-10-10"
         }
+      end
 
       its("ok?") { is_expected.to be(true) }
     end
@@ -39,6 +40,7 @@ RSpes.describe OrcaApi::PatientModService, orca_api_mock: true do
           Sex: "2",
           BirthDate: "2000-10-10"
         }
+      end
 
       its("ok?") { is_expected.to be(false) }
     end
@@ -64,6 +66,7 @@ RSpes.describe OrcaApi::PatientModService, orca_api_mock: true do
           Sex: "2",
           BirthDate: "2000-10-10"
         }
+      end
 
       its("ok?") { is_expected.to be(true) }
     end
@@ -78,6 +81,7 @@ RSpes.describe OrcaApi::PatientModService, orca_api_mock: true do
           Sex: "2",
           BirthDate: "2000-10-10"
         }
+      end
 
       its("ok?") { is_expected.to be(false) }
     end
