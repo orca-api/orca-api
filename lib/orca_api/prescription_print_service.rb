@@ -16,7 +16,7 @@ module OrcaApi
         },
       }
 
-      orca_api.call("/api21/medicalmodv31", body: body)
+      Result.new(orca_api.call("/api21/medicalmodv31", body: body))
     end
 
     def medical_treatment(params)
@@ -38,9 +38,9 @@ module OrcaApi
     private
 
     def medical_call(params)
-      orca_api.call("/api21/medicalmodv32", body: {
+      Result.new(orca_api.call("/api21/medicalmodv32", body: {
         "medicalv3req2" => params,
-      })
+      }))
     end
   end
 end
