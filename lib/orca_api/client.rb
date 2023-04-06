@@ -214,6 +214,9 @@ module OrcaApi #:nodoc:
 
     # @!method new_medication_master_list_service
     # @return [MedicationMasterListService] MedicationMasterListServiceインスタンス
+    #
+    # @!method new_prescription_print_service
+    # @return [PrescriptionPrintService] PrescriptionPrintServiceインスタンス
 
     # @!endgroup
 
@@ -241,6 +244,7 @@ module OrcaApi #:nodoc:
       StatisticsFormService
       SubjectiveService
       UserService
+      PrescriptionPrintService
     )
     service_class_names.each do |name|
       s = underscore(name)
