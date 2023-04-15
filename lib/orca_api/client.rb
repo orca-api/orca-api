@@ -217,6 +217,9 @@ module OrcaApi #:nodoc:
     #
     # @!method new_prescription_print_service
     # @return [PrescriptionPrintService] PrescriptionPrintServiceインスタンス
+    #
+    # @!method new_hospital_service
+    # @return [HospitalService] HospitalServiceインスタンス
 
     # @!endgroup
 
@@ -245,6 +248,7 @@ module OrcaApi #:nodoc:
       SubjectiveService
       UserService
       PrescriptionPrintService
+      HospitalService
     )
     service_class_names.each do |name|
       s = underscore(name)
