@@ -57,6 +57,7 @@ module OrcaApi
     #   `output_io` 引数にnilを指定した場合は、`#raw` と `#body` にはレスポンスボディを格納した文字列が格納される。
     def get(uid, output_io = Tempfile.new(binmode: true))
       path = "/blobapi/#{uid}"
+      puts "GET #{path}"
       BinaryResult.new(orca_api.call(path, http_method: :get, format: nil, output_io: output_io))
     end
   end
