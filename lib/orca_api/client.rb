@@ -399,7 +399,7 @@ module OrcaApi #:nodoc:
         case response
         when Net::HTTPSuccess
           if output_io
-            puts response.read_body.inspect
+            puts response.inspect
             response.read_body do |chunk|
               output_io.write(chunk)
             end
